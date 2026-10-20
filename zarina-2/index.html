@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ресторан «Зарина»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap">
+<style>
+/* Вариант 2 «Журнал»: светлая бумага, крупная книжная антиква, разделы с номерами слева,
+   тонкие линейки вместо карточек. Расчёт банкета написан одной фразой с выпадающими словами. */
+:root {
+  --bg: #F4EFE7;
+  --ink: #1C1915;
+  --muted: #5E554B;
+  --line: #D6CCBF;
+  --accent: #8A2A22;
+  --accent-hover: #6F1F19;
+  --accent-ink: #FFFFFF;
+  --paper-2: #EDE6DB;
+  --danger: #B02A21;
+  --f-display: "Literata", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --tap: 60px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161412; --ink: #EFE9E1; --muted: #B3A89B; --line: #36312B; --accent: #E59C8E; --accent-hover: #F0B2A6; --accent-ink: #1A1210; --paper-2: #1E1B18; --danger: #F07A70;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161412; --ink: #EFE9E1; --muted: #B3A89B; --line: #36312B; --accent: #E59C8E; --accent-hover: #F0B2A6; --accent-ink: #1A1210; --paper-2: #1E1B18; --danger: #F07A70;
+  color-scheme: dark;
+}
+
+html { font-size: 112.5%; scroll-behavior: smooth; }
+html.large { font-size: 128%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 500; line-height: 1.08; margin: 0; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: var(--accent); text-underline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* Шапка как у журнала */
+.mast { border-bottom: 1px solid var(--ink); padding-top: env(safe-area-inset-top, 0px); }
+.mast .wrap { display: flex; align-items: center; gap: 12px 32px; padding-block: 18px; flex-wrap: wrap; }
+.logo { font-family: var(--f-display); font-weight: 600; font-size: 1.7rem; color: var(--ink); text-decoration: none; margin-right: auto; letter-spacing: -.01em; }
+.nav { display: flex; gap: 24px; }
+.nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.nav a:hover { color: var(--accent); }
+.mast-phone { font-weight: 600; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.size { display: inline-flex; border: 1px solid var(--line); }
+.size button { background: none; border: 0; color: var(--ink); font: 600 1rem var(--f-body); min-width: 48px; min-height: 48px; cursor: pointer; }
+.size button + button { border-left: 1px solid var(--line); font-size: 1.25rem; }
+.size button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); padding: 0 30px; border: 0; background: var(--accent); color: var(--accent-ink); font: 600 1.05rem var(--f-body); text-decoration: none; cursor: pointer; border-radius: 4px; }
+.btn:hover { background: var(--accent-hover); }
+.btn-plain { background: none; color: var(--ink); text-decoration: underline; padding: 0 4px; }
+.btn-plain:hover { background: none; color: var(--accent); }
+
+/* Первый экран */
+.hero { display: grid; grid-template-columns: 1.7fr 1fr; gap: 48px; padding-block: 56px 40px; align-items: end; }
+.hero > * { min-width: 0; }
+.hero h1 { font-size: clamp(2.8rem, 7.4vw, 6rem); overflow-wrap: break-word; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-side { padding-bottom: 10px; }
+.hero-lead { font-size: 1.15rem; }
+.facts { margin: 24px 0 28px; border-top: 1px solid var(--line); }
+.facts div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; text-align: right; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.lead-photo img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; object-position: center 55%; }
+.caption { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: .92rem; padding: 10px 0 0; }
+
+/* Разделы с номерами */
+.part { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; padding-block: 72px; border-top: 1px solid var(--ink); }
+.part:first-of-type { border-top: 0; }
+.part > * { min-width: 0; }
+.part-head { align-self: start; }
+.part-num { font-family: var(--f-display); font-size: 1rem; color: var(--accent); margin-bottom: 8px; display: block; }
+.part h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
+.part-head p { color: var(--muted); margin-top: 14px; max-width: 30ch; }
+.big-text { font-family: var(--f-display); font-size: clamp(1.4rem, 2.4vw, 1.75rem); line-height: 1.4; max-width: 34ch; }
+
+.hall { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.hall img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.list { list-style: none; padding: 0; margin: 24px 0 0; border-top: 1px solid var(--line); }
+.list li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.list b { font-weight: 600; }
+
+/* Меню */
+.bm { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.bm:first-child { padding-top: 0; }
+.bm-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.bm h3 { font-size: 1.9rem; }
+.bm-price { font-family: var(--f-display); font-size: 1.5rem; white-space: nowrap; }
+.bm p { color: var(--muted); margin-top: 6px; max-width: 56ch; }
+.note { color: var(--muted); margin-top: 20px; }
+
+/* Расчёт одной фразой */
+.calc { background: var(--paper-2); }
+.sentence { font-family: var(--f-display); font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.9; }
+.sentence select { font: inherit; color: var(--accent); background: transparent; border: 0; border-bottom: 2px solid var(--accent); padding: 0 1.1em 0 .1em; margin: 0 .1em; cursor: pointer; appearance: none; -webkit-appearance: none; border-radius: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238A2A22' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .15em center; background-size: .55em; max-width: 100%; }
+.sentence select:focus { outline: none; background-color: rgba(138,42,34,.08); }
+.sentence option { font-size: 1rem; color: #1C1915; }
+.inline-step { display: inline-flex; align-items: center; gap: .25em; vertical-align: baseline; white-space: nowrap; }
+.inline-step button { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--ink); background: none; color: var(--ink); font: 500 1.5rem var(--f-body); cursor: pointer; vertical-align: middle; }
+.inline-step button:hover { border-color: var(--accent); color: var(--accent); }
+.inline-step input { width: 2.4em; font: inherit; color: var(--accent); background: transparent; border: 0; border-bottom: 2px solid var(--accent); text-align: center; padding: 0; }
+.inline-step input:focus { outline: none; background: rgba(138,42,34,.08); }
+.answer { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.answer-sum { font-family: var(--f-display); font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.05; }
+.answer-sum span { color: var(--accent); }
+.answer-per { color: var(--muted); margin-top: 6px; }
+.answer-menu { margin: 18px 0 24px; max-width: 60ch; }
+.answer-menu b { font-weight: 600; }
+.small { color: var(--muted); font-size: .92rem; margin-top: 14px; }
+
+/* Дата */
+.req { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-title { font-family: var(--f-display); font-size: 1.7rem; text-transform: capitalize; }
+.cal-nav { width: 52px; height: 52px; border: 1px solid var(--ink); border-radius: 50%; background: none; color: var(--ink); font: 400 1.4rem var(--f-body); cursor: pointer; }
+.cal-nav:disabled { opacity: .25; cursor: default; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.cal-grid > * { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.cal-wd { text-align: center; color: var(--muted); font-size: .85rem; padding: 6px 0; }
+.cal-day { min-height: 54px; background: var(--bg); border-top: 0; border-left: 0; color: var(--ink); font: 600 1.05rem var(--f-body); cursor: pointer; }
+.cal-day:hover:not(:disabled) { background: var(--paper-2); color: var(--accent); }
+.cal-day[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.cal-day:disabled { cursor: default; }
+.cal-day.past { color: var(--line); }
+.cal-day.busy { color: var(--muted); text-decoration: line-through; background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(94,85,75,.12) 6px 7px); }
+.cal-legend { color: var(--muted); font-size: .92rem; margin-top: 10px; }
+.date-error { color: var(--danger); margin-top: 10px; }
+.sel { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.sel b { display: block; font-weight: 600; }
+.sel span { color: var(--muted); }
+.field { margin-bottom: 18px; }
+.field label { display: block; margin-bottom: 6px; font-weight: 500; }
+.field input, .field textarea { width: 100%; min-height: var(--tap); padding: 0 16px; background: var(--bg); border: 1px solid var(--muted); border-radius: 4px; color: var(--ink); font: 400 1.1rem var(--f-body); }
+.field textarea { padding: 14px 16px; min-height: 96px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.field-error { color: var(--danger); margin-top: 6px; }
+.req .btn[type="submit"] { width: 100%; }
+.done { border-top: 3px solid var(--accent); padding-top: 24px; max-width: 620px; }
+.done h3 { font-size: 2.4rem; }
+.done-list { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 20px 0; }
+.done-list dt { color: var(--muted); }
+.done-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.done p { color: var(--muted); margin-bottom: 20px; }
+.done-actions { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+
+/* Поминки */
+.wake-text { border-left: 3px solid var(--muted); padding-left: 24px; }
+.wake-text p + p { margin-top: 14px; }
+.wake-phone { display: inline-block; margin-top: 22px; font-family: var(--f-display); font-size: clamp(1.8rem, 3.6vw, 2.4rem); color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--ink); }
+
+/* Кухня */
+.dishes { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 40px; }
+.dishes li { break-inside: avoid; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.dishes b { font-family: var(--f-display); font-weight: 500; font-size: 1.5rem; display: block; }
+.dishes span { color: var(--muted); }
+
+/* Контакты */
+.contacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.c-label { color: var(--muted); margin-bottom: 6px; }
+.c-val { font-family: var(--f-display); font-size: 1.6rem; line-height: 1.25; color: var(--ink); text-decoration: none; display: block; }
+.hours { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; font-size: 1.1rem; }
+.hours span:nth-child(odd) { color: var(--muted); }
+.foot { border-top: 1px solid var(--ink); padding-block: 24px 40px; color: var(--muted); font-size: .88rem; }
+
+#calc, #request, #find, #hall, #menu { scroll-margin-top: 16px; }
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .hero, .part, .req, .hall, .contacts { grid-template-columns: 1fr; gap: 28px; }
+  .part { padding-block: 56px; }
+  .lead-photo img { aspect-ratio: 4 / 3; }
+  .hall img { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 620px) {
+  html { font-size: 106.25%; }
+  html.large { font-size: 121%; }
+  .logo { font-size: 1.5rem; }
+  .hero { padding-block: 32px 28px; }
+  .hero-actions .btn { width: 100%; }
+  .caption { flex-direction: column; gap: 2px; }
+  .sentence { line-height: 1.75; }
+  .dishes { columns: 1; }
+  .bm-row { flex-direction: column; gap: 2px; }
+  .done-list { grid-template-columns: 1fr; gap: 2px; }
+  .done-list dd { margin-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+
+<header class="mast">
+  <div class="wrap">
+    <a class="logo" href="#top">Зарина</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#hall">Зал</a><a href="#menu">Меню</a><a href="#calc">Расчёт</a><a href="#find">Контакты</a>
+    </nav>
+    <div class="size" role="group" aria-label="Размер текста">
+      <button type="button" id="font-normal" aria-pressed="true" title="Обычный текст">А</button>
+      <button type="button" id="font-large" aria-pressed="false" title="Крупный текст">А</button>
+    </div>
+    <a class="mast-phone" data-tel href="#" data-cfg="phone"></a>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+  <section class="hero">
+    <h1>Банкетный зал <em>на Первого Мая</em></h1>
+    <div class="hero-side">
+      <p class="hero-lead">Здесь отмечают свадьбы и юбилеи и провожают близких. Ресторан восточной кухни в Красном Селе.</p>
+      <dl class="facts">
+        <div><dt>Гостей</dt><dd>до <span data-cfg="maxGuests"></span></dd></div>
+        <div><dt>Банкетное меню</dt><dd><span data-cfg="partyFrom"></span> на гостя</dd></div>
+        <div><dt>Работаем</dt><dd>каждый день с 11:00</dd></div>
+      </dl>
+      <div class="hero-actions">
+        <a class="btn" href="#calc">Рассчитать банкет</a>
+        <a class="btn btn-plain" data-tel href="#">Позвонить</a>
+      </div>
+    </div>
+  </section>
+  <figure class="lead-photo" style="margin:0">
+    <img src="img/hall.jpg" alt="Зал ресторана «Зарина»: столы с белыми скатертями, белые диваны, большие окна" width="1280" height="855">
+    <figcaption class="caption"><span>Основной зал. Днём здесь светло от больших окон.</span><span>ул. Первого Мая, 15</span></figcaption>
+  </figure>
+
+  <section class="part" id="hall" style="margin-top:56px">
+    <div class="part-head"><span class="part-num">01</span><h2>Зал</h2></div>
+    <div>
+      <p class="big-text">Один большой зал на 250 человек. Когда у вас банкет от 30 гостей, мы закрываем его для всех остальных.</p>
+      <div class="hall" style="margin-top:32px">
+        <img src="img/table.jpg" alt="Сервированный банкетный стол в зале «Зарины»" width="855" height="1280" loading="lazy">
+        <ul class="list">
+          <li><b>Столы как вам удобно.</b> Один длинный стол, как на свадьбе, или отдельные столы на 8–10 человек.</li>
+          <li><b>Место для танцев.</b> Свободная площадка, музыка и свет.</li>
+          <li><b>Мягкие диваны.</b> Старшим гостям удобнее, чем на стуле весь вечер.</li>
+          <li><b>До полуночи.</b> В субботу и воскресенье работаем до 00:00.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="menu">
+    <div class="part-head"><span class="part-num">02</span><h2>Банкетное меню</h2><p>Цена за одного гостя. Блюда можно поменять, если кто-то не ест мясо или острое.</p></div>
+    <div id="bmenu"></div>
+  </section>
+</main>
+
+<section class="calc" id="calc">
+  <div class="wrap">
+    <div class="part" style="border-top:0">
+      <div class="part-head"><span class="part-num">03</span><h2>Расчёт</h2><p>Поменяйте выделенные слова, сумма пересчитается.</p></div>
+      <div aria-live="polite">
+        <p class="sentence">
+          Нам нужен зал на <select id="occasions" data-acc aria-label="Повод"></select>
+          для <span class="inline-step"><button type="button" id="g-minus" aria-label="Меньше гостей">−</button><input id="g-count" type="text" inputmode="numeric" aria-label="Число гостей" value="40"><button type="button" id="g-plus" aria-label="Больше гостей">+</button></span>
+          <span id="g-word-gen">гостей</span>, меню <select id="menus" aria-label="Меню"></select>
+        </p>
+        <div class="answer">
+          <p class="answer-sum">Это примерно <span id="t-sum"></span></p>
+          <p class="answer-per" id="t-per"></p>
+          <p class="answer-menu"><b>В меню:</b> <span id="t-menu"></span></p>
+          <a class="btn" href="#request">Выбрать дату</a>
+          <p class="small" id="guests-note"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="part" id="request" style="border-top:0">
+    <div class="part-head"><span class="part-num">04</span><h2>Дата</h2><p>Субботы расходятся первыми. Выберите день, и мы перезвоним, чтобы закрепить его за вами.</p></div>
+    <div>
+      <form class="req" id="req-form" novalidate>
+        <div>
+          <div class="cal-head">
+            <button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button>
+            <span class="cal-title" id="cal-title"></span>
+            <button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <p class="cal-legend">Заштрихованные дни заняты.</p>
+          <p class="date-error" id="date-error" hidden>Выберите дату в календаре.</p>
+        </div>
+        <div>
+          <p class="sel"><b id="sel-line"></b><span id="sel-date">дата не выбрана</span></p>
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" type="text" autocomplete="given-name">
+            <div class="field-error" id="name-error" hidden>Напишите ваше имя.</div>
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+            <div class="field-error" id="phone-error" hidden>Проверьте номер: нужно 10 цифр после +7.</div>
+          </div>
+          <div class="field">
+            <label for="comment">Пожелания</label>
+            <textarea id="comment" placeholder="Торт, дети, кто-то не ест мясо"></textarea>
+          </div>
+          <button class="btn" type="submit">Отправить заявку</button>
+        </div>
+      </form>
+      <div class="done" id="done" hidden>
+        <h3 tabindex="-1" id="done-title">Заявка отправлена</h3>
+        <dl class="done-list" id="done-list"></dl>
+        <p>Администратор перезвонит в течение часа в рабочее время. Дату держим за вами, пока не созвонимся.</p>
+        <div class="done-actions">
+          <button class="btn" type="button" id="done-new">Новая заявка</button>
+          <button class="btn btn-plain" type="button" id="done-cancel">Отменить заявку</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="part-head"><span class="part-num">05</span><h2>Поминки</h2></div>
+    <div class="wake-text">
+      <p class="big-text">Позвоните, и мы всё организуем: меню, стол, обслуживание.</p>
+      <p>Поминальный обед <span data-cfg="wakeFrom"></span> на человека: кутья, блины, суп, горячее, кисель. Без музыки, в спокойной обстановке. Принимаем заказы в короткие сроки, звоните каждый день с 11:00.</p>
+      <a class="wake-phone" data-tel href="#" data-cfg="phone"></a>
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="part-head"><span class="part-num">06</span><h2>Кухня</h2><p>Восточная кухня каждый день. Можно прийти просто пообедать.</p></div>
+    <ul class="dishes" id="dishes"></ul>
+  </section>
+
+  <section class="part" id="find">
+    <div class="part-head"><span class="part-num">07</span><h2>Как найти</h2></div>
+    <div class="contacts">
+      <div><p class="c-label">Адрес</p><span class="c-val" data-cfg="address"></span><span style="color:var(--muted)" data-cfg="addressNote"></span><br><a data-map href="#" target="_blank" rel="noopener">Открыть на карте</a></div>
+      <div><p class="c-label">Телефон</p><a class="c-val" data-tel href="#" data-cfg="phone"></a></div>
+      <div><p class="c-label">Часы работы</p><div class="hours" id="hours"></div></div>
+    </div>
+  </section>
+</div>
+<footer class="wrap foot">Демонстрационная версия: заявки сохраняются только в этом браузере.</footer>
+
+<script>
+window.ZARINA_TPL = {
+  bmenu: function (m, esc, rub) {
+    return '<div class="bm"><div class="bm-row"><h3>' + esc(m.name) + '</h3><span class="bm-price">' + rub(m.price) + "</span></div><p>" + esc(m.dishes.join(", ")) + "</p></div>";
+  },
+  dish: function (d, esc) { return "<li><b>" + esc(d[0]) + "</b><span>" + esc(d[1]) + "</span></li>"; },
+  // выпадающие слова в фразе по ширине выбранного варианта
+  onRender: function () {
+    var probe = document.getElementById("probe");
+    if (!probe) { probe = document.createElement("span"); probe.id = "probe"; probe.setAttribute("aria-hidden", "true"); probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre;left:-9999px"; document.body.appendChild(probe); }
+    document.querySelectorAll(".sentence select").forEach(function (sel) {
+      var cs = getComputedStyle(sel);
+      probe.style.font = cs.font;
+      probe.textContent = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : "";
+      sel.style.width = Math.ceil(probe.getBoundingClientRect().width + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.fontSize) * .35) + "px";
+    });
+    if (!window.__zFonts && document.fonts) { window.__zFonts = true; document.fonts.ready.then(window.ZARINA_TPL.onRender); }
+  }
+};
+(function () {
+  "use strict";
+
+  /* ===== НАСТРОЙКИ РЕСТОРАНА ===== */
+  var SHOP = {
+    name: "Зарина",
+    tagline: "Ресторан и банкетный зал",
+    phone: "+7 (812) 925-00-94",
+    address: "ул. Первого Мая, 15",
+    addressNote: "Красное Село, Санкт-Петербург",
+    mapUrl: "https://yandex.ru/maps/org/zarina/187040498752/",
+    hours: [["Пн–Пт", "11:00–23:00"], ["Сб–Вс", "11:00–00:00"]],
+    hoursShort: "Ежедневно с 11:00",
+    minGuests: 10, maxGuests: 250, hallClosedFrom: 30,
+    occasions: [
+      { id: "wedding", title: "Свадьба", acc: "свадьбу", menus: "party", guests: 80 },
+      { id: "jubilee", title: "Юбилей", acc: "юбилей", menus: "party", guests: 40 },
+      { id: "birthday", title: "День рождения", acc: "день рождения", menus: "party", guests: 30 },
+      { id: "corp", title: "Корпоратив", acc: "корпоратив", menus: "party", guests: 50 },
+      { id: "wake", title: "Поминки", acc: "поминки", menus: "wake", guests: 30 }
+    ],
+    menus: {
+      party: [
+        { id: "std", name: "Стандарт", price: 3000, dishes: ["4 салата", "мясная и овощная нарезка", "плов или шашлык из курицы", "самса", "фрукты", "чай, морс"] },
+        { id: "fest", name: "Праздничное", price: 3800, dishes: ["6 салатов", "мясная, сырная и овощная нарезка", "долма", "шашлык ассорти", "плов", "фрукты", "чай, морс"] },
+        { id: "big", name: "Большой стол", price: 4800, dishes: ["8 салатов", "рыбная и мясная нарезка", "горячие закуски", "шашлык из баранины", "плов", "десерт", "фрукты", "чай, морс"] }
+      ],
+      wake: [
+        { id: "w1", name: "Поминальный обед", price: 1500, dishes: ["кутья", "блины", "суп-лапша", "плов или котлета с пюре", "кисель", "хлеб"] },
+        { id: "w2", name: "Расширенный", price: 2200, dishes: ["кутья", "блины", "2 салата", "нарезка", "суп-лапша", "плов", "пирожки", "кисель, морс"] }
+      ]
+    },
+    dishes: [
+      ["Плов", "на казане, с бараниной, нутом и барбарисом"],
+      ["Шашлык", "баранина, говядина, курица, люля-кебаб"],
+      ["Лагман", "тянутая лапша с мясом и овощами"],
+      ["Манты", "на пару, со сметаной и зеленью"],
+      ["Долма", "в виноградных листьях, с мацони"],
+      ["Самса", "слоёная, с мясом, горячая"]
+    ]
+  };
+  /* ===== конец настроек ===== */
+
+  var T = window.ZARINA_TPL || {};
+  var WD = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  var MONTHS_NOM = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+  var STORE = "zarina-demo-requests";
+
+  function $(id) { return document.getElementById(id); }
+  function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+  function setText(id, t) { var el = $(id); if (el) el.textContent = t; }
+  function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function rub(n) { return n.toLocaleString("ru-RU") + " ₽"; }
+  function load() { try { return JSON.parse(localStorage.getItem(STORE) || "[]"); } catch (e) { return []; } }
+  function save(v) { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch (e) {} }
+  function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
+  function guestsWord(n) { return plural(n, "гость", "гостя", "гостей"); }
+
+  var state = { occ: "jubilee", guests: 40, menu: "fest", date: null };
+  var requests = load(), lastRequest = null;
+  function occ() { return SHOP.occasions.find(function (o) { return o.id === state.occ; }); }
+  function menuList() { return SHOP.menus[occ().menus]; }
+  function menu() { return menuList().find(function (m) { return m.id === state.menu; }) || menuList()[0]; }
+
+  // ===== Калькулятор =====
+  var occEl = $("occasions"), menuEl = $("menus");
+  function renderOcc() {
+    if (!occEl) return;
+    if (occEl.tagName === "SELECT") {
+      occEl.innerHTML = SHOP.occasions.map(function (o) { return '<option value="' + o.id + '"' + (o.id === state.occ ? " selected" : "") + ">" + esc(occEl.hasAttribute("data-acc") ? o.acc : o.title.toLowerCase()) + "</option>"; }).join("");
+    } else {
+      occEl.innerHTML = SHOP.occasions.map(function (o) {
+        return (T.occ || function (o, c) { return '<label class="occ"><input type="radio" name="occ" value="' + o.id + '"' + (c ? " checked" : "") + "><span>" + esc(o.title) + "</span></label>"; })(o, o.id === state.occ);
+      }).join("");
+    }
+  }
+  function renderMenus() {
+    if (!menuEl) return;
+    if (menuEl.tagName === "SELECT") {
+      menuEl.innerHTML = menuList().map(function (m) { return '<option value="' + m.id + '"' + (m.id === menu().id ? " selected" : "") + ">«" + esc(m.name) + "», " + rub(m.price) + "</option>"; }).join("");
+    } else {
+      menuEl.innerHTML = menuList().map(function (m) {
+        return (T.menuOpt || function (m, c) {
+          return '<label class="mopt"><input type="radio" name="menu" value="' + m.id + '"' + (c ? " checked" : "") + '><span class="mopt-body"><span class="mopt-name">' + esc(m.name) +
+            '</span><span class="mopt-price">' + rub(m.price) + '</span><span class="mopt-dishes">' + esc(m.dishes.join(", ")) + "</span></span></label>";
+        })(m, m.id === menu().id, rub);
+      }).join("");
+    }
+  }
+  if (occEl) occEl.addEventListener("change", function (e) {
+    var prevGroup = occ().menus;
+    state.occ = e.target.value;
+    if (occ().menus !== prevGroup) state.menu = menuList()[0].id;
+    if (occ().menus !== prevGroup || !state.touched) state.guests = occ().guests;
+    renderCalc();
+  });
+  if (menuEl) menuEl.addEventListener("change", function (e) { state.menu = e.target.value; renderTotal(); });
+
+  function setGuests(n) {
+    if (isNaN(n)) n = SHOP.minGuests;
+    state.touched = true;
+    state.guests = Math.max(SHOP.minGuests, Math.min(SHOP.maxGuests, n));
+    $("g-count").value = state.guests;
+    renderTotal();
+  }
+  on("g-minus", "click", function () { setGuests(state.guests - 5); });
+  on("g-plus", "click", function () { setGuests(state.guests + 5); });
+  on("g-count", "input", function () {
+    var v = this.value.replace(/\D/g, "").slice(0, 3); this.value = v;
+    var n = parseInt(v, 10);
+    if (n >= SHOP.minGuests && n <= SHOP.maxGuests) { state.guests = n; state.touched = true; renderTotal(); }
+  });
+  on("g-count", "blur", function () { setGuests(parseInt(this.value, 10)); });
+
+  function renderTotal() {
+    var m = menu(), g = state.guests, sum = m.price * g;
+    setText("t-sum", rub(sum));
+    setText("t-per", rub(m.price) + " × " + g + " " + guestsWord(g));
+    setText("g-word", guestsWord(g));
+    setText("g-word-gen", plural(g, "гостя", "гостей", "гостей"));
+    setText("t-menu", m.dishes.join(", "));
+    setText("guests-note", g >= SHOP.hallClosedFrom
+      ? "От " + SHOP.hallClosedFrom + " гостей зал закрываем под вас. Максимум " + SHOP.maxGuests + "."
+      : "До " + SHOP.hallClosedFrom + " гостей накроем стол в части зала.");
+    setText("sel-line", occ().title + ", " + g + " " + guestsWord(g) + ", меню «" + m.name + "», " + rub(sum));
+    if (T.onRender) T.onRender();
+  }
+  function renderCalc() { renderOcc(); renderMenus(); $("g-count").value = state.guests; renderTotal(); renderCal(); }
+
+  // ===== Календарь =====
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+  if (new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate() - today.getDate() < 10) view.setMonth(view.getMonth() + 1);
+  var MAX_MONTHS = 6;
+  function dkey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function isBusy(d) {
+    // занятость для демо: одинаковая при каждом открытии, чаще всего заняты субботы
+    var k = dkey(d), h = 2166136261;
+    for (var i = 0; i < k.length; i++) { h ^= k.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= h >>> 13; h = Math.imul(h, 0x5bd1e995); h ^= h >>> 15;
+    var p = (h >>> 0) % 100, wd = d.getDay(), soon = (d - today) / 864e5 < 45;
+    if (wd === 6) return p < (soon ? 80 : 55);
+    if (wd === 5) return p < (soon ? 50 : 30);
+    if (wd === 0) return p < (soon ? 35 : 20);
+    return p < 7;
+  }
+  function renderCal() {
+    if (!$("cal-grid")) return;
+    setText("cal-title", MONTHS_NOM[view.getMonth()] + " " + view.getFullYear());
+    var ahead = (view.getFullYear() - today.getFullYear()) * 12 + view.getMonth() - today.getMonth();
+    $("cal-prev").disabled = ahead <= 0;
+    $("cal-next").disabled = ahead >= MAX_MONTHS;
+    var html = WD.map(function (w) { return '<span class="cal-wd" aria-hidden="true">' + w + "</span>"; }).join("");
+    var first = (view.getDay() + 6) % 7, days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    for (var i = 0; i < first; i++) html += "<span></span>";
+    for (var d = 1; d <= days; d++) {
+      var date = new Date(view.getFullYear(), view.getMonth(), d), k = dkey(date);
+      var past = date < today, busy = !past && isBusy(date) && !(state.occ === "wake" && date - today < 864e5 * 2);
+      var label = d + " " + MONTHS[date.getMonth()] + ", " + WD_FULL[date.getDay()] + (busy ? ", занято" : past ? ", прошло" : "");
+      html += '<button type="button" class="cal-day' + (busy ? " busy" : "") + (past ? " past" : "") + '" data-k="' + k + '" aria-label="' + label + '" aria-pressed="' + (state.date === k) + '"' + (past || busy ? " disabled" : "") + ">" + d + "</button>";
+    }
+    $("cal-grid").innerHTML = html;
+  }
+  on("cal-prev", "click", function () { view.setMonth(view.getMonth() - 1); renderCal(); });
+  on("cal-next", "click", function () { view.setMonth(view.getMonth() + 1); renderCal(); });
+  function dateText(k) { var p = k.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]); return d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()]; }
+  on("cal-grid", "click", function (e) {
+    var b = e.target.closest("button[data-k]"); if (!b || b.disabled) return;
+    state.date = b.getAttribute("data-k");
+    setText("sel-date", dateText(state.date));
+    $("date-error").hidden = true;
+    renderCal();
+  });
+
+  // ===== Заявка =====
+  function phoneDigits() {
+    var v = $("phone").value, d;
+    if (/^\s*\+7/.test(v)) d = v.replace(/^\s*\+7/, "").replace(/\D/g, "");
+    else { d = v.replace(/\D/g, ""); if (d.length >= 11 && /[78]/.test(d.charAt(0))) d = d.slice(1); }
+    if (d.length === 11 && d.charAt(0) === "8") d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatPhone(d) {
+    var out = "+7";
+    if (d.length) out += " (" + d.slice(0, 3);
+    if (d.length >= 3) out += ")";
+    if (d.length > 3) out += " " + d.slice(3, 6);
+    if (d.length > 6) out += "-" + d.slice(6, 8);
+    if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  on("phone", "input", function () {
+    var d = phoneDigits(); this.value = d.length ? formatPhone(d) : "";
+    if (d.length === 10) { this.removeAttribute("aria-invalid"); $("phone-error").hidden = true; }
+  });
+  on("name", "input", function () { if (this.value.trim()) { this.removeAttribute("aria-invalid"); $("name-error").hidden = true; } });
+
+  function scrollToEl(el) {
+    var top = el.getBoundingClientRect().top + window.pageYOffset;
+    var head = document.querySelector("[data-head]");
+    var off = head && getComputedStyle(head).position === "sticky" ? head.offsetHeight + 16 : 16;
+    window.scrollTo({ top: Math.max(0, top - off), behavior: "instant" });
+  }
+
+  on("req-form", "submit", function (e) {
+    e.preventDefault();
+    var dateOk = !!state.date, nameOk = !!$("name").value.trim(), phoneOk = phoneDigits().length === 10;
+    $("date-error").hidden = dateOk;
+    [["name", nameOk], ["phone", phoneOk]].forEach(function (c) { $(c[0] + "-error").hidden = c[1]; if (c[1]) $(c[0]).removeAttribute("aria-invalid"); else $(c[0]).setAttribute("aria-invalid", "true"); });
+    if (!dateOk) { scrollToEl($("cal-grid")); return; }
+    if (!nameOk) { $("name").focus(); return; }
+    if (!phoneOk) { $("phone").focus(); return; }
+    var m = menu();
+    lastRequest = { id: Date.now(), date: state.date, occ: occ().title, guests: state.guests, menu: m.name, sum: m.price * state.guests,
+      name: $("name").value.trim(), phone: formatPhone(phoneDigits()), comment: $("comment") ? $("comment").value.trim() : "" };
+    requests.push(lastRequest); save(requests);
+    var rows = [["Дата", dateText(lastRequest.date)], ["Повод", lastRequest.occ], ["Гостей", String(lastRequest.guests)], ["Меню", "«" + lastRequest.menu + "», около " + rub(lastRequest.sum)], ["Имя", lastRequest.name], ["Телефон", lastRequest.phone]];
+    if (lastRequest.comment) rows.push(["Пожелания", lastRequest.comment]);
+    $("done-list").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
+    $("req-form").hidden = true; $("done").hidden = false;
+    scrollToEl($("done"));
+    $("done-title").focus({ preventScroll: true });
+  });
+  function resetForm() {
+    $("req-form").reset(); state.date = null; setText("sel-date", "дата не выбрана");
+    $("done").hidden = true; $("req-form").hidden = false; renderCal(); scrollToEl($("req-form"));
+  }
+  on("done-new", "click", resetForm);
+  on("done-cancel", "click", function () {
+    if (lastRequest) { requests = requests.filter(function (r) { return r.id !== lastRequest.id; }); save(requests); lastRequest = null; }
+    resetForm();
+  });
+
+  // ===== Размер текста =====
+  function setLarge(on_) {
+    document.documentElement.classList.toggle("large", on_);
+    if ($("font-normal")) { $("font-normal").setAttribute("aria-pressed", String(!on_)); $("font-large").setAttribute("aria-pressed", String(on_)); }
+    try { localStorage.setItem("zarina-demo-large", on_ ? "1" : "0"); } catch (e) {}
+  }
+  on("font-normal", "click", function () { setLarge(false); });
+  on("font-large", "click", function () { setLarge(true); });
+  try { if (localStorage.getItem("zarina-demo-large") === "1") setLarge(true); } catch (e) {}
+
+  function applyShop() {
+    var minParty = Math.min.apply(null, SHOP.menus.party.map(function (m) { return m.price; }));
+    var minWake = Math.min.apply(null, SHOP.menus.wake.map(function (m) { return m.price; }));
+    var map = { name: SHOP.name, tagline: SHOP.tagline, phone: SHOP.phone, address: SHOP.address, addressNote: SHOP.addressNote,
+      hoursShort: SHOP.hoursShort, partyFrom: "от " + rub(minParty), wakeFrom: "от " + rub(minWake), maxGuests: String(SHOP.maxGuests) };
+    document.querySelectorAll("[data-cfg]").forEach(function (el) { var v = map[el.getAttribute("data-cfg")]; if (v != null) el.textContent = v; });
+    var tel = "tel:+" + SHOP.phone.replace(/\D/g, "");
+    document.querySelectorAll("[data-tel]").forEach(function (a) { a.href = tel; });
+    document.querySelectorAll("[data-map]").forEach(function (a) { a.href = SHOP.mapUrl; });
+    if ($("hours")) $("hours").innerHTML = SHOP.hours.map(function (h) { return "<span>" + h[0] + "</span><span>" + h[1] + "</span>"; }).join("");
+    if ($("dishes")) $("dishes").innerHTML = SHOP.dishes.map(function (d) {
+      return (T.dish || function (d) { return '<li class="dish"><b>' + esc(d[0]) + "</b> <span>" + esc(d[1]) + "</span></li>"; })(d, esc);
+    }).join("");
+    if ($("bmenu")) $("bmenu").innerHTML = SHOP.menus.party.map(function (m) {
+      return (T.bmenu || function (m) { return '<div class="bm"><h3>' + esc(m.name) + '</h3><p class="bm-price">' + rub(m.price) + " на гостя</p><ul>" + m.dishes.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>"; })(m, esc, rub);
+    }).join("");
+  }
+
+  applyShop();
+  renderCalc();
+})();
+</script>
+</body>
+</html>

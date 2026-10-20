@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ресторан «Зарина»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Yeseva+One&display=swap">
+<style>
+/* Вариант 3 «Восточный дом»: тёплый крем, терракота и лазурь, как узбекская керамика.
+   Фото в арках, полоса орнамента между разделами, меню в панелях-арках. */
+:root {
+  --bg: #FBF3E6;
+  --surface: #FFF9EF;
+  --ink: #2B1D15;
+  --muted: #6D5747;
+  --line: #EAD9C3;
+  --terra: #B4532A;
+  --terra-hover: #963F1C;
+  --terra-ink: #FFFFFF;
+  --lazur: #1E4A6B;
+  --lazur-ink: #FBF3E6;
+  --saffron: #E7A93C;
+  --sand: #F4E2C6;
+  --danger: #B02A21;
+  --f-display: "Yeseva One", Georgia, "Times New Roman", serif;
+  --f-body: "Nunito", "Segoe UI", Roboto, Arial, sans-serif;
+  --tap: 60px;
+  --orn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23E7A93C' stroke-width='1.6'%3E%3Crect x='12' y='12' width='16' height='16'/%3E%3Crect x='12' y='12' width='16' height='16' transform='rotate(45 20 20)'/%3E%3Ccircle cx='0' cy='0' r='5'/%3E%3Ccircle cx='40' cy='0' r='5'/%3E%3Ccircle cx='0' cy='40' r='5'/%3E%3Ccircle cx='40' cy='40' r='5'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='2.5' fill='%23E7A93C'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1411; --surface: #231B17; --ink: #F6EBDD; --muted: #C9B5A3; --line: #3A2E27; --terra: #E2875C; --terra-hover: #EC9C76; --terra-ink: #1A1411;
+    --lazur: #17344B; --lazur-ink: #F6EBDD; --sand: #2A211B; --danger: #F07A70;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1A1411; --surface: #231B17; --ink: #F6EBDD; --muted: #C9B5A3; --line: #3A2E27; --terra: #E2875C; --terra-hover: #EC9C76; --terra-ink: #1A1411;
+  --lazur: #17344B; --lazur-ink: #F6EBDD; --sand: #2A211B; --danger: #F07A70;
+  color-scheme: dark;
+}
+
+html { font-size: 112.5%; scroll-behavior: smooth; }
+html.large { font-size: 128%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.1; margin: 0; }
+p { margin: 0; }
+a { color: var(--terra); }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--terra); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.band { height: 40px; background: var(--lazur) var(--orn) center / 40px 40px repeat-x; }
+
+/* Шапка */
+.top { padding-top: env(safe-area-inset-top, 0px); }
+.top .wrap { display: flex; align-items: center; gap: 12px 24px; padding-block: 18px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); margin-right: auto; }
+.logo svg { width: 42px; height: 42px; flex: none; }
+.logo b { font-family: var(--f-display); font-weight: 400; font-size: 1.8rem; line-height: 1; }
+.top-phone { color: var(--ink); text-decoration: none; font-weight: 800; font-size: 1.1rem; white-space: nowrap; }
+.size { display: inline-flex; background: var(--sand); border-radius: 999px; padding: 4px; }
+.size button { border: 0; background: none; color: var(--ink); font: 800 1rem var(--f-body); min-width: 48px; min-height: 44px; border-radius: 999px; cursor: pointer; }
+.size button + button { font-size: 1.25rem; }
+.size button[aria-pressed="true"] { background: var(--lazur); color: var(--lazur-ink); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); padding: 0 32px; border-radius: 999px; border: 2px solid var(--terra); background: var(--terra); color: var(--terra-ink); font: 800 1.05rem var(--f-body); text-decoration: none; cursor: pointer; transition: background-color .15s; }
+.btn:hover { background: var(--terra-hover); border-color: var(--terra-hover); }
+.btn-out { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-out:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Первый экран */
+.hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; padding-block: 32px 64px; }
+.hero > * { min-width: 0; }
+.hero-where { display: inline-flex; align-items: center; gap: 10px; color: var(--terra); font-weight: 800; }
+.hero-where::before { content: ""; width: 28px; height: 2px; background: var(--terra); }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin: 16px 0 20px; }
+.hero-lead { font-size: 1.2rem; color: var(--muted); max-width: 36ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.arch { border-radius: 999px 999px 18px 18px; overflow: hidden; position: relative; }
+.arch img { width: 100%; height: 100%; object-fit: cover; }
+.arch-frame { padding: 10px; border: 2px solid var(--saffron); border-radius: 999px 999px 26px 26px; }
+.hero .arch { aspect-ratio: 4 / 5; }
+.hero .arch img { object-position: 62% center; }
+
+/* Зал на лазури */
+.hall { background: var(--lazur); color: var(--lazur-ink); }
+.hall .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; align-items: center; padding-block: 88px; }
+.hall .wrap > * { min-width: 0; }
+.hall .arch { aspect-ratio: 3 / 4; }
+.hall .arch-frame { border-color: var(--saffron); }
+.hall h2 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); }
+.hall p { margin-top: 18px; font-size: 1.12rem; opacity: .92; max-width: 46ch; }
+.hall-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; }
+.hall-nums b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 2.6rem; line-height: 1; color: var(--saffron); }
+.hall-nums span { display: block; margin-top: 8px; opacity: .9; }
+
+.sec { padding-block: 88px; }
+.sec-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+.sec-head h2 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); }
+.sec-head p { color: var(--muted); margin-top: 14px; font-size: 1.1rem; }
+.star { display: block; width: 34px; height: 34px; margin: 0 auto 14px; color: var(--terra); }
+
+/* Меню в арках */
+.bmenu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+.bm { background: var(--surface); border: 2px solid var(--line); border-radius: 220px 220px 20px 20px; padding: 64px 28px 32px; text-align: center; display: flex; flex-direction: column; min-width: 0; }
+.bm:nth-child(2) { background: var(--lazur); color: var(--lazur-ink); border-color: var(--lazur); }
+.bm h3 { font-size: 1.9rem; }
+.bm-price { font-weight: 800; font-size: 1.3rem; color: var(--terra); margin: 8px 0 20px; }
+.bm:nth-child(2) .bm-price { color: var(--saffron); }
+.bm ul { list-style: none; padding: 20px 0 0; margin: 0; border-top: 1px dashed currentColor; border-top-color: rgba(127,100,80,.4); display: grid; gap: 6px; }
+.note { text-align: center; color: var(--muted); margin-top: 28px; }
+
+/* Расчёт */
+.calc { background: var(--sand); }
+.calc-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: start; }
+.calc-grid > * { min-width: 0; }
+.q { border: 0; padding: 0; margin: 0 0 32px; min-width: 0; }
+.q legend { float: left; width: 100%; padding: 0; font-weight: 800; font-size: 1.15rem; margin-bottom: 14px; }
+.q > :not(legend) { clear: both; }
+.occs { display: flex; flex-wrap: wrap; gap: 10px; }
+.occ { position: relative; }
+.occ input { position: absolute; opacity: 0; pointer-events: none; }
+.occ span { display: inline-flex; align-items: center; min-height: 56px; padding: 0 24px; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); font-weight: 700; cursor: pointer; }
+.occ span:hover { border-color: var(--terra); }
+.occ input:checked + span { background: var(--terra); border-color: var(--terra); color: var(--terra-ink); }
+.occ input:focus-visible + span { outline: 3px solid var(--lazur); outline-offset: 3px; }
+.stepper { display: flex; align-items: center; gap: 12px; }
+.stepper button { width: var(--tap); height: var(--tap); border-radius: 50%; border: 0; background: var(--lazur); color: var(--lazur-ink); font: 700 1.8rem var(--f-body); cursor: pointer; }
+.stepper button:hover { filter: brightness(1.15); }
+.stepper input { width: 120px; height: var(--tap); border-radius: 999px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); text-align: center; font: 400 1.9rem var(--f-display); }
+.stepper input:focus { outline: none; border-color: var(--terra); }
+.guests-note { color: var(--muted); margin-top: 10px; }
+.mopt { position: relative; display: block; cursor: pointer; margin-bottom: 10px; }
+.mopt input { position: absolute; opacity: 0; pointer-events: none; }
+.mopt-body { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 16px 22px; border-radius: 18px; background: var(--surface); border: 2px solid var(--line); }
+.mopt:hover .mopt-body { border-color: var(--terra); }
+.mopt input:checked + .mopt-body { border-color: var(--terra); box-shadow: inset 0 0 0 1px var(--terra); }
+.mopt input:focus-visible + .mopt-body { outline: 3px solid var(--lazur); outline-offset: 3px; }
+.mopt-name { font-weight: 800; font-size: 1.1rem; }
+.mopt-price { font-weight: 800; color: var(--terra); white-space: nowrap; }
+.mopt-dishes { grid-column: 1 / -1; color: var(--muted); font-size: .95rem; }
+.result { background: var(--lazur); color: var(--lazur-ink); border-radius: 220px 220px 24px 24px; padding: 72px 32px 32px; text-align: center; position: sticky; top: 24px; }
+.result-label { font-weight: 700; opacity: .85; }
+.result-sum { font-family: var(--f-display); font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1.05; color: var(--saffron); margin: 8px 0; }
+.result-per { opacity: .85; }
+.result .btn { width: 100%; margin-top: 24px; background: var(--saffron); border-color: var(--saffron); color: #2B1D15; }
+.result .btn:hover { filter: brightness(1.06); }
+.result-note { opacity: .75; font-size: .9rem; margin-top: 14px; }
+
+/* Дата */
+.req { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.req > * { min-width: 0; }
+.cal-box { background: var(--surface); border: 2px solid var(--line); border-radius: 24px; padding: 22px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-title { font-family: var(--f-display); font-size: 1.6rem; text-transform: capitalize; }
+.cal-nav { width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--sand); color: var(--ink); font: 800 1.3rem var(--f-body); cursor: pointer; }
+.cal-nav:disabled { opacity: .3; cursor: default; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.cal-wd { text-align: center; color: var(--muted); font-size: .85rem; font-weight: 700; padding-bottom: 4px; }
+.cal-day { aspect-ratio: 1; min-height: 44px; border-radius: 14px; border: 2px solid var(--line); background: var(--bg); color: var(--ink); font: 800 1.05rem var(--f-body); cursor: pointer; }
+.cal-day:hover:not(:disabled) { border-color: var(--terra); }
+.cal-day[aria-pressed="true"] { background: var(--terra); border-color: var(--terra); color: var(--terra-ink); }
+.cal-day:disabled { cursor: default; }
+.cal-day.past { border-color: transparent; background: none; color: var(--line); }
+.cal-day.busy { border-color: transparent; color: var(--muted); text-decoration: line-through; background: radial-gradient(circle, rgba(180,83,42,.18) 1.2px, transparent 1.6px) 0 0 / 7px 7px, var(--sand); }
+.cal-legend { color: var(--muted); font-size: .92rem; margin-top: 12px; }
+.date-error { color: var(--danger); margin-top: 10px; font-weight: 700; }
+.sel { background: var(--sand); border-radius: 18px; padding: 16px 20px; margin-bottom: 22px; }
+.sel b { display: block; }
+.sel span { color: var(--muted); }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-weight: 800; margin-bottom: 8px; }
+.field input, .field textarea { width: 100%; min-height: var(--tap); padding: 0 20px; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: 600 1.1rem var(--f-body); }
+.field textarea { padding: 14px 20px; min-height: 96px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--terra); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.field-error { color: var(--danger); margin-top: 6px; font-weight: 700; }
+.req .btn[type="submit"] { width: 100%; }
+.done { background: var(--surface); border: 2px solid var(--terra); border-radius: 24px; padding: 36px; max-width: 640px; margin: 0 auto; }
+.done h3 { font-size: 2.4rem; color: var(--terra); }
+.done-list { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 20px 0; }
+.done-list dt { color: var(--muted); }
+.done-list dd { margin: 0; font-weight: 800; min-width: 0; }
+.done p { color: var(--muted); margin-bottom: 22px; }
+.done-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Поминки: спокойно, без орнамента */
+.wake { border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
+.wake .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; padding-block: 72px; }
+.wake h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); color: var(--lazur); }
+.wake p { color: var(--muted); margin-top: 14px; font-size: 1.1rem; max-width: 50ch; }
+.wake-call { text-align: center; }
+.wake-call span { display: block; color: var(--muted); }
+.wake-call a.num { display: block; font-family: var(--f-display); font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--ink); text-decoration: none; margin: 6px 0 18px; }
+
+/* Кухня */
+.dishes { list-style: none; padding: 0; margin: 0 auto; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.dishes li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 16px 0; border-bottom: 2px dotted var(--line); }
+.dishes svg { width: 24px; height: 24px; color: var(--terra); margin-top: 4px; }
+.dishes b { font-family: var(--f-display); font-weight: 400; font-size: 1.5rem; display: block; line-height: 1.2; }
+.dishes span { color: var(--muted); }
+
+/* Подвал */
+.foot { background: var(--lazur); color: var(--lazur-ink); }
+.foot-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 36px; padding-block: 56px 32px; }
+.foot-label { font-weight: 800; color: var(--saffron); margin-bottom: 8px; }
+.foot-val { font-family: var(--f-display); font-size: 1.6rem; line-height: 1.25; color: var(--lazur-ink); text-decoration: none; display: block; }
+.foot a { color: var(--saffron); }
+.hours { display: grid; grid-template-columns: max-content 1fr; gap: 2px 16px; font-size: 1.1rem; }
+.hours span:nth-child(odd) { opacity: .8; }
+.foot-bottom { opacity: .7; font-size: .88rem; padding-bottom: 32px; }
+
+#calc, #request, #find { scroll-margin-top: 16px; }
+@media (max-width: 900px) {
+  .hero, .hall .wrap, .calc-grid, .req, .wake .wrap, .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero { padding-top: 16px; }
+  .hero .arch { aspect-ratio: 1; }
+  .hall .arch { aspect-ratio: 1; }
+  .bmenu { grid-template-columns: 1fr; }
+  .bm { border-radius: 160px 160px 20px 20px; padding-top: 56px; }
+  .result { position: static; border-radius: 160px 160px 24px 24px; }
+  .sec, .hall .wrap { padding-block: 64px; }
+}
+@media (max-width: 620px) {
+  html { font-size: 106.25%; }
+  html.large { font-size: 121%; }
+  .logo b { font-size: 1.5rem; }
+  .hero-actions .btn { width: 100%; }
+  .hall-nums { grid-template-columns: 1fr; gap: 14px; }
+  .hall-nums div { display: flex; align-items: baseline; gap: 14px; }
+  .hall-nums span { margin-top: 0; }
+  .occ { flex: 1 1 calc(50% - 5px); }
+  .occ span { width: 100%; justify-content: center; padding: 0 12px; }
+  .stepper input { flex: 1; min-width: 0; }
+  .cal-box { padding: 14px; }
+  .cal-grid { gap: 4px; }
+  .cal-day { border-radius: 10px; font-size: 1rem; }
+  .dishes { grid-template-columns: 1fr; }
+  .done { padding: 24px 20px; }
+  .done-list { grid-template-columns: 1fr; gap: 2px; }
+  .done-list dd { margin-bottom: 8px; }
+  .done-actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 42 42" aria-hidden="true"><g fill="none" stroke="var(--terra)" stroke-width="2.4" stroke-linejoin="round"><rect x="10" y="10" width="22" height="22"/><rect x="10" y="10" width="22" height="22" transform="rotate(45 21 21)"/></g><circle cx="21" cy="21" r="4.5" fill="var(--lazur)"/></svg>
+      <b data-cfg="name">Зарина</b>
+    </a>
+    <div class="size" role="group" aria-label="Размер текста">
+      <button type="button" id="font-normal" aria-pressed="true" title="Обычный текст">А</button>
+      <button type="button" id="font-large" aria-pressed="false" title="Крупный текст">А</button>
+    </div>
+    <a class="top-phone" data-tel href="#" data-cfg="phone"></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <span class="hero-where">Первого Мая, 15 · Красное Село</span>
+      <h1>Праздник за большим столом</h1>
+      <p class="hero-lead">Плов на казане, шашлык на углях и зал на 250 гостей. Свадьбы, юбилеи, дни рождения и поминки.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#calc">Рассчитать банкет</a>
+        <a class="btn btn-out" data-tel href="#">Позвонить</a>
+      </div>
+    </div>
+    <div class="arch-frame"><div class="arch"><img src="img/hall.jpg" alt="Зал ресторана «Зарина»: столы с белыми скатертями, белые диваны, большие окна" width="1280" height="855"></div></div>
+  </section>
+
+  <div class="band" aria-hidden="true"></div>
+
+  <section class="hall">
+    <div class="wrap">
+      <div class="arch-frame"><div class="arch"><img src="img/table.jpg" alt="Сервированный банкетный стол в зале «Зарины»" width="855" height="1280" loading="lazy"></div></div>
+      <div>
+        <h2>Весь зал только для ваших гостей</h2>
+        <p>При банкете от 30 человек мы никого больше не сажаем. Расставим столы как скажете: одним длинным рядом или по 8–10 человек. Есть место для танцев и мягкие диваны для старших.</p>
+        <div class="hall-nums">
+          <div><b data-cfg="maxGuests"></b><span>гостей помещается</span></div>
+          <div><b>30</b><span>гостей, и зал ваш</span></div>
+          <div><b>00:00</b><span>до полуночи по выходным</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <svg class="star" viewBox="0 0 34 34" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2"><rect x="8" y="8" width="18" height="18"/><rect x="8" y="8" width="18" height="18" transform="rotate(45 17 17)"/></g></svg>
+        <h2>Банкетное меню</h2>
+        <p>Цена за одного гостя. Если кто-то не ест мясо или острое, заменим блюда.</p>
+      </div>
+      <div class="bmenu" id="bmenu"></div>
+    </div>
+  </section>
+
+  <section class="sec calc" id="calc">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Посчитайте свой банкет</h2>
+        <p>Выберите повод, гостей и меню.</p>
+      </div>
+      <div class="calc-grid">
+        <div>
+          <fieldset class="q">
+            <legend>Какой праздник?</legend>
+            <div class="occs" id="occasions"></div>
+          </fieldset>
+          <fieldset class="q">
+            <legend>Сколько гостей?</legend>
+            <div class="stepper">
+              <button type="button" id="g-minus" aria-label="Меньше гостей">−</button>
+              <input id="g-count" type="text" inputmode="numeric" aria-label="Число гостей" value="40">
+              <button type="button" id="g-plus" aria-label="Больше гостей">+</button>
+            </div>
+            <p class="guests-note" id="guests-note"></p>
+          </fieldset>
+          <fieldset class="q">
+            <legend>Какое меню?</legend>
+            <div id="menus"></div>
+          </fieldset>
+        </div>
+        <aside class="result" aria-live="polite">
+          <div class="result-label">Ваш банкет примерно</div>
+          <div class="result-sum" id="t-sum"></div>
+          <div class="result-per" id="t-per"></div>
+          <a class="btn" href="#request">Выбрать дату</a>
+          <p class="result-note">Точную сумму скажет администратор, когда обсудите меню.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="request">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Свободные даты</h2>
+        <p>Субботы разбирают первыми. Выберите день, и мы перезвоним, чтобы закрепить его за вами.</p>
+      </div>
+      <form class="req" id="req-form" novalidate>
+        <div class="cal-box">
+          <div class="cal-head">
+            <button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button>
+            <span class="cal-title" id="cal-title"></span>
+            <button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <p class="cal-legend">Зачёркнутые дни заняты.</p>
+          <p class="date-error" id="date-error" hidden>Выберите дату в календаре.</p>
+        </div>
+        <div>
+          <p class="sel"><b id="sel-line"></b><span id="sel-date">дата не выбрана</span></p>
+          <div class="field">
+            <label for="name">Ваше имя</label>
+            <input id="name" type="text" autocomplete="given-name">
+            <div class="field-error" id="name-error" hidden>Напишите, как к вам обращаться.</div>
+          </div>
+          <div class="field">
+            <label for="phone">Телефон</label>
+            <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+            <div class="field-error" id="phone-error" hidden>Проверьте номер: нужно 10 цифр после +7.</div>
+          </div>
+          <div class="field">
+            <label for="comment">Пожелания</label>
+            <textarea id="comment" placeholder="Торт, дети, кто-то не ест мясо"></textarea>
+          </div>
+          <button class="btn" type="submit">Отправить заявку</button>
+        </div>
+      </form>
+      <div class="done" id="done" hidden>
+        <h3 tabindex="-1" id="done-title">Заявка у нас</h3>
+        <dl class="done-list" id="done-list"></dl>
+        <p>Администратор перезвонит в течение часа в рабочее время. Дату держим за вами, пока не созвонимся.</p>
+        <div class="done-actions">
+          <button class="btn" type="button" id="done-new">Новая заявка</button>
+          <button class="btn btn-out" type="button" id="done-cancel">Отменить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wake">
+    <div class="wrap">
+      <div>
+        <h2>Поминки</h2>
+        <p>Позвоните, и мы всё организуем: поминальный обед <span data-cfg="wakeFrom"></span> на человека, кутья, блины, кисель. Без музыки, в спокойной обстановке. Принимаем заказы в короткие сроки.</p>
+      </div>
+      <div class="wake-call">
+        <span>Звоните каждый день с 11:00</span>
+        <a class="num" data-tel href="#" data-cfg="phone"></a>
+        <a class="btn btn-out" data-tel href="#">Позвонить</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Что у нас готовят</h2>
+        <p>Восточная кухня каждый день с 11:00. Можно прийти просто пообедать.</p>
+      </div>
+      <ul class="dishes" id="dishes"></ul>
+    </div>
+  </section>
+</main>
+
+<div class="band" aria-hidden="true"></div>
+<footer class="foot" id="find">
+  <div class="wrap foot-grid">
+    <div><p class="foot-label">Адрес</p><span class="foot-val" data-cfg="address"></span><span data-cfg="addressNote"></span><br><a data-map href="#" target="_blank" rel="noopener">Открыть на карте</a></div>
+    <div><p class="foot-label">Телефон</p><a class="foot-val" data-tel href="#" data-cfg="phone"></a></div>
+    <div><p class="foot-label">Часы работы</p><div class="hours" id="hours"></div></div>
+  </div>
+  <div class="wrap foot-bottom">Демонстрационная версия: заявки сохраняются только в этом браузере.</div>
+</footer>
+
+<script>
+window.ZARINA_TPL = {
+  bmenu: function (m, esc, rub) {
+    return '<div class="bm"><h3>' + esc(m.name) + '</h3><p class="bm-price">' + rub(m.price) + " на гостя</p><ul>" + m.dishes.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+  },
+  dish: function (d, esc) {
+    return '<li><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12"/><rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)"/></g></svg><p><b>' + esc(d[0]) + "</b><span>" + esc(d[1]) + "</span></p></li>";
+  }
+};
+(function () {
+  "use strict";
+
+  /* ===== НАСТРОЙКИ РЕСТОРАНА ===== */
+  var SHOP = {
+    name: "Зарина",
+    tagline: "Ресторан и банкетный зал",
+    phone: "+7 (812) 925-00-94",
+    address: "ул. Первого Мая, 15",
+    addressNote: "Красное Село, Санкт-Петербург",
+    mapUrl: "https://yandex.ru/maps/org/zarina/187040498752/",
+    hours: [["Пн–Пт", "11:00–23:00"], ["Сб–Вс", "11:00–00:00"]],
+    hoursShort: "Ежедневно с 11:00",
+    minGuests: 10, maxGuests: 250, hallClosedFrom: 30,
+    occasions: [
+      { id: "wedding", title: "Свадьба", acc: "свадьбу", menus: "party", guests: 80 },
+      { id: "jubilee", title: "Юбилей", acc: "юбилей", menus: "party", guests: 40 },
+      { id: "birthday", title: "День рождения", acc: "день рождения", menus: "party", guests: 30 },
+      { id: "corp", title: "Корпоратив", acc: "корпоратив", menus: "party", guests: 50 },
+      { id: "wake", title: "Поминки", acc: "поминки", menus: "wake", guests: 30 }
+    ],
+    menus: {
+      party: [
+        { id: "std", name: "Стандарт", price: 3000, dishes: ["4 салата", "мясная и овощная нарезка", "плов или шашлык из курицы", "самса", "фрукты", "чай, морс"] },
+        { id: "fest", name: "Праздничное", price: 3800, dishes: ["6 салатов", "мясная, сырная и овощная нарезка", "долма", "шашлык ассорти", "плов", "фрукты", "чай, морс"] },
+        { id: "big", name: "Большой стол", price: 4800, dishes: ["8 салатов", "рыбная и мясная нарезка", "горячие закуски", "шашлык из баранины", "плов", "десерт", "фрукты", "чай, морс"] }
+      ],
+      wake: [
+        { id: "w1", name: "Поминальный обед", price: 1500, dishes: ["кутья", "блины", "суп-лапша", "плов или котлета с пюре", "кисель", "хлеб"] },
+        { id: "w2", name: "Расширенный", price: 2200, dishes: ["кутья", "блины", "2 салата", "нарезка", "суп-лапша", "плов", "пирожки", "кисель, морс"] }
+      ]
+    },
+    dishes: [
+      ["Плов", "на казане, с бараниной, нутом и барбарисом"],
+      ["Шашлык", "баранина, говядина, курица, люля-кебаб"],
+      ["Лагман", "тянутая лапша с мясом и овощами"],
+      ["Манты", "на пару, со сметаной и зеленью"],
+      ["Долма", "в виноградных листьях, с мацони"],
+      ["Самса", "слоёная, с мясом, горячая"]
+    ]
+  };
+  /* ===== конец настроек ===== */
+
+  var T = window.ZARINA_TPL || {};
+  var WD = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  var MONTHS_NOM = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
+  var STORE = "zarina-demo-requests";
+
+  function $(id) { return document.getElementById(id); }
+  function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+  function setText(id, t) { var el = $(id); if (el) el.textContent = t; }
+  function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function rub(n) { return n.toLocaleString("ru-RU") + " ₽"; }
+  function load() { try { return JSON.parse(localStorage.getItem(STORE) || "[]"); } catch (e) { return []; } }
+  function save(v) { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch (e) {} }
+  function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
+  function guestsWord(n) { return plural(n, "гость", "гостя", "гостей"); }
+
+  var state = { occ: "jubilee", guests: 40, menu: "fest", date: null };
+  var requests = load(), lastRequest = null;
+  function occ() { return SHOP.occasions.find(function (o) { return o.id === state.occ; }); }
+  function menuList() { return SHOP.menus[occ().menus]; }
+  function menu() { return menuList().find(function (m) { return m.id === state.menu; }) || menuList()[0]; }
+
+  // ===== Калькулятор =====
+  var occEl = $("occasions"), menuEl = $("menus");
+  function renderOcc() {
+    if (!occEl) return;
+    if (occEl.tagName === "SELECT") {
+      occEl.innerHTML = SHOP.occasions.map(function (o) { return '<option value="' + o.id + '"' + (o.id === state.occ ? " selected" : "") + ">" + esc(occEl.hasAttribute("data-acc") ? o.acc : o.title.toLowerCase()) + "</option>"; }).join("");
+    } else {
+      occEl.innerHTML = SHOP.occasions.map(function (o) {
+        return (T.occ || function (o, c) { return '<label class="occ"><input type="radio" name="occ" value="' + o.id + '"' + (c ? " checked" : "") + "><span>" + esc(o.title) + "</span></label>"; })(o, o.id === state.occ);
+      }).join("");
+    }
+  }
+  function renderMenus() {
+    if (!menuEl) return;
+    if (menuEl.tagName === "SELECT") {
+      menuEl.innerHTML = menuList().map(function (m) { return '<option value="' + m.id + '"' + (m.id === menu().id ? " selected" : "") + ">«" + esc(m.name) + "», " + rub(m.price) + "</option>"; }).join("");
+    } else {
+      menuEl.innerHTML = menuList().map(function (m) {
+        return (T.menuOpt || function (m, c) {
+          return '<label class="mopt"><input type="radio" name="menu" value="' + m.id + '"' + (c ? " checked" : "") + '><span class="mopt-body"><span class="mopt-name">' + esc(m.name) +
+            '</span><span class="mopt-price">' + rub(m.price) + '</span><span class="mopt-dishes">' + esc(m.dishes.join(", ")) + "</span></span></label>";
+        })(m, m.id === menu().id, rub);
+      }).join("");
+    }
+  }
+  if (occEl) occEl.addEventListener("change", function (e) {
+    var prevGroup = occ().menus;
+    state.occ = e.target.value;
+    if (occ().menus !== prevGroup) state.menu = menuList()[0].id;
+    if (occ().menus !== prevGroup || !state.touched) state.guests = occ().guests;
+    renderCalc();
+  });
+  if (menuEl) menuEl.addEventListener("change", function (e) { state.menu = e.target.value; renderTotal(); });
+
+  function setGuests(n) {
+    if (isNaN(n)) n = SHOP.minGuests;
+    state.touched = true;
+    state.guests = Math.max(SHOP.minGuests, Math.min(SHOP.maxGuests, n));
+    $("g-count").value = state.guests;
+    renderTotal();
+  }
+  on("g-minus", "click", function () { setGuests(state.guests - 5); });
+  on("g-plus", "click", function () { setGuests(state.guests + 5); });
+  on("g-count", "input", function () {
+    var v = this.value.replace(/\D/g, "").slice(0, 3); this.value = v;
+    var n = parseInt(v, 10);
+    if (n >= SHOP.minGuests && n <= SHOP.maxGuests) { state.guests = n; state.touched = true; renderTotal(); }
+  });
+  on("g-count", "blur", function () { setGuests(parseInt(this.value, 10)); });
+
+  function renderTotal() {
+    var m = menu(), g = state.guests, sum = m.price * g;
+    setText("t-sum", rub(sum));
+    setText("t-per", rub(m.price) + " × " + g + " " + guestsWord(g));
+    setText("g-word", guestsWord(g));
+    setText("g-word-gen", plural(g, "гостя", "гостей", "гостей"));
+    setText("t-menu", m.dishes.join(", "));
+    setText("guests-note", g >= SHOP.hallClosedFrom
+      ? "От " + SHOP.hallClosedFrom + " гостей зал закрываем под вас. Максимум " + SHOP.maxGuests + "."
+      : "До " + SHOP.hallClosedFrom + " гостей накроем стол в части зала.");
+    setText("sel-line", occ().title + ", " + g + " " + guestsWord(g) + ", меню «" + m.name + "», " + rub(sum));
+    if (T.onRender) T.onRender();
+  }
+  function renderCalc() { renderOcc(); renderMenus(); $("g-count").value = state.guests; renderTotal(); renderCal(); }
+
+  // ===== Календарь =====
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+  if (new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate() - today.getDate() < 10) view.setMonth(view.getMonth() + 1);
+  var MAX_MONTHS = 6;
+  function dkey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function isBusy(d) {
+    // занятость для демо: одинаковая при каждом открытии, чаще всего заняты субботы
+    var k = dkey(d), h = 2166136261;
+    for (var i = 0; i < k.length; i++) { h ^= k.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= h >>> 13; h = Math.imul(h, 0x5bd1e995); h ^= h >>> 15;
+    var p = (h >>> 0) % 100, wd = d.getDay(), soon = (d - today) / 864e5 < 45;
+    if (wd === 6) return p < (soon ? 80 : 55);
+    if (wd === 5) return p < (soon ? 50 : 30);
+    if (wd === 0) return p < (soon ? 35 : 20);
+    return p < 7;
+  }
+  function renderCal() {
+    if (!$("cal-grid")) return;
+    setText("cal-title", MONTHS_NOM[view.getMonth()] + " " + view.getFullYear());
+    var ahead = (view.getFullYear() - today.getFullYear()) * 12 + view.getMonth() - today.getMonth();
+    $("cal-prev").disabled = ahead <= 0;
+    $("cal-next").disabled = ahead >= MAX_MONTHS;
+    var html = WD.map(function (w) { return '<span class="cal-wd" aria-hidden="true">' + w + "</span>"; }).join("");
+    var first = (view.getDay() + 6) % 7, days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    for (var i = 0; i < first; i++) html += "<span></span>";
+    for (var d = 1; d <= days; d++) {
+      var date = new Date(view.getFullYear(), view.getMonth(), d), k = dkey(date);
+      var past = date < today, busy = !past && isBusy(date) && !(state.occ === "wake" && date - today < 864e5 * 2);
+      var label = d + " " + MONTHS[date.getMonth()] + ", " + WD_FULL[date.getDay()] + (busy ? ", занято" : past ? ", прошло" : "");
+      html += '<button type="button" class="cal-day' + (busy ? " busy" : "") + (past ? " past" : "") + '" data-k="' + k + '" aria-label="' + label + '" aria-pressed="' + (state.date === k) + '"' + (past || busy ? " disabled" : "") + ">" + d + "</button>";
+    }
+    $("cal-grid").innerHTML = html;
+  }
+  on("cal-prev", "click", function () { view.setMonth(view.getMonth() - 1); renderCal(); });
+  on("cal-next", "click", function () { view.setMonth(view.getMonth() + 1); renderCal(); });
+  function dateText(k) { var p = k.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]); return d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()]; }
+  on("cal-grid", "click", function (e) {
+    var b = e.target.closest("button[data-k]"); if (!b || b.disabled) return;
+    state.date = b.getAttribute("data-k");
+    setText("sel-date", dateText(state.date));
+    $("date-error").hidden = true;
+    renderCal();
+  });
+
+  // ===== Заявка =====
+  function phoneDigits() {
+    var v = $("phone").value, d;
+    if (/^\s*\+7/.test(v)) d = v.replace(/^\s*\+7/, "").replace(/\D/g, "");
+    else { d = v.replace(/\D/g, ""); if (d.length >= 11 && /[78]/.test(d.charAt(0))) d = d.slice(1); }
+    if (d.length === 11 && d.charAt(0) === "8") d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatPhone(d) {
+    var out = "+7";
+    if (d.length) out += " (" + d.slice(0, 3);
+    if (d.length >= 3) out += ")";
+    if (d.length > 3) out += " " + d.slice(3, 6);
+    if (d.length > 6) out += "-" + d.slice(6, 8);
+    if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  on("phone", "input", function () {
+    var d = phoneDigits(); this.value = d.length ? formatPhone(d) : "";
+    if (d.length === 10) { this.removeAttribute("aria-invalid"); $("phone-error").hidden = true; }
+  });
+  on("name", "input", function () { if (this.value.trim()) { this.removeAttribute("aria-invalid"); $("name-error").hidden = true; } });
+
+  function scrollToEl(el) {
+    var top = el.getBoundingClientRect().top + window.pageYOffset;
+    var head = document.querySelector("[data-head]");
+    var off = head && getComputedStyle(head).position === "sticky" ? head.offsetHeight + 16 : 16;
+    window.scrollTo({ top: Math.max(0, top - off), behavior: "instant" });
+  }
+
+  on("req-form", "submit", function (e) {
+    e.preventDefault();
+    var dateOk = !!state.date, nameOk = !!$("name").value.trim(), phoneOk = phoneDigits().length === 10;
+    $("date-error").hidden = dateOk;
+    [["name", nameOk], ["phone", phoneOk]].forEach(function (c) { $(c[0] + "-error").hidden = c[1]; if (c[1]) $(c[0]).removeAttribute("aria-invalid"); else $(c[0]).setAttribute("aria-invalid", "true"); });
+    if (!dateOk) { scrollToEl($("cal-grid")); return; }
+    if (!nameOk) { $("name").focus(); return; }
+    if (!phoneOk) { $("phone").focus(); return; }
+    var m = menu();
+    lastRequest = { id: Date.now(), date: state.date, occ: occ().title, guests: state.guests, menu: m.name, sum: m.price * state.guests,
+      name: $("name").value.trim(), phone: formatPhone(phoneDigits()), comment: $("comment") ? $("comment").value.trim() : "" };
+    requests.push(lastRequest); save(requests);
+    var rows = [["Дата", dateText(lastRequest.date)], ["Повод", lastRequest.occ], ["Гостей", String(lastRequest.guests)], ["Меню", "«" + lastRequest.menu + "», около " + rub(lastRequest.sum)], ["Имя", lastRequest.name], ["Телефон", lastRequest.phone]];
+    if (lastRequest.comment) rows.push(["Пожелания", lastRequest.comment]);
+    $("done-list").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
+    $("req-form").hidden = true; $("done").hidden = false;
+    scrollToEl($("done"));
+    $("done-title").focus({ preventScroll: true });
+  });
+  function resetForm() {
+    $("req-form").reset(); state.date = null; setText("sel-date", "дата не выбрана");
+    $("done").hidden = true; $("req-form").hidden = false; renderCal(); scrollToEl($("req-form"));
+  }
+  on("done-new", "click", resetForm);
+  on("done-cancel", "click", function () {
+    if (lastRequest) { requests = requests.filter(function (r) { return r.id !== lastRequest.id; }); save(requests); lastRequest = null; }
+    resetForm();
+  });
+
+  // ===== Размер текста =====
+  function setLarge(on_) {
+    document.documentElement.classList.toggle("large", on_);
+    if ($("font-normal")) { $("font-normal").setAttribute("aria-pressed", String(!on_)); $("font-large").setAttribute("aria-pressed", String(on_)); }
+    try { localStorage.setItem("zarina-demo-large", on_ ? "1" : "0"); } catch (e) {}
+  }
+  on("font-normal", "click", function () { setLarge(false); });
+  on("font-large", "click", function () { setLarge(true); });
+  try { if (localStorage.getItem("zarina-demo-large") === "1") setLarge(true); } catch (e) {}
+
+  function applyShop() {
+    var minParty = Math.min.apply(null, SHOP.menus.party.map(function (m) { return m.price; }));
+    var minWake = Math.min.apply(null, SHOP.menus.wake.map(function (m) { return m.price; }));
+    var map = { name: SHOP.name, tagline: SHOP.tagline, phone: SHOP.phone, address: SHOP.address, addressNote: SHOP.addressNote,
+      hoursShort: SHOP.hoursShort, partyFrom: "от " + rub(minParty), wakeFrom: "от " + rub(minWake), maxGuests: String(SHOP.maxGuests) };
+    document.querySelectorAll("[data-cfg]").forEach(function (el) { var v = map[el.getAttribute("data-cfg")]; if (v != null) el.textContent = v; });
+    var tel = "tel:+" + SHOP.phone.replace(/\D/g, "");
+    document.querySelectorAll("[data-tel]").forEach(function (a) { a.href = tel; });
+    document.querySelectorAll("[data-map]").forEach(function (a) { a.href = SHOP.mapUrl; });
+    if ($("hours")) $("hours").innerHTML = SHOP.hours.map(function (h) { return "<span>" + h[0] + "</span><span>" + h[1] + "</span>"; }).join("");
+    if ($("dishes")) $("dishes").innerHTML = SHOP.dishes.map(function (d) {
+      return (T.dish || function (d) { return '<li class="dish"><b>' + esc(d[0]) + "</b> <span>" + esc(d[1]) + "</span></li>"; })(d, esc);
+    }).join("");
+    if ($("bmenu")) $("bmenu").innerHTML = SHOP.menus.party.map(function (m) {
+      return (T.bmenu || function (m) { return '<div class="bm"><h3>' + esc(m.name) + '</h3><p class="bm-price">' + rub(m.price) + " на гостя</p><ul>" + m.dishes.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>"; })(m, esc, rub);
+    }).join("");
+  }
+
+  applyShop();
+  renderCalc();
+})();
+</script>
+</body>
+</html>
