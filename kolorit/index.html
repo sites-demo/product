@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Салон штор «Колорит»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Onest:wght@600;700;800&display=swap">
+<style>
+/* Layout: одна колонка до 1120px. Первый экран с веером тканей, калькулятор «сколько стоят шторы на моё окно»,
+   каталог с подборкой, вызов мастера на замер, как найти салон в торговом центре.
+   Палитра: бутылочно-зелёный акцент на прохладном светлом фоне, ткани показаны своими цветами. */
+:root {
+  --bg: #F3F4F2;
+  --surface: #FFFFFF;
+  --ink: #171B1A;
+  --muted: #4D5654;
+  --line: #D6DBD8;
+  --accent: #1E5A52;
+  --accent-hover: #164740;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2EEEB;
+  --mark: #D9A13B;
+  --ok: #1E7443;
+  --ok-soft: #E3F2E8;
+  --danger: #B02A21;
+  --busy: #ECEFED;
+  --busy-ink: #8B9491;
+  --wall: #E9E6E1;
+  --shadow: 0 1px 2px rgba(23,27,26,.05), 0 8px 28px rgba(23,27,26,.07);
+
+  --f-display: "Onest", "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-body: "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius: 14px;
+  --tap: 60px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101413; --surface: #181E1C; --ink: #EEF2F0; --muted: #AEB9B5; --line: #2C3533;
+    --accent: #4FA597; --accent-hover: #67B8AA; --accent-ink: #0E1312; --accent-soft: #19302C;
+    --mark: #E6B45A; --ok: #5CC488; --ok-soft: #15301F; --danger: #F07A70;
+    --busy: #1F2725; --busy-ink: #6E7A76; --wall: #2A2927; --shadow: 0 1px 2px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101413; --surface: #181E1C; --ink: #EEF2F0; --muted: #AEB9B5; --line: #2C3533;
+  --accent: #4FA597; --accent-hover: #67B8AA; --accent-ink: #0E1312; --accent-soft: #19302C;
+  --mark: #E6B45A; --ok: #5CC488; --ok-soft: #15301F; --danger: #F07A70;
+  --busy: #1F2725; --busy-ink: #6E7A76; --wall: #2A2927; --shadow: 0 1px 2px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+
+html { font-size: 112.5%; scroll-behavior: smooth; }
+html.large { font-size: 128%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 1rem; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--mark); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Шапка */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.top { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+.top .wrap { display: flex; align-items: center; gap: 12px 24px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.brand-mark { width: 44px; height: 44px; flex: none; border-radius: 10px; overflow: hidden; display: grid; grid-template-columns: repeat(4, 1fr); }
+.brand-mark span:nth-child(1) { background: #1E5A52; } .brand-mark span:nth-child(2) { background: #D9A13B; }
+.brand-mark span:nth-child(3) { background: #B5544A; } .brand-mark span:nth-child(4) { background: #8DA3B8; }
+.brand-name { font-family: var(--f-display); font-weight: 800; font-size: 1.2rem; line-height: 1.1; }
+.brand-sub { font-size: .8rem; color: var(--muted); }
+.top-phone { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+.top-hours { font-size: .8rem; color: var(--muted); display: block; font-family: var(--f-body); font-weight: 400; }
+.size-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.size-toggle button { border: 0; background: var(--surface); color: var(--ink); font: 600 1rem var(--f-body); min-width: 52px; min-height: 48px; cursor: pointer; }
+.size-toggle button + button { border-left: 1px solid var(--line); font-size: 1.25rem; }
+.size-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Кнопки */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: var(--tap); padding: 0 28px; border-radius: 12px; border: 2px solid transparent; font: 700 1.05rem var(--f-body); text-decoration: none; cursor: pointer; background: var(--accent); color: var(--accent-ink); transition: background-color .15s; }
+.btn:hover { background: var(--accent-hover); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { background: var(--busy); }
+.btn-wide { width: 100%; }
+
+/* Ткани: цвет — это содержимое (цвет ткани), а не тема */
+.sw { position: relative; background-color: var(--c); overflow: hidden; }
+.sw-drape { background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.16) 0%, rgba(255,255,255,.10) 6%, rgba(0,0,0,.16) 12.5%); }
+.sw-linen { background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0%, rgba(255,255,255,.10) 6%, rgba(0,0,0,.14) 12.5%), repeating-linear-gradient(0deg, rgba(255,255,255,.07) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px); }
+.sw-velvet { background-image: radial-gradient(ellipse at 30% 15%, rgba(255,255,255,.22), transparent 55%), repeating-linear-gradient(90deg, rgba(0,0,0,.28) 0%, rgba(255,255,255,.08) 6%, rgba(0,0,0,.28) 12.5%); }
+.sw-sheer { background-color: var(--wall); }
+.sw-sheer::after { content: ""; position: absolute; inset: 0; background-color: var(--c); opacity: .78; background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(255,255,255,.4) 6%, rgba(0,0,0,.08) 12.5%), repeating-linear-gradient(45deg, rgba(0,0,0,.04) 0 1px, transparent 1px 4px); }
+.sw-roll { background-image: linear-gradient(180deg, rgba(0,0,0,.06), rgba(255,255,255,.08)); }
+.sw-roll::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12%; background: linear-gradient(180deg, #d9dcdc, #a9adad); }
+.sw-roll::after { content: ""; position: absolute; left: 0; right: 0; bottom: 8%; height: 3%; background: rgba(0,0,0,.22); }
+.sw-roman { background-image: repeating-linear-gradient(180deg, rgba(255,255,255,.08) 0 14%, rgba(0,0,0,.18) 18%, rgba(255,255,255,.08) 20%); }
+.sw-slats { background-image: repeating-linear-gradient(180deg, rgba(255,255,255,.18) 0 2px, transparent 2px 13px, rgba(0,0,0,.28) 13px 15px); }
+.sw-vslats { background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 2px, transparent 2px 22px, rgba(0,0,0,.22) 22px 25px); }
+.sw-rod { background-color: var(--wall); }
+.sw-rod::before { content: ""; position: absolute; left: 10%; right: 10%; top: 38%; height: 7px; border-radius: 4px; background: var(--c); box-shadow: 0 2px 3px rgba(0,0,0,.2); }
+.sw-rod::after { content: ""; position: absolute; left: calc(10% - 9px); right: calc(10% - 9px); top: calc(38% - 6px); height: 19px; background: radial-gradient(circle at 9px 50%, var(--c) 8px, transparent 9px), radial-gradient(circle at calc(100% - 9px) 50%, var(--c) 8px, transparent 9px); }
+
+/* Первый экран */
+.hero .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; padding-block: 56px 40px; align-items: center; }
+.eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: .85rem; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.2rem); font-weight: 800; }
+.hero-lead { font-size: 1.15rem; color: var(--muted); margin-top: 18px; max-width: 38ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero-note { margin-top: 18px; color: var(--muted); font-size: .95rem; display: flex; gap: 10px; align-items: center; }
+.hero-note svg { width: 22px; height: 22px; color: var(--ok); flex: none; }
+.fan { display: flex; justify-content: center; align-items: flex-end; height: 340px; padding-top: 20px; }
+.fan .sw { width: 92px; height: 300px; border-radius: 14px 14px 6px 6px; margin-left: -26px; box-shadow: -6px 6px 18px rgba(0,0,0,.12); transform-origin: 50% 110%; }
+.fan .sw:first-child { margin-left: 0; }
+.fan .sw:nth-child(1) { transform: rotate(-14deg); } .fan .sw:nth-child(2) { transform: rotate(-7deg); }
+.fan .sw:nth-child(4) { transform: rotate(7deg); } .fan .sw:nth-child(5) { transform: rotate(14deg); }
+
+/* Секции */
+.block { padding-block: 48px; }
+.section-head { margin-bottom: 24px; }
+.section-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 800; }
+.section-head p { color: var(--muted); margin-top: 8px; max-width: 62ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: clamp(20px, 4vw, 40px); }
+
+/* Как работаем: настоящая последовательность */
+.process { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: s; }
+.process li { counter-increment: s; position: relative; padding-top: 56px; }
+.process li::before { content: counter(s); position: absolute; top: 0; left: 0; width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 700 1.1rem var(--f-display); }
+.process li:not(:last-child)::after { content: ""; position: absolute; top: 21px; left: 54px; right: -12px; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px); }
+.process h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.process p { color: var(--muted); }
+
+/* Калькулятор */
+.calc { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: start; }
+.calc-fields { display: grid; gap: 22px; min-width: 0; }
+.field label, .field .label { display: block; font-weight: 600; margin-bottom: 8px; }
+.field input[type="text"], .field input[type="tel"], .field input[type="number"], .field textarea, .field select {
+  width: 100%; min-height: var(--tap); padding: 0 18px; border-radius: 12px; border: 2px solid var(--line);
+  background: var(--surface); color: var(--ink); font: 500 1.1rem var(--f-body);
+}
+.field textarea { padding: 14px 18px; min-height: 96px; resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.field-error { color: var(--danger); font-size: .95rem; margin-top: 6px; font-weight: 500; }
+.unit-input { display: flex; align-items: center; gap: 10px; }
+.unit-input input { max-width: 160px; }
+.unit-input span { color: var(--muted); font-weight: 500; }
+.stepper { display: flex; gap: 8px; }
+.stepper button { min-width: var(--tap); min-height: var(--tap); border-radius: 12px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: 700 1.4rem var(--f-body); cursor: pointer; }
+.stepper button:hover { border-color: var(--accent); }
+.check { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; font-weight: 500; }
+.check input { width: 26px; height: 26px; accent-color: var(--accent); flex: none; }
+.calc-result { background: var(--accent-soft); border-radius: 18px; padding: 28px; display: grid; gap: 14px; }
+.calc-preview { height: 150px; border-radius: 12px; position: relative; background: var(--wall); overflow: hidden; }
+.calc-preview .win { position: absolute; left: 22%; right: 22%; top: 22%; bottom: 0; background: linear-gradient(180deg, #cfe2ef, #e9f2f7); border: 6px solid #fff; border-bottom: 0; }
+.calc-preview .cur { position: absolute; top: 14%; bottom: 0; width: 26%; }
+.calc-preview .cur.l { left: 8%; } .calc-preview .cur.r { right: 8%; }
+.calc-preview .rail { position: absolute; left: 6%; right: 6%; top: 11%; height: 6px; border-radius: 3px; background: #6f6a63; }
+.calc-total-label { color: var(--muted); font-weight: 600; }
+.calc-total { font-family: var(--f-display); font-weight: 800; font-size: 2.4rem; line-height: 1.1; }
+.calc-lines { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.calc-lines li { display: flex; justify-content: space-between; gap: 12px; }
+.calc-lines li span:last-child { font-weight: 600; white-space: nowrap; }
+.calc-note { color: var(--muted); font-size: .95rem; }
+
+/* Каталог */
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.filters button { min-height: 52px; padding: 0 20px; border-radius: 999px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: 600 1rem var(--f-body); cursor: pointer; }
+.filters button:hover { border-color: var(--accent); }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card .sw { aspect-ratio: 4 / 3; max-width: 100%; }
+.card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.card-cat { font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.card h3 { font-size: 1.1rem; }
+.card-color { color: var(--muted); font-size: .95rem; }
+.card-price { font-weight: 700; font-size: 1.1rem; margin: 6px 0 12px; }
+.card-price small { font-weight: 500; color: var(--muted); font-size: .9rem; }
+.card-add { margin-top: auto; min-height: 52px; border-radius: 12px; border: 2px solid var(--accent); background: transparent; color: var(--accent); font: 700 1rem var(--f-body); cursor: pointer; }
+.card-add:hover { background: var(--accent-soft); }
+.card-add[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Подборка — плавающая кнопка */
+.pick-fab { position: fixed; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 6;
+  display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 0 22px; border-radius: 999px; border: 0;
+  background: var(--ink); color: var(--bg); font: 700 1rem var(--f-body); box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer; text-decoration: none; }
+.pick-fab b { background: var(--mark); color: #1b1b1b; border-radius: 999px; min-width: 30px; height: 30px; display: grid; place-items: center; padding: 0 8px; }
+
+/* Заявка на замер */
+.req { display: grid; gap: 32px; }
+.step { border: 0; margin: 0; padding: 0; min-width: 0; }
+.step + .step { padding-top: 28px; border-top: 1px solid var(--line); }
+.step legend { float: left; width: 100%; display: flex; align-items: center; gap: 14px; padding: 0; margin-bottom: 18px; font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; }
+.step > :not(legend) { clear: both; }
+.step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 1.05rem; flex: none; }
+.step.done .step-num { background: var(--ok); color: #fff; }
+.hint { color: var(--muted); font-size: .95rem; margin: -6px 0 16px; }
+.choices { display: grid; gap: 12px; }
+.choices-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.choices-days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; pointer-events: none; }
+.choice label { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: var(--tap); height: 100%; padding: 12px 16px; border-radius: var(--radius); border: 2px solid var(--line); background: var(--surface); cursor: pointer; transition: border-color .12s, background-color .12s; }
+.choice label:hover { border-color: var(--accent); }
+.choice input:checked + label { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.choice input:focus-visible + label { outline: 3px solid var(--mark); outline-offset: 2px; }
+.choice input:disabled + label { background: var(--busy); color: var(--busy-ink); border-color: transparent; cursor: not-allowed; text-decoration: line-through; }
+.choice-title { font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
+.choice-sub { color: var(--muted); font-size: .9rem; }
+.choices-days label { align-items: center; text-align: center; padding: 10px 6px; }
+.choices-days .choice-sub { font-size: .85rem; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+.fields .full { grid-column: 1 / -1; }
+.picked { display: grid; gap: 8px; }
+.picked-item { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
+.picked-item .sw { width: 44px; height: 44px; border-radius: 8px; flex: none; }
+.picked-item span { flex: 1; min-width: 0; font-weight: 600; }
+.picked-item button { min-height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font: 500 .95rem var(--f-body); cursor: pointer; }
+.picked-empty { padding: 16px 18px; border-radius: 12px; background: var(--busy); color: var(--muted); }
+.summary { padding: 24px; border-radius: 18px; background: var(--accent-soft); display: grid; grid-template-columns: 1fr auto; gap: 20px 32px; align-items: center; }
+.summary-text { font-size: 1.1rem; min-width: 0; }
+.form-error { color: var(--danger); font-weight: 600; }
+
+.done-head { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.done-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; flex: none; }
+.done-icon svg { width: 36px; height: 36px; }
+.done-head h2 { font-size: 1.9rem; font-weight: 800; }
+.done-list { display: grid; grid-template-columns: max-content 1fr; gap: 12px 24px; margin: 0 0 24px; font-size: 1.1rem; }
+.done-list dt { color: var(--muted); }
+.done-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.done-note { padding: 16px 20px; border-left: 4px solid var(--mark); background: var(--bg); border-radius: 0 10px 10px 0; margin-bottom: 24px; }
+.done-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Услуги */
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.service { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.service h3 { font-size: 1.15rem; }
+.service p { color: var(--muted); }
+.service-price { font-family: var(--f-display); font-weight: 800; font-size: 1.4rem; margin-top: auto; padding-top: 10px; }
+
+/* Как найти */
+.find { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+.find-main { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+.find-main h3 { font-size: 1.4rem; margin-bottom: 4px; }
+.find-steps { margin: 18px 0 0; padding-left: 1.3em; display: grid; gap: 8px; }
+.find-side { display: grid; gap: 16px; }
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.contact-label { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.contact-value { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; line-height: 1.3; }
+.copy-btn { align-self: flex-start; background: none; border: 0; padding: 8px 0 0; color: var(--accent); font: 600 1rem var(--f-body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.find-main a.link { display: inline-block; margin-top: 18px; font-weight: 600; }
+
+footer { border-top: 1px solid var(--line); margin-top: 48px; }
+footer .wrap { padding-block: 28px 96px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; color: var(--muted); font-size: .9rem; }
+
+#calc, #catalog, #request, #find, #done, .step, .field input { scroll-margin-top: 110px; }
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 36px 24px; gap: 24px; }
+  .fan { height: 250px; } .fan .sw { width: 70px; height: 220px; margin-left: -20px; }
+  .process { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; }
+  .process li::after { display: none; }
+  .calc, .find { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .services { grid-template-columns: 1fr; }
+  .choices-days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  html { font-size: 106.25%; }
+  html.large { font-size: 121%; }
+  .top { position: static; }
+  body::before { display: none; }
+  .brand-sub, .top-hours { display: none; }
+  #calc, #catalog, #request, #find, #done, .step, .field input { scroll-margin-top: 16px; }
+  .process { grid-template-columns: 1fr; }
+  .grid { gap: 12px; }
+  .card-body { padding: 12px 14px 14px; }
+  .calc-result { padding: 20px; }
+  .calc-total { font-size: 2rem; }
+  .card h3 { font-size: 1rem; }
+  .card-add { font-size: .95rem; padding: 0 6px; }
+  .choices-3, .fields { grid-template-columns: 1fr; }
+  .choices-days { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .summary { grid-template-columns: 1fr; }
+  .summary .btn, .hero-actions .btn { width: 100%; }
+  .done-list { grid-template-columns: 1fr; gap: 2px; }
+  .done-list dd { margin-bottom: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="На главную">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span>
+        <span class="brand-name" data-cfg="name">Колорит</span><br>
+        <span class="brand-sub" data-cfg="tagline">Салон штор</span>
+      </span>
+    </a>
+    <div class="size-toggle" role="group" aria-label="Размер текста">
+      <button type="button" id="font-normal" aria-pressed="true" title="Обычный текст">А</button>
+      <button type="button" id="font-large" aria-pressed="false" title="Крупный текст">А</button>
+    </div>
+    <span class="top-phone"><span data-cfg="phone"></span><span class="top-hours" data-cfg="hoursShort"></span></span>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" data-cfg="eyebrow"></p>
+        <h1>Шторы на заказ с замером у вас дома</h1>
+        <p class="hero-lead">Мастер приедет с образцами тканей, снимет мерки и поможет выбрать. Мы сошьём шторы и повесим их сами.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#request">Вызвать мастера на замер</a>
+          <a class="btn btn-ghost" href="#calc">Узнать цену за минуту</a>
+        </div>
+        <p class="hero-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-cfg="measureNote"></span></p>
+      </div>
+      <div class="fan" aria-hidden="true" id="fan"></div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="process-title">Как всё происходит</h2></div>
+      <ol class="process">
+        <li><h3>Замер на дому</h3><p>Мастер приезжает в удобное вам время и снимает размеры окон.</p></li>
+        <li><h3>Выбор ткани</h3><p>Показываем образцы прямо у вашего окна, при вашем освещении.</p></li>
+        <li><h3>Пошив</h3><p>Шьём в своей мастерской точно по меркам.</p></li>
+        <li><h3>Установка</h3><p>Вешаем карниз и шторы, убираем за собой.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="calc" aria-labelledby="calc-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="calc-title">Сколько стоят шторы на ваше окно</h2>
+        <p>Укажите ширину окна и выберите ткань. Покажем примерную цену вместе с пошивом.</p>
+      </div>
+      <div class="panel calc">
+        <div class="calc-fields">
+          <div class="field">
+            <label for="calc-width">Ширина окна вместе с откосами</label>
+            <div class="unit-input">
+              <div class="stepper"><button type="button" id="w-minus" aria-label="Уменьшить на 10 см">−</button></div>
+              <input id="calc-width" type="number" inputmode="numeric" min="50" max="600" step="10" value="180">
+              <span>см</span>
+              <div class="stepper"><button type="button" id="w-plus" aria-label="Увеличить на 10 см">+</button></div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="calc-fabric">Ткань</label>
+            <select id="calc-fabric"></select>
+          </div>
+          <div class="field">
+            <span class="label">Что ещё нужно</span>
+            <label class="check"><input type="checkbox" id="calc-tulle" checked> Тюль в комплект</label>
+            <label class="check"><input type="checkbox" id="calc-rod"> Новый карниз с установкой</label>
+          </div>
+        </div>
+        <div class="calc-result" aria-live="polite">
+          <div class="calc-preview" aria-hidden="true">
+            <div class="win"></div>
+            <div class="sw cur l" id="cur-l"></div><div class="sw cur r" id="cur-r"></div>
+            <div class="rail"></div>
+          </div>
+          <div class="calc-total-label">Примерная стоимость</div>
+          <div class="calc-total" id="calc-total">—</div>
+          <ul class="calc-lines" id="calc-lines"></ul>
+          <p class="calc-note">Ткани берём с запасом на сборку в два раза. Точную цену мастер назовёт на замере, он бесплатный.</p>
+          <button class="btn btn-wide" type="button" id="calc-to-request">Вызвать мастера с этой тканью</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="catalog" aria-labelledby="catalog-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="catalog-title">Ткани и товары в салоне</h2>
+        <p>Отметьте, что понравилось. Мастер привезёт эти образцы на замер.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Категории"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="block" id="request" aria-labelledby="request-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="request-title">Вызвать мастера</h2>
+        <p>Оставьте заявку, мы перезвоним и подтвердим время.</p>
+      </div>
+      <form class="panel req" id="req-form" novalidate>
+        <fieldset class="step" id="step-what">
+          <legend><span class="step-num">1</span>Что нужно?</legend>
+          <div class="choices choices-3" id="what"></div>
+        </fieldset>
+        <fieldset class="step" id="step-picked">
+          <legend><span class="step-num">2</span>Какие образцы привезти</legend>
+          <div class="picked" id="picked"></div>
+        </fieldset>
+        <fieldset class="step" id="step-day">
+          <legend><span class="step-num">3</span>Когда удобно?</legend>
+          <div class="choices choices-days" id="days"></div>
+          <p class="hint" style="margin: 16px 0 12px">Время суток</p>
+          <div class="choices choices-3" id="windows"></div>
+        </fieldset>
+        <fieldset class="step" id="step-contact">
+          <legend><span class="step-num">4</span>Куда приехать и как связаться</legend>
+          <div class="fields">
+            <div class="field full">
+              <label for="addr">Адрес</label>
+              <input id="addr" type="text" autocomplete="street-address" placeholder="Например, ул. Свободы, 12, кв. 45">
+              <div class="field-error" id="addr-error" hidden>Напишите адрес, куда приехать мастеру.</div>
+            </div>
+            <div class="field">
+              <label for="name">Ваше имя</label>
+              <input id="name" type="text" autocomplete="given-name" placeholder="Например, Татьяна">
+              <div class="field-error" id="name-error" hidden>Напишите, как к вам обращаться.</div>
+            </div>
+            <div class="field">
+              <label for="phone">Номер телефона</label>
+              <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+              <div class="field-error" id="phone-error" hidden>Проверьте номер: нужно 10 цифр после +7.</div>
+            </div>
+            <div class="field full">
+              <label for="comment">Комментарий <span style="color:var(--muted);font-weight:400">(необязательно)</span></label>
+              <textarea id="comment" placeholder="Например: две комнаты, хочу плотные шторы в спальню"></textarea>
+            </div>
+          </div>
+        </fieldset>
+        <div class="summary">
+          <div class="summary-text" id="summary" aria-live="polite">Выберите, что нужно, и удобное время.</div>
+          <button class="btn" type="submit">Отправить заявку</button>
+        </div>
+        <p class="form-error" id="form-error" hidden></p>
+      </form>
+
+      <div class="panel" id="done" hidden tabindex="-1">
+        <div class="done-head">
+          <div class="done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h2>Заявка принята</h2>
+        </div>
+        <dl class="done-list" id="done-list"></dl>
+        <p class="done-note">Мы перезвоним в течение часа в рабочее время и подтвердим визит мастера. Если удобнее, позвоните сами: <span data-cfg="phone"></span>.</p>
+        <div class="done-actions">
+          <button class="btn btn-ghost" type="button" id="again">Оставить ещё одну заявку</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="services-title">Услуги</h2></div>
+      <div class="services" id="services"></div>
+    </div>
+  </section>
+
+  <section class="block" id="find" aria-labelledby="find-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="find-title">Как нас найти</h2></div>
+      <div class="find">
+        <div class="find-main">
+          <h3 data-cfg="place"></h3>
+          <p data-cfg="address"></p>
+          <ol class="find-steps" id="find-steps"></ol>
+          <a class="link" id="map-link" href="https://yandex.ru/maps/" target="_blank" rel="noopener">Открыть на карте</a>
+        </div>
+        <div class="find-side">
+          <div class="contact">
+            <span class="contact-label">Телефон</span>
+            <span class="contact-value" id="phone-text" data-cfg="phone"></span>
+            <button class="copy-btn" type="button" id="copy-phone">Скопировать номер</button>
+          </div>
+          <div class="contact">
+            <span class="contact-label">Часы работы</span>
+            <span class="contact-value" data-cfg="hoursLong"></span>
+            <span data-cfg="hoursNote"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<a class="pick-fab" href="#request" id="pick-fab" hidden>Образцы на замер <b id="pick-count">0</b></a>
+
+<footer>
+  <div class="wrap">
+    <span><span data-cfg="name"></span>, <span data-cfg="tagline"></span></span>
+    <span>Демонстрационная версия: заявки сохраняются только в этом браузере.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ===== НАСТРОЙКИ САЛОНА ===== */
+  var SHOP = {
+    name: "Колорит",
+    tagline: "Салон штор",
+    eyebrow: "Красное Село · ТК «Красносельский»",
+    phone: "+7 (921) 941-77-38",
+    place: "ТК «Красносельский»",
+    address: "Красное Село, ул. Лермонтова, 21",
+    findSteps: ["Вход в торговый центр с улицы Лермонтова.", "Салон «Колорит» находится внутри, на первом этаже."],
+    mapUrl: "https://yandex.ru/maps/org/kolorit/1786201298/",
+    openHour: 10, closeHour: 18,
+    hoursNote: "Без выходных",
+    measureNote: "Замер и образцы на дому бесплатно при заказе",
+    sewPerMeter: 300,          // пошив, ₽ за метр готовой шторы
+    gather: 2,                 // запас ткани на сборку
+    tullePrice: 650,           // тюль для калькулятора, ₽/м
+    rodPerMeter: 900,          // карниз с установкой, ₽/м
+    services: [
+      { title: "Замер и образцы на дому", text: "Мастер привезёт образцы тканей и снимет мерки.", price: "Бесплатно при заказе" },
+      { title: "Пошив штор и тюля", text: "Любая длина и сборка: на ленту, люверсы, петли.", price: "от 300 ₽ за метр" },
+      { title: "Установка карнизов", text: "Потолочные и настенные, на бетон и гипсокартон.", price: "от 500 ₽" },
+      { title: "Подгонка готовых штор", text: "Укоротим или подошьём шторы, купленные в другом месте.", price: "от 250 ₽ за метр" },
+      { title: "Рулонные шторы и жалюзи", text: "Сделаем по размеру вашего окна и установим без сверления.", price: "от 1 200 ₽" },
+      { title: "Помощь дизайнера", text: "Подберёт ткани к обоям, мебели и свету в комнате.", price: "Бесплатно" }
+    ]
+  };
+  // Каталог: cat — категория, kind — как нарисовать образец, c — цвет ткани
+  var CATALOG = [
+    { id: "linen-sand", cat: "Шторы", kind: "linen", c: "#C9B79A", title: "Лён", color: "Песочный", price: 950, unit: "за метр", calc: true },
+    { id: "velvet-emerald", cat: "Шторы", kind: "velvet", c: "#1F5A4A", title: "Бархат", color: "Изумрудный", price: 1600, unit: "за метр", calc: true },
+    { id: "blackout-graphite", cat: "Шторы", kind: "drape", c: "#4A4E52", title: "Блэкаут", color: "Графит, не пропускает свет", price: 1100, unit: "за метр", calc: true },
+    { id: "canvas-blue", cat: "Шторы", kind: "linen", c: "#8DA3B8", title: "Канвас", color: "Серо-голубой", price: 850, unit: "за метр", calc: true },
+    { id: "velvet-wine", cat: "Шторы", kind: "velvet", c: "#6E2633", title: "Бархат", color: "Винный", price: 1600, unit: "за метр", calc: true },
+    { id: "jacquard-gold", cat: "Шторы", kind: "drape", c: "#B89A5E", title: "Жаккард", color: "Золотистый, с узором", price: 1400, unit: "за метр", calc: true },
+    { id: "voile-white", cat: "Тюль", kind: "sheer", c: "#FFFFFF", title: "Вуаль", color: "Белый", price: 450, unit: "за метр" },
+    { id: "mesh-milk", cat: "Тюль", kind: "sheer", c: "#F1E8D8", title: "Сетка под лён", color: "Молочный", price: 650, unit: "за метр" },
+    { id: "organza-smoke", cat: "Тюль", kind: "sheer", c: "#B9BDC2", title: "Органза", color: "Дымчатый", price: 550, unit: "за метр" },
+    { id: "roll-dn", cat: "Рулонные", kind: "roll", c: "#D8CDBB", title: "День-ночь", color: "Бежевый", price: 1900, unit: "за штору" },
+    { id: "roll-bo", cat: "Рулонные", kind: "roll", c: "#E9ECEE", title: "Блэкаут рулонный", color: "Белый", price: 2300, unit: "за штору" },
+    { id: "roman-grey", cat: "Римские", kind: "roman", c: "#9A9690", title: "Римская штора", color: "Серый лён", price: 3500, unit: "за штору" },
+    { id: "blinds-h", cat: "Жалюзи", kind: "slats", c: "#E4E6E8", title: "Горизонтальные", color: "Алюминий, белые", price: 1200, unit: "за м²" },
+    { id: "blinds-v", cat: "Жалюзи", kind: "vslats", c: "#D9D2C5", title: "Вертикальные", color: "Ткань, бежевые", price: 1500, unit: "за м²" },
+    { id: "rod-ceiling", cat: "Карнизы", kind: "rod", c: "#F5F5F5", title: "Потолочный", color: "Пластик, 2 ряда", price: 600, unit: "за метр" },
+    { id: "rod-metal", cat: "Карнизы", kind: "rod", c: "#3A3A3A", title: "Круглый металлический", color: "Чёрный матовый", price: 1800, unit: "за метр" }
+  ];
+  /* ===== конец настроек ===== */
+
+  var WHAT = [
+    { id: "measure", title: "Замер и подбор", sub: "Мастер с образцами" },
+    { id: "install", title: "Только установка", sub: "Карниз или готовые шторы" },
+    { id: "design", title: "Совет дизайнера", sub: "Не знаю, что выбрать" }
+  ];
+  var WINDOWS = [
+    { id: "morning", title: "Утро", sub: "10:00–13:00" },
+    { id: "day", title: "День", sub: "13:00–16:00" },
+    { id: "evening", title: "Вечер", sub: "16:00–18:00" }
+  ];
+  var WD = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  var STORE = "kolorit-demo-requests", PICK = "kolorit-demo-picked";
+
+  function $(id) { return document.getElementById(id); }
+  function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function money(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽"; }
+  function swatch(item, extra) { return '<div class="sw sw-' + item.kind + (extra ? " " + extra : "") + '" style="--c:' + item.c + '"></div>'; }
+  function load(k, d) { try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function byId(id) { return CATALOG.find(function (x) { return x.id === id; }); }
+
+  var picked = load(PICK, []).filter(byId);
+  var filter = "Все";
+
+  // Первый экран: веер тканей
+  $("fan").innerHTML = ["blackout-graphite", "canvas-blue", "linen-sand", "velvet-emerald", "velvet-wine"].map(function (id) { return swatch(byId(id)); }).join("");
+
+  // Каталог
+  function renderFilters() {
+    var cats = ["Все"].concat(CATALOG.map(function (x) { return x.cat; }).filter(function (c, i, a) { return a.indexOf(c) === i; }));
+    $("filters").innerHTML = cats.map(function (c) { return '<button type="button" aria-pressed="' + (c === filter) + '" data-cat="' + esc(c) + '">' + esc(c) + "</button>"; }).join("");
+  }
+  function renderGrid() {
+    $("grid").innerHTML = CATALOG.filter(function (x) { return filter === "Все" || x.cat === filter; }).map(function (x) {
+      var on = picked.indexOf(x.id) >= 0;
+      return '<article class="card">' + swatch(x) + '<div class="card-body"><span class="card-cat">' + esc(x.cat) + "</span><h3>" + esc(x.title) +
+        '</h3><span class="card-color">' + esc(x.color) + '</span><span class="card-price">от ' + money(x.price) + " <small>" + esc(x.unit) + "</small></span>" +
+        '<button type="button" class="card-add" data-id="' + x.id + '" aria-pressed="' + on + '">' + (on ? "✓ Привезём на замер" : "Хочу посмотреть") + "</button></div></article>";
+    }).join("");
+  }
+  $("filters").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; filter = b.getAttribute("data-cat"); renderFilters(); renderGrid(); });
+  $("grid").addEventListener("click", function (e) { var b = e.target.closest(".card-add"); if (b) togglePick(b.getAttribute("data-id")); });
+
+  function togglePick(id, forceOn) {
+    var i = picked.indexOf(id);
+    if (i >= 0 && !forceOn) picked.splice(i, 1); else if (i < 0) picked.push(id);
+    save(PICK, picked); renderGrid(); renderPicked(); updateSummary();
+  }
+  function renderPicked() {
+    $("pick-count").textContent = picked.length;
+    $("pick-fab").hidden = picked.length === 0 || !$("done").hidden;
+    $("picked").innerHTML = picked.length ? picked.map(function (id) {
+      var x = byId(id);
+      return '<div class="picked-item">' + swatch(x) + "<span>" + esc(x.title + ", " + x.color.toLowerCase()) + '</span><button type="button" data-id="' + id + '">Убрать</button></div>';
+    }).join("") : '<div class="picked-empty">Пока ничего не выбрано. Отметьте ткани в <a href="#catalog">каталоге</a> или мастер привезёт популярные образцы.</div>';
+  }
+  $("picked").addEventListener("click", function (e) { var b = e.target.closest("button[data-id]"); if (b) togglePick(b.getAttribute("data-id")); });
+
+  // Калькулятор
+  var calcFabrics = CATALOG.filter(function (x) { return x.calc; });
+  $("calc-fabric").innerHTML = calcFabrics.map(function (x) { return '<option value="' + x.id + '">' + esc(x.title + ", " + x.color.toLowerCase() + " — от " + money(x.price) + " за метр") + "</option>"; }).join("");
+  function calc() {
+    var w = Math.min(600, Math.max(50, parseInt($("calc-width").value, 10) || 0));
+    var f = byId($("calc-fabric").value);
+    var m = Math.ceil(w / 100 * SHOP.gather * 10) / 10;
+    var lines = [["Ткань «" + f.title + "», " + String(m).replace(".", ",") + " м", m * f.price], ["Пошив", m * SHOP.sewPerMeter]];
+    if ($("calc-tulle").checked) lines.push(["Тюль с пошивом, " + String(m).replace(".", ",") + " м", m * (SHOP.tullePrice + SHOP.sewPerMeter)]);
+    if ($("calc-rod").checked) { var r = Math.ceil((w + 30) / 10) / 10; lines.push(["Карниз " + String(r).replace(".", ",") + " м с установкой", r * SHOP.rodPerMeter]); }
+    var total = lines.reduce(function (s, l) { return s + l[1]; }, 0);
+    $("calc-total").textContent = "≈ " + money(total);
+    $("calc-lines").innerHTML = lines.map(function (l) { return "<li><span>" + esc(l[0]) + "</span><span>" + money(l[1]) + "</span></li>"; }).join("");
+    ["cur-l", "cur-r"].forEach(function (id) { var el = $(id); el.className = "sw cur " + (id === "cur-l" ? "l" : "r") + " sw-" + f.kind; el.style.setProperty("--c", f.c); });
+  }
+  ["calc-width", "calc-fabric", "calc-tulle", "calc-rod"].forEach(function (id) { $(id).addEventListener("input", calc); $(id).addEventListener("change", calc); });
+  $("w-minus").addEventListener("click", function () { $("calc-width").value = Math.max(50, (parseInt($("calc-width").value, 10) || 180) - 10); calc(); });
+  $("w-plus").addEventListener("click", function () { $("calc-width").value = Math.min(600, (parseInt($("calc-width").value, 10) || 180) + 10); calc(); });
+  $("calc-to-request").addEventListener("click", function () {
+    togglePick($("calc-fabric").value, true);
+    if ($("calc-tulle").checked) togglePick("voile-white", true);
+    var m = $("what-measure"); if (m && !document.querySelector('input[name="what"]:checked')) { m.checked = true; updateSummary(); }
+    var c = $("comment"); if (!c.value) c.value = "Окно примерно " + $("calc-width").value + " см";
+    $("request").scrollIntoView({ block: "start" });
+  });
+
+  // Заявка
+  function choice(group, value, title, sub, checked, disabled) {
+    var id = group + "-" + value;
+    return '<div class="choice"><input type="radio" name="' + group + '" id="' + id + '" value="' + value + '"' + (checked ? " checked" : "") + (disabled ? " disabled" : "") +
+      '><label for="' + id + '"><span class="choice-title">' + title + "</span>" + (sub ? '<span class="choice-sub">' + sub + "</span>" : "") + "</label></div>";
+  }
+  var days = [];
+  (function () { var t = new Date(); t.setHours(0, 0, 0, 0); for (var i = 1; i <= 7; i++) { var d = new Date(t); d.setDate(t.getDate() + i); days.push(d); } })();
+  function dayKey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function dayLong(d) { var s = d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()]; return dayKey(d) === dayKey(days[0]) ? "Завтра, " + s : s.charAt(0).toUpperCase() + s.slice(1); }
+  function renderReq() {
+    $("what").innerHTML = WHAT.map(function (w) { return choice("what", w.id, w.title, w.sub); }).join("");
+    $("days").innerHTML = days.map(function (d, i) { return choice("day", dayKey(d), i === 0 ? "Завтра" : WD[d.getDay()].charAt(0).toUpperCase() + WD[d.getDay()].slice(1), d.getDate() + " " + MONTHS[d.getMonth()].slice(0, 3)); }).join("");
+    $("windows").innerHTML = WINDOWS.map(function (w) { return choice("win", w.id, w.title, w.sub); }).join("");
+  }
+  function val(n) { var el = document.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : ""; }
+
+  function phoneDigits() {
+    var v = $("phone").value, d;
+    if (/^\s*\+7/.test(v)) d = v.replace(/^\s*\+7/, "").replace(/\D/g, "");
+    else { d = v.replace(/\D/g, ""); if (d.length >= 11 && /[78]/.test(d.charAt(0))) d = d.slice(1); }
+    if (d.length === 11 && d.charAt(0) === "8") d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatPhone(d) {
+    var out = "+7";
+    if (d.length) out += " (" + d.slice(0, 3);
+    if (d.length >= 3) out += ")";
+    if (d.length > 3) out += " " + d.slice(3, 6);
+    if (d.length > 6) out += "-" + d.slice(6, 8);
+    if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  $("phone").addEventListener("input", function () {
+    var d = phoneDigits(); this.value = d.length ? formatPhone(d) : "";
+    if (d.length === 10) { this.removeAttribute("aria-invalid"); $("phone-error").hidden = true; }
+    updateSummary();
+  });
+  ["name", "addr"].forEach(function (id) {
+    $(id).addEventListener("input", function () { if (this.value.trim()) { this.removeAttribute("aria-invalid"); $(id + "-error").hidden = true; } updateSummary(); });
+  });
+
+  function updateSummary() {
+    var w = WHAT.find(function (x) { return x.id === val("what"); });
+    var d = days.find(function (x) { return dayKey(x) === val("day"); });
+    var win = WINDOWS.find(function (x) { return x.id === val("win"); });
+    var parts = [];
+    if (w) parts.push("<strong>" + esc(w.title) + "</strong>");
+    if (d) parts.push(dayLong(d) + (win ? ", " + win.title.toLowerCase() + " (" + win.sub + ")" : ""));
+    if (picked.length) parts.push("Образцов: " + picked.length);
+    $("summary").innerHTML = parts.length ? parts.join("<br>") : "Выберите, что нужно, и удобное время.";
+    $("step-what").classList.toggle("done", !!w);
+    $("step-picked").classList.toggle("done", picked.length > 0);
+    $("step-day").classList.toggle("done", !!d && !!win);
+    $("step-contact").classList.toggle("done", !!$("addr").value.trim() && !!$("name").value.trim() && phoneDigits().length === 10);
+  }
+  $("req-form").addEventListener("change", function () { $("form-error").hidden = true; updateSummary(); });
+
+  $("req-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = [];
+    if (!val("what")) missing.push(["step-what", "что нужно"]);
+    if (!val("day")) missing.push(["step-day", "день"]);
+    if (!val("win")) missing.push(["step-day", "время суток"]);
+    var checks = [["addr", !!$("addr").value.trim()], ["name", !!$("name").value.trim()], ["phone", phoneDigits().length === 10]];
+    checks.forEach(function (c) { $(c[0] + "-error").hidden = c[1]; if (c[1]) $(c[0]).removeAttribute("aria-invalid"); else $(c[0]).setAttribute("aria-invalid", "true"); });
+    var bad = checks.filter(function (c) { return !c[1]; });
+    if (missing.length || bad.length) {
+      $("form-error").textContent = missing.length ? "Осталось выбрать: " + missing.map(function (m) { return m[1]; }).join(", ") + "." : "Проверьте адрес, имя и телефон.";
+      $("form-error").hidden = false;
+      var first = missing.length ? $(missing[0][0]) : $(bad[0][0]);
+      first.scrollIntoView({ block: "center" });
+      if (first.tagName === "INPUT") first.focus({ preventScroll: true });
+      return;
+    }
+    var w = WHAT.find(function (x) { return x.id === val("what"); });
+    var d = days.find(function (x) { return dayKey(x) === val("day"); });
+    var win = WINDOWS.find(function (x) { return x.id === val("win"); });
+    var req = { id: Date.now(), what: w.title, when: dayLong(d) + ", " + win.title.toLowerCase() + " (" + win.sub + ")", addr: $("addr").value.trim(),
+      name: $("name").value.trim(), phone: formatPhone(phoneDigits()), samples: picked.map(function (id) { var x = byId(id); return x.title + ", " + x.color.toLowerCase(); }), comment: $("comment").value.trim() };
+    var all = load(STORE, []); all.push(req); save(STORE, all);
+    var rows = [["Что нужно", req.what], ["Когда", req.when], ["Адрес", req.addr], ["Имя", req.name], ["Телефон", req.phone]];
+    if (req.samples.length) rows.push(["Образцы", req.samples.join("; ")]);
+    if (req.comment) rows.push(["Комментарий", req.comment]);
+    $("done-list").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("");
+    $("req-form").hidden = true; $("done").hidden = false; renderPicked();
+    var top = document.querySelector(".top");
+    window.scrollTo({ top: $("request").getBoundingClientRect().top + window.scrollY - ((getComputedStyle(top).position === "sticky" ? top.offsetHeight : 0) + 12), behavior: "instant" });
+    $("done").focus({ preventScroll: true });
+  });
+  $("again").addEventListener("click", function () {
+    $("req-form").reset(); picked = []; save(PICK, picked);
+    renderReq(); renderGrid(); renderPicked(); updateSummary();
+    $("done").hidden = true; $("req-form").hidden = false; renderPicked();
+    $("request").scrollIntoView({ block: "start" });
+  });
+
+  $("copy-phone").addEventListener("click", function () {
+    var btn = this, text = $("phone-text").textContent;
+    function done() { btn.textContent = "Номер скопирован"; setTimeout(function () { btn.textContent = "Скопировать номер"; }, 2000); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents($("phone-text")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  function setLarge(on) {
+    document.documentElement.classList.toggle("large", on);
+    $("font-normal").setAttribute("aria-pressed", String(!on));
+    $("font-large").setAttribute("aria-pressed", String(on));
+    try { localStorage.setItem("kolorit-demo-large", on ? "1" : "0"); } catch (e) {}
+  }
+  $("font-normal").addEventListener("click", function () { setLarge(false); });
+  $("font-large").addEventListener("click", function () { setLarge(true); });
+  try { if (localStorage.getItem("kolorit-demo-large") === "1") setLarge(true); } catch (e) {}
+
+  function applyShop() {
+    var hours = SHOP.openHour + ":00–" + SHOP.closeHour + ":00";
+    var map = { name: SHOP.name, tagline: SHOP.tagline, eyebrow: SHOP.eyebrow, phone: SHOP.phone, place: SHOP.place, address: SHOP.address,
+      hoursNote: SHOP.hoursNote, hoursShort: "Каждый день " + hours, hoursLong: "Каждый день " + hours, measureNote: SHOP.measureNote };
+    document.querySelectorAll("[data-cfg]").forEach(function (el) { var v = map[el.getAttribute("data-cfg")]; if (v != null) el.textContent = v; });
+    document.title = SHOP.tagline + " «" + SHOP.name + "»";
+    $("map-link").href = SHOP.mapUrl;
+    $("find-steps").innerHTML = SHOP.findSteps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("");
+    $("services").innerHTML = SHOP.services.map(function (s) { return '<div class="service"><h3>' + esc(s.title) + "</h3><p>" + esc(s.text) + '</p><div class="service-price">' + esc(s.price) + "</div></div>"; }).join("");
+  }
+
+  applyShop();
+  renderFilters(); renderGrid();
+  renderReq(); renderPicked();
+  calc(); updateSummary();
+})();
+</script>
+</body>
+</html>

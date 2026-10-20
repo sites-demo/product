@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Шиномонтаж в Красном Селе</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Onest:wght@600;700;800&display=swap">
+<style>
+/* Layout: одна колонка до 1080px. Шапка с телефоном, затем запись как главный блок, цены по размеру дисков, контакты.
+   Палитра дорожного знака: синий указатель + жёлтая разметка на светлом асфальте. */
+:root {
+  --bg: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #13171C;
+  --muted: #4A5462;
+  --line: #D3DAE2;
+  --accent: #1B4F8E;
+  --accent-hover: #153F73;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E4ECF6;
+  --mark: #F2C12E;
+  --ok: #1E7443;
+  --ok-soft: #E3F2E8;
+  --danger: #B02A21;
+  --busy: #E9EDF1;
+  --busy-ink: #8A93A0;
+  --shadow: 0 1px 2px rgba(19,23,28,.06), 0 6px 24px rgba(19,23,28,.06);
+
+  --f-display: "Onest", "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-body: "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius: 14px;
+  --tap: 60px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1318; --surface: #181D24; --ink: #EEF1F5; --muted: #AEB7C3; --line: #2C343F;
+    --accent: #3D7BD4; --accent-hover: #5A90DE; --accent-ink: #FFFFFF; --accent-soft: #1A2A41;
+    --mark: #F2C12E; --ok: #5CC488; --ok-soft: #15301F; --danger: #F07A70;
+    --busy: #1F252D; --busy-ink: #6D7682; --shadow: 0 1px 2px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1318; --surface: #181D24; --ink: #EEF1F5; --muted: #AEB7C3; --line: #2C343F;
+  --accent: #3D7BD4; --accent-hover: #5A90DE; --accent-ink: #FFFFFF; --accent-soft: #1A2A41;
+  --mark: #F2C12E; --ok: #5CC488; --ok-soft: #15301F; --danger: #F07A70;
+  --busy: #1F252D; --busy-ink: #6D7682; --shadow: 0 1px 2px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+
+html { font-size: 112.5%; }
+html.large { font-size: 128%; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 1rem; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--mark); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Шапка */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.top { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+.top .wrap { display: flex; align-items: center; gap: 16px 24px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.brand-mark { width: 44px; height: 44px; flex: none; }
+.brand-name { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; line-height: 1.1; }
+.brand-sub { font-size: .8rem; color: var(--muted); }
+.top-phone { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.top-hours { font-size: .8rem; color: var(--muted); display: block; font-family: var(--f-body); font-weight: 400; }
+.size-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.size-toggle button { border: 0; background: var(--surface); color: var(--ink); font: 600 1rem var(--f-body); min-width: 52px; min-height: 48px; cursor: pointer; }
+.size-toggle button + button { border-left: 1px solid var(--line); font-size: 1.25rem; }
+.size-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.road { height: 6px; background: repeating-linear-gradient(90deg, var(--mark) 0 48px, transparent 48px 80px); opacity: .9; }
+
+/* Кнопки */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: var(--tap); padding: 0 28px; border-radius: 12px; border: 2px solid transparent;
+  font: 700 1.05rem var(--f-body); text-decoration: none; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); transition: background-color .15s;
+}
+.btn:hover { background: var(--accent-hover); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { background: var(--busy); }
+.btn-wide { width: 100%; }
+
+/* Первый экран */
+.hero .wrap { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; padding-block: 56px 48px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 4.4vw, 3rem); font-weight: 800; }
+.hero-lead { font-size: 1.15rem; color: var(--muted); margin-top: 18px; max-width: 34ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.facts { list-style: none; padding: 0; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.facts li { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+.facts svg { width: 24px; height: 24px; color: var(--ok); flex: none; }
+.next-slot { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 28px; border: 1px solid var(--line); }
+.next-slot-label { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.next-slot-time { font-family: var(--f-display); font-size: 2.6rem; font-weight: 800; line-height: 1.1; margin: 8px 0 4px; }
+.next-slot-day { font-size: 1.1rem; font-weight: 600; }
+.next-slot hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0; }
+.next-slot-note { color: var(--muted); font-size: .95rem; margin-bottom: 16px; }
+
+/* Секции */
+section { padding-block: 8px; }
+.section-head { margin-bottom: 24px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; }
+.section-head p { color: var(--muted); margin-top: 8px; max-width: 60ch; }
+.block { padding-block: 48px; }
+
+/* Запись */
+.booking { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: clamp(20px, 4vw, 40px); }
+.step { border: 0; margin: 0; padding: 0; min-width: 0; }
+.step + .step { margin-top: 36px; padding-top: 32px; border-top: 1px solid var(--line); }
+.step legend { float: left; width: 100%; display: flex; align-items: center; gap: 14px; padding: 0; margin-bottom: 18px; font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; }
+.step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 1.1rem; flex: none; }
+.step.done .step-num { background: var(--ok); color: #fff; }
+.step > :not(legend) { clear: both; }
+.hint { color: var(--muted); font-size: .95rem; margin: -6px 0 16px; }
+
+.choices { display: grid; gap: 12px; }
+.choices-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choices-sizes { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.choices-days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.choices-times { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; pointer-events: none; }
+.choice label {
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  min-height: var(--tap); height: 100%; padding: 12px 16px; border-radius: var(--radius);
+  border: 2px solid var(--line); background: var(--surface); cursor: pointer;
+  transition: border-color .12s, background-color .12s;
+}
+.choice label:hover { border-color: var(--accent); }
+.choice input:checked + label { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.choice input:focus-visible + label { outline: 3px solid var(--mark); outline-offset: 2px; }
+.choice input:disabled + label { background: var(--busy); color: var(--busy-ink); border-color: transparent; cursor: not-allowed; text-decoration: line-through; }
+.choice-title { font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
+.choice-sub { color: var(--muted); font-size: .9rem; }
+.choice input:checked + label .choice-sub { color: var(--ink); }
+.choices-services .choice label { padding: 16px 20px 16px 56px; min-height: 84px; }
+.choices-services .choice label::before {
+  content: ""; position: absolute; left: 18px; top: 50%; translate: 0 -50%;
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface);
+}
+.choices-services .choice input:checked + label::before { border: 7px solid var(--accent); }
+.choices-sizes label, .choices-days label, .choices-times label { align-items: center; text-align: center; padding: 10px 6px; }
+.choices-times .choice-title { font-size: 1.1rem; }
+.choices-days .choice-sub { font-size: .85rem; }
+.no-slots { padding: 16px 20px; border-radius: var(--radius); background: var(--busy); color: var(--muted); }
+
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+.field label { display: block; font-weight: 600; margin-bottom: 8px; }
+.field input {
+  width: 100%; min-height: var(--tap); padding: 0 18px; border-radius: 12px;
+  border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+  font: 500 1.1rem var(--f-body);
+}
+.field input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.field-error { color: var(--danger); font-size: .95rem; margin-top: 6px; font-weight: 500; }
+
+.summary { margin-top: 36px; padding: 24px; border-radius: 16px; background: var(--accent-soft); display: grid; grid-template-columns: 1fr auto; gap: 20px 32px; align-items: center; }
+.summary-text { font-size: 1.1rem; min-width: 0; }
+.summary-text strong { font-weight: 700; }
+.summary-price { color: var(--muted); margin-top: 4px; }
+.form-error { color: var(--danger); font-weight: 600; margin-top: 14px; }
+
+/* Подтверждение */
+.done-card { text-align: left; }
+.done-head { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.done-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; flex: none; }
+.done-icon svg { width: 36px; height: 36px; }
+.done-head h2 { font-size: 1.9rem; font-weight: 800; }
+.done-list { display: grid; grid-template-columns: max-content 1fr; gap: 12px 24px; margin: 0 0 24px; font-size: 1.1rem; }
+.done-list dt { color: var(--muted); }
+.done-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.done-note { padding: 16px 20px; border-left: 4px solid var(--mark); background: var(--bg); border-radius: 0 10px 10px 0; margin-bottom: 24px; }
+.done-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.confirm-cancel { margin-top: 16px; padding: 18px 20px; border-radius: 12px; border: 2px solid var(--danger); display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.confirm-cancel p { font-weight: 600; margin-right: auto; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: var(--danger); filter: brightness(.92); }
+
+/* Цены */
+.price-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+table.prices { width: 100%; border-collapse: collapse; min-width: 620px; }
+.prices th, .prices td { padding: 18px 20px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.prices thead th { font-family: var(--f-display); font-size: 1.05rem; background: var(--bg); }
+.prices th[scope="row"], .prices thead th:first-child { text-align: left; white-space: normal; }
+.prices th[scope="row"] { font-weight: 600; }
+.prices th[scope="row"] span { display: block; font-weight: 400; color: var(--muted); font-size: .9rem; }
+.prices tbody tr:last-child > * { border-bottom: 0; }
+.prices td { font-weight: 600; font-size: 1.1rem; }
+.price-note { color: var(--muted); margin-top: 14px; font-size: .95rem; }
+.tyre-hint { display: flex; gap: 20px; align-items: center; margin-top: 24px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.tyre-hint code { font-family: var(--f-display); font-weight: 800; font-size: 1.4rem; letter-spacing: .04em; white-space: nowrap; }
+.tyre-hint code b { color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 0 6px; }
+.tyre-hint p { color: var(--muted); }
+
+/* Почему мы */
+.why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.why h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.why p { color: var(--muted); }
+.why-num { font-family: var(--f-display); font-weight: 800; font-size: 2.2rem; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+
+/* Контакты */
+.contacts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.contact-label { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.contact-value { font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; line-height: 1.3; }
+.contact a.link { font-weight: 600; margin-top: auto; padding-top: 10px; }
+.copy-btn { margin-top: auto; align-self: flex-start; background: none; border: 0; padding: 10px 0 0; color: var(--accent); font: 600 1rem var(--f-body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+footer { border-top: 1px solid var(--line); margin-top: 48px; }
+footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; color: var(--muted); font-size: .9rem; }
+
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: 1fr; padding-block: 36px 32px; gap: 28px; }
+  .choices-days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .choices-times { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .choices-sizes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .why, .contacts { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 620px) {
+  html { font-size: 106.25%; }
+  html.large { font-size: 121%; }
+  .top .wrap { gap: 10px 16px; }
+  .brand-sub, .top-hours { display: none; }
+  .choices-services, .fields { grid-template-columns: 1fr; }
+  .choices-days, .choices-times, .choices-sizes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .summary { grid-template-columns: 1fr; }
+  .summary .btn { width: 100%; }
+  .done-list { grid-template-columns: 1fr; gap: 2px; }
+  .done-list dd { margin-bottom: 10px; }
+  .tyre-hint { flex-direction: column; align-items: flex-start; }
+  .hero-actions .btn { width: 100%; }
+  .price-wrap { overflow: visible; background: none; border: 0; }
+  table.prices { min-width: 0; }
+  .prices thead { display: none; }
+  .prices, .prices tbody { display: block; }
+  .prices tbody { display: grid; gap: 12px; }
+  .prices tr { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 8px 0; }
+  .prices th[scope="row"] { grid-column: 1 / -1; font-family: var(--f-display); font-size: 1.1rem; border-bottom: 1px solid var(--line); }
+  .prices th, .prices td { padding: 10px 18px; }
+  .prices td { border: 0; text-align: left; display: flex; flex-direction: column; }
+  .prices td::before { content: attr(data-label); font-size: .85rem; font-weight: 500; color: var(--muted); }
+  .prices tbody tr:last-child > th { border-bottom: 1px solid var(--line); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+#booking, #prices, #contacts, #done, .step, .field input { scroll-margin-top: 110px; }
+@media (max-width: 620px) { #booking, #prices, #contacts, #done, .step, .field input { scroll-margin-top: 16px; }
+  .top { position: static; }
+  body::before { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="На главную">
+      <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="20" fill="var(--ink)"/>
+        <circle cx="22" cy="22" r="11" fill="var(--surface)"/>
+        <circle cx="22" cy="22" r="4" fill="var(--accent)"/>
+        <g stroke="var(--surface)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M22 3.5v4M22 36.5v4M3.5 22h4M36.5 22h4M8.9 8.9l2.8 2.8M32.3 32.3l2.8 2.8M8.9 35.1l2.8-2.8M32.3 11.7l2.8-2.8"/>
+        </g>
+      </svg>
+      <span>
+        <span class="brand-name" data-cfg="name">Шиномонтаж «Протектор»</span><br>
+        <span class="brand-sub" data-cfg="tagline">Легковые автомобили и кроссоверы</span>
+      </span>
+    </a>
+    <div class="size-toggle" role="group" aria-label="Размер текста">
+      <button type="button" id="font-normal" aria-pressed="true" title="Обычный текст">А</button>
+      <button type="button" id="font-large" aria-pressed="false" title="Крупный текст">А</button>
+    </div>
+    <span class="top-phone"><span data-cfg="phone">+7 (900) 123-45-67</span><span class="top-hours" data-cfg="hoursShort">Каждый день 8:00–21:00</span></span>
+  </div>
+  <div class="road" aria-hidden="true"></div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Запишитесь на шиномонтаж заранее и приезжайте без очереди</h1>
+        <p class="hero-lead">Выберите услугу, день и удобное время. Мастер будет ждать вас и позвонит накануне.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#booking">Записаться онлайн</a>
+          <a class="btn btn-ghost" href="#prices">Посмотреть цены</a>
+        </div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-cfg="heroFact">Сезонная смена за 40 минут</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Цена известна заранее</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Запись без звонка</li>
+        </ul>
+      </div>
+      <aside class="next-slot" aria-live="polite">
+        <div class="next-slot-label">Ближайшее свободное время</div>
+        <div class="next-slot-time" id="next-time">—</div>
+        <div class="next-slot-day" id="next-day"></div>
+        <hr>
+        <p class="next-slot-note">Удобно? Запишем вас на это время в два касания.</p>
+        <button class="btn btn-wide" type="button" id="take-next">Записаться на это время</button>
+      </aside>
+    </div>
+  </section>
+
+  <section class="block" id="booking" aria-labelledby="booking-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="booking-title">Онлайн-запись</h2>
+        <p>Пять простых шагов. Если что-то не получается, позвоните нам, запишем по телефону.</p>
+      </div>
+
+      <form class="booking" id="booking-form" novalidate>
+        <fieldset class="step" id="step-service">
+          <legend><span class="step-num">1</span>Что нужно сделать?</legend>
+          <div class="choices choices-services" id="services"></div>
+        </fieldset>
+
+        <fieldset class="step" id="step-size">
+          <legend><span class="step-num">2</span>Какой размер колёс?</legend>
+          <p class="hint">Размер написан на боковине шины, например 205/55 <b>R16</b>. Если не знаете, выберите «Не знаю», мастер посмотрит на месте.</p>
+          <div class="choices choices-sizes" id="sizes"></div>
+        </fieldset>
+
+        <fieldset class="step" id="step-day">
+          <legend><span class="step-num">3</span>В какой день?</legend>
+          <div class="choices choices-days" id="days"></div>
+        </fieldset>
+
+        <fieldset class="step" id="step-time">
+          <legend><span class="step-num">4</span>Во сколько?</legend>
+          <p class="hint">Зачёркнутое время уже занято.</p>
+          <div class="choices choices-times" id="times"></div>
+        </fieldset>
+
+        <fieldset class="step" id="step-contact">
+          <legend><span class="step-num">5</span>Как с вами связаться?</legend>
+          <div class="fields">
+            <div class="field">
+              <label for="name">Ваше имя</label>
+              <input id="name" name="name" type="text" autocomplete="given-name" placeholder="Например, Николай">
+              <div class="field-error" id="name-error" hidden>Напишите, как к вам обращаться.</div>
+            </div>
+            <div class="field">
+              <label for="phone">Номер телефона</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+              <div class="field-error" id="phone-error" hidden>Проверьте номер: нужно 10 цифр после +7.</div>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="summary">
+          <div class="summary-text" id="summary" aria-live="polite">Выберите услугу, день и время.</div>
+          <button class="btn" type="submit" id="submit">Записаться</button>
+        </div>
+        <p class="form-error" id="form-error" hidden></p>
+      </form>
+
+      <div class="booking done-card" id="done" hidden tabindex="-1">
+        <div class="done-head">
+          <div class="done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h2>Вы записаны</h2>
+        </div>
+        <dl class="done-list" id="done-list"></dl>
+        <p class="done-note">Мастер позвонит вам накануне, чтобы напомнить о визите. Если планы изменятся, позвоните нам: <span data-cfg="phone">+7 (900) 123-45-67</span>.</p>
+        <div class="done-actions">
+          <button class="btn" type="button" id="book-again">Записать ещё одну машину</button>
+          <button class="btn btn-ghost" type="button" id="cancel">Отменить запись</button>
+        </div>
+        <div class="confirm-cancel" id="confirm-cancel" hidden>
+          <p>Точно отменить запись?</p>
+          <button class="btn btn-danger" type="button" id="cancel-yes">Да, отменить</button>
+          <button class="btn btn-ghost" type="button" id="cancel-no">Нет, оставить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="prices" aria-labelledby="prices-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="prices-title">Цены</h2>
+        <p>Цена зависит от размера дисков. Указана за комплект из четырёх колёс, если не написано иначе.</p>
+      </div>
+      <div class="price-wrap">
+        <table class="prices">
+          <thead>
+            <tr><th scope="col">Услуга</th><th scope="col">R13–R15</th><th scope="col">R16–R17</th><th scope="col">R18–R19</th><th scope="col">R20 и больше</th></tr>
+          </thead>
+          <tbody id="price-rows"></tbody>
+        </table>
+      </div>
+      <p class="price-note">Цены в рублях. Внедорожники и низкий профиль шин считаются по цене следующего размера.</p>
+      <div class="tyre-hint">
+        <code aria-label="Пример маркировки шины: 205/55 R16">205/55 <b>R16</b></code>
+        <p>Где посмотреть размер: на боковине шины, крупными цифрами. Нужна часть после буквы R, это диаметр диска в дюймах.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="why-title">Почему удобно у нас</h2></div>
+      <div class="why" id="why">
+        <!-- заполняется из SHOP.why -->
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contacts" aria-labelledby="contacts-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="contacts-title">Как нас найти</h2></div>
+      <div class="contacts">
+        <div class="contact">
+          <span class="contact-label">Адрес</span>
+          <span class="contact-value" data-cfg="address">ул. Ленина, 25</span>
+          <span data-cfg="addressNote">Въезд со двора, синие ворота</span>
+          <a class="link" id="map-link" href="https://yandex.ru/maps/" target="_blank" rel="noopener">Открыть на карте</a>
+        </div>
+        <div class="contact">
+          <span class="contact-label">Телефон</span>
+          <span class="contact-value" id="phone-text" data-cfg="phone">+7 (900) 123-45-67</span>
+          <span data-cfg="phoneNote">Ответим с 8:00 до 21:00</span>
+          <button class="copy-btn" type="button" id="copy-phone">Скопировать номер</button>
+        </div>
+        <div class="contact">
+          <span class="contact-label">Часы работы</span>
+          <span class="contact-value" data-cfg="hoursLong" style="white-space: pre-line">Каждый день 8:00–21:00</span>
+          <span data-cfg="hoursNote">Без перерыва и выходных</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-cfg="name">Шиномонтаж «Протектор»</span>
+    <span>Демонстрационная версия: записи сохраняются только в этом браузере.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ===== НАСТРОЙКИ ШИНОМОНТАЖА =====
+     Чтобы сделать сайт под конкретную точку, поменяйте значения ниже. Остальной код трогать не нужно. */
+  var SHOP = {
+    name: "Шиномонтаж",
+    tagline: "Красное Село, пер. Щуппа, 5",
+    phone: "+7 (812) 923-98-06",
+    address: "пер. Щуппа, 5",
+    addressNote: "Красное Село, рядом с проспектом Ленина",
+    mapQuery: "Красное Село, переулок Щуппа, 5",
+    mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
+    openHour: 11, closeHour: 20,          // часы работы
+    hoursNote: "Без выходных",
+    heroFact: "Сезонная смена за 40 минут",
+    why: [
+      { num: "Рядом", title: "В Красном Селе", text: "Переулок Щуппа, у проспекта Ленина. Не нужно ехать в город, чтобы поменять колёса." },
+      { num: "Онлайн", title: "Запись без звонков", text: "Выберите день и время на сайте. Мастер будет ждать вас и позвонит накануне." },
+      { num: "Заранее", title: "Цена известна до визита", text: "Стоимость зависит только от размера колёс и видна до записи." }
+    ],
+    // Услуги: время работы (минуты, 0 — не показывать) и цены по размерам R13–R15 / R16–R17 / R18–R19 / R20+
+    services: [
+      { id: "season", title: "Сезонная смена колёс", sub: "Снять, поставить, отбалансировать", minutes: 40, prices: [2000, 2400, 2900, 3600] },
+      { id: "balance", title: "Балансировка", sub: "Если руль дрожит на скорости", minutes: 30, prices: [1000, 1200, 1500, 1900] },
+      { id: "puncture", title: "Ремонт прокола", sub: "Колесо спускает", minutes: 30, prices: [600, 700, 800, 1000], unit: "за 1 колесо" },
+      { id: "storage", title: "Сдать шины на хранение", sub: "Храним до следующего сезона в тёплом складе", minutes: 0, prices: [3000, 3500, 4000, 4800], unit: "за сезон" }
+    ]
+  };
+  /* ===== конец настроек ===== */
+
+  var SERVICES = SHOP.services.map(function (x) {
+    return Object.assign({}, x, { sub: x.sub + (x.minutes ? " · около " + x.minutes + " мин" : "") });
+  });
+  var SIZES = [
+    { id: "r15", title: "R13–R15", idx: 0 },
+    { id: "r17", title: "R16–R17", idx: 1 },
+    { id: "r19", title: "R18–R19", idx: 2 },
+    { id: "r20", title: "R20+", idx: 3 },
+    { id: "unknown", title: "Не знаю", idx: -1 }
+  ];
+  var SIZE_LABELS = ["R13–R15", "R16–R17", "R18–R19", "R20 и больше"];
+  var HOURS = [];
+  for (var hr = SHOP.openHour; hr < SHOP.closeHour; hr++) HOURS.push(hr);
+  var DAYS_AHEAD = 7;
+  var STORE_KEY = "tyre-demo-bookings";
+  var WD = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+
+  function $(id) { return document.getElementById(id); }
+  function fmtPrice(n) { return n.toLocaleString("ru-RU").replace(/ |\s/g, " ") + " ₽"; }
+  function dayKey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function hh(h) { return h + ":00"; }
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || "[]"); } catch (e) { return []; }
+  }
+  function save(list) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  var bookings = load();
+  var current = null;
+
+  // Псевдослучайная занятость, одинаковая при каждом открытии страницы
+  function isBusyDemo(key, h) {
+    var s = key + ":" + h, x = 0;
+    for (var i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) >>> 0;
+    return (x % 100) < 38;
+  }
+  function slotState(date, h) {
+    var key = dayKey(date);
+    var now = new Date();
+    if (dayKey(now) === key && h <= now.getHours()) return "past";
+    if (bookings.some(function (b) { return b.day === key && b.hour === h; })) return "busy";
+    return isBusyDemo(key, h) ? "busy" : "free";
+  }
+
+  var days = [];
+  (function () {
+    var t = new Date(); t.setHours(0, 0, 0, 0);
+    for (var i = 0; i < DAYS_AHEAD; i++) { var d = new Date(t); d.setDate(t.getDate() + i); days.push(d); }
+  })();
+  function dayLabel(d, i) {
+    if (i === 0) return "Сегодня";
+    if (i === 1) return "Завтра";
+    return WD[d.getDay()].charAt(0).toUpperCase() + WD[d.getDay()].slice(1);
+  }
+  function dayLong(d) {
+    var i = days.findIndex(function (x) { return dayKey(x) === dayKey(d); });
+    var base = d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()];
+    return i === 0 ? "Сегодня, " + base : i === 1 ? "Завтра, " + base : base.charAt(0).toUpperCase() + base.slice(1);
+  }
+
+  function choice(group, value, title, sub, checked, disabled) {
+    var id = group + "-" + value;
+    return '<div class="choice"><input type="radio" name="' + group + '" id="' + id + '" value="' + value + '"' +
+      (checked ? " checked" : "") + (disabled ? " disabled" : "") + '><label for="' + id + '">' +
+      '<span class="choice-title">' + title + "</span>" + (sub ? '<span class="choice-sub">' + sub + "</span>" : "") + "</label></div>";
+  }
+
+  function renderStatic() {
+    $("services").innerHTML = SERVICES.map(function (s) { return choice("service", s.id, s.title, s.sub); }).join("");
+    $("sizes").innerHTML = SIZES.map(function (s) { return choice("size", s.id, s.title); }).join("");
+    $("price-rows").innerHTML = SERVICES.map(function (s) {
+      return '<tr><th scope="row">' + s.title + (s.unit ? "<span>" + s.unit + "</span>" : "") + "</th>" +
+        s.prices.map(function (p, i) { return '<td data-label="' + SIZE_LABELS[i] + '">' + fmtPrice(p) + "</td>"; }).join("") + "</tr>";
+    }).join("");
+  }
+
+  function freeCount(d) { return HOURS.filter(function (h) { return slotState(d, h) === "free"; }).length; }
+
+  function renderDays(selectedKey) {
+    $("days").innerHTML = days.map(function (d, i) {
+      var n = freeCount(d);
+      var sub = d.getDate() + " " + MONTHS[d.getMonth()].slice(0, 3);
+      return choice("day", dayKey(d), dayLabel(d, i), n ? sub : "мест нет", dayKey(d) === selectedKey, n === 0);
+    }).join("");
+  }
+
+  function renderTimes(selectedHour) {
+    var dk = val("day");
+    if (!dk) { $("times").innerHTML = '<div class="no-slots" style="grid-column:1/-1">Сначала выберите день.</div>'; return; }
+    var d = days.find(function (x) { return dayKey(x) === dk; });
+    var html = HOURS.filter(function (h) { return slotState(d, h) !== "past"; }).map(function (h) {
+      var st = slotState(d, h);
+      return choice("hour", h, hh(h), "", h === selectedHour && st === "free", st !== "free");
+    }).join("");
+    $("times").innerHTML = html || '<div class="no-slots" style="grid-column:1/-1">На этот день свободного времени нет. Выберите другой день.</div>';
+  }
+
+  function val(name) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : "";
+  }
+
+  function nextFree() {
+    for (var i = 0; i < days.length; i++) for (var j = 0; j < HOURS.length; j++)
+      if (slotState(days[i], HOURS[j]) === "free") return { d: days[i], h: HOURS[j] };
+    return null;
+  }
+  function renderNext() {
+    var n = nextFree();
+    $("next-time").textContent = n ? hh(n.h) : "—";
+    $("next-day").textContent = n ? dayLong(n.d) : "Свободного времени на неделю нет";
+    $("take-next").hidden = !n;
+  }
+
+  function priceFor(serviceId, sizeId) {
+    var s = SERVICES.find(function (x) { return x.id === serviceId; });
+    var z = SIZES.find(function (x) { return x.id === sizeId; });
+    if (!s) return "";
+    if (!z || z.idx < 0) return "от " + fmtPrice(s.prices[0]) + (s.unit ? " " + s.unit : "");
+    return fmtPrice(s.prices[z.idx]) + (s.unit ? " " + s.unit : "");
+  }
+
+  function updateSteps() {
+    $("step-service").classList.toggle("done", !!val("service"));
+    $("step-size").classList.toggle("done", !!val("size"));
+    $("step-day").classList.toggle("done", !!val("day"));
+    $("step-time").classList.toggle("done", !!val("hour"));
+    $("step-contact").classList.toggle("done", $("name").value.trim().length > 0 && phoneDigits().length === 10);
+  }
+
+  function updateSummary() {
+    var s = SERVICES.find(function (x) { return x.id === val("service"); });
+    var dk = val("day"), h = val("hour");
+    var d = days.find(function (x) { return dayKey(x) === dk; });
+    var parts = [];
+    if (s) parts.push("<strong>" + s.title + "</strong>");
+    if (d) parts.push(dayLong(d).toLowerCase().replace(/^./, function (c) { return c.toUpperCase(); }) + (h ? " в " + hh(+h) : ""));
+    var html = parts.length ? parts.join("<br>") : "Выберите услугу, день и время.";
+    if (s) html += '<div class="summary-price">Стоимость: ' + priceFor(s.id, val("size")) + "</div>";
+    $("summary").innerHTML = html;
+    updateSteps();
+  }
+
+  // Телефон: +7 (XXX) XXX-XX-XX
+  function phoneDigits() {
+    var v = $("phone").value, d;
+    if (/^\s*\+7/.test(v)) d = v.replace(/^\s*\+7/, "").replace(/\D/g, "");
+    else { d = v.replace(/\D/g, ""); if (d.length >= 11 && /[78]/.test(d.charAt(0))) d = d.slice(1); }
+    if (d.length === 11 && d.charAt(0) === "8") d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatPhone(d) {
+    var out = "+7";
+    if (d.length) out += " (" + d.slice(0, 3);
+    if (d.length >= 3) out += ")";
+    if (d.length > 3) out += " " + d.slice(3, 6);
+    if (d.length > 6) out += "-" + d.slice(6, 8);
+    if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  $("phone").addEventListener("input", function () {
+    var d = phoneDigits();
+    this.value = d.length ? formatPhone(d) : "";
+    if (d.length === 10) { this.removeAttribute("aria-invalid"); $("phone-error").hidden = true; }
+    updateSteps();
+  });
+  $("name").addEventListener("input", function () {
+    if (this.value.trim()) { this.removeAttribute("aria-invalid"); $("name-error").hidden = true; }
+    updateSteps();
+  });
+
+  $("booking-form").addEventListener("change", function (e) {
+    if (e.target.name === "day") renderTimes(null);
+    $("form-error").hidden = true;
+    updateSummary();
+  });
+
+  $("booking-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var missing = [];
+    if (!val("service")) missing.push(["step-service", "услугу"]);
+    if (!val("size")) missing.push(["step-size", "размер колёс"]);
+    if (!val("day")) missing.push(["step-day", "день"]);
+    if (!val("hour")) missing.push(["step-time", "время"]);
+    var nameOk = $("name").value.trim().length > 0;
+    var phoneOk = phoneDigits().length === 10;
+    $("name-error").hidden = nameOk; $("phone-error").hidden = phoneOk;
+    if (nameOk) $("name").removeAttribute("aria-invalid"); else $("name").setAttribute("aria-invalid", "true");
+    if (phoneOk) $("phone").removeAttribute("aria-invalid"); else $("phone").setAttribute("aria-invalid", "true");
+
+    if (missing.length || !nameOk || !phoneOk) {
+      var msg = missing.length ? "Осталось выбрать: " + missing.map(function (m) { return m[1]; }).join(", ") + "." : "Проверьте имя и телефон.";
+      $("form-error").textContent = msg; $("form-error").hidden = false;
+      var first = missing.length ? $(missing[0][0]) : (!nameOk ? $("name") : $("phone"));
+      first.scrollIntoView({ block: "center" });
+      if (first.tagName === "INPUT") first.focus({ preventScroll: true });
+      return;
+    }
+
+    var d = days.find(function (x) { return dayKey(x) === val("day"); });
+    var h = +val("hour");
+    if (slotState(d, h) !== "free") {
+      $("form-error").textContent = "Это время только что заняли. Выберите другое.";
+      $("form-error").hidden = false; renderTimes(null); return;
+    }
+    current = {
+      id: Date.now(), service: val("service"), size: val("size"),
+      day: val("day"), dayText: dayLong(d), hour: h,
+      name: $("name").value.trim(), phone: formatPhone(phoneDigits())
+    };
+    bookings.push(current); save(bookings);
+    showDone();
+  });
+
+  function showDone() {
+    var s = SERVICES.find(function (x) { return x.id === current.service; });
+    var z = SIZES.find(function (x) { return x.id === current.size; });
+    var rows = [
+      ["Когда", current.dayText + ", " + hh(current.hour)],
+      ["Услуга", s.title],
+      ["Колёса", z.idx < 0 ? "Размер уточнит мастер" : z.title],
+      ["Стоимость", priceFor(current.service, current.size)],
+      ["Имя", current.name],
+      ["Телефон", current.phone],
+      ["Адрес", SHOP.address + (SHOP.addressNote ? ". " + SHOP.addressNote : "")]
+    ];
+    $("done-list").innerHTML = rows.map(function (r) {
+      var dd = document.createElement("dd"); dd.textContent = r[1];
+      return "<dt>" + r[0] + "</dt>" + dd.outerHTML;
+    }).join("");
+    $("booking-form").hidden = true;
+    $("confirm-cancel").hidden = true;
+    $("done").hidden = false;
+    window.scrollTo({ top: $("booking").getBoundingClientRect().top + window.scrollY - ((getComputedStyle(document.querySelector(".top")).position === "sticky" ? document.querySelector(".top").offsetHeight : 0) + 12), behavior: "instant" });
+    $("done").focus({ preventScroll: true });
+    renderNext();
+  }
+
+  function resetForm() {
+    $("booking-form").reset();
+    $("form-error").hidden = true;
+    renderDays(null); renderTimes(null); updateSummary();
+    $("done").hidden = true; $("booking-form").hidden = false;
+    $("booking").scrollIntoView({ block: "start" });
+  }
+  $("book-again").addEventListener("click", function () { current = null; resetForm(); });
+  $("cancel").addEventListener("click", function () { $("confirm-cancel").hidden = false; $("cancel-yes").focus(); });
+  $("cancel-no").addEventListener("click", function () { $("confirm-cancel").hidden = true; $("cancel").focus(); });
+  $("cancel-yes").addEventListener("click", function () {
+    bookings = bookings.filter(function (b) { return b.id !== current.id; }); save(bookings);
+    current = null; renderNext(); resetForm();
+  });
+
+  $("take-next").addEventListener("click", function () {
+    var n = nextFree(); if (!n) return;
+    renderDays(dayKey(n.d)); renderTimes(n.h); updateSummary();
+    if (!val("service")) { var first = $("service-season"); if (first) first.checked = true; updateSummary(); }
+    $("step-size").scrollIntoView({ block: "start" });
+  });
+
+  $("copy-phone").addEventListener("click", function () {
+    var btn = this, text = $("phone-text").textContent;
+    function done() { btn.textContent = "Номер скопирован"; setTimeout(function () { btn.textContent = "Скопировать номер"; }, 2000); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents($("phone-text")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  // Размер текста
+  function setLarge(on) {
+    document.documentElement.classList.toggle("large", on);
+    $("font-normal").setAttribute("aria-pressed", String(!on));
+    $("font-large").setAttribute("aria-pressed", String(on));
+    try { localStorage.setItem("tyre-demo-large", on ? "1" : "0"); } catch (e) {}
+  }
+  $("font-normal").addEventListener("click", function () { setLarge(false); });
+  $("font-large").addEventListener("click", function () { setLarge(true); });
+  try { if (localStorage.getItem("tyre-demo-large") === "1") setLarge(true); } catch (e) {}
+
+  function applyShop() {
+    var hours = SHOP.openHour + ":00–" + SHOP.closeHour + ":00";
+    var map = { name: SHOP.name, tagline: SHOP.tagline, phone: SHOP.phone, address: SHOP.address,
+      addressNote: SHOP.addressNote, heroFact: SHOP.heroFact, hoursNote: SHOP.hoursNote,
+      hoursShort: "Каждый день " + hours, hoursLong: "Каждый день\n" + hours,
+      phoneNote: "Ответим с " + SHOP.openHour + ":00 до " + SHOP.closeHour + ":00" };
+    document.querySelectorAll("[data-cfg]").forEach(function (el) {
+      var v = map[el.getAttribute("data-cfg")];
+      if (v != null) { el.textContent = v; el.hidden = !v; }
+    });
+    document.title = SHOP.name;
+    $("map-link").href = SHOP.mapUrl || "https://yandex.ru/maps/?text=" + encodeURIComponent(SHOP.mapQuery);
+    var why = $("why"); why.innerHTML = "";
+    SHOP.why.forEach(function (w) {
+      var d = document.createElement("div");
+      d.innerHTML = '<div class="why-num"></div><h3></h3><p></p>';
+      d.children[0].textContent = w.num; d.children[1].textContent = w.title; d.children[2].textContent = w.text;
+      why.appendChild(d);
+    });
+  }
+
+  applyShop();
+  renderStatic();
+  renderDays(null);
+  renderTimes(null);
+  renderNext();
+  updateSummary();
+})();
+</script>
+</body>
+</html>
