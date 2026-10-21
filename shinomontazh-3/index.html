@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Шиномонтаж в Красном Селе</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Вариант 3 «Калькулятор»: светлый и деловой. На первом экране сразу выбор размера колёс
+   и цены на все работы для этого размера. Узкий гротеск Plex Condensed в заголовках, синий акцент. */
+:root {
+  --bg: #F3F4F6;
+  --card: #FFFFFF;
+  --ink: #14171C;
+  --muted: #555D68;
+  --line: #DCE0E5;
+  --accent: #1B54D1;
+  --accent-hover: #1543AA;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E7EEFC;
+  --danger: #B3261E;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --tap: 58px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --card: #1A1D22; --ink: #EEF0F3; --muted: #A9B0BA; --line: #2E333A; --accent: #7EA6FF; --accent-hover: #A2BFFF; --accent-ink: #0E1116; --accent-soft: #1E2A44; --danger: #FF8A80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --card: #1A1D22; --ink: #EEF0F3; --muted: #A9B0BA; --line: #2E333A; --accent: #7EA6FF; --accent-hover: #A2BFFF; --accent-ink: #0E1116; --accent-soft: #1E2A44; --danger: #FF8A80;
+  color-scheme: dark;
+}
+html { font-size: 112.5%; scroll-behavior: smooth; }
+html.large { font-size: 130%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 1rem; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.08; margin: 0; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: inherit; text-underline-offset: 4px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); padding: 0 28px; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 1rem; text-decoration: none; cursor: pointer; border-radius: 4px; }
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-quiet { background: var(--card); color: var(--ink); border-color: var(--line); }
+.btn-quiet:hover { background: var(--card); border-color: var(--ink); }
+.btn-wide { width: 100%; }
+
+/* Шапка */
+.top { background: #14171C; color: #FFFFFF; font-size: .9rem; padding-top: env(safe-area-inset-top, 0px); }
+.top .wrap { display: flex; align-items: center; gap: 6px 24px; min-height: 48px; }
+.top .grow { margin-right: auto; }
+.size { display: inline-flex; align-items: center; gap: 2px; }
+.size span { margin-right: 6px; opacity: .8; }
+.size button { min-width: 42px; min-height: 40px; background: none; border: 1px solid transparent; border-radius: 4px; cursor: pointer; font-weight: 700; line-height: 1; }
+.size button + button { font-size: 1.25rem; }
+.size button[aria-pressed="true"] { border-color: currentColor; }
+.head { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.head .wrap { display: flex; align-items: center; gap: 10px 32px; min-height: 76px; }
+.brand { text-decoration: none; margin-right: auto; display: flex; align-items: center; gap: 12px; }
+.brand-mark { width: 40px; height: 40px; border-radius: 4px; background: var(--accent); display: grid; place-items: center; }
+.brand-name { font-family: var(--f-display); font-weight: 700; font-size: 1.45rem; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.nav { display: flex; gap: 26px; }
+.nav a { text-decoration: none; font-weight: 500; }
+.nav a:hover { color: var(--accent); }
+.head-phone { font-weight: 700; font-size: 1.1rem; text-decoration: none; white-space: nowrap; }
+
+/* Первый экран: калькулятор */
+.hero { padding-block: 56px 72px; }
+.hero h1 { font-size: clamp(2.3rem, 4.8vw, 3.8rem); max-width: 16em; }
+.hero-lead { color: var(--muted); font-size: 1.15rem; margin-top: 16px; max-width: 36em; }
+.hero-grid { display: grid; grid-template-columns: 8fr 4fr; gap: 24px; margin-top: 40px; align-items: start; }
+.hero-grid > * { min-width: 0; }
+.calc-box { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 28px; }
+.calc-q { font-weight: 700; font-size: 1.15rem; }
+.calc-sizes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 6px; }
+.sp { min-height: 60px; background: var(--card); border: 2px solid var(--line); border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 1.05rem; }
+.sp:hover { border-color: var(--muted); }
+.sp[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.calc-hint { color: var(--muted); font-size: .92rem; }
+.calc-hint b { color: var(--ink); }
+#calc { margin-top: 20px; border-top: 1px solid var(--line); }
+.calc-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.calc-name { font-weight: 600; }
+.calc-name small { color: var(--muted); font-weight: 400; font-size: .88rem; }
+.calc-price { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; white-space: nowrap; }
+.calc-book { min-height: 48px; padding: 0 18px; background: var(--accent-soft); color: var(--accent); border: 0; border-radius: 4px; font-weight: 600; cursor: pointer; }
+.calc-book:hover { background: var(--accent); color: var(--accent-ink); }
+.side { display: grid; gap: 12px; }
+.side-card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 22px 24px; }
+.side-label { color: var(--muted); font-size: .9rem; }
+.side-big { font-family: var(--f-display); font-weight: 700; font-size: 1.9rem; line-height: 1.15; margin-top: 2px; }
+.side-card .btn { margin-top: 16px; }
+.side-card p + p { margin-top: 2px; }
+.side-card a.side-big { text-decoration: none; display: block; }
+
+.sec { padding-block: 80px; }
+.sec-white { background: var(--card); border-block: 1px solid var(--line); }
+.sec-head { margin-bottom: 36px; max-width: 760px; }
+.sec-head h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); }
+.sec-head p { color: var(--muted); margin-top: 12px; font-size: 1.08rem; }
+
+/* Запись */
+.booking { display: grid; grid-template-columns: 4fr 8fr; gap: 48px; }
+.booking > * { min-width: 0; }
+.booking-side h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); }
+.booking-side p { color: var(--muted); margin-top: 14px; }
+.phone-alt { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); }
+.booking-side .phone-alt p { margin-top: 0; }
+.phone-alt a { display: block; font-family: var(--f-display); font-weight: 700; font-size: 1.8rem; text-decoration: none; margin: 2px 0; white-space: nowrap; }
+.bk { background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+.bk-steps { list-style: none; margin: 0; padding: 0; }
+.bk-step + .bk-step { border-top: 1px solid var(--line); }
+.bk-head { display: flex; align-items: center; gap: 16px; padding: 20px 24px; }
+.bk-n { flex: none; width: 42px; height: 42px; border-radius: 4px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; background: var(--bg); color: var(--muted); }
+.is-open .bk-n { background: var(--accent); color: var(--accent-ink); }
+.is-done .bk-n { background: var(--ink); color: var(--card); }
+.bk-ht { flex: 1; min-width: 0; }
+.bk-title { font-family: var(--f-body); font-weight: 700; font-size: 1.15rem; line-height: 1.3; letter-spacing: 0; }
+.is-later .bk-title { color: var(--muted); font-weight: 600; }
+.bk-title:focus, .bk-q:focus, .bk-done-title:focus { outline: none; }
+.bk-val { color: var(--muted); margin-top: 2px; }
+.bk-edit { background: none; border: 0; color: var(--accent); font-weight: 600; text-decoration: underline; cursor: pointer; min-height: 44px; padding: 0 4px; }
+.bk-body { padding: 0 24px 26px 82px; }
+.bk-q { font-weight: 700; margin: 14px 0 10px; }
+.bk-hint { color: var(--muted); margin: 0 0 12px; }
+.bk-hint b { color: var(--ink); }
+.bk-times + .bk-hint { margin: 10px 0 0; font-size: .92rem; }
+.bk-list { display: grid; gap: 6px; }
+.bk-opt { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "main price" "meta price"; align-items: center; gap: 0 20px; text-align: left; width: 100%; background: var(--card); border: 2px solid var(--line); border-radius: 4px; padding: 12px 16px; min-height: 64px; cursor: pointer; }
+.bk-opt:hover { border-color: var(--muted); }
+.bk-opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.bk-opt-main { grid-area: main; font-weight: 600; }
+.bk-opt-meta { grid-area: meta; color: var(--muted); font-size: .92rem; }
+.bk-opt-price { grid-area: price; font-weight: 700; white-space: nowrap; }
+.bk-sizes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.bk-size-x { grid-column: 1 / -1; }
+.bk-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.bk-day { display: flex; flex-direction: column; align-items: center; padding: 8px 0; min-height: 80px; background: var(--card); border: 2px solid var(--line); border-radius: 4px; cursor: pointer; line-height: 1.2; }
+.bk-day:hover:not(:disabled) { border-color: var(--muted); }
+.bk-day-w, .bk-day-m { font-size: .8rem; color: var(--muted); }
+.bk-day-d { font-family: var(--f-display); font-size: 1.45rem; font-weight: 700; }
+.bk-day[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.bk-day[aria-pressed="true"] span { color: inherit; }
+.bk-day:disabled { cursor: default; opacity: .45; }
+.bk-times { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.bk-time { min-height: 54px; background: var(--card); border: 2px solid var(--line); border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 1.05rem; }
+.bk-time:hover:not(:disabled) { border-color: var(--muted); }
+.bk-time[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.bk-time:disabled { cursor: default; background: var(--bg); color: var(--muted); text-decoration: line-through; border-color: var(--bg); }
+.bk-form { display: grid; gap: 16px; max-width: 520px; }
+.field label { display: block; font-weight: 600; margin-bottom: 6px; }
+.field .opt { font-weight: 400; color: var(--muted); }
+.field input { width: 100%; min-height: var(--tap); padding: 12px 16px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font: inherit; border-radius: 4px; }
+.field input:focus { outline: none; border-color: var(--accent); }
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+.err { color: var(--danger); margin-top: 6px; font-weight: 600; }
+.bk-legal { color: var(--muted); font-size: .85rem; }
+.bk-done { padding: 32px 28px; }
+.bk-done-title { font-size: 2.2rem; }
+.bk-done-list { margin: 20px 0; }
+.bk-done-list div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); }
+.bk-done-list dt { color: var(--muted); }
+.bk-done-list dd { margin: 0; font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.bk-done-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+/* Таблица цен */
+.pt { width: 100%; border-collapse: collapse; background: var(--card); }
+.pt th, .pt td { text-align: left; padding: 16px 18px; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+.pt thead th { background: var(--bg); font-weight: 600; font-size: .9rem; color: var(--muted); }
+.pt tbody th { font-weight: 400; }
+.pt-name { display: block; font-weight: 600; }
+.pt-note { display: block; color: var(--muted); font-size: .9rem; }
+.pt .pt-p { text-align: right; width: 8em; white-space: nowrap; font-weight: 600; }
+.pt[data-col="0"] .c0, .pt[data-col="1"] .c1, .pt[data-col="2"] .c2, .pt[data-col="3"] .c3 { background: var(--accent-soft); color: var(--accent); }
+.table-wrap { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.price-note { color: var(--muted); margin-top: 16px; }
+
+/* Маркировка шины */
+.mark { display: grid; grid-template-columns: 5fr 7fr; gap: 48px; align-items: center; }
+.mark > * { min-width: 0; }
+.mark h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); }
+.mark p { color: var(--muted); margin-top: 14px; }
+.wall { background: #1D1F23; color: #C9CCD1; border-radius: 6px; padding: 36px 32px 28px; text-align: center; }
+.wall-code { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.2rem, 5.4vw, 3.6rem); letter-spacing: .06em; white-space: nowrap; }
+.wall-code b { color: #8FB0FF; }
+.wall-legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px dashed #3A3D43; font-size: .9rem; }
+.mark .wall p { margin: 0; color: #8B9098; }
+.mark .wall .wall-code { color: #E4E6EA; }
+.wall-legend span { display: block; color: #E4E6EA; font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; }
+.mark .wall .hl, .wall-legend .hl span { color: #8FB0FF; }
+
+/* Хранение и контакты */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.duo > * { min-width: 0; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 32px; }
+.panel h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+.panel p { color: var(--muted); margin-top: 12px; }
+.panel .btn { margin-top: 22px; }
+.panel-price { font-family: var(--f-display); font-weight: 700; font-size: 2.2rem; color: var(--ink) !important; margin-top: 18px !important; }
+.panel-price small { font-family: var(--f-body); font-weight: 400; font-size: 1rem; color: var(--muted); }
+.c-list { margin: 18px 0 0; }
+.c-list > div { display: grid; grid-template-columns: 7em 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.c-list dt { color: var(--muted); }
+.c-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.map { position: relative; min-height: 380px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-top: 24px; }
+.map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.foot { padding-block: 32px; color: var(--muted); font-size: .92rem; }
+.foot .wrap { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.foot .wrap > :first-child { margin-right: auto; }
+
+.mbar { display: none; }
+
+@media (max-width: 1040px) {
+  .nav { display: none; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .side { grid-template-columns: 1fr 1fr; }
+  .booking { grid-template-columns: 1fr; gap: 24px; }
+  .mark { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 760px) {
+  .top .grow { display: none; }
+  .top .wrap { justify-content: space-between; }
+  .head { position: static; }
+  .head .wrap { min-height: 64px; }
+  .brand-name { font-size: 1.2rem; }
+  .head-phone { font-size: 1rem; }
+  .hero { padding-block: 32px 48px; }
+  .hero h1 { font-size: 2.1rem; }
+  .hero-grid { margin-top: 24px; }
+  .calc-box { padding: 20px 16px; }
+  .calc-sizes { grid-template-columns: 1fr 1fr; }
+  .calc-row { grid-template-columns: 1fr auto; }
+  .calc-book { grid-column: 1 / -1; }
+  .side { grid-template-columns: 1fr; }
+  .sec { padding-block: 56px; }
+  .bk-head { padding: 18px 14px; gap: 12px; }
+  .bk-n { width: 38px; height: 38px; }
+  .bk-body { padding: 0 14px 22px; }
+  .bk-sizes { grid-template-columns: 1fr; }
+  .bk-days { grid-template-columns: repeat(4, 1fr); }
+  .bk-times { grid-template-columns: repeat(3, 1fr); }
+  .bk-done { padding: 24px 16px; }
+  .bk-done-list div { grid-template-columns: 1fr; gap: 0; }
+  .table-wrap { border: 0; border-radius: 0; background: none; }
+  .pt { background: none; }
+  .pt thead { display: none; }
+  .pt, .pt tbody, .pt tr, .pt th, .pt td { display: block; width: auto !important; }
+  .pt tr { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 6px; padding: 14px 14px; margin-bottom: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+  .pt th, .pt td { border: 0; padding: 0; }
+  .pt tbody th { grid-column: 1 / -1; padding-bottom: 10px; }
+  .pt .pt-p { text-align: left; padding: 4px 6px; border-radius: 4px; }
+  .pt td[data-l]::before { content: attr(data-l); display: block; color: var(--muted); font-size: .76rem; font-weight: 500; }
+  .wall { padding: 26px 16px 20px; }
+  .wall-legend { gap: 6px; font-size: .82rem; }
+  .duo { grid-template-columns: 1fr; }
+  .panel { padding: 24px 18px; }
+  .panel .btn { width: 100%; }
+  .map { min-height: 300px; }
+  body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+  .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px max(12px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--card); border-top: 1px solid var(--line); }
+  .mbar .btn { min-height: 56px; padding: 0 12px; }
+}
+@media (max-width: 520px) {
+  .head-phone { display: none; }
+  html.large .top-hours { display: none; }
+  html.large .top .wrap { justify-content: flex-end; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="top"><div class="wrap">
+  <span class="grow"><span data-cfg="address"></span>, Красное Село</span>
+  <span class="top-hours" data-cfg="hoursShort"></span>
+  <div class="size" role="group" aria-label="Размер текста"><span>Текст</span><button type="button" id="font-normal" aria-pressed="true" aria-label="Обычный текст">А</button><button type="button" id="font-large" aria-pressed="false" aria-label="Крупный текст">А</button></div>
+</div></div>
+
+<header class="head" data-head><div class="wrap">
+  <a class="brand" href="#top" aria-label="Шиномонтаж, в начало">
+    <span class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" fill="none" stroke="#fff" stroke-width="3.2"/><circle cx="13" cy="13" r="4" fill="#fff"/></svg></span>
+    <span class="brand-name" data-cfg="name"></span>
+  </a>
+  <nav class="nav" aria-label="Разделы"><a href="#booking">Запись</a><a href="#prices">Все цены</a><a href="#storage">Хранение</a><a href="#contacts">Контакты</a></nav>
+  <a class="head-phone" data-tel data-cfg="phone"></a>
+</div></header>
+
+<main id="top">
+  <section class="wrap hero">
+    <h1>Сколько стоит шиномонтаж для вашей машины</h1>
+    <p class="hero-lead">Выберите размер колёс, и мы покажем цены на все работы. Записаться можно сразу, на любое свободное время.</p>
+    <div class="hero-grid">
+      <div class="calc-box">
+        <p class="calc-q" id="calc-q">Какой у вас размер колёс?</p>
+        <div class="calc-sizes" id="size-pick" role="group" aria-labelledby="calc-q"></div>
+        <p class="calc-hint">Посмотрите на боковину шины: в надписи <b>205/55 R16</b> размер — <b>R16</b>.</p>
+        <div id="calc" aria-live="polite"></div>
+      </div>
+      <div class="side">
+        <div class="side-card"><p class="side-label">Ближайшее свободное время</p><p class="side-big" data-near></p><a class="btn btn-wide" href="#booking" data-book="next">Записаться на это время</a></div>
+        <div class="side-card"><p class="side-label">Запись по телефону</p><a class="side-big" data-tel data-cfg="phone"></a><p class="side-label" data-cfg="hoursShort"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-white" id="booking" aria-labelledby="booking-h">
+    <div class="wrap booking">
+      <div class="booking-side">
+        <h2 id="booking-h">Онлайн-запись</h2>
+        <p>Мастер будет ждать вас к назначенному времени и позвонит накануне.</p>
+        <div class="phone-alt"><p>Удобнее по телефону?</p><a data-tel data-cfg="phone"></a><p data-cfg="hoursShort"></p></div>
+      </div>
+      <div class="bk" id="bk"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="prices" aria-labelledby="prices-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="prices-h">Все цены</h2><p>За комплект из четырёх колёс, если не написано иначе. Выбранный вами размер подсвечен.</p></div>
+      <div class="table-wrap" id="price"></div>
+      <p class="price-note">Цены в рублях. Внедорожники и низкопрофильные шины считаем по цене следующего размера.</p>
+    </div>
+  </section>
+
+  <section class="sec sec-white" aria-labelledby="mark-h">
+    <div class="wrap mark">
+      <div>
+        <h2 id="mark-h">Где посмотреть размер колёс</h2>
+        <p>На боковине каждой шины крупно написана её маркировка. Для цены нужна только часть после буквы R: это диаметр диска в дюймах. Если не нашли, ничего страшного, мастер посмотрит на месте.</p>
+      </div>
+      <div class="wall" aria-label="Пример маркировки шины: 205/55 R16, размер R16">
+        <p class="wall-code" aria-hidden="true">205/55 <b>R16</b></p>
+        <div class="wall-legend" aria-hidden="true"><p><span>205</span>ширина, мм</p><p><span>55</span>высота профиля, %</p><p class="hl"><span>R16</span>диаметр диска</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Хранение и контакты">
+    <div class="wrap duo">
+      <div class="panel" id="storage">
+        <h2>Хранение шин</h2>
+        <p>Не возите колёса в багажнике и не держите на балконе. Храним в тёплом складе до следующего сезона.</p>
+        <p class="panel-price">от 3 000 ₽ <small>за сезон</small></p>
+        <a class="btn" href="#booking" data-book="svc:storage">Записаться на хранение</a>
+      </div>
+      <div class="panel" id="contacts">
+        <h2>Как добраться</h2>
+        <dl class="c-list">
+          <div><dt>Адрес</dt><dd><span data-cfg="address"></span><br><span style="font-weight:400;color:var(--muted)" data-cfg="addressNote"></span></dd></div>
+          <div><dt>Часы</dt><dd><span data-cfg="hoursShort"></span><br><span style="font-weight:400;color:var(--muted)" data-cfg="hoursNote"></span></dd></div>
+          <div><dt>Телефон</dt><dd><a data-tel data-cfg="phone"></a></dd></div>
+        </dl>
+        <a class="btn btn-quiet" data-map target="_blank" rel="noopener">Маршрут в Яндекс Картах</a>
+      </div>
+    </div>
+    <div class="wrap"><div class="map"><iframe data-map-embed title="Шиномонтаж на карте" loading="lazy"></iframe></div></div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <span><span data-cfg="name"></span>, <span data-cfg="address"></span></span>
+  <a data-tel data-cfg="phone"></a>
+  <span>© <span data-cfg="year"></span></span>
+</div></footer>
+
+<div class="mbar"><a class="btn btn-quiet" data-tel>Позвонить</a><a class="btn" href="#booking" data-book="">Записаться</a></div>
+
+<script>
+window.TYRE_TPL = { defaultSize: 1 };
+(function () {
+  "use strict";
+
+  /* ===== НАСТРОЙКИ ШИНОМОНТАЖА ===== */
+  var SHOP = {
+    name: "Шиномонтаж",
+    phone: "+7 (812) 923-98-06",
+    address: "пер. Щуппа, 5",
+    addressNote: "Красное Село, рядом с проспектом Ленина",
+    mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
+    coords: [59.7381, 30.0889],
+    open: 11, close: 20,
+    hoursShort: "Ежедневно с 11 до 20",
+    hoursNote: "Без выходных",
+    sizes: ["R13–R15", "R16–R17", "R18–R19", "R20 и больше"],
+    sizesShort: ["R13–15", "R16–17", "R18–19", "R20+"],
+    // minutes: сколько занимает работа; prices: по размерам из sizes; unit: если цена не за комплект
+    services: [
+      { id: "season", title: "Сезонная смена колёс", sub: "Снять, поставить, отбалансировать", minutes: 40, prices: [2000, 2400, 2900, 3600] },
+      { id: "balance", title: "Балансировка", sub: "Если руль дрожит на скорости", minutes: 30, prices: [1000, 1200, 1500, 1900] },
+      { id: "puncture", title: "Ремонт прокола", sub: "Колесо спускает", minutes: 30, prices: [600, 700, 800, 1000], unit: "за колесо" },
+      { id: "storage", title: "Хранение шин", sub: "До следующего сезона, в тёплом складе", minutes: 15, prices: [3000, 3500, 4000, 4800], unit: "за сезон" }
+    ]
+  };
+  /* ===== конец настроек ===== */
+
+  var T = window.TYRE_TPL || {};
+  var WD_SHORT = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  var STORE = "tyre-demo-bookings-2", DAYS_AHEAD = 7;
+
+  function $(id) { return document.getElementById(id); }
+  function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
+  function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+  function num(n) { return n.toLocaleString("ru-RU"); }
+  function plural(n, a, b, c) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? b : c; }
+  function rub(n) { return num(n) + " ₽"; }
+  function load() { try { return JSON.parse(localStorage.getItem(STORE) || "[]"); } catch (e) { return []; } }
+  function save(v) { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch (e) {} }
+  function svc(id) { return SHOP.services.find(function (s) { return s.id === id; }); }
+  function priceText(s, size) {
+    if (size == null || size < 0) return "от " + rub(s.prices[0]) + (s.unit ? " " + s.unit : "");
+    return rub(s.prices[size]) + (s.unit ? " " + s.unit : "");
+  }
+
+  // ===== Свободное время (для демо: одинаковое при каждом открытии) =====
+  var now = new Date(), today = new Date(now); today.setHours(0, 0, 0, 0);
+  function dayAt(i) { var d = new Date(today); d.setDate(d.getDate() + i); return d; }
+  function dkey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function fromKey(k) { var p = k.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function hash(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= h >>> 13; h = Math.imul(h, 0x5bd1e995); h ^= h >>> 15;
+    return (h >>> 0) % 100;
+  }
+  var bookings = load(), lastBooking = null;
+  function busy(d, h) {
+    var k = dkey(d), ahead = (d - today) / 864e5;
+    if (bookings.some(function (b) { return b.day === k && b.hour === h; })) return true;
+    return hash("tyre" + k + h) < (ahead < 1 ? 55 : ahead < 3 ? 42 : 25);
+  }
+  function hours(d) {
+    var out = [], first = SHOP.open;
+    if (dkey(d) === dkey(today)) first = Math.max(first, now.getHours() + (now.getMinutes() > 20 ? 2 : 1));
+    for (var h = first; h < SHOP.close; h++) if (!busy(d, h)) out.push(h);
+    return out;
+  }
+  function nearest() {
+    for (var i = 0; i < DAYS_AHEAD; i++) { var l = hours(dayAt(i)); if (l.length) return { day: dayAt(i), hour: l[0] }; }
+    return null;
+  }
+  function dayWord(d) {
+    var diff = Math.round((d - today) / 864e5);
+    if (diff === 0) return "сегодня";
+    if (diff === 1) return "завтра";
+    return WD_SHORT[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()];
+  }
+  function whenText(k, h) { var d = fromKey(k); return d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()] + ", в " + h + ":00"; }
+
+  // ===== Прайс =====
+  var pick = T.defaultSize != null ? T.defaultSize : null;
+  function renderPrice() {
+    var box = $("price"); if (!box) return;
+    box.innerHTML = "<table class=\"pt\"" + (pick != null ? " data-col=\"" + pick + "\"" : "") + "><thead><tr><th scope=\"col\">Услуга</th>" +
+      SHOP.sizes.map(function (z, i) { return "<th scope=\"col\" class=\"pt-p c" + i + "\">" + z + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      SHOP.services.map(function (s) {
+        return "<tr><th scope=\"row\"><span class=\"pt-name\">" + esc(s.title) + "</span><span class=\"pt-note\">" + esc(s.sub) + (s.unit ? ", цена " + s.unit : "") + "</span></th>" +
+          s.prices.map(function (p, i) { return "<td class=\"pt-p c" + i + "\" data-l=\"" + SHOP.sizesShort[i] + "\">" + num(p) + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table>";
+    var sp = $("size-pick");
+    if (sp) sp.innerHTML = SHOP.sizes.map(function (z, i) { return "<button type=\"button\" class=\"sp\" data-pick=\"" + i + "\" aria-pressed=\"" + (pick === i) + "\">" + z + "</button>"; }).join("");
+    var calc = $("calc");
+    if (calc) calc.innerHTML = pick == null ? "" : SHOP.services.map(function (s) {
+      return "<div class=\"calc-row\"><span class=\"calc-name\">" + esc(s.title) + (s.unit ? " <small>" + s.unit + "</small>" : "") + "</span><span class=\"calc-price\">" + rub(s.prices[pick]) + "</span>" +
+        "<button type=\"button\" class=\"calc-book\" data-book=\"svc:" + s.id + "\">Записаться<span class=\"vh\">: " + esc(s.title) + "</span></button></div>";
+    }).join("");
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-pick]"); if (!b) return;
+    pick = +b.getAttribute("data-pick"); renderPrice();
+    var again = document.querySelector("[data-pick=\"" + pick + "\"]"); if (again) again.focus();
+    if (st.size == null) st.size = pick;
+  });
+
+  // ===== Запись по шагам =====
+  var STEPS = [["svc", "Что сделать"], ["size", "Размер колёс"], ["time", "День и время"], ["contact", "Ваши контакты"]];
+  var st = { svc: null, size: null, day: null, hour: null, open: "svc" };
+  var bk = $("bk");
+  function stepDone(id) {
+    if (id === "svc") return !!st.svc;
+    if (id === "size") return st.size != null;
+    if (id === "time") return !!st.hour;
+    return false;
+  }
+  function firstOpen() { for (var i = 0; i < STEPS.length; i++) if (!stepDone(STEPS[i][0])) return STEPS[i][0]; return "contact"; }
+  function summary(id) {
+    var s = st.svc && svc(st.svc);
+    if (id === "svc" && s) return s.title + " · около " + s.minutes + " мин";
+    if (id === "size" && st.size != null) return st.size < 0 ? "Не знаю, мастер посмотрит на месте" + (s ? " · " + priceText(s) : "") : SHOP.sizes[st.size] + (s ? " · " + priceText(s, st.size) : "");
+    if (id === "time" && st.hour) return whenText(st.day, st.hour);
+    return "";
+  }
+  function buildBooking() {
+    bk.innerHTML = "<ol class=\"bk-steps\" id=\"bk-steps\">" + STEPS.map(function (s, i) {
+      return "<li class=\"bk-step\" data-step=\"" + s[0] + "\"><div class=\"bk-head\"><span class=\"bk-n\" aria-hidden=\"true\">" + (i + 1) + "</span>" +
+        "<div class=\"bk-ht\"><h3 class=\"bk-title\" tabindex=\"-1\" id=\"bk-t-" + s[0] + "\">" + s[1] + "</h3><p class=\"bk-val\" id=\"bk-v-" + s[0] + "\"></p></div>" +
+        "<button type=\"button\" class=\"bk-edit\" data-edit=\"" + s[0] + "\" hidden>Изменить<span class=\"vh\">: " + s[1].toLowerCase() + "</span></button></div>" +
+        "<div class=\"bk-body\" id=\"bk-b-" + s[0] + "\" hidden></div></li>";
+    }).join("") + "</ol>" +
+      "<div class=\"bk-done\" id=\"bk-done\" hidden><h3 class=\"bk-done-title\" id=\"bk-done-title\" tabindex=\"-1\">Вы записаны</h3><dl class=\"bk-done-list\" id=\"bk-done-list\"></dl>" +
+      "<p class=\"bk-done-note\">Мастер позвонит накануне и напомнит о визите. Если планы поменяются, отмените запись здесь или позвоните нам.</p>" +
+      "<div class=\"bk-done-actions\"><button type=\"button\" class=\"btn\" id=\"bk-again\">Записать ещё машину</button><button type=\"button\" class=\"btn btn-quiet\" id=\"bk-cancel\">Отменить запись</button></div></div>";
+    $("bk-b-contact").innerHTML =
+      "<form class=\"bk-form\" id=\"bk-form\" novalidate>" +
+      "<div class=\"field\"><label for=\"bk-name\">Как к вам обращаться</label><input id=\"bk-name\" autocomplete=\"given-name\" aria-describedby=\"bk-name-err\"><p class=\"err\" id=\"bk-name-err\" hidden>Напишите имя</p></div>" +
+      "<div class=\"field\"><label for=\"bk-phone\">Телефон</label><input id=\"bk-phone\" type=\"tel\" inputmode=\"tel\" autocomplete=\"tel\" placeholder=\"+7 (___) ___-__-__\" aria-describedby=\"bk-phone-err\"><p class=\"err\" id=\"bk-phone-err\" hidden>Нужен номер из 10 цифр после +7</p></div>" +
+      "<div class=\"field\"><label for=\"bk-car\">Машина <span class=\"opt\">необязательно</span></label><input id=\"bk-car\" placeholder=\"Например, Kia Rio\"></div>" +
+      "<button type=\"submit\" class=\"btn btn-wide\">Записаться</button>" +
+      "<p class=\"bk-legal\">Нажимая «Записаться», вы соглашаетесь на обработку персональных данных. Номер нужен только для подтверждения записи.</p></form>";
+  }
+  function renderSvc() {
+    $("bk-b-svc").innerHTML = "<div class=\"bk-list\">" + SHOP.services.map(function (s) {
+      return "<button type=\"button\" class=\"bk-opt\" data-svc=\"" + s.id + "\" aria-pressed=\"" + (st.svc === s.id) + "\"><span class=\"bk-opt-main\">" + esc(s.title) + "</span>" +
+        "<span class=\"bk-opt-meta\">" + esc(s.sub) + "</span><span class=\"bk-opt-price\">" + priceText(s, st.size) + "</span></button>";
+    }).join("") + "</div>";
+  }
+  function renderSize() {
+    var s = svc(st.svc);
+    $("bk-b-size").innerHTML = "<p class=\"bk-hint\">Размер написан на боковине шины: в надписи <b>205/55 R16</b> это <b>R16</b>.</p><div class=\"bk-sizes\">" +
+      SHOP.sizes.map(function (z, i) {
+        return "<button type=\"button\" class=\"bk-opt bk-size\" data-size=\"" + i + "\" aria-pressed=\"" + (st.size === i) + "\"><span class=\"bk-opt-main\">" + z + "</span><span class=\"bk-opt-price\">" + rub(s.prices[i]) + "</span></button>";
+      }).join("") + "<button type=\"button\" class=\"bk-opt bk-size bk-size-x\" data-size=\"-1\" aria-pressed=\"" + (st.size === -1) + "\"><span class=\"bk-opt-main\">Не знаю</span><span class=\"bk-opt-meta\">мастер посмотрит на месте</span></button></div>";
+  }
+  function renderTime() {
+    var html = "<p class=\"bk-q\">День</p><div class=\"bk-days\" role=\"group\" aria-label=\"День\">";
+    for (var i = 0; i < DAYS_AHEAD; i++) {
+      var d = dayAt(i), k = dkey(d), free = hours(d).length;
+      html += "<button type=\"button\" class=\"bk-day\" data-day=\"" + k + "\" aria-pressed=\"" + (st.day === k) + "\"" + (free ? "" : " disabled") +
+        " aria-label=\"" + d.getDate() + " " + MONTHS[d.getMonth()] + ", " + WD_FULL[d.getDay()] + (free ? "" : ", всё занято") + "\"><span class=\"bk-day-w\">" + (i === 0 ? "Сегодня" : i === 1 ? "Завтра" : WD_SHORT[d.getDay()]) +
+        "</span><span class=\"bk-day-d\">" + d.getDate() + "</span><span class=\"bk-day-m\">" + (free ? free + "\u00a0" + plural(free, "окно", "окна", "окон") : "занято") + "</span></button>";
+    }
+    html += "</div>";
+    if (st.day) {
+      var d2 = fromKey(st.day), free2 = hours(d2), all = [];
+      for (var h = SHOP.open; h < SHOP.close; h++) all.push(h);
+      html += "<p class=\"bk-q\" id=\"bk-time-q\" tabindex=\"-1\">Время, " + dayWord(d2) + "</p><div class=\"bk-times\">" + all.map(function (h) {
+        var ok = free2.indexOf(h) >= 0;
+        return "<button type=\"button\" class=\"bk-time\" data-hour=\"" + h + "\" aria-pressed=\"" + (st.hour === h) + "\"" + (ok ? "" : " disabled aria-label=\"" + h + ":00, занято\"") + ">" + h + ":00</button>";
+      }).join("") + "</div><p class=\"bk-hint\">Зачёркнутое время уже занято.</p>";
+    }
+    $("bk-b-time").innerHTML = html;
+  }
+  function headOffset() {
+    var head = document.querySelector("[data-head]"), pos = head && getComputedStyle(head).position;
+    return pos === "sticky" || pos === "fixed" ? head.offsetHeight + 12 : 12;
+  }
+  function scrollToEl(el) {
+    var off = headOffset(), top = el.getBoundingClientRect().top;
+    if (top < off || top > window.innerHeight * 0.45) window.scrollTo({ top: Math.max(0, top + window.pageYOffset - off), behavior: "instant" });
+  }
+  function renderBooking(focusId) {
+    if (!bk) return;
+    var fo = STEPS.findIndex(function (x) { return x[0] === firstOpen(); });
+    STEPS.forEach(function (p, idx) {
+      var id = p[0], li = bk.querySelector("[data-step=\"" + id + "\"]"), done = stepDone(id), open = st.open === id;
+      li.classList.toggle("is-open", open); li.classList.toggle("is-done", done && !open); li.classList.toggle("is-later", !open && !done);
+      $("bk-v-" + id).textContent = open ? "" : summary(id);
+      li.querySelector(".bk-edit").hidden = open || !done || idx > fo;
+      $("bk-b-" + id).hidden = !open;
+    });
+    if (st.open === "svc") renderSvc();
+    if (st.open === "size") renderSize();
+    if (st.open === "time") renderTime();
+    if (focusId && $(focusId)) { var el = $(focusId); scrollToEl(el.closest(".bk-step") || el); el.focus({ preventScroll: true }); }
+  }
+  function go(step) { st.open = step; renderBooking("bk-t-" + step); }
+  function advance() { go(firstOpen()); }
+
+  if (bk) {
+    buildBooking();
+    bk.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b || b.disabled) return;
+      if (b.hasAttribute("data-edit")) { go(b.getAttribute("data-edit")); return; }
+      if (b.hasAttribute("data-svc")) { st.svc = b.getAttribute("data-svc"); advance(); return; }
+      if (b.hasAttribute("data-size")) { st.size = +b.getAttribute("data-size"); advance(); return; }
+      if (b.hasAttribute("data-day")) { st.day = b.getAttribute("data-day"); st.hour = null; renderBooking("bk-time-q"); return; }
+      if (b.hasAttribute("data-hour")) { st.hour = +b.getAttribute("data-hour"); advance(); }
+    });
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-book]"); if (!a || !bk) return;
+    e.preventDefault();
+    if (!$("bk-done").hidden) resetBooking(true);
+    var p = a.getAttribute("data-book").split(":");
+    if (p[0] === "svc") { st.svc = p[1]; if (a.classList.contains("calc-book") && pick != null) st.size = pick; }
+    if (p[0] === "next") { var n = nearest(); if (n) { st.svc = st.svc || "season"; st.day = dkey(n.day); st.hour = n.hour; } }
+    st.open = firstOpen(); renderBooking();
+    var sec = $("booking") || bk;
+    window.scrollTo({ top: Math.max(0, sec.getBoundingClientRect().top + window.pageYOffset - headOffset()), behavior: "instant" });
+    $("bk-t-" + st.open).focus({ preventScroll: true });
+  });
+
+  function phoneDigits() {
+    var v = $("bk-phone").value, d;
+    if (/^\s*\+7/.test(v)) d = v.replace(/^\s*\+7/, "").replace(/\D/g, "");
+    else { d = v.replace(/\D/g, ""); if (d.length >= 11 && /[78]/.test(d.charAt(0))) d = d.slice(1); }
+    if (d.length === 11 && d.charAt(0) === "8") d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatPhone(d) {
+    var out = "+7";
+    if (d.length) out += " (" + d.slice(0, 3);
+    if (d.length >= 3) out += ")";
+    if (d.length > 3) out += " " + d.slice(3, 6);
+    if (d.length > 6) out += "-" + d.slice(6, 8);
+    if (d.length > 8) out += "-" + d.slice(8, 10);
+    return out;
+  }
+  if (bk) {
+    on("bk-phone", "input", function () {
+      var d = phoneDigits(); this.value = d.length ? formatPhone(d) : "";
+      if (d.length === 10) { this.removeAttribute("aria-invalid"); $("bk-phone-err").hidden = true; }
+    });
+    on("bk-name", "input", function () { if (this.value.trim()) { this.removeAttribute("aria-invalid"); $("bk-name-err").hidden = true; } });
+    on("bk-form", "submit", function (e) {
+      e.preventDefault();
+      var nameOk = !!$("bk-name").value.trim(), phoneOk = phoneDigits().length === 10;
+      [["bk-name", nameOk], ["bk-phone", phoneOk]].forEach(function (c) { $(c[0] + "-err").hidden = c[1]; if (c[1]) $(c[0]).removeAttribute("aria-invalid"); else $(c[0]).setAttribute("aria-invalid", "true"); });
+      if (!nameOk) { $("bk-name").focus(); return; }
+      if (!phoneOk) { $("bk-phone").focus(); return; }
+      var s = svc(st.svc);
+      lastBooking = { id: Date.now(), svc: s.id, size: st.size, day: st.day, hour: st.hour, name: $("bk-name").value.trim(), phone: formatPhone(phoneDigits()), car: $("bk-car").value.trim() };
+      bookings.push(lastBooking); save(bookings);
+      var rows = [["Услуга", s.title], ["Колёса", st.size < 0 ? "размер посмотрит мастер" : SHOP.sizes[st.size]], ["Когда", whenText(st.day, st.hour)], ["Стоимость", priceText(s, st.size)],
+        ["Адрес", SHOP.address + ", " + SHOP.addressNote], ["Имя", lastBooking.name], ["Телефон", lastBooking.phone]];
+      if (lastBooking.car) rows.push(["Машина", lastBooking.car]);
+      $("bk-done-list").innerHTML = rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("");
+      $("bk-steps").hidden = true; $("bk-done").hidden = false;
+      scrollToEl($("bk-done")); $("bk-done-title").focus({ preventScroll: true });
+      renderNear();
+    });
+  }
+  function resetBooking(silent) {
+    $("bk-form").reset();
+    st.svc = null; st.size = null; st.day = null; st.hour = null; st.open = "svc";
+    $("bk-done").hidden = true; $("bk-steps").hidden = false;
+    renderBooking(silent ? null : "bk-t-svc");
+  }
+  on("bk-again", "click", function () { resetBooking(); });
+  on("bk-cancel", "click", function () {
+    if (lastBooking) { bookings = bookings.filter(function (b) { return b.id !== lastBooking.id; }); save(bookings); lastBooking = null; renderNear(); }
+    resetBooking();
+  });
+
+  // ===== Размер текста =====
+  function setLarge(v) {
+    document.documentElement.classList.toggle("large", v);
+    if ($("font-normal")) { $("font-normal").setAttribute("aria-pressed", String(!v)); $("font-large").setAttribute("aria-pressed", String(v)); }
+    try { localStorage.setItem("tyre-demo-large", v ? "1" : "0"); } catch (e) {}
+  }
+  on("font-normal", "click", function () { setLarge(false); });
+  on("font-large", "click", function () { setLarge(true); });
+  try { if (localStorage.getItem("tyre-demo-large") === "1") setLarge(true); } catch (e) {}
+
+  function renderNear() {
+    var n = nearest();
+    document.querySelectorAll("[data-near]").forEach(function (el) { el.textContent = n ? dayWord(n.day) + " в " + n.hour + ":00" : "по телефону"; });
+    document.querySelectorAll("[data-near-day]").forEach(function (el) { el.textContent = n ? dayWord(n.day) : ""; });
+    document.querySelectorAll("[data-near-time]").forEach(function (el) { el.textContent = n ? n.hour + ":00" : "—"; });
+  }
+  function applyShop() {
+    var map = { name: SHOP.name, phone: SHOP.phone, address: SHOP.address, addressNote: SHOP.addressNote, hoursShort: SHOP.hoursShort, hoursNote: SHOP.hoursNote,
+      from: rub(SHOP.services[0].prices[0]), year: String(new Date().getFullYear()) };
+    document.querySelectorAll("[data-cfg]").forEach(function (el) { var v = map[el.getAttribute("data-cfg")]; if (v != null) el.textContent = v; });
+    var tel = "tel:+" + SHOP.phone.replace(/\D/g, "");
+    document.querySelectorAll("[data-tel]").forEach(function (a) { a.href = tel; });
+    document.querySelectorAll("[data-map]").forEach(function (a) { a.href = SHOP.mapUrl; });
+    var ll = SHOP.coords[1] + "%2C" + SHOP.coords[0];
+    document.querySelectorAll("[data-map-embed]").forEach(function (f) { f.src = "https://yandex.ru/map-widget/v1/?ll=" + ll + "&z=16&pt=" + ll + "%2Cpm2rdm"; });
+  }
+
+  applyShop();
+  renderPrice();
+  renderNear();
+  renderBooking();
+  if (T.onReady) T.onReady();
+})();
+</script>
+</body>
+</html>
