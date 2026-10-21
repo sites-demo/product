@@ -71,8 +71,10 @@ button { font: inherit; color: inherit; }
 /* Первый экран */
 .hero { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; padding-block: 72px 80px; }
 .hero > * { min-width: 0; }
-.hero h1 { font-size: clamp(2.3rem, 5vw, 4.4rem); line-height: 1.04; }
-.hero h1 span { color: var(--accent); }
+/* «в Красном Селе» всегда одной строкой: размер заголовка подстраивается под ширину колонки */
+.hero > div { container-type: inline-size; }
+.hero h1 { font-size: clamp(2.3rem, 5vw, 4.4rem); font-size: min(4.4rem, 9.6cqi); line-height: 1.04; }
+.hero h1 span { color: var(--accent); white-space: nowrap; }
 .hero-lead { font-size: 1.2rem; margin-top: 26px; max-width: 30em; color: var(--muted); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 6px 28px; margin-top: 34px; color: var(--muted); }
@@ -189,6 +191,7 @@ button { font: inherit; color: inherit; }
 .store h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
 .store p { color: var(--muted); margin-top: 16px; max-width: 34em; }
 .store-price { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.4rem, 4.6vw, 3.6rem); color: var(--accent); line-height: 1; }
+.store .store-price { color: var(--ink); font-family: "Asfalt Digits", var(--f-body); font-weight: 700; letter-spacing: -.01em; }
 .store-price small { display: block; font-family: var(--f-body); font-weight: 500; font-size: 1rem; color: var(--muted); margin-top: 10px; }
 .store .btn { margin-top: 24px; }
 
@@ -278,10 +281,9 @@ html.large .nav { display: none; }
   html.large .c-addr { font-size: 25px; }
   html.large .pt tr { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 }
-@media (max-width: 420px) {
-  .brand svg { display: none; }
-  .brand-name { font-size: min(1rem, calc(10vw - 16px)); }
-}
+@media (max-width: 420px) { .brand-name { font-size: min(1rem, calc(10vw - 16px)); } }
+@media (max-width: 400px) { html.large .brand svg { display: none; } }
+@media (max-width: 360px) { .brand svg { display: none; } }
 </style>
 </head>
 <body>
