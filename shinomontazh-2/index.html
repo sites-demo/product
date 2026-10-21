@@ -11,6 +11,9 @@
 <style>
 /* Вариант 2 «Асфальт»: тёмный фон, жёлтый цвет дорожной разметки, широкий гротеск Unbounded.
    Главное на первом экране — ближайшее свободное время, как табло. */
+/* Цифры и двоеточие в заголовках берём из Onest: у Unbounded они слишком широкие и вылезают при крупном шрифте */
+@font-face { font-family: "Asfalt Digits"; font-display: swap; font-weight: 500 700; src: url(fonts/onest-latin-800-normal.woff2) format("woff2"); unicode-range: U+0030-003A; }
+@font-face { font-family: "Asfalt Digits"; font-display: swap; font-weight: 800 900; src: url(fonts/onest-latin-900-normal.woff2) format("woff2"); unicode-range: U+0030-003A; }
 :root {
   --bg: #121315;
   --bg-2: #1A1C1F;
@@ -23,7 +26,7 @@
   --accent-ink: #121315;
   --accent-soft: #2E2918;
   --danger: #FF8A7A;
-  --f-display: "Unbounded", "Arial Black", Arial, sans-serif;
+  --f-display: "Asfalt Digits", "Unbounded", "Arial Black", Arial, sans-serif;
   --f-body: "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
   --tap: 58px;
   color-scheme: dark;
@@ -166,6 +169,11 @@ button { font: inherit; color: inherit; }
 .field input:focus { outline: none; border-color: var(--accent); }
 .field input[aria-invalid="true"] { border-color: var(--danger); }
 .err { color: var(--danger); margin-top: 6px; font-weight: 600; }
+.field .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; cursor: pointer; }
+.check input { flex: none; width: 26px; height: 26px; min-height: 0; margin: 1px 0 0; padding: 0; accent-color: var(--accent); }
+.check a { color: var(--ink); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.bk-warn { color: var(--danger); font-weight: 600; }
 .bk-legal { color: var(--muted); font-size: .85rem; }
 .bk-done { padding: 34px 28px; }
 .bk-done-title { font-size: 2rem; color: var(--accent); }
@@ -194,6 +202,7 @@ button { font: inherit; color: inherit; }
 .c-list > div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
 .c-list dt { color: var(--muted); }
 .c-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.c-list .dd-note { font-weight: 400; color: var(--muted); }
 .c-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .map { position: relative; min-height: 440px; background: var(--card); border-radius: 10px; overflow: hidden; }
 .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -216,7 +225,7 @@ button { font: inherit; color: inherit; }
   .brand-name { font-size: 1rem; }
   .head .btn, .head-phone { display: none; }
   .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 36px 56px; }
-  .hero h1 { font-size: 2.15rem; }
+  .hero h1 { font-size: min(2.15rem, calc(10vw - 5px)); } /* «Шиномонтаж» целиком влезает в строку и при крупном шрифте */
   .hero-actions .btn { width: 100%; }
   .board { padding: 24px 20px; }
   .sec { padding-block: 60px; }
@@ -249,6 +258,29 @@ button { font: inherit; color: inherit; }
   body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
   .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px max(12px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--bg); border-top: 1px solid var(--line); }
   .mbar .btn { min-height: 56px; padding: 0 12px; }
+}
+/* Услуги в записи на узком телефоне и с крупным шрифтом: цена переносится под описание */
+.bk-list { grid-template-columns: minmax(0, 1fr); }
+.bk-opt { grid-template-columns: minmax(0, 1fr) auto; }
+@media (max-width: 420px) {
+  .bk-opt { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "meta" "price"; }
+  .bk-opt-price { margin-top: 4px; }
+}
+/* Шапка: название не должно наезжать на меню и кнопки. С крупным шрифтом меню убираем, разделы и так идут по странице подряд */
+html.large .nav { display: none; }
+@media (max-width: 1160px) { .nav { display: none; } }
+@media (max-width: 1080px) { html.large .head-phone { display: none; } }
+/* Самые узкие телефоны с крупным шрифтом: крупным остаётся текст, а заголовки и цены не растут, чтобы влезать в ширину */
+@media (max-width: 380px) {
+  html.large .sec-head h2 { font-size: 32px; }
+  html.large .store h2 { font-size: 28px; }
+  html.large .store-price { font-size: 38px; }
+  html.large .c-addr { font-size: 25px; }
+  html.large .pt tr { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}
+@media (max-width: 420px) {
+  .brand svg { display: none; }
+  .brand-name { font-size: min(1rem, calc(10vw - 16px)); }
 }
 </style>
 </head>
@@ -326,7 +358,7 @@ button { font: inherit; color: inherit; }
         <h2 id="contacts-h">Как добраться</h2>
         <p class="c-addr"><span data-cfg="address"></span><small data-cfg="addressNote"></small></p>
         <dl class="c-list">
-          <div><dt>Часы работы</dt><dd><span data-cfg="hoursShort"></span>, <span data-cfg="hoursNote"></span></dd></div>
+          <div><dt>Часы работы</dt><dd><span data-cfg="hoursShort"></span><br><span class="dd-note" data-cfg="hoursNote"></span></dd></div>
           <div><dt>Телефон</dt><dd><a data-tel data-cfg="phone"></a></dd></div>
         </dl>
         <p class="c-links"><a class="btn" data-map target="_blank" rel="noopener">Маршрут в Яндекс Картах</a><a class="btn btn-quiet" data-tel>Позвонить</a></p>
@@ -356,9 +388,9 @@ button { font: inherit; color: inherit; }
     address: "пер. Щуппа, 5",
     addressNote: "Красное Село, рядом с проспектом Ленина",
     mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
-    coords: [59.7381, 30.0889],
+    coords: [59.72696, 30.08442],
     open: 11, close: 20,
-    hoursShort: "Ежедневно с 11 до 20",
+    hoursShort: "Ежедневно с 11:00 до 20:00",
     hoursNote: "Без выходных",
     sizes: ["R13–R15", "R16–R17", "R18–R19", "R20 и больше"],
     sizesShort: ["R13–15", "R16–17", "R18–19", "R20+"],
@@ -377,6 +409,8 @@ button { font: inherit; color: inherit; }
   var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
   var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
   var STORE = "tyre-demo-bookings-2", DAYS_AHEAD = 7;
+  // Боевой режим: свободное время, цены и запись берутся с сервера (TYRE_TPL.api), иначе работает демо
+  var API = T.api || null, live = null, liveAt = 0, liveError = false;
 
   function $(id) { return document.getElementById(id); }
   function on(id, ev, fn) { var el = $(id); if (el) el.addEventListener(ev, fn); }
@@ -395,7 +429,8 @@ button { font: inherit; color: inherit; }
   // ===== Свободное время (для демо: одинаковое при каждом открытии) =====
   var now = new Date(), today = new Date(now); today.setHours(0, 0, 0, 0);
   function dayAt(i) { var d = new Date(today); d.setDate(d.getDate() + i); return d; }
-  function dkey(d) { return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function p2(n) { return (n < 10 ? "0" : "") + n; }
+  function dkey(d) { return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
   function fromKey(k) { var p = k.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
   function hash(s) {
     var h = 2166136261;
@@ -410,6 +445,7 @@ button { font: inherit; color: inherit; }
     return hash("tyre" + k + h) < (ahead < 1 ? 55 : ahead < 3 ? 42 : 25);
   }
   function hours(d) {
+    if (API) return live && live.free[dkey(d)] ? live.free[dkey(d)].slice() : [];
     var out = [], first = SHOP.open;
     if (dkey(d) === dkey(today)) first = Math.max(first, now.getHours() + (now.getMinutes() > 20 ? 2 : 1));
     for (var h = first; h < SHOP.close; h++) if (!busy(d, h)) out.push(h);
@@ -418,6 +454,25 @@ button { font: inherit; color: inherit; }
   function nearest() {
     for (var i = 0; i < DAYS_AHEAD; i++) { var l = hours(dayAt(i)); if (l.length) return { day: dayAt(i), hour: l[0] }; }
     return null;
+  }
+  function applyLive(data) {
+    live = { free: {} };
+    data.days.forEach(function (x) { live.free[x.day] = x.free; });
+    today = fromKey(data.today); DAYS_AHEAD = data.daysAhead;
+    ["name", "phone", "address", "addressNote", "mapUrl", "coords"].forEach(function (k) { if (data.shop[k] != null && data.shop[k] !== "") SHOP[k] = data.shop[k]; });
+    var off = data.hours.closedWeekdays || [];
+    SHOP.open = data.hours.open; SHOP.close = data.hours.close;
+    SHOP.hoursShort = (off.length ? "С " : "Ежедневно с ") + SHOP.open + ":00 до " + SHOP.close + ":00";
+    SHOP.hoursNote = off.length ? "Выходной: " + off.map(function (i) { return WD_FULL[i]; }).join(", ") : "Без выходных";
+    SHOP.sizes = data.sizes; SHOP.sizesShort = data.sizesShort; SHOP.services = data.services;
+    liveError = false;
+  }
+  function refreshLive(cb) {
+    liveAt = Date.now();
+    fetch(API + "/public", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) { applyLive(data); if (cb) cb(); })
+      .catch(function () { liveError = !live; if (cb) cb(); });
   }
   function dayWord(d) {
     var diff = Math.round((d - today) / 864e5);
@@ -478,15 +533,18 @@ button { font: inherit; color: inherit; }
         "<div class=\"bk-body\" id=\"bk-b-" + s[0] + "\" hidden></div></li>";
     }).join("") + "</ol>" +
       "<div class=\"bk-done\" id=\"bk-done\" hidden><h3 class=\"bk-done-title\" id=\"bk-done-title\" tabindex=\"-1\">Вы записаны</h3><dl class=\"bk-done-list\" id=\"bk-done-list\"></dl>" +
-      "<p class=\"bk-done-note\">Мастер позвонит накануне и напомнит о визите. Если планы поменяются, отмените запись здесь или позвоните нам.</p>" +
+      "<p class=\"bk-done-note\">Мастер позвонит накануне и напомнит о визите. Если планы поменяются, отмените запись здесь или позвоните нам.</p><p class=\"err\" id=\"bk-done-err\" role=\"alert\" hidden></p>" +
       "<div class=\"bk-done-actions\"><button type=\"button\" class=\"btn\" id=\"bk-again\">Записать ещё машину</button><button type=\"button\" class=\"btn btn-quiet\" id=\"bk-cancel\">Отменить запись</button></div></div>";
     $("bk-b-contact").innerHTML =
       "<form class=\"bk-form\" id=\"bk-form\" novalidate>" +
       "<div class=\"field\"><label for=\"bk-name\">Как к вам обращаться</label><input id=\"bk-name\" autocomplete=\"given-name\" aria-describedby=\"bk-name-err\"><p class=\"err\" id=\"bk-name-err\" hidden>Напишите имя</p></div>" +
       "<div class=\"field\"><label for=\"bk-phone\">Телефон</label><input id=\"bk-phone\" type=\"tel\" inputmode=\"tel\" autocomplete=\"tel\" placeholder=\"+7 (___) ___-__-__\" aria-describedby=\"bk-phone-err\"><p class=\"err\" id=\"bk-phone-err\" hidden>Нужен номер из 10 цифр после +7</p></div>" +
       "<div class=\"field\"><label for=\"bk-car\">Машина <span class=\"opt\">необязательно</span></label><input id=\"bk-car\" placeholder=\"Например, Kia Rio\"></div>" +
-      "<button type=\"submit\" class=\"btn btn-wide\">Записаться</button>" +
-      "<p class=\"bk-legal\">Нажимая «Записаться», вы соглашаетесь на обработку персональных данных. Номер нужен только для подтверждения записи.</p></form>";
+      (API ? "<div class=\"field\"><label class=\"check\"><input type=\"checkbox\" id=\"bk-consent\" aria-describedby=\"bk-consent-err\"><span>Согласен на <a href=\"/privacy/#consent\" target=\"_blank\">обработку персональных данных</a></span></label><p class=\"err\" id=\"bk-consent-err\" hidden>Отметьте согласие, без него мы не можем вас записать</p></div>" +
+        "<div class=\"hp\" aria-hidden=\"true\"><label for=\"bk-web\">Сайт</label><input id=\"bk-web\" tabindex=\"-1\" autocomplete=\"off\"></div>" : "") +
+      "<button type=\"submit\" class=\"btn btn-wide\" id=\"bk-submit\">Записаться</button>" +
+      "<p class=\"err\" id=\"bk-form-err\" role=\"alert\" hidden></p>" +
+      (API ? "<p class=\"bk-legal\">Номер нужен только для подтверждения записи.</p></form>" : "<p class=\"bk-legal\">Нажимая «Записаться», вы соглашаетесь на обработку персональных данных. Номер нужен только для подтверждения записи.</p></form>");
   }
   function renderSvc() {
     $("bk-b-svc").innerHTML = "<div class=\"bk-list\">" + SHOP.services.map(function (s) {
@@ -502,7 +560,14 @@ button { font: inherit; color: inherit; }
       }).join("") + "<button type=\"button\" class=\"bk-opt bk-size bk-size-x\" data-size=\"-1\" aria-pressed=\"" + (st.size === -1) + "\"><span class=\"bk-opt-main\">Не знаю</span><span class=\"bk-opt-meta\">мастер посмотрит на месте</span></button></div>";
   }
   function renderTime() {
-    var html = "<p class=\"bk-q\">День</p><div class=\"bk-days\" role=\"group\" aria-label=\"День\">";
+    if (API && !live) {
+      $("bk-b-time").innerHTML = liveError
+        ? "<p class=\"bk-hint\">Не получилось загрузить свободное время. Запишитесь по телефону <a data-tel href=\"tel:+" + SHOP.phone.replace(/\D/g, "") + "\">" + SHOP.phone + "</a>.</p>"
+        : "<p class=\"bk-hint\">Загружаем свободное время…</p>";
+      return;
+    }
+    var html = st.timeMsg ? "<p class=\"bk-hint bk-warn\" role=\"alert\">" + esc(st.timeMsg) + "</p>" : "";
+    html += "<p class=\"bk-q\">День</p><div class=\"bk-days\" role=\"group\" aria-label=\"День\">";
     for (var i = 0; i < DAYS_AHEAD; i++) {
       var d = dayAt(i), k = dkey(d), free = hours(d).length;
       html += "<button type=\"button\" class=\"bk-day\" data-day=\"" + k + "\" aria-pressed=\"" + (st.day === k) + "\"" + (free ? "" : " disabled") +
@@ -540,7 +605,10 @@ button { font: inherit; color: inherit; }
     });
     if (st.open === "svc") renderSvc();
     if (st.open === "size") renderSize();
-    if (st.open === "time") renderTime();
+    if (st.open === "time") {
+      renderTime();
+      if (API && Date.now() - liveAt > 60000) refreshLive(function () { if (st.open === "time") renderTime(); });
+    }
     if (focusId && $(focusId)) { var el = $(focusId); scrollToEl(el.closest(".bk-step") || el); el.focus({ preventScroll: true }); }
   }
   function go(step) { st.open = step; renderBooking("bk-t-" + step); }
@@ -554,7 +622,7 @@ button { font: inherit; color: inherit; }
       if (b.hasAttribute("data-svc")) { st.svc = b.getAttribute("data-svc"); advance(); return; }
       if (b.hasAttribute("data-size")) { st.size = +b.getAttribute("data-size"); advance(); return; }
       if (b.hasAttribute("data-day")) { st.day = b.getAttribute("data-day"); st.hour = null; renderBooking("bk-time-q"); return; }
-      if (b.hasAttribute("data-hour")) { st.hour = +b.getAttribute("data-hour"); advance(); }
+      if (b.hasAttribute("data-hour")) { st.hour = +b.getAttribute("data-hour"); st.timeMsg = ""; advance(); }
     });
   }
   document.addEventListener("click", function (e) {
@@ -598,26 +666,77 @@ button { font: inherit; color: inherit; }
       [["bk-name", nameOk], ["bk-phone", phoneOk]].forEach(function (c) { $(c[0] + "-err").hidden = c[1]; if (c[1]) $(c[0]).removeAttribute("aria-invalid"); else $(c[0]).setAttribute("aria-invalid", "true"); });
       if (!nameOk) { $("bk-name").focus(); return; }
       if (!phoneOk) { $("bk-phone").focus(); return; }
+      if (API) { submitLive(); return; }
       var s = svc(st.svc);
       lastBooking = { id: Date.now(), svc: s.id, size: st.size, day: st.day, hour: st.hour, name: $("bk-name").value.trim(), phone: formatPhone(phoneDigits()), car: $("bk-car").value.trim() };
       bookings.push(lastBooking); save(bookings);
       var rows = [["Услуга", s.title], ["Колёса", st.size < 0 ? "размер посмотрит мастер" : SHOP.sizes[st.size]], ["Когда", whenText(st.day, st.hour)], ["Стоимость", priceText(s, st.size)],
         ["Адрес", SHOP.address + ", " + SHOP.addressNote], ["Имя", lastBooking.name], ["Телефон", lastBooking.phone]];
       if (lastBooking.car) rows.push(["Машина", lastBooking.car]);
-      $("bk-done-list").innerHTML = rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("");
-      $("bk-steps").hidden = true; $("bk-done").hidden = false;
-      scrollToEl($("bk-done")); $("bk-done-title").focus({ preventScroll: true });
-      renderNear();
+      showDone(rows);
     });
   }
+  function showDone(rows) {
+    $("bk-done-list").innerHTML = rows.map(function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("");
+    $("bk-done-err").hidden = true;
+    $("bk-steps").hidden = true; $("bk-done").hidden = false;
+    scrollToEl($("bk-done")); $("bk-done-title").focus({ preventScroll: true });
+    renderNear();
+  }
+  function formError(text) { var el = $("bk-form-err"); el.textContent = text; el.hidden = !text; }
+  function post(url, body) {
+    return fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, data: j }; }); });
+  }
+  function submitLive() {
+    var consent = $("bk-consent");
+    $("bk-consent-err").hidden = consent.checked;
+    if (!consent.checked) { consent.focus(); return; }
+    var btn = $("bk-submit");
+    btn.disabled = true; btn.textContent = "Отправляем…"; formError("");
+    var noLink = "Не получилось записаться. Проверьте интернет или позвоните нам: " + SHOP.phone;
+    post(API + "/bookings", { svc: st.svc, size: st.size, day: st.day, hour: st.hour, name: $("bk-name").value.trim(), phone: "+7" + phoneDigits(), car: $("bk-car").value.trim(), consent: true, website: $("bk-web").value })
+      .then(function (res) {
+        btn.disabled = false; btn.textContent = "Записаться";
+        if (!res.ok) {
+          if (res.data.code === "taken") {
+            refreshLive(function () { st.hour = null; st.timeMsg = res.data.error; go("time"); renderNear(); });
+            return;
+          }
+          formError(res.data.error || noLink);
+          return;
+        }
+        var b = res.data;
+        lastBooking = { id: b.id, token: b.token };
+        var rows = [["Услуга", b.service], ["Колёса", b.sizeText], ["Когда", b.when], ["Стоимость", b.priceText], ["Адрес", SHOP.address + ", " + SHOP.addressNote], ["Имя", b.name], ["Телефон", b.phone]];
+        if (b.car) rows.push(["Машина", b.car]);
+        showDone(rows);
+        refreshLive(renderNear);
+      })
+      .catch(function () { btn.disabled = false; btn.textContent = "Записаться"; formError(noLink); });
+  }
   function resetBooking(silent) {
-    $("bk-form").reset();
+    $("bk-form").reset(); formError("");
     st.svc = null; st.size = null; st.day = null; st.hour = null; st.open = "svc";
     $("bk-done").hidden = true; $("bk-steps").hidden = false;
     renderBooking(silent ? null : "bk-t-svc");
   }
   on("bk-again", "click", function () { resetBooking(); });
   on("bk-cancel", "click", function () {
+    if (API) {
+      if (!lastBooking) { resetBooking(); return; }
+      var btn = this, err = $("bk-done-err");
+      btn.disabled = true;
+      post(API + "/bookings/" + lastBooking.id + "/cancel", { token: lastBooking.token })
+        .then(function (res) {
+          btn.disabled = false;
+          if (!res.ok) { err.textContent = res.data.error || "Не получилось отменить. Позвоните нам: " + SHOP.phone; err.hidden = false; return; }
+          lastBooking = null;
+          refreshLive(function () { renderNear(); resetBooking(); });
+        })
+        .catch(function () { btn.disabled = false; err.textContent = "Нет связи. Позвоните нам: " + SHOP.phone; err.hidden = false; });
+      return;
+    }
     if (lastBooking) { bookings = bookings.filter(function (b) { return b.id !== lastBooking.id; }); save(bookings); lastBooking = null; renderNear(); }
     resetBooking();
   });
@@ -633,8 +752,8 @@ button { font: inherit; color: inherit; }
   try { if (localStorage.getItem("tyre-demo-large") === "1") setLarge(true); } catch (e) {}
 
   function renderNear() {
-    var n = nearest();
-    document.querySelectorAll("[data-near]").forEach(function (el) { el.textContent = n ? dayWord(n.day) + " в " + n.hour + ":00" : "по телефону"; });
+    var n = nearest(), wait = API && !live && !liveError;
+    document.querySelectorAll("[data-near]").forEach(function (el) { el.textContent = n ? dayWord(n.day) + " в " + n.hour + ":00" : wait ? "…" : "по телефону"; });
     document.querySelectorAll("[data-near-day]").forEach(function (el) { el.textContent = n ? dayWord(n.day) : ""; });
     document.querySelectorAll("[data-near-time]").forEach(function (el) { el.textContent = n ? n.hour + ":00" : "—"; });
   }
@@ -653,6 +772,7 @@ button { font: inherit; color: inherit; }
   renderPrice();
   renderNear();
   renderBooking();
+  if (API) refreshLive(function () { applyShop(); renderPrice(); renderNear(); renderBooking(); });
   if (T.onReady) T.onReady();
 })();
 </script>

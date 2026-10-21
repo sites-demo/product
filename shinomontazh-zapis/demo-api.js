@@ -16,7 +16,7 @@
       address: "пер. Щуппа, 5",
       addressNote: "Красное Село, рядом с проспектом Ленина",
       mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
-      coords: [59.7381, 30.0889]
+      coords: [59.72696, 30.08442]
     },
     hours: { open: 11, close: 20, closedWeekdays: [] },
     posts: 1,

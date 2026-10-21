@@ -9,6 +9,9 @@
 <style>
 /* Вариант 2 «Асфальт»: тёмный фон, жёлтый цвет дорожной разметки, широкий гротеск Unbounded.
    Главное на первом экране — ближайшее свободное время, как табло. */
+/* Цифры и двоеточие в заголовках берём из Onest: у Unbounded они слишком широкие и вылезают при крупном шрифте */
+@font-face { font-family: "Asfalt Digits"; font-display: swap; font-weight: 500 700; src: url(fonts/onest-latin-800-normal.woff2) format("woff2"); unicode-range: U+0030-003A; }
+@font-face { font-family: "Asfalt Digits"; font-display: swap; font-weight: 800 900; src: url(fonts/onest-latin-900-normal.woff2) format("woff2"); unicode-range: U+0030-003A; }
 :root {
   --bg: #121315;
   --bg-2: #1A1C1F;
@@ -21,7 +24,7 @@
   --accent-ink: #121315;
   --accent-soft: #2E2918;
   --danger: #FF8A7A;
-  --f-display: "Unbounded", "Arial Black", Arial, sans-serif;
+  --f-display: "Asfalt Digits", "Unbounded", "Arial Black", Arial, sans-serif;
   --f-body: "Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
   --tap: 58px;
   color-scheme: dark;
@@ -197,6 +200,7 @@ button { font: inherit; color: inherit; }
 .c-list > div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
 .c-list dt { color: var(--muted); }
 .c-list dd { margin: 0; font-weight: 600; min-width: 0; }
+.c-list .dd-note { font-weight: 400; color: var(--muted); }
 .c-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .map { position: relative; min-height: 440px; background: var(--card); border-radius: 10px; overflow: hidden; }
 .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -219,7 +223,7 @@ button { font: inherit; color: inherit; }
   .brand-name { font-size: 1rem; }
   .head .btn, .head-phone { display: none; }
   .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 36px 56px; }
-  .hero h1 { font-size: 2.15rem; }
+  .hero h1 { font-size: min(2.15rem, calc(10vw - 5px)); } /* «Шиномонтаж» целиком влезает в строку и при крупном шрифте */
   .hero-actions .btn { width: 100%; }
   .board { padding: 24px 20px; }
   .sec { padding-block: 60px; }
@@ -252,6 +256,29 @@ button { font: inherit; color: inherit; }
   body { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
   .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px max(12px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--bg); border-top: 1px solid var(--line); }
   .mbar .btn { min-height: 56px; padding: 0 12px; }
+}
+/* Услуги в записи на узком телефоне и с крупным шрифтом: цена переносится под описание */
+.bk-list { grid-template-columns: minmax(0, 1fr); }
+.bk-opt { grid-template-columns: minmax(0, 1fr) auto; }
+@media (max-width: 420px) {
+  .bk-opt { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "meta" "price"; }
+  .bk-opt-price { margin-top: 4px; }
+}
+/* Шапка: название не должно наезжать на меню и кнопки. С крупным шрифтом меню убираем, разделы и так идут по странице подряд */
+html.large .nav { display: none; }
+@media (max-width: 1160px) { .nav { display: none; } }
+@media (max-width: 1080px) { html.large .head-phone { display: none; } }
+/* Самые узкие телефоны с крупным шрифтом: крупным остаётся текст, а заголовки и цены не растут, чтобы влезать в ширину */
+@media (max-width: 380px) {
+  html.large .sec-head h2 { font-size: 32px; }
+  html.large .store h2 { font-size: 28px; }
+  html.large .store-price { font-size: 38px; }
+  html.large .c-addr { font-size: 25px; }
+  html.large .pt tr { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}
+@media (max-width: 420px) {
+  .brand svg { display: none; }
+  .brand-name { font-size: min(1rem, calc(10vw - 16px)); }
 }
 .demo-bar { background: var(--accent); color: var(--accent-ink); font-size: 1rem; line-height: 1.4; padding: 12px 0; }
 .demo-bar a { color: inherit; font-weight: 700; text-underline-offset: 3px; white-space: nowrap; }
@@ -333,7 +360,7 @@ button { font: inherit; color: inherit; }
         <h2 id="contacts-h">Как добраться</h2>
         <p class="c-addr"><span data-cfg="address"></span><small data-cfg="addressNote"></small></p>
         <dl class="c-list">
-          <div><dt>Часы работы</dt><dd><span data-cfg="hoursShort"></span>, <span data-cfg="hoursNote"></span></dd></div>
+          <div><dt>Часы работы</dt><dd><span data-cfg="hoursShort"></span><br><span class="dd-note" data-cfg="hoursNote"></span></dd></div>
           <div><dt>Телефон</dt><dd><a data-tel data-cfg="phone"></a></dd></div>
         </dl>
         <p class="c-links"><a class="btn" data-map target="_blank" rel="noopener">Маршрут в Яндекс Картах</a><a class="btn btn-quiet" data-tel>Позвонить</a></p>
@@ -363,9 +390,9 @@ window.TYRE_TPL = { api: "api" };
     address: "пер. Щуппа, 5",
     addressNote: "Красное Село, рядом с проспектом Ленина",
     mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
-    coords: [59.7381, 30.0889],
+    coords: [59.72696, 30.08442],
     open: 11, close: 20,
-    hoursShort: "Ежедневно с 11 до 20",
+    hoursShort: "Ежедневно с 11:00 до 20:00",
     hoursNote: "Без выходных",
     sizes: ["R13–R15", "R16–R17", "R18–R19", "R20 и больше"],
     sizesShort: ["R13–15", "R16–17", "R18–19", "R20+"],
@@ -437,7 +464,7 @@ window.TYRE_TPL = { api: "api" };
     ["name", "phone", "address", "addressNote", "mapUrl", "coords"].forEach(function (k) { if (data.shop[k] != null && data.shop[k] !== "") SHOP[k] = data.shop[k]; });
     var off = data.hours.closedWeekdays || [];
     SHOP.open = data.hours.open; SHOP.close = data.hours.close;
-    SHOP.hoursShort = (off.length ? "С " : "Ежедневно с ") + SHOP.open + " до " + SHOP.close;
+    SHOP.hoursShort = (off.length ? "С " : "Ежедневно с ") + SHOP.open + ":00 до " + SHOP.close + ":00";
     SHOP.hoursNote = off.length ? "Выходной: " + off.map(function (i) { return WD_FULL[i]; }).join(", ") : "Без выходных";
     SHOP.sizes = data.sizes; SHOP.sizesShort = data.sizesShort; SHOP.services = data.services;
     liveError = false;
