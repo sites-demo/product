@@ -2,7 +2,9 @@
 // но записи и настройки лежат в localStorage этого браузера. Сайт и админка на одном адресе, поэтому видят одни данные.
 (function () {
   "use strict";
-  var KEY = "shina-demo-v1", PASSWORD = "demo", TZ_OFFSET_MIN = 180;
+  // Несколько демо лежат на одном адресе sites-demo.github.io, поэтому у каждого свой ключ в localStorage
+  var ROOT = document.currentScript ? new URL(".", document.currentScript.src).pathname : "/";
+  var KEY = "shina-demo-v1:" + ROOT, PASSWORD = "demo", TZ_OFFSET_MIN = 180;
   var WD_SHORT = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
   var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
   var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
@@ -34,6 +36,13 @@
     privacy: { operator: "", inn: "", email: "" },
     retentionDays: 365
   };
+  // Данные конкретного шиномонтажа подставляет сборка (demo/build.py)
+  var CLIENT = window.SHINA_DEMO_CLIENT || {};
+  if (CLIENT.shop) {
+    ["name", "phone", "address", "addressNote", "mapUrl", "coords"].forEach(function (k) { if (CLIENT.shop[k] != null) DEFAULTS.shop[k] = CLIENT.shop[k]; });
+    if (CLIENT.shop.open != null) DEFAULTS.hours = { open: CLIENT.shop.open, close: CLIENT.shop.close, closedWeekdays: CLIENT.shop.closedWeekdays || [] };
+    if (CLIENT.shop.services) DEFAULTS.services = CLIENT.shop.services;
+  }
 
   // ===== Время по Москве =====
   function pad(n) { return String(n).padStart(2, "0"); }
@@ -95,7 +104,7 @@
     var now = local(), today = now.day, ts = new Date().toISOString();
     var st = {
       seedDay: today, settings: {}, bookings: [], blocks: [], nextId: 1, nextBlock: 1, admin: false,
-      bots: { tg: { token: true, username: "shina_ks_bot" }, max: { token: true, username: "shina_ks_bot" } },
+      bots: { tg: { token: true, username: CLIENT.bot || "shina_ks_bot" }, max: { token: true, username: CLIENT.bot || "shina_ks_bot" } },
       chats: [{ id: 1, transport: "tg", title: "Владелец" }, { id: 2, transport: "max", title: "Мастера шиномонтажа" }], nextChat: 3,
       code: String(100000 + Math.floor(Math.random() * 900000))
     };
@@ -121,6 +130,8 @@
     add(2, 12, "season", 3, "Елена Сергеевна", "+7 (921) 908-16-72", "BMW X5", "confirmed");
     add(2, 17, "storage", 1, "Павел", "+7 (981) 360-75-09", "Renault Duster", "new");
     add(3, 11, "season", 0, "Татьяна", "+7 (911) 581-29-36", "Kia Rio", "confirmed");
+    // Круглосуточный шиномонтаж: показываем и ночную запись
+    if (s.hours.open === 0 && s.hours.close === 24) add(1, 2, "puncture", 1, "Роман", "+7 (981) 702-46-15", "Kia Ceed", "new", { comment: "Пробил колесо на трассе" });
     st.blocks.push({ id: st.nextBlock++, day: addDays(today, 2), hour: 14, note: "мастер на выезде" });
     return st;
   }

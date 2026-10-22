@@ -349,7 +349,7 @@ html.large .nav { display: none; }
           <p>Оставьте шины у нас до следующего сезона. Храним в тёплом складе, весной поставим их обратно на машину.</p>
           <a class="btn" href="#booking" data-book="svc:storage">Записаться на хранение</a>
         </div>
-        <p class="store-price">от 3 000 ₽<small>за сезон, за комплект</small></p>
+        <p class="store-price"><span data-cfg="storeFrom"></span><small>за сезон, за комплект</small></p>
       </div>
     </div>
   </section>
@@ -379,7 +379,6 @@ html.large .nav { display: none; }
 <div class="mbar"><a class="btn btn-quiet" data-tel>Позвонить</a><a class="btn" href="#booking" data-book="">Записаться</a></div>
 
 <script>
-
 (function () {
   "use strict";
 
@@ -407,6 +406,7 @@ html.large .nav { display: none; }
   /* ===== конец настроек ===== */
 
   var T = window.TYRE_TPL || {};
+  if (T.shop) Object.keys(T.shop).forEach(function (k) { SHOP[k] = T.shop[k]; });
   var WD_SHORT = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
   var WD_FULL = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
   var MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
@@ -464,11 +464,15 @@ html.large .nav { display: none; }
     ["name", "phone", "address", "addressNote", "mapUrl", "coords"].forEach(function (k) { if (data.shop[k] != null && data.shop[k] !== "") SHOP[k] = data.shop[k]; });
     var off = data.hours.closedWeekdays || [];
     SHOP.open = data.hours.open; SHOP.close = data.hours.close;
-    SHOP.hoursShort = (off.length ? "С " : "Ежедневно с ") + SHOP.open + ":00 до " + SHOP.close + ":00";
-    SHOP.hoursNote = off.length ? "Выходной: " + off.map(function (i) { return WD_FULL[i]; }).join(", ") : "Без выходных";
+    setHours(off);
     SHOP.sizes = data.sizes; SHOP.sizesShort = data.sizesShort; SHOP.services = data.services;
     liveError = false;
   }
+  function setHours(off) {
+    SHOP.hoursShort = SHOP.open === 0 && SHOP.close === 24 ? "Круглосуточно" : (off.length ? "С " : "Ежедневно с ") + SHOP.open + ":00 до " + SHOP.close + ":00";
+    SHOP.hoursNote = off.length ? "Выходной: " + off.map(function (i) { return WD_FULL[i]; }).join(", ") : "Без выходных";
+  }
+  if (T.shop && T.shop.open != null) setHours([]);
   function refreshLive(cb) {
     liveAt = Date.now();
     fetch(API + "/public", { cache: "no-store" })
@@ -580,10 +584,22 @@ html.large .nav { display: none; }
     if (st.day) {
       var d2 = fromKey(st.day), free2 = hours(d2), all = [];
       for (var h = SHOP.open; h < SHOP.close; h++) all.push(h);
-      html += "<p class=\"bk-q\" id=\"bk-time-q\" tabindex=\"-1\">Время, " + dayWord(d2) + "</p><div class=\"bk-times\">" + all.map(function (h) {
+      var timeBtn = function (h) {
         var ok = free2.indexOf(h) >= 0;
         return "<button type=\"button\" class=\"bk-time\" data-hour=\"" + h + "\" aria-pressed=\"" + (st.hour === h) + "\"" + (ok ? "" : " disabled aria-label=\"" + h + ":00, занято\"") + ">" + h + ":00</button>";
-      }).join("") + "</div><p class=\"bk-hint\">Зачёркнутое время уже занято.</p>";
+      };
+      html += "<p class=\"bk-q\" id=\"bk-time-q\" tabindex=\"-1\">Время, " + dayWord(d2) + "</p>";
+      if (all.length > 14) {
+        // Длинный день (круглосуточно): часы по частям суток, части без свободного времени не показываем
+        html += [["Ночь", 0, 6], ["Утро", 6, 12], ["День", 12, 18], ["Вечер", 18, 24]].map(function (p) {
+          var part = all.filter(function (h) { return h >= p[1] && h < p[2]; });
+          if (!part.some(function (h) { return free2.indexOf(h) >= 0; })) return "";
+          return "<p class=\"bk-part\">" + p[0] + "</p><div class=\"bk-times\" role=\"group\" aria-label=\"" + p[0] + "\">" + part.map(timeBtn).join("") + "</div>";
+        }).join("");
+      } else {
+        html += "<div class=\"bk-times\">" + all.map(timeBtn).join("") + "</div>";
+      }
+      html += "<p class=\"bk-hint\">Зачёркнутое время уже занято.</p>";
     }
     $("bk-b-time").innerHTML = html;
   }
@@ -762,6 +778,8 @@ html.large .nav { display: none; }
   function applyShop() {
     var map = { name: SHOP.name, phone: SHOP.phone, address: SHOP.address, addressNote: SHOP.addressNote, hoursShort: SHOP.hoursShort, hoursNote: SHOP.hoursNote,
       from: rub(SHOP.services[0].prices[0]), year: String(new Date().getFullYear()) };
+    var st = svc("storage");
+    map.storeFrom = st ? "от " + rub(st.prices[0]) : "";
     document.querySelectorAll("[data-cfg]").forEach(function (el) { var v = map[el.getAttribute("data-cfg")]; if (v != null) el.textContent = v; });
     var tel = "tel:+" + SHOP.phone.replace(/\D/g, "");
     document.querySelectorAll("[data-tel]").forEach(function (a) { a.href = tel; });
