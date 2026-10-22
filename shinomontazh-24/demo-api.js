@@ -14,13 +14,13 @@
   var DEFAULTS = {
     shop: {
       name: "Шиномонтаж",
-      phone: "+7 (812) 923-98-06",
+      phone: "+7 (911) 900-99-27",
       address: "пер. Щуппа, 5",
       addressNote: "Красное Село, рядом с проспектом Ленина",
       mapUrl: "https://yandex.ru/maps/org/shinomontazh/1151076734/",
       coords: [59.72696, 30.08442]
     },
-    hours: { open: 11, close: 20, closedWeekdays: [] },
+    hours: { open: 11, close: 21, closedWeekdays: [] },
     posts: 1,
     daysAhead: 7,
     leadMinutes: 40,
