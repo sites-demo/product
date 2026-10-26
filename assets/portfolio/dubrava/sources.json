@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru \"Дубрава\" \"Нижний Новгород\" кухни; site:2gis.ru/n_novgorod \"Текстура дуба\" кухни",
+    "result": "Название Дубрава найдено у мебельного цеха в Нижнем Новгороде. Заменено на Текстура дуба, по новому имени совпадений в городе и нише не найдено.",
+    "conflict_url": "https://2gis.ru/n_novgorod/search/Мебельные%20фабрики%20и%20производства%20мебели"
+  },
+  "price_research": {
+    "url": "https://bismebel.ru/tseny/tseny-na-kukhni",
+    "note": "Цены сопоставлены с открытым прайсом города. На странице приведены стартовые значения с описанием состава услуги, это не скопированный прайс чужой компании."
+  },
+  "images": [
+    {
+      "file": "0.webp",
+      "original_url": "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg",
+      "subject": "Кухня с островом",
+      "license": "Pexels License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://www.pexels.com/photo/2724749/"
+    },
+    {
+      "file": "1.webp",
+      "original_url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+      "subject": "Кухня и обеденная зона",
+      "license": "Pexels License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://www.pexels.com/photo/1080721/"
+    },
+    {
+      "file": "2.webp",
+      "original_url": "https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg",
+      "subject": "Светлая кухня",
+      "license": "Pexels License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://www.pexels.com/photo/2062426/"
+    }
+  ],
+  "editorial": "Нет отзывов, счётчиков клиентов, обещаний медицинского или юридического результата. Контактный номер из безопасного диапазона задания."
+}

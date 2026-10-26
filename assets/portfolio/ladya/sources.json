@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru \"Ладья\" Екатеринбург грузоперевозки",
+    "result": "В результатах поиска точного совпадения города, названия и ниши не найдено. Отсутствие в выдаче не является полной проверкой реестра.",
+    "conflict_url": null
+  },
+  "price_research": {
+    "url": "https://big-moving.ru/price",
+    "note": "Цены сопоставлены с открытым прайсом города. На странице приведены стартовые значения с описанием состава услуги, это не скопированный прайс чужой компании."
+  },
+  "images": [
+    {
+      "file": "0.webp",
+      "original_url": "https://images.unsplash.com/photo-1580674285054-bed31e145f59",
+      "subject": "Коробки в грузовом фургоне",
+      "license": "Unsplash License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://unsplash.com"
+    },
+    {
+      "file": "1.webp",
+      "original_url": "https://images.pexels.com/photos/4246120/pexels-photo-4246120.jpeg",
+      "subject": "Упаковка вещей",
+      "license": "Pexels License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://www.pexels.com/photo/4246120/"
+    },
+    {
+      "file": "2.webp",
+      "original_url": "https://images.pexels.com/photos/4246091/pexels-photo-4246091.jpeg",
+      "subject": "Подготовка к переезду",
+      "license": "Pexels License",
+      "usage": "Тематическая иллюстрация, не собственный объект, персонал или результат услуги",
+      "source_page": "https://www.pexels.com/photo/4246091/"
+    }
+  ],
+  "editorial": "Нет отзывов, счётчиков клиентов, обещаний медицинского или юридического результата. Контактный номер из безопасного диапазона задания."
+}
