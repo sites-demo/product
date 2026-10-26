@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "photos": [
+    {
+      "file": "tire.webp",
+      "image_url": "https://images.unsplash.com/photo-1770275215437-a0f36921bae3",
+      "source_page": "https://unsplash.com/photos/cAfl2Xiexkg",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "wheel.webp",
+      "image_url": "https://images.unsplash.com/photo-1486449259016-a15ff636844a",
+      "source_page": "https://unsplash.com/photos/tmEr1JfzZsM",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "silver.webp",
+      "image_url": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    }
+  ],
+  "name_check": {
+    "query": "site:2gis.ru \"Шинный двор\" \"Тюмень\" Шиномонтаж и хранение шин",
+    "result": "No exact same-city same-niche match in indexed search results. Search index is incomplete; absence is not a guarantee.",
+    "url": "https://2gis.ru/"
+  },
+  "pricing": {
+    "url": "https://akbbox.ru/page/shinomontazh",
+    "note": "Published local rates checked to establish plausible scope. Site prices specify inclusions and exclusions; final quote after inspection."
+  }
+}

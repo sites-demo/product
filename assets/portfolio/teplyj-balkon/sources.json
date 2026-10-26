@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "photos": [
+    {
+      "file": "white.webp",
+      "image_url": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "living.webp",
+      "image_url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "room.webp",
+      "image_url": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    }
+  ],
+  "name_check": {
+    "query": "site:2gis.ru \"Тёплый балкон\" \"Пермь\" Окна и остекление балконов",
+    "result": "No exact same-city same-niche match in indexed search results. Search index is incomplete; absence is not a guarantee.",
+    "url": "https://2gis.ru/"
+  },
+  "pricing": {
+    "url": "https://2gis.ru/perm/firm/2252328094876296/tab/prices",
+    "note": "Published local rates checked to establish plausible scope. Site prices specify inclusions and exclusions; final quote after inspection."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "photos": [
+    {
+      "file": "living.webp",
+      "image_url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "white.webp",
+      "image_url": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "kitchen.webp",
+      "image_url": "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    }
+  ],
+  "name_check": {
+    "query": "site:2gis.ru \"Ровные стены\" \"Казань\" Ремонт квартир",
+    "result": "No exact same-city same-niche match in indexed search results. Search index is incomplete; absence is not a guarantee.",
+    "url": "https://2gis.ru/"
+  },
+  "pricing": {
+    "url": "https://remion.ru/indeks-cen-na-remont",
+    "note": "Published local rates checked to establish plausible scope. Site prices specify inclusions and exclusions; final quote after inspection."
+  }
+}
