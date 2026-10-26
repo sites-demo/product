@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru Красноярск «Парилка на Енисее» Банный комплекс",
+    "result": "По запросу site:2gis.ru Красноярск «Парилка на Енисее» точного совпадения не найдено. Найдена другая «Баня на Енисее», название не заимствовано.",
+    "limitation": "Проверена открытая поисковая выдача 2ГИС, отсутствие совпадения не является полной проверкой реестра."
+  },
+  "price_references": [
+    "https://82taiga.ru/"
+  ],
+  "price_note": "Прайсы использованы как ориентир рынка, цены страницы составлены в сопоставимом диапазоне. Итог зависит от состава услуги.",
+  "photos": [
+    {
+      "file": "photo-1.webp",
+      "source": "https://unsplash.com/photos/interior-of-a-wooden-sauna-with-a-heater-Z80uS2A-IFw",
+      "image_url": "https://images.unsplash.com/photo-1770573319185-049b29ab0ca9",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-2.webp",
+      "source": "https://unsplash.com/photos/wooden-sauna-interior-with-bucket-and-ladle-v_GHgqgrFzQ",
+      "image_url": "https://images.unsplash.com/photo-1759300031446-88e81c8a26c9",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-3.webp",
+      "source": "https://unsplash.com/photos/a-log-cabin-in-the-woods-surrounded-by-trees-CuEjcyBFRXU",
+      "image_url": "https://images.unsplash.com/photo-1693298025381-689a9ddf1ff8",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    }
+  ]
+}

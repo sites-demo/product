@@ -1,0 +1,287 @@
+{
+  "Literata": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Literata:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/literata/v40/or3aQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_df3-vbgKBM6YoggA-vpK-7cVMA.woff2",
+        "bytes": 21008,
+        "css": "@font-face {\n  font-family: 'Literata';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/literata/v40/or3aQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_df3-vbgKBM6YoggA-vpK-7cVMA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/literata/v40/or3aQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_df3-vbgKBM6YoggA-vpO-7c.woff2",
+        "bytes": 38996,
+        "css": "@font-face {\n  font-family: 'Literata';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/literata/v40/or3aQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_df3-vbgKBM6YoggA-vpO-7c.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Nunito Sans": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Nunito%20Sans:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2",
+        "bytes": 16388,
+        "css": "@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400 800;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tCKQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2",
+        "bytes": 31076,
+        "css": "@font-face {\n  font-family: 'Nunito Sans';\n  font-style: normal;\n  font-weight: 400 800;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-s.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Unbounded": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Unbounded:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwv8ZfrxE.woff2",
+        "bytes": 31424,
+        "css": "@font-face {\n  font-family: 'Unbounded';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwv8ZfrxE.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8Zf.woff2",
+        "bytes": 50904,
+        "css": "@font-face {\n  font-family: 'Unbounded';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/unbounded/v12/Yq6W-LOTXCb04q32xlpwu8Zf.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Golos Text": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Golos%20Text:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExd8hLxR.woff2",
+        "bytes": 22032,
+        "css": "@font-face {\n  font-family: 'Golos Text';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExd8hLxR.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExN8hA.woff2",
+        "bytes": 37916,
+        "css": "@font-face {\n  font-family: 'Golos Text';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExN8hA.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Oswald": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Oswald:wght@400..700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlSHYjedg.woff2",
+        "bytes": 11748,
+        "css": "@font-face {\n  font-family: 'Oswald';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlSHYjedg.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2",
+        "bytes": 21472,
+        "css": "@font-face {\n  font-family: 'Oswald';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/oswald/v57/TK3IWkUHHAIjg75cFRf3bXL8LICs1_Fv40pKlN4NNSeSASz7FmlWHYg.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Spectral": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/spectral/v15/rnCr-xNNww_2s0amA9M9knj-SA.woff2",
+        "bytes": 15372,
+        "css": "@font-face {\n  font-family: 'Spectral';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/spectral/v15/rnCr-xNNww_2s0amA9M9knj-SA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/spectral/v15/rnCr-xNNww_2s0amA9M5kng.woff2",
+        "bytes": 21696,
+        "css": "@font-face {\n  font-family: 'Spectral';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/spectral/v15/rnCr-xNNww_2s0amA9M5kng.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Commissioner": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Commissioner:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/commissioner/v24/tDbw2o2WnlgI0FNDgduEk4jAhwgumbU1SVfU5BD8OuRL8OstC6KOhgvBYWSFJ-Mgdrgiju6fF8m0bkXaexs.woff2",
+        "bytes": 26188,
+        "css": "@font-face {\n  font-family: 'Commissioner';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/commissioner/v24/tDbw2o2WnlgI0FNDgduEk4jAhwgumbU1SVfU5BD8OuRL8OstC6KOhgvBYWSFJ-Mgdrgiju6fF8m0bkXaexs.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/commissioner/v24/tDbw2o2WnlgI0FNDgduEk4jAhwgumbU1SVfU5BD8OuRL8OstC6KOhgvBYWSFJ-Mgdrgiju6fF8m0akXa.woff2",
+        "bytes": 36700,
+        "css": "@font-face {\n  font-family: 'Commissioner';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/commissioner/v24/tDbw2o2WnlgI0FNDgduEk4jAhwgumbU1SVfU5BD8OuRL8OstC6KOhgvBYWSFJ-Mgdrgiju6fF8m0akXa.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Rubik": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Rubik:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIV7nFrXyi0A.woff2",
+        "bytes": 15112,
+        "css": "@font-face {\n  font-family: 'Rubik';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIV7nFrXyi0A.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIV7nBrXw.woff2",
+        "bytes": 35348,
+        "css": "@font-face {\n  font-family: 'Rubik';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/rubik/v31/iJWKBXyIfDnIV7nBrXw.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "PT Sans": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=PT%20Sans:wght@400;700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0aExdGM.woff2",
+        "bytes": 28548,
+        "css": "@font-face {\n  font-family: 'PT Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0aExdGM.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0KExQ.woff2",
+        "bytes": 45532,
+        "css": "@font-face {\n  font-family: 'PT Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0KExQ.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Geologica": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Geologica:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/geologica/v5/oY1l8evIr7j9P3TN9YwNAdyjzUyDKkKdAGOJh1UlCDUIhAIdhCZOn1fLsig7jfvCCPHZckUWF1lEP2A.woff2",
+        "bytes": 16428,
+        "css": "@font-face {\n  font-family: 'Geologica';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/geologica/v5/oY1l8evIr7j9P3TN9YwNAdyjzUyDKkKdAGOJh1UlCDUIhAIdhCZOn1fLsig7jfvCCPHZckUWF1lEP2A.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/geologica/v5/oY1l8evIr7j9P3TN9YwNAdyjzUyDKkKdAGOJh1UlCDUIhAIdhCZOn1fLsig7jfvCCPHZckUWE1lE.woff2",
+        "bytes": 24944,
+        "css": "@font-face {\n  font-family: 'Geologica';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/geologica/v5/oY1l8evIr7j9P3TN9YwNAdyjzUyDKkKdAGOJh1UlCDUIhAIdhCZOn1fLsig7jfvCCPHZckUWE1lE.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Lora": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Lora:wght@400..700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMw77I-NP.woff2",
+        "bytes": 21232,
+        "css": "@font-face {\n  font-family: 'Lora';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMw77I-NP.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwr7Iw.woff2",
+        "bytes": 37788,
+        "css": "@font-face {\n  font-family: 'Lora';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwr7Iw.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "IBM Plex Sans": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=IBM%20Plex%20Sans:wght@400;500;600;700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/ibmplexsans/v23/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxaKYbABA.woff2",
+        "bytes": 29512,
+        "css": "@font-face {\n  font-family: 'IBM Plex Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/ibmplexsans/v23/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxaKYbABA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/ibmplexsans/v23/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxeKYY.woff2",
+        "bytes": 45712,
+        "css": "@font-face {\n  font-family: 'IBM Plex Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-stretch: 100%;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/ibmplexsans/v23/zYXzKVElMYYaJe8bpLHnCwDKr932-G7dytD-Dmu1syxeKYY.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Manrope": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2",
+        "bytes": 14500,
+        "css": "@font-face {\n  font-family: 'Manrope';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggOxSuXd.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2",
+        "bytes": 24836,
+        "css": "@font-face {\n  font-family: 'Manrope';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7gYHE41ni1AdIRggexSg.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Nunito": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Nunito:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIMeaBXso.woff2",
+        "bytes": 20776,
+        "css": "@font-face {\n  font-family: 'Nunito';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofIMeaBXso.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaB.woff2",
+        "bytes": 39128,
+        "css": "@font-face {\n  font-family: 'Nunito';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaB.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Source Serif 4": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Source%20Serif%204:wght@400..700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6kCXr4cXk.woff2",
+        "bytes": 36508,
+        "css": "@font-face {\n  font-family: 'Source Serif 4';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6kCXr4cXk.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6kDXr4.woff2",
+        "bytes": 50936,
+        "css": "@font-face {\n  font-family: 'Source Serif 4';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUHf6kDXr4.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Jost": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Jost:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oDd4iYl.woff2",
+        "bytes": 10140,
+        "css": "@font-face {\n  font-family: 'Jost';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oDd4iYl.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oTd4g.woff2",
+        "bytes": 26576,
+        "css": "@font-face {\n  font-family: 'Jost';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oTd4g.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Onest": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Onest:wght@400..800&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/onest/v11/gNMKW3F-SZuj7xmb-HY6EQ.woff2",
+        "bytes": 15860,
+        "css": "@font-face {\n  font-family: 'Onest';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/onest/v11/gNMKW3F-SZuj7xmb-HY6EQ.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/onest/v11/gNMKW3F-SZuj7xmf-HY.woff2",
+        "bytes": 33760,
+        "css": "@font-face {\n  font-family: 'Onest';\n  font-style: normal;\n  font-weight: 400 800;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/onest/v11/gNMKW3F-SZuj7xmf-HY.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Tenor Sans": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Tenor%20Sans:wght@400&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/tenorsans/v21/bx6ANxqUneKx06UkIXISn3F4Cl2I.woff2",
+        "bytes": 11644,
+        "css": "@font-face {\n  font-family: 'Tenor Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/tenorsans/v21/bx6ANxqUneKx06UkIXISn3F4Cl2I.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/tenorsans/v21/bx6ANxqUneKx06UkIXISn3V4Cg.woff2",
+        "bytes": 18588,
+        "css": "@font-face {\n  font-family: 'Tenor Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/tenorsans/v21/bx6ANxqUneKx06UkIXISn3V4Cg.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  },
+  "Cormorant Garamond": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400..700&display=swap",
+    "subsets": {
+      "cyrillic": {
+        "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYrXtKgS4.woff2",
+        "bytes": 21168,
+        "css": "@font-face {\n  font-family: 'Cormorant Garamond';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYrXtKgS4.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}"
+      },
+      "latin": {
+        "url": "https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2",
+        "bytes": 37640,
+        "css": "@font-face {\n  font-family: 'Cormorant Garamond';\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru Листвянка «Кедровый дом» Дом у Байкала с баней",
+    "result": "По запросу site:2gis.ru Листвянка «Кедровый дом» точного совпадения в нише не найдено.",
+    "limitation": "Проверена открытая поисковая выдача 2ГИС, отсутствие совпадения не является полной проверкой реестра."
+  },
+  "price_references": [
+    "https://shalecom.ru/irkutsk/zabronirovat-dom-forest-trail",
+    "https://2gis.ru/ulanude/search/Купель%20на%20байкале"
+  ],
+  "price_note": "Прайсы использованы как ориентир рынка, цены страницы составлены в сопоставимом диапазоне. Итог зависит от состава услуги.",
+  "photos": [
+    {
+      "file": "photo-1.webp",
+      "source": "https://unsplash.com/photos/a-cabin-in-the-woods-surrounded-by-tall-trees-KkxP47SwEW0",
+      "image_url": "https://images.unsplash.com/photo-1693298020278-a3f59c8cee94",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-2.webp",
+      "source": "https://unsplash.com/photos/a-log-cabin-in-the-woods-surrounded-by-trees-CuEjcyBFRXU",
+      "image_url": "https://images.unsplash.com/photo-1693298025381-689a9ddf1ff8",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-3.webp",
+      "source": "https://unsplash.com/photos/wooden-sauna-interior-with-bucket-and-ladle-v_GHgqgrFzQ",
+      "image_url": "https://images.unsplash.com/photo-1759300031446-88e81c8a26c9",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    }
+  ]
+}

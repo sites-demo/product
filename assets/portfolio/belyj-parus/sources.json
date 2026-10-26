@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru Анапа «Парус у берега» Гостевой дом у моря",
+    "result": "Найден Белый парус в Витязево, Анапа. Название заменено. По запросу site:2gis.ru Анапа «Парус у берега» гостевой дом точного совпадения не найдено.",
+    "limitation": "Проверена открытая поисковая выдача 2ГИС, отсутствие совпадения не является полной проверкой реестра."
+  },
+  "price_references": [
+    "https://anapa64.ru/",
+    "https://kristina.vvityazevo.ru/"
+  ],
+  "price_note": "Прайсы использованы как ориентир рынка, цены страницы составлены в сопоставимом диапазоне. Итог зависит от состава услуги.",
+  "photos": [
+    {
+      "file": "photo-1.webp",
+      "source": "https://unsplash.com/photos/twin-beds-in-a-bright-room-with-a-sea-view-uXYHodDhiG4",
+      "image_url": "https://images.unsplash.com/photo-1779870458288-95fd59cd2c5b",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-2.webp",
+      "source": "https://unsplash.com/photos/a-bedroom-with-two-beds-and-a-balcony-ccKvfKSKH-k",
+      "image_url": "https://images.unsplash.com/photo-1718359759373-1b2670b7478b",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-3.webp",
+      "source": "https://unsplash.com/photos/a-view-of-the-ocean-from-a-balcony-of-a-hotel-_MpoUdeAN48",
+      "image_url": "https://images.unsplash.com/photo-1677177894661-c92622afc477",
+      "license": "Unsplash License",
+      "visual_review": "Тематический морской пейзаж. Не заявлен как фото Анапы или местного объекта."
+    }
+  ]
+}

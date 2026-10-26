@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru Екатеринбург «Графит» Детейлинг",
+    "result": "По запросу site:2gis.ru Екатеринбург «Графит» детейлинг точного совпадения в нише не найдено. Найдена фитнес-студия с таким названием.",
+    "limitation": "Проверена открытая поисковая выдача 2ГИС, отсутствие совпадения не является полной проверкой реестра."
+  },
+  "price_references": [
+    "https://nlevel.pro/",
+    "https://s-dc.ru/price"
+  ],
+  "price_note": "Прайсы использованы как ориентир рынка, цены страницы составлены в сопоставимом диапазоне. Итог зависит от состава услуги.",
+  "photos": [
+    {
+      "file": "photo-1.webp",
+      "source": "https://unsplash.com/photos/a-white-bmw-car-in-a-dark-garage-0cTvMZHuVZE",
+      "image_url": "https://images.unsplash.com/photo-1754004958928-4175eadc3d33",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-2.webp",
+      "source": "https://unsplash.com/photos/black-luxury-car-parked-in-a-dimly-lit-garage-_E4bZ0lBE3g",
+      "image_url": "https://images.unsplash.com/photo-1760688962576-1e2ff91424ba",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-3.webp",
+      "source": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3",
+      "image_url": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    }
+  ]
+}

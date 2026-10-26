@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "name_check": {
+    "query": "site:2gis.ru Кисловодск «Горная тропа» Гостевой дом в горах",
+    "result": "По запросу site:2gis.ru Кисловодск «Горная тропа» гостевой дом точного совпадения не найдено.",
+    "limitation": "Проверена открытая поисковая выдача 2ГИС, отсутствие совпадения не является полной проверкой реестра."
+  },
+  "price_references": [
+    "https://www.ukolonnady.ru/"
+  ],
+  "price_note": "Прайсы использованы как ориентир рынка, цены страницы составлены в сопоставимом диапазоне. Итог зависит от состава услуги.",
+  "photos": [
+    {
+      "file": "photo-1.webp",
+      "source": "https://unsplash.com/photos/a-wooden-cabin-sits-amidst-lush-green-mountains-FGUyqURDHLg",
+      "image_url": "https://images.unsplash.com/photo-1753755167150-722b6baed05b",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-2.webp",
+      "source": "https://unsplash.com/photos/a-bedroom-with-two-beds-and-a-balcony-ccKvfKSKH-k",
+      "image_url": "https://images.unsplash.com/photo-1718359759373-1b2670b7478b",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    },
+    {
+      "file": "photo-3.webp",
+      "source": "https://unsplash.com/photos/a-cabin-in-the-woods-surrounded-by-tall-trees-KkxP47SwEW0",
+      "image_url": "https://images.unsplash.com/photo-1693298020278-a3f59c8cee94",
+      "license": "Unsplash License",
+      "visual_review": "Проверено на контактном листе. Тематическое фото без заявления о местном объекте или выполненной работе."
+    }
+  ]
+}
