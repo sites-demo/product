@@ -1,0 +1,202 @@
+[
+  {
+    "slug": "belyj-parus",
+    "name": "Парус у берега",
+    "niche": "Гостевой дом у моря",
+    "city": "Анапа",
+    "title": "Парус у берега · Гостевой дом у моря · Анапа",
+    "thumb": "/assets/portfolio/thumbs/belyj-parus.webp"
+  },
+  {
+    "slug": "gornaya-tropa",
+    "name": "Горная тропа",
+    "niche": "Гостевой дом в горах",
+    "city": "Кисловодск",
+    "title": "Горная тропа · Гостевой дом в горах · Кисловодск",
+    "thumb": "/assets/portfolio/thumbs/gornaya-tropa.webp"
+  },
+  {
+    "slug": "kedrovyj-dom",
+    "name": "Кедровый дом",
+    "niche": "Дом у Байкала с баней",
+    "city": "Листвянка",
+    "title": "Кедровый дом · Дом у Байкала с баней · Листвянка",
+    "thumb": "/assets/portfolio/thumbs/kedrovyj-dom.webp"
+  },
+  {
+    "slug": "parilka",
+    "name": "Парилка на Енисее",
+    "niche": "Банный комплекс",
+    "city": "Красноярск",
+    "title": "Парилка на Енисее · Банный комплекс · Красноярск",
+    "thumb": "/assets/portfolio/thumbs/parilka.webp"
+  },
+  {
+    "slug": "grafit",
+    "name": "Графит",
+    "niche": "Детейлинг",
+    "city": "Екатеринбург",
+    "title": "Графит · Детейлинг · Екатеринбург",
+    "thumb": "/assets/portfolio/thumbs/grafit.webp"
+  },
+  {
+    "slug": "sever-detailing",
+    "name": "Север Детейлинг",
+    "niche": "Детейлинг и защитная плёнка",
+    "city": "Новосибирск",
+    "title": "Север Детейлинг · Детейлинг и защитная плёнка · Новосибирск",
+    "thumb": "/assets/portfolio/thumbs/sever-detailing.webp"
+  },
+  {
+    "slug": "uzel",
+    "name": "Узел",
+    "niche": "Автосервис",
+    "city": "Воронеж",
+    "title": "Узел · Автосервис · Воронеж",
+    "thumb": "/assets/portfolio/thumbs/uzel.webp"
+  },
+  {
+    "slug": "klyuch-na-10",
+    "name": "Ключ на 10",
+    "niche": "Автосервис",
+    "city": "Омск",
+    "title": "Ключ на 10 · Автосервис · Омск",
+    "thumb": "/assets/portfolio/thumbs/klyuch-na-10.webp"
+  },
+  {
+    "slug": "rovnyj-kuzov",
+    "name": "Ровный кузов",
+    "niche": "Кузовной ремонт и PDR",
+    "city": "Уфа",
+    "title": "Ровный кузов · Кузовной ремонт и PDR · Уфа",
+    "thumb": "/assets/portfolio/thumbs/rovnyj-kuzov.webp"
+  },
+  {
+    "slug": "krasim",
+    "name": "Красим",
+    "niche": "Кузовной ремонт и покраска",
+    "city": "Ростов-на-Дону",
+    "title": "Красим · Кузовной ремонт и покраска · Ростов-на-Дону",
+    "thumb": "/assets/portfolio/thumbs/krasim.webp"
+  },
+  {
+    "slug": "shinnyj-dvor",
+    "name": "Шинный двор",
+    "niche": "Шиномонтаж и хранение шин",
+    "city": "Тюмень",
+    "title": "Шинный двор · Шиномонтаж и хранение шин · Тюмень",
+    "thumb": "/assets/portfolio/thumbs/shinnyj-dvor.webp"
+  },
+  {
+    "slug": "rovnye-steny",
+    "name": "Ровные стены",
+    "niche": "Ремонт квартир",
+    "city": "Казань",
+    "title": "Ровные стены · Ремонт квартир · Казань",
+    "thumb": "/assets/portfolio/thumbs/rovnye-steny.webp"
+  },
+  {
+    "slug": "belyj-list",
+    "name": "Белый лист",
+    "niche": "Дизайн и ремонт квартир",
+    "city": "Краснодар",
+    "title": "Белый лист · Дизайн и ремонт квартир · Краснодар",
+    "thumb": "/assets/portfolio/thumbs/belyj-list.webp"
+  },
+  {
+    "slug": "vysota",
+    "name": "Высота 2,7",
+    "niche": "Натяжные потолки",
+    "city": "Самара",
+    "title": "Высота 2,7 · Натяжные потолки · Самара",
+    "thumb": "/assets/portfolio/thumbs/vysota.webp"
+  },
+  {
+    "slug": "teplyj-balkon",
+    "name": "Тёплый балкон",
+    "niche": "Окна и остекление балконов",
+    "city": "Пермь",
+    "title": "Тёплый балкон · Окна и остекление балконов · Пермь",
+    "thumb": "/assets/portfolio/thumbs/teplyj-balkon.webp"
+  },
+  {
+    "slug": "klimat-yug",
+    "name": "Климат Юг",
+    "niche": "Кондиционеры: продажа и монтаж",
+    "city": "Краснодар",
+    "title": "Климат Юг · Кондиционеры: продажа и монтаж · Краснодар",
+    "thumb": "/assets/portfolio/thumbs/klimat-yug.webp"
+  },
+  {
+    "slug": "severnyj-srub",
+    "name": "Северный сруб",
+    "niche": "Бани и дома из бревна",
+    "city": "Вологда",
+    "title": "Северный сруб · Бани и дома из бревна · Вологда",
+    "thumb": "/assets/portfolio/thumbs/severnyj-srub.webp"
+  },
+  {
+    "slug": "dubrava",
+    "name": "Текстура дуба",
+    "niche": "Кухни на заказ",
+    "city": "Нижний Новгород",
+    "title": "Текстура дуба · Кухни на заказ · Нижний Новгород",
+    "thumb": "/assets/portfolio/thumbs/dubrava.webp"
+  },
+  {
+    "slug": "ladya",
+    "name": "Ладья",
+    "niche": "Переезды и грузоперевозки",
+    "city": "Екатеринбург",
+    "title": "Ладья · Переезды и грузоперевозки · Екатеринбург",
+    "thumb": "/assets/portfolio/thumbs/ladya.webp"
+  },
+  {
+    "slug": "tyagach",
+    "name": "Тягач 74",
+    "niche": "Эвакуатор 24 часа",
+    "city": "Челябинск",
+    "title": "Тягач 74 · Эвакуатор 24 часа · Челябинск",
+    "thumb": "/assets/portfolio/thumbs/tyagach.webp"
+  },
+  {
+    "slug": "blik",
+    "name": "Блик",
+    "niche": "Клининг квартир и офисов",
+    "city": "Новосибирск",
+    "title": "Блик · Клининг квартир и офисов · Новосибирск",
+    "thumb": "/assets/portfolio/thumbs/blik.webp"
+  },
+  {
+    "slug": "opora",
+    "name": "Опора",
+    "niche": "Юрист по банкротству и долгам",
+    "city": "Тюмень",
+    "title": "Опора · Юрист по банкротству и долгам · Тюмень",
+    "thumb": "/assets/portfolio/thumbs/opora.webp"
+  },
+  {
+    "slug": "enot",
+    "name": "Енот",
+    "niche": "Ветеринарная клиника",
+    "city": "Калининград",
+    "title": "Енот · Ветеринарная клиника · Калининград",
+    "thumb": "/assets/portfolio/thumbs/enot.webp"
+  },
+  {
+    "slug": "atelie-volos",
+    "name": "Ателье волос Миры",
+    "niche": "Окрашивание и стрижки",
+    "city": "Казань",
+    "title": "Ателье волос Миры · Окрашивание и стрижки · Казань",
+    "thumb": "/assets/portfolio/thumbs/atelie-volos.webp"
+  },
+  {
+    "slug": "skin-atelier",
+    "name": "Скин Ателье",
+    "niche": "Консультации и уход за кожей",
+    "city": "Екатеринбург",
+    "title": "Скин Ателье · Консультации и уход за кожей · Екатеринбург",
+    "thumb": "/assets/portfolio/thumbs/skin-atelier.webp"
+  }
+]
