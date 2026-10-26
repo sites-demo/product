@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-26",
+  "photos": [
+    {
+      "file": "silver.webp",
+      "image_url": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7",
+      "source_page": "https://unsplash.com",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "body.webp",
+      "image_url": "https://images.unsplash.com/photo-1786489785506-9c527aaf908d",
+      "source_page": "https://unsplash.com/photos/zyLW2erHdRg",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    },
+    {
+      "file": "paint.webp",
+      "image_url": "https://images.unsplash.com/photo-1632605192331-085fa2082575",
+      "source_page": "https://unsplash.com/photos/qu9XY-kl1oU",
+      "license": "Unsplash License",
+      "visual_check": "Downloaded, opened and inspected. Illustrative stock, not identified as company work."
+    }
+  ],
+  "name_check": {
+    "query": "site:2gis.ru \"Ровный кузов\" \"Уфа\" Кузовной ремонт и PDR",
+    "result": "No exact same-city same-niche match in indexed search results. Search index is incomplete; absence is not a guarantee.",
+    "url": "https://2gis.ru/"
+  },
+  "pricing": {
+    "url": "https://autoservis-avalon.ru/ceny/",
+    "note": "Published local rates checked to establish plausible scope. Site prices specify inclusions and exclusions; final quote after inspection."
+  }
+}
