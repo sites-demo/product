@@ -134,6 +134,17 @@ html,body{overflow-x:clip}
 @media(max-width:420px){.price-row{gap:6px}.price-row div{padding:9px 9px;font-size:12px}.price-row strong{font-size:14px}.dims{grid-template-columns:1fr 1fr}.dims label:last-child{grid-column:1/-1}}
 @media(max-width:899px){.top{position:relative}}
 @media(max-width:420px){.calc{padding:24px 14px}.types label{padding:12px;gap:10px;font-size:15px}.types b{font-size:14px}}
+
+/* robust to Android text scaling */
+.types label{flex-wrap:wrap;row-gap:2px}.types span{min-width:0;flex:1 1 9em}.types b{margin-left:auto}
+.prow{flex-wrap:wrap}.prow>div{min-width:0;flex:1 1 12em}
+.how{grid-template-columns:minmax(0,1fr)}@media(min-width:800px){.how{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.how h3,.stage b,.cbox dd{overflow-wrap:break-word;hyphens:auto}
+.logo img{max-width:44vw;height:auto;max-height:50px}
+.top .wrap{min-width:0;gap:10px}.icons{flex:none}@media(max-width:400px){.icons a{width:36px;height:36px}.icons a[aria-label=Telegram]{display:none}}
+.facts{grid-template-columns:repeat(2,minmax(0,1fr))}@media(min-width:600px){.facts{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.facts b{white-space:normal}
+.cta .btn{max-width:100%;white-space:normal;text-align:center}
 </style></head><body>
 
 <header class="top"><div class="wrap">
