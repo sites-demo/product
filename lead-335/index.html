@@ -123,6 +123,17 @@ footer{padding:30px 0 40px;color:var(--mute);font-size:14px;border-top:1px solid
 .mbar .btn{flex:1;min-height:50px;padding:0 12px;font-size:15px}
 .mbar .btn.wa{flex:0 0 56px;padding:0}
 @media(min-width:900px){.mbar{display:none}}
+
+/* mobile fixes */
+html,body{overflow-x:clip}
+.hero .wrap>*,.calc>*,.contacts>*,.gallery>*{min-width:0}
+.price-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stage>div{min-width:0}.stage b{overflow-wrap:anywhere}
+@media(max-width:560px){.stages{grid-template-columns:1fr}.stage img{width:48px;height:48px}}
+@media(max-width:420px){.price-row{gap:6px}.price-row div{padding:9px 9px;font-size:12px}.price-row strong{font-size:14px}.dims{grid-template-columns:1fr 1fr}.dims label:last-child{grid-column:1/-1}}
+@media(max-width:899px){.top{position:relative}}
+@media(max-width:420px){.calc{padding:24px 14px}.types label{padding:12px;gap:10px;font-size:15px}.types b{font-size:14px}}
 </style></head><body>
 
 <header class="top"><div class="wrap">
@@ -144,7 +155,7 @@ footer{padding:30px 0 40px;color:var(--mute);font-size:14px;border-top:1px solid
     <h1>Чистка ковров в&nbsp;Казани <em>с&nbsp;вывозом</em></h1>
     <p>Заберём ковёр из квартиры, почистим в цеху с двух сторон и привезём сухим и упакованным. Платите, только когда развернёте и посмотрите.</p>
     <div class="price-row">
-      <div><strong>от 290 ₽/м²</strong>Синтетика</div>
+      <div><strong>от 290 ₽</strong>За м², синтетика</div>
       <div><strong>3–12 дней</strong>Срочно 1–2 дня</div>
       <div><strong>Оплата</strong>После получения</div>
     </div>
