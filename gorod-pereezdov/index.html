@@ -1,13 +1,13 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Город Переездов: переезды в Нижнем Новгороде и по России</title>
+<title>Moving town: переезды в Нижнем Новгороде и по России</title>
 <meta name="description" content="Квартирные, офисные и дачные переезды, грузчики, такелаж и хранение в Нижнем Новгороде. Заявка на расчёт с маршрутом, этажами и фото вещей.">
-<meta name="theme-color" content="#0F2235">
+<meta name="theme-color" content="#ffffff">
 <style>
 @font-face{font-family:Manrope;font-weight:200 800;font-display:swap;src:url(../assets/fonts/manrope-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:Manrope;font-weight:200 800;font-display:swap;src:url(../assets/fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F,U+20AC,U+2122}
-:root{--dark:#0F2235;--dark2:#17304A;--bg:#F3F1EC;--card:#fff;--ink:#14202C;--mute:#5B6672;--line:#DEDAD2;--acc:#FF6A2B;--acc-d:#E85A1E;--soft:#FFF1EA;--ok:#1F9D5B;--r:8px}
+:root{--dark:#13261C;--dark2:#1C3628;--bg:#F2F4F0;--card:#fff;--ink:#16211B;--mute:#5A665E;--line:#D9DFD8;--acc:#3E9A55;--acc-d:#33844A;--soft:#EAF5EC;--ok:#1F9D5B;--r:8px}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 Manrope,Arial,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:80px;overflow-x:clip;overflow-wrap:break-word}
 @media(min-width:900px){body{padding-bottom:0}}
@@ -27,15 +27,15 @@ section{padding:60px 0;scroll-margin-top:12px}
 .btn svg{width:22px;height:22px;flex:none}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
 /* header */
-.top{background:var(--dark);color:#fff;border-bottom:1px solid #22405E}
+.top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-height:64px;padding-top:8px;padding-bottom:8px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.logo{display:block;min-width:0}.logo img{height:46px;width:auto}@media(max-width:480px){.logo img{height:34px}}
 .logo i{width:38px;height:38px;border-radius:var(--r);background:var(--acc);display:grid;place-items:center;flex:none}
 .logo i svg{width:24px;height:24px}
 .logo span{font-weight:800;font-size:17px;line-height:1.15}
-.logo small{display:block;font-weight:500;font-size:12px;color:#9FB0C2}
+.logo small{display:block;font-weight:500;font-size:12px;color:#A3B5A9}
 .sp{flex:1}
-.nav{display:none;gap:22px;font-size:15px;font-weight:600}.nav a{text-decoration:none;color:#C9D4DF}.nav a:hover{color:#fff}
+.nav{display:none;gap:22px;font-size:15px;font-weight:600}.nav a{text-decoration:none;color:var(--mute)}.nav a:hover{color:var(--acc)}
 @media(min-width:1000px){.nav{display:flex}}
 .top .tel{font-weight:800;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums;font-size:16px}
 @media(max-width:420px){.top .tel{font-size:15px}.logo small{display:none}}
@@ -43,17 +43,17 @@ section{padding:60px 0;scroll-margin-top:12px}
 .hero{background:var(--dark);color:#fff;padding:36px 0 56px;position:relative;overflow:hidden}
 .hero .wrap{display:grid;gap:28px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:900px){.hero{padding:72px 0 96px}.hero .wrap{grid-template-columns:1.05fr .95fr;align-items:center}}
-.hero .over{color:#FFB28F}
+.hero .over{color:#8FD39E}
 .hero h1{hyphens:none;overflow-wrap:normal;font-size:clamp(30px,7.4vw,62px);margin-bottom:18px;line-height:1.04}
-.hero h1 em{font-style:normal;color:var(--acc)}
-.hero p{color:#C9D4DF;font-size:18px;margin:0 0 26px;max-width:540px}
+.hero h1 em{font-style:normal;color:#6CC383}
+.hero p{color:#C8D6CC;font-size:18px;margin:0 0 26px;max-width:540px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px;padding:0;list-style:none}
-.chips li{background:var(--dark2);border:1px solid #2A4A6B;border-radius:40px;padding:7px 14px;font-size:15px;font-weight:600;color:#E3EAF1}
+.chips li{background:var(--dark2);border:1px solid #2E5240;border-radius:40px;padding:7px 14px;font-size:15px;font-weight:600;color:#E2EBE4}
 .cta{display:flex;flex-wrap:wrap;gap:12px}
 .cta .btn{flex:1 1 220px}
 @media(min-width:900px){.cta .btn{flex:0 0 auto}}
 .hero .btn.line{color:#fff;border-color:rgba(255,255,255,.35)}
-.art{background:var(--dark2);border:1px solid #2A4A6B;border-radius:14px;overflow:hidden}
+.art{background:var(--dark2);border:1px solid #2E5240;border-radius:14px;overflow:hidden}
 .art svg{width:100%;height:auto;display:block}
 /* calc */
 #calc{background:var(--bg)}
@@ -74,7 +74,7 @@ section{padding:60px 0;scroll-margin-top:12px}
 .opt span{display:flex;flex-direction:column;gap:4px;min-height:58px;justify-content:center;padding:12px 14px;border:2px solid var(--line);border-radius:var(--r);font-weight:700;font-size:16px;cursor:pointer;background:#fff;line-height:1.25}
 .opt span small{font-weight:500;font-size:13px;color:var(--mute)}
 .opt input:checked+span{border-color:var(--acc);background:var(--soft)}
-.opt input:focus-visible+span{outline:3px solid #FFC9B3}
+.opt input:focus-visible+span{outline:3px solid #B9E3C2}
 .lbl{display:block;font-weight:700;font-size:15px;margin:0 0 8px}
 .field{margin:0 0 20px}
 .inp{width:100%;min-height:54px;padding:12px 14px;border:2px solid var(--line);border-radius:var(--r);font:500 17px Manrope,Arial,sans-serif;color:var(--ink);background:#fff}
@@ -94,25 +94,25 @@ textarea.inp{min-height:96px;resize:vertical}
 .thumbs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));margin:0 0 20px}
 .thumbs div{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;background:#E9E5DD}
 .thumbs img{width:100%;height:100%;object-fit:cover}
-.thumbs button{position:absolute;right:4px;top:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(15,34,53,.8);color:#fff;font:700 16px/1 Manrope,Arial,sans-serif;cursor:pointer}
+.thumbs button{position:absolute;right:4px;top:4px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(19,38,28,.8);color:#fff;font:700 16px/1 Manrope,Arial,sans-serif;cursor:pointer}
 .err{color:#C0392B;font-weight:700;font-size:15px;margin:-8px 0 16px;display:none}.err.on{display:block}
 /* summary */
 .sum{background:var(--dark);color:#fff;border-radius:14px;padding:22px}
 @media(min-width:960px){.sum{position:sticky;top:16px}}
 @media(max-width:959px){.sum{display:none}.sum.show{display:block}}
 .sum h3{font-size:20px;margin-bottom:4px}
-.sum .sub{color:#9FB0C2;font-size:14px;margin:0 0 16px}
+.sum .sub{color:#A3B5A9;font-size:14px;margin:0 0 16px}
 .sum dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0}
-.sum dt,.sum dd{padding:9px 0;border-top:1px solid #22405E;font-size:15px}
-.sum dt{color:#9FB0C2;padding-right:14px}
+.sum dt,.sum dd{padding:9px 0;border-top:1px solid #2B4A38;font-size:15px}
+.sum dt{color:#A3B5A9;padding-right:14px}
 .sum dd{margin:0;font-weight:700;text-align:right}
-.sum dd.empty{color:#5E7790;font-weight:500}
+.sum dd.empty{color:#6E8A77;font-weight:500}
 .sum .ph{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .sum .ph img{width:40px;height:40px;object-fit:cover;border-radius:4px}
 .est{margin-top:16px;background:var(--dark2);border-radius:10px;padding:16px}
-.est small{display:block;color:#9FB0C2;font-size:13px}
-.est b{display:block;font-size:28px;line-height:1.2;color:#FFB28F;font-variant-numeric:tabular-nums}
-.est p{margin:6px 0 0;color:#C9D4DF;font-size:14px;line-height:1.45}
+.est small{display:block;color:#A3B5A9;font-size:13px}
+.est b{display:block;font-size:28px;line-height:1.2;color:#8FD39E;font-variant-numeric:tabular-nums}
+.est p{margin:6px 0 0;color:#C8D6CC;font-size:14px;line-height:1.45}
 /* done */
 .done{display:none}.done.on{display:block}
 .done .ok{width:56px;height:56px;border-radius:50%;background:#E3F5EB;display:grid;place-items:center;margin-bottom:14px}
@@ -138,14 +138,14 @@ textarea.inp{min-height:96px;resize:vertical}
 .svc .pr small{font-weight:500;color:var(--mute);font-size:14px}
 /* prices */
 .dark{background:var(--dark);color:#fff}
-.dark .lead{color:#C9D4DF}.dark .over{color:#FFB28F}
-.tbl{display:grid;gap:1px;background:#22405E;border:1px solid #22405E;border-radius:12px;overflow:hidden}
+.dark .lead{color:#C8D6CC}.dark .over{color:#8FD39E}
+.tbl{display:grid;gap:1px;background:#2B4A38;border:1px solid #2B4A38;border-radius:12px;overflow:hidden}
 @media(min-width:760px){.tbl{grid-template-columns:repeat(4,1fr)}}
 .tbl div{background:var(--dark);padding:24px}
 .tbl b{display:block;font-size:20px;margin-bottom:6px}
-.tbl span{display:block;color:#9FB0C2;font-size:15px}
-.tbl strong{display:block;margin-top:14px;font-size:clamp(24px,3vw,30px);color:#FFB28F;font-variant-numeric:tabular-nums;white-space:nowrap}
-.note{margin-top:22px;padding:16px 20px;border-left:4px solid var(--acc);background:var(--dark2);color:#E3EAF1;max-width:760px;font-size:16px}
+.tbl span{display:block;color:#A3B5A9;font-size:15px}
+.tbl strong{display:block;margin-top:14px;font-size:clamp(24px,3vw,30px);color:#8FD39E;font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{margin-top:22px;padding:16px 20px;border-left:4px solid var(--acc);background:var(--dark2);color:#E2EBE4;max-width:760px;font-size:16px}
 /* steps */
 .steps{display:grid;gap:14px;counter-reset:s;margin:0;padding:0;list-style:none}
 @media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr)}}
@@ -156,7 +156,8 @@ textarea.inp{min-height:96px;resize:vertical}
 .cont{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:860px){.cont{grid-template-columns:1.2fr .8fr;align-items:center}}
 .bigtel{display:block;font-weight:800;font-size:clamp(28px,5vw,44px);text-decoration:none;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap;margin:6px 0 18px}
-footer{background:#0A1928;color:#7F93A8;font-size:14px;padding:26px 0}
+.addr{display:grid;gap:1px;background:#2B4A38;border:1px solid #2B4A38;border-radius:12px;overflow:hidden}.addr p{margin:0;background:var(--dark2);padding:18px 20px;font-size:17px;font-weight:600}.addr b{display:block;font-size:13px;color:#8FD39E;font-weight:700;margin-bottom:4px}
+footer{background:#0D1B14;color:#7F93A8;font-size:14px;padding:26px 0}
 footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
 /* mobile bar */
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(243,241,236,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
@@ -166,7 +167,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 </style></head><body>
 
 <header class="top"><div class="wrap">
-  <a class="logo" href="#"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8" fill="#fff"/><circle cx="17" cy="17.5" r="1.8" fill="#fff"/></svg></i><span>Город Переездов<small>Нижний Новгород</small></span></a>
+  <a class="logo" href="#"><img src="logo.png" alt="Moving town. Двигаемся к лучшему" width="642" height="137"></a>
   <span class="sp"></span>
   <nav class="nav"><a href="#calc">Расчёт</a><a href="#services">Услуги</a><a href="#prices">Цены</a><a href="#contacts">Контакты</a></nav>
   <a class="tel" href="tel:+78312310695">+7 (831) 231-06-95</a>
@@ -174,7 +175,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 
 <section class="hero"><div class="wrap">
   <div>
-    <p class="over">Переезды в Нижнем Новгороде и по России</p>
+    <p class="over">Переезды в Нижнем Новгороде и по России. Круглосуточно</p>
     <h1>Расскажите о&nbsp;переезде за&nbsp;2&nbsp;минуты. <em>Мы посчитаем.</em></h1>
     <p>Укажите маршрут, этажи и лифт, добавьте фото вещей. Менеджер получит всё одной заявкой и назовёт стоимость без долгих расспросов по телефону.</p>
     <ul class="chips"><li>Квартиры</li><li>Офисы</li><li>Дачи</li><li>Межгород</li><li>Такелаж</li><li>Хранение</li></ul>
@@ -185,28 +186,28 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   </div>
   <div class="art" aria-hidden="true">
     <svg viewBox="0 0 560 400">
-      <rect width="560" height="400" fill="#17304A"/>
-      <g fill="#1E3A57"><rect x="20" y="150" width="60" height="170"/><rect x="90" y="110" width="44" height="210"/><rect x="146" y="170" width="70" height="150"/><rect x="380" y="130" width="54" height="190"/><rect x="444" y="90" width="40" height="230"/><rect x="494" y="160" width="56" height="160"/></g>
-      <g fill="#2A4A6B"><rect x="30" y="165" width="10" height="12"/><rect x="52" y="165" width="10" height="12"/><rect x="30" y="195" width="10" height="12"/><rect x="100" y="125" width="9" height="12"/><rect x="118" y="125" width="9" height="12"/><rect x="100" y="155" width="9" height="12"/><rect x="392" y="148" width="10" height="12"/><rect x="412" y="148" width="10" height="12"/><rect x="454" y="108" width="8" height="12"/><rect x="454" y="138" width="8" height="12"/><rect x="506" y="178" width="10" height="12"/><rect x="528" y="178" width="10" height="12"/></g>
-      <g fill="#FF8A57"><rect x="30" y="225" width="10" height="12"/><rect x="118" y="185" width="9" height="12"/><rect x="412" y="208" width="10" height="12"/></g>
-      <rect y="320" width="560" height="80" fill="#10263B"/>
+      <rect width="560" height="400" fill="#1C3628"/>
+      <g fill="#22402F"><rect x="20" y="150" width="60" height="170"/><rect x="90" y="110" width="44" height="210"/><rect x="146" y="170" width="70" height="150"/><rect x="380" y="130" width="54" height="190"/><rect x="444" y="90" width="40" height="230"/><rect x="494" y="160" width="56" height="160"/></g>
+      <g fill="#2E5240"><rect x="30" y="165" width="10" height="12"/><rect x="52" y="165" width="10" height="12"/><rect x="30" y="195" width="10" height="12"/><rect x="100" y="125" width="9" height="12"/><rect x="118" y="125" width="9" height="12"/><rect x="100" y="155" width="9" height="12"/><rect x="392" y="148" width="10" height="12"/><rect x="412" y="148" width="10" height="12"/><rect x="454" y="108" width="8" height="12"/><rect x="454" y="138" width="8" height="12"/><rect x="506" y="178" width="10" height="12"/><rect x="528" y="178" width="10" height="12"/></g>
+      <g fill="#8FD39E"><rect x="30" y="225" width="10" height="12"/><rect x="118" y="185" width="9" height="12"/><rect x="412" y="208" width="10" height="12"/></g>
+      <rect y="320" width="560" height="80" fill="#15291F"/>
       <g fill="#F3F1EC" opacity=".35"><rect x="20" y="356" width="50" height="5" rx="2"/><rect x="110" y="356" width="50" height="5" rx="2"/><rect x="200" y="356" width="50" height="5" rx="2"/><rect x="290" y="356" width="50" height="5" rx="2"/><rect x="380" y="356" width="50" height="5" rx="2"/><rect x="470" y="356" width="50" height="5" rx="2"/></g>
       <!-- truck -->
       <rect x="96" y="176" width="250" height="140" rx="6" fill="#F3F1EC"/>
-      <rect x="96" y="176" width="250" height="22" rx="6" fill="#FF6A2B"/>
-      <text x="221" y="262" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="24" fill="#0F2235">ГОРОД</text>
-      <text x="221" y="290" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="24" fill="#FF6A2B">ПЕРЕЕЗДОВ</text>
-      <path d="M346 214h66l40 44v58h-106z" fill="#FF6A2B"/>
-      <path d="M358 226h50l30 33h-80z" fill="#BFD6EA"/>
-      <rect x="346" y="300" width="112" height="16" fill="#E85A1E"/>
+      <rect x="96" y="176" width="250" height="22" rx="6" fill="#3E9A55"/>
+      <text x="221" y="262" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="26" fill="#13261C">MOVING</text>
+      <text x="221" y="290" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="26" fill="#3E9A55">TOWN</text>
+      <path d="M346 214h66l40 44v58h-106z" fill="#3E9A55"/>
+      <path d="M358 226h50l30 33h-80z" fill="#CDE6D4"/>
+      <rect x="346" y="300" width="112" height="16" fill="#33844A"/>
       <rect x="440" y="282" width="18" height="10" rx="2" fill="#FFE2A8"/>
-      <g><circle cx="150" cy="318" r="26" fill="#0F2235"/><circle cx="150" cy="318" r="11" fill="#9FB0C2"/><circle cx="210" cy="318" r="26" fill="#0F2235"/><circle cx="210" cy="318" r="11" fill="#9FB0C2"/><circle cx="406" cy="318" r="26" fill="#0F2235"/><circle cx="406" cy="318" r="11" fill="#9FB0C2"/></g>
+      <g><circle cx="150" cy="318" r="26" fill="#13261C"/><circle cx="150" cy="318" r="11" fill="#A3B5A9"/><circle cx="210" cy="318" r="26" fill="#13261C"/><circle cx="210" cy="318" r="11" fill="#A3B5A9"/><circle cx="406" cy="318" r="26" fill="#13261C"/><circle cx="406" cy="318" r="11" fill="#A3B5A9"/></g>
       <!-- boxes -->
       <g><rect x="40" y="262" width="48" height="40" rx="3" fill="#C99A62"/><rect x="40" y="262" width="48" height="7" fill="#B4844E"/><rect x="60" y="262" width="8" height="40" fill="#E8C99B" opacity=".7"/>
       <rect x="474" y="248" width="56" height="48" rx="3" fill="#C99A62"/><rect x="474" y="248" width="56" height="8" fill="#B4844E"/><rect x="498" y="248" width="9" height="48" fill="#E8C99B" opacity=".7"/>
       <rect x="484" y="214" width="40" height="34" rx="3" fill="#D6AB74"/><rect x="484" y="214" width="40" height="6" fill="#B4844E"/></g>
       <!-- route -->
-      <g transform="translate(330 46)"><rect width="196" height="74" rx="10" fill="#0F2235"/><circle cx="22" cy="24" r="7" fill="none" stroke="#FFB28F" stroke-width="3"/><circle cx="22" cy="52" r="7" fill="#FF6A2B"/><path d="M22 32v12" stroke="#5E7790" stroke-width="2" stroke-dasharray="3 3"/><rect x="40" y="18" width="120" height="10" rx="5" fill="#2A4A6B"/><rect x="40" y="46" width="94" height="10" rx="5" fill="#2A4A6B"/><rect x="168" y="16" width="18" height="14" rx="3" fill="#1F9D5B"/><rect x="142" y="44" width="44" height="14" rx="3" fill="#2A4A6B"/></g>
+      <g transform="translate(330 46)"><rect width="196" height="74" rx="10" fill="#13261C"/><circle cx="22" cy="24" r="7" fill="none" stroke="#8FD39E" stroke-width="3"/><circle cx="22" cy="52" r="7" fill="#3E9A55"/><path d="M22 32v12" stroke="#6E8A77" stroke-width="2" stroke-dasharray="3 3"/><rect x="40" y="18" width="120" height="10" rx="5" fill="#2E5240"/><rect x="40" y="46" width="94" height="10" rx="5" fill="#2E5240"/><rect x="168" y="16" width="18" height="14" rx="3" fill="#1F9D5B"/><rect x="142" y="44" width="44" height="14" rx="3" fill="#2E5240"/></g>
     </svg>
   </div>
 </div></section>
@@ -324,7 +325,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         <h3 style="font-size:26px">Заявка отправлена</h3>
         <p class="hint" style="color:var(--mute);margin:6px 0 0">Менеджер посмотрит фото и свяжется с вами, чтобы назвать стоимость.</p>
         <div class="msg">
-          <div class="who"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/></svg></i><span>Бот заявок «Город Переездов»<small>Так заявка придёт менеджеру в Telegram</small></span></div>
+          <div class="who"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/></svg></i><span>Бот заявок Moving town<small>Так заявка придёт менеджеру в Telegram</small></span></div>
           <div class="bubble" id="bubble"></div>
         </div>
         <p class="demo">Это демо-версия. В рабочей версии заявка вместе с фото сразу приходит вам в Telegram и на почту.</p>
@@ -384,14 +385,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <section class="dark" id="contacts"><div class="wrap cont">
   <div>
     <p class="over">Контакты</p>
-    <h2>Город Переездов, Нижний Новгород</h2>
+    <h2>Moving town, Нижний Новгород</h2>
     <a class="bigtel" href="tel:+78312310695">+7 (831) 231-06-95</a>
     <div class="cta"><a class="btn" href="#calc">Оставить заявку</a><a class="btn line" style="color:#fff;border-color:rgba(255,255,255,.35)" href="tel:+78312310695">Позвонить</a></div>
   </div>
-  <p class="lead" style="margin:0">Переезды по городу и области, межгород по России, грузчики, такелаж и ответственное хранение.</p>
+  <div class="addr"><p><b>Офис</b>ул. Юлиуса Фучика, 8, 3-й этаж, офис 15</p><p><b>Офис работает</b>Ежедневно с 8:00 до 22:00</p><p><b>Переезды</b>Выполняем круглосуточно</p></div>
 </div></section>
 
-<footer><div class="wrap"><span>Город Переездов, Нижний Новгород</span><span>Демо-версия сайта</span></div></footer>
+<footer><div class="wrap"><span>Moving town, Нижний Новгород, ул. Юлиуса Фучика, 8</span><span>Демо-версия сайта</span></div></footer>
 
 <div class="mbar"><a class="btn ghost" href="tel:+78312310695" aria-label="Позвонить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z"/></svg></a><a class="btn" href="#calc">Рассчитать переезд</a></div>
 
