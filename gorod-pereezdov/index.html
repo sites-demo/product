@@ -181,7 +181,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <ul class="chips"><li>Квартиры</li><li>Офисы</li><li>Дачи</li><li>Межгород</li><li>Такелаж</li><li>Хранение</li></ul>
     <div class="cta">
       <a class="btn" href="#calc">Рассчитать переезд</a>
-      <a class="btn line" href="tel:+78312310695">Позвонить</a>
+      <a class="btn line" href="https://t.me/Allexilin7" target="_blank" rel="noopener">Отправить фото в Telegram</a>
     </div>
   </div>
   <div class="art" aria-hidden="true">
@@ -235,7 +235,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           <span class="lbl">Сколько комнат?</span>
           <div class="opts">
             <label class="opt"><input type="radio" name="rooms" value="1"><span>1 комната<small>Машина 18 м³</small></span></label>
-            <label class="opt"><input type="radio" name="rooms" value="2" checked><span>2 комнаты<small>Машина 25 м³</small></span></label>
+            <label class="opt"><input type="radio" name="rooms" value="2"><span>2 комнаты<small>Машина 25 м³</small></span></label>
             <label class="opt"><input type="radio" name="rooms" value="3"><span>3 комнаты<small>Машина 32 м³</small></span></label>
             <label class="opt"><input type="radio" name="rooms" value="4"><span>4 и больше<small>Машина 36 м³</small></span></label>
           </div>
@@ -309,7 +309,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           <div class="field"><label class="lbl" for="name">Имя</label><input class="inp" id="name" name="name" autocomplete="given-name" placeholder="Как к вам обращаться"></div>
           <div class="field"><label class="lbl" for="phone">Телефон</label><input class="inp" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__"></div>
         </div>
-        <p class="err" id="perr">Укажите телефон, чтобы мы могли прислать расчёт.</p>
+        <div class="field" id="tgField" hidden><label class="lbl" for="telegram">Ваш Telegram</label><input class="inp" id="telegram" name="telegram" placeholder="@username" autocomplete="off"><small>Можно указать вместо телефона, если выбрали Telegram.</small></div>
+        <p class="err" id="perr">Укажите телефон или @username для связи в Telegram.</p>
         <span class="lbl">Как удобнее связаться</span>
         <div class="opts">
           <label class="opt"><input type="radio" name="via" value="Звонок" checked><span>Звонок</span></label>
@@ -322,13 +323,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 
       <div class="done" id="done">
         <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-        <h3 style="font-size:26px">Заявка отправлена</h3>
+        <h3 style="font-size:26px">Ваша заявка отправлена</h3>
         <p class="hint" style="color:var(--mute);margin:6px 0 0">Менеджер посмотрит фото и свяжется с вами, чтобы назвать стоимость.</p>
         <div class="msg">
-          <div class="who"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/></svg></i><span>Бот заявок Moving town<small>Так заявка придёт менеджеру в Telegram</small></span></div>
+          <div class="who"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/></svg></i><span>Бот заявок Moving town<small>Ваша заявка</small></span></div>
           <div class="bubble" id="bubble"></div>
         </div>
-        <p class="demo">Это демо-версия. В рабочей версии заявка вместе с фото сразу приходит вам в Telegram и на почту.</p>
         <button type="button" class="btn ghost" id="again">Заполнить заново</button>
       </div>
     </form>
@@ -350,8 +350,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></div><h3>Квартирный переезд</h3><p>Упакуем, вынесем, перевезём и расставим по комнатам. Машина под объём вещей.</p><div class="pr">от 9 600 ₽ <small>за 1-комнатную</small></div></article>
     <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div><h3>Офисный переезд</h3><p>Мебель, техника, документы и серверы. Можно в выходные, чтобы офис не простаивал.</p><div class="pr">900 ₽ <small>в час за грузчика</small></div></article>
     <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 20h20M5 20V10l7-5 7 5v10"/><path d="M10 20v-5h4v5"/></svg></div><h3>Дачный переезд</h3><p>Перевезём вещи на дачу весной и обратно осенью, вместе с садовым инвентарём.</p><div class="pr">900 ₽ <small>в час за грузчика</small></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H15a3 3 0 010 6H9a3 3 0 000 6h6.5"/></svg></div><h3>Переезд в другой город</h3><p>Из Нижнего Новгорода по России на машине от 25 м³, с упаковкой вещей.</p><div class="pr">Расчёт <small>по маршруту</small></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="1"/><path d="M9 9V6a3 3 0 016 0v3M12 13v3"/></svg></div><h3>Такелаж</h3><p>Пианино, сейфы, банкоматы, витрины и оборудование. Поднимем и спустим без лифта.</p><div class="pr">от 20 ₽ <small>за кг, груз 100–300 кг</small></div></article>
+    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H15a3 3 0 010 6H9a3 3 0 000 6h6.5"/></svg></div><h3>Переезд в другой город</h3><p>Из Нижнего Новгорода по России на машине от 18 м³, с упаковкой вещей.</p><div class="pr">Расчёт <small>по маршруту</small></div></article>
+    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="1"/><path d="M9 9V6a3 3 0 016 0v3M12 13v3"/></svg></div><h3>Такелаж</h3><p>Пианино, сейфы, банкоматы, витрины и оборудование. Поднимем и спустим без лифта.</p><div class="pr">от 25 ₽ <small>за кг, груз 100–300 кг</small></div></article>
     <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-5 9 5v11H3z"/><path d="M7 20v-7h10v7M7 16h10"/></svg></div><h3>Ответственное хранение</h3><p>Мебель, техника и личные вещи на складе, пока идёт ремонт или ищете новое жильё.</p><div class="pr">от 25 ₽ <small>в сутки за 1 м³</small></div></article>
   </div>
 </div></section>
@@ -361,14 +361,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <h2>Сколько стоит переезд квартиры</h2>
   <p class="lead">Цена зависит от объёма вещей, этажей и расстояния. Ниже стартовая стоимость.</p>
   <div class="tbl">
-    <div><b>1 комната</b><span>Машина 18 м³, от 3 часов</span><strong>от 9 600 ₽</strong></div>
-    <div><b>2 комнаты</b><span>Машина 25 м³, от 4 часов</span><strong>от 15 600 ₽</strong></div>
-    <div><b>3 комнаты</b><span>Машина 32 м³, от 5 часов</span><strong>от 26 500 ₽</strong></div>
-    <div><b>4 комнаты</b><span>Машина 36 м³, от 8 часов</span><strong>от 36 400 ₽</strong></div>
+    <div><b>1 комната</b><span>Машина 18 м³, от 3 часов</span><span>2 грузчика</span><strong>от 9 600 ₽</strong></div>
+    <div><b>2 комнаты</b><span>Машина 25 м³, от 4 часов</span><span>2–4 грузчика</span><strong>от 15 600 ₽</strong></div>
+    <div><b>3 комнаты</b><span>Машина 32 м³, от 5 часов</span><span>4 грузчика</span><strong>от 26 500 ₽</strong></div>
+    <div><b>4 комнаты</b><span>Машина 36 м³, от 8 часов</span><span>6 грузчиков</span><strong>от 36 400 ₽</strong></div>
   </div>
-  <p class="note">Грузчики на переезде 900 ₽ в час, разборка, сборка и упаковка 950 ₽ в час. Точную сумму назовём после заявки с фото.</p>
+  <p class="note">Почасовая работа грузчика на переезде — 900 ₽, разборка, сборка и упаковка — 950 ₽ в час. Состав работ, материалы и итоговую стоимость согласуем до заказа. Цены выше — ориентиры по прайсу.</p>
   <div class="cta" style="margin-top:26px"><a class="btn" href="#calc">Рассчитать мой переезд</a></div>
 </div></section>
+
+<section id="trust" style="padding-bottom:0"><div class="wrap"><p class="over">Ваши вещи в надёжных руках</p><h2>Договор и ответственность за имущество</h2><p class="lead">Работаем по договору и несём материальную ответственность за имущество во время работ. До заказа согласуем состав услуг и стоимость.</p><a class="btn line" href="https://yandex.ru/maps/org/muving_taun/52265900654/reviews/" target="_blank" rel="noopener">Читать отзывы на Яндекс Картах</a></div></section>
 
 <section><div class="wrap">
   <p class="over">Как всё проходит</p>
@@ -389,10 +391,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <a class="bigtel" href="tel:+78312310695">+7 (831) 231-06-95</a>
     <div class="cta"><a class="btn" href="#calc">Оставить заявку</a><a class="btn line" style="color:#fff;border-color:rgba(255,255,255,.35)" href="tel:+78312310695">Позвонить</a></div>
   </div>
-  <div class="addr"><p><b>Офис</b>ул. Юлиуса Фучика, 8, 3-й этаж, офис 15</p><p><b>Офис работает</b>Ежедневно с 8:00 до 22:00</p><p><b>Переезды</b>Выполняем круглосуточно</p></div>
+  <div class="addr"><p><b>Офис</b>ул. Смирнова, 2, 2-й этаж, офис 209</p><p><b>Офис работает</b>Ежедневно с 8:00 до 22:00</p><p><b>Переезды</b>Выполняем круглосуточно</p></div>
 </div></section>
 
-<footer><div class="wrap"><span>Moving town, Нижний Новгород, ул. Юлиуса Фучика, 8</span><span>Демо-версия сайта</span></div></footer>
+<footer><div class="wrap"><span>Moving town, Нижний Новгород, ул. Смирнова, 2</span></div></footer>
 
 <div class="mbar"><a class="btn ghost" href="tel:+78312310695" aria-label="Позвонить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z"/></svg></a><a class="btn" href="#calc">Рассчитать переезд</a></div>
 
@@ -421,7 +423,7 @@ f.addEventListener('click',function(e){
 function floorTxt(id,lift){var v=document.getElementById(id).value;var s=v+' этаж';return s+(v>1?', лифт: '+val(lift).toLowerCase():'')}
 function rows(){
   var t=val('type'),r=[];
-  r.push(['Тип',t+(t==='Квартира'?', '+val('rooms')+(val('rooms')==='4'?'+':'')+' комн.':'')]);
+  r.push(['Тип',t+(t==='Квартира'&&val('rooms')?', '+val('rooms')+(val('rooms')==='4'?'+':'')+' комн.':'')]);
   r.push(['Откуда',(f.fromAddr.value.trim()||'')]);
   r.push(['',floorTxt('fromFloor','fromLift')]);
   r.push(['Куда',(f.toAddr.value.trim()||'')]);
@@ -438,8 +440,9 @@ function upd(){
   h+='<dt>Фото</dt><dd'+(photos.length?'':' class="empty"')+'>'+(photos.length?'<span class="ph">'+photos.slice(0,6).map(function(p){return'<img src="'+p.url+'" alt="">'}).join('')+'</span>':'нет')+'</dd>';
   document.getElementById('sumList').innerHTML=h;
   var est=document.getElementById('est');
-  if(val('type')==='Квартира'){var k=val('rooms');est.innerHTML='<small>Ориентир по прайсу</small><b>'+PRICE[k]+'</b><p>Машина '+CAR[k]+'. Точную цену менеджер назовёт по фото и этажам.</p>'}
-  else est.innerHTML='<small>Стоимость</small><b>По заявке</b><p>Менеджер посчитает по маршруту и фото вещей.</p>';
+  if(val('type')==='Квартира'&&val('rooms')){var k=val('rooms');est.innerHTML='<small>Ориентир по прайсу</small><b>'+PRICE[k]+'</b><p>Машина '+CAR[k]+'. Точную цену менеджер назовёт по фото и этажам.</p>'}
+  else est.innerHTML='<small>Стоимость</small><b>По заявке</b><p>Выберите размер квартиры для ориентира по прайсу. Для остальных услуг менеджер рассчитает стоимость по маршруту и фото.</p>';
+  document.getElementById('tgField').hidden=val('via')!=='Telegram';
 }
 f.addEventListener('input',upd);f.addEventListener('change',upd);
 var inp=document.getElementById('files'),drop=document.getElementById('drop'),th=document.getElementById('thumbs');
@@ -454,13 +457,14 @@ var ph=f.phone;
 ph.addEventListener('input',function(){var d=ph.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);var s='+7';if(d.length>1)s+=' '+d.slice(1,4);if(d.length>4)s+=' '+d.slice(4,7);if(d.length>7)s+='-'+d.slice(7,9);if(d.length>9)s+='-'+d.slice(9,11);ph.value=d?s:''});
 f.addEventListener('submit',function(e){
   e.preventDefault();
-  var ok=ph.value.replace(/\D/g,'').length===11;document.getElementById('perr').classList.toggle('on',!ok);if(!ok){ph.focus();return}
-  var n=Math.floor(1000+Math.random()*9000);
+  var tg=f.telegram.value.trim();
+  var ok=ph.value.replace(/\D/g,'').length===11||(val('via')==='Telegram'&&/^@?[a-zA-Z][a-zA-Z0-9_]{4,31}$/.test(tg));document.getElementById('perr').classList.toggle('on',!ok);if(!ok){(val('via')==='Telegram'?f.telegram:ph).focus();return}
   var lines=['Новая заявка на переезд'];
   rows().forEach(function(r){if(r[1])lines.push((r[0]?r[0]+': ':'   ')+r[1])});
   if(f.comment.value.trim())lines.push('Комментарий: '+f.comment.value.trim());
   lines.push('');
-  lines.push('Клиент: '+(f.name.value.trim()||'без имени')+', '+ph.value);
+  lines.push('Клиент: '+(f.name.value.trim()||'без имени')+(ph.value?', '+ph.value:''));
+  if(val('via')==='Telegram'&&tg)lines.push('Telegram: '+(tg[0]==='@'?tg:'@'+tg));
   lines.push('Связаться: '+val('via'));
   lines.push('Фото: '+(photos.length?photos.length+' шт.':'нет'));
   var b=document.getElementById('bubble');
@@ -474,3 +478,4 @@ show(0);upd();
 })();
 </script>
 </body></html>
+
