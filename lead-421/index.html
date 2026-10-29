@@ -18,7 +18,7 @@ h2{font-size:clamp(26px,4vw,40px);margin-bottom:12px}
 h3{font-size:19px;margin-bottom:6px}
 section{padding:64px 0;scroll-margin-top:60px}
 @media(min-width:900px){section{padding:96px 0}}
-.over{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.over{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--mute);margin:0 0 12px}.over:before{content:"";width:26px;height:4px;background:var(--acc);flex:none}
 .lead{color:var(--mute);font-size:18px;max-width:600px;margin:0 0 30px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 24px;border-radius:var(--r);background:var(--acc);color:var(--dark);font:800 17px/1.1 Manrope,Arial,sans-serif;text-decoration:none;border:0;cursor:pointer;text-align:center}
 .btn:hover{background:var(--acc-d)}
@@ -40,19 +40,20 @@ section{padding:64px 0;scroll-margin-top:60px}
 @media(min-width:700px){.top .tel{display:block}}
 @media(max-width:699px){.top .btn{display:none}}
 /* hero */
-.hero{background:var(--dark);color:#fff;padding:40px 0 56px}
-.hero .wrap{display:grid;gap:36px}
+.hero{background:var(--dark);color:#fff;padding:0 0 48px}
+.hero .wrap{display:grid;gap:28px;grid-template-columns:minmax(0,1fr)}
+@media(max-width:899px){.hero .pic{order:-1;margin:0 -18px;border:0;border-radius:0}}
 @media(min-width:900px){.hero{padding:72px 0 88px}.hero .wrap{grid-template-columns:1.1fr .9fr;align-items:center}}
 .hero .over{color:var(--acc)}
-.hero h1{font-size:clamp(34px,6vw,64px);margin-bottom:18px}
+.hero h1{font-size:clamp(30px,9.6vw,70px);margin-bottom:16px;line-height:1.02}.hero h1 em{font-style:normal;color:var(--acc);display:block}
 .hero p{color:#C5C9CE;font-size:18px;margin:0 0 28px;max-width:520px}
 .cta{display:flex;flex-wrap:wrap;gap:12px}
 .cta .btn{flex:1 1 220px}
 @media(min-width:900px){.cta .btn{flex:0 0 auto}}
 .bigtel{display:block;margin-top:22px;font-weight:800;font-size:clamp(24px,4.4vw,36px);text-decoration:none;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .bigtel small{display:block;font-size:14px;font-weight:500;color:#A3A8AF;letter-spacing:0}
-.pic{background:var(--dark2);border:1px solid #2A2E34;border-radius:var(--r);aspect-ratio:4/3;display:grid;place-items:center;position:relative;overflow:hidden}
-.pic svg{width:82%;height:auto}
+.pic{background:#17191D;border:1px solid #2A2E34;border-radius:var(--r);aspect-ratio:4/3;display:grid;place-items:center;position:relative;overflow:hidden}
+.pic svg{width:100%;height:auto}.pic{aspect-ratio:auto}
 .pic span{position:absolute;left:14px;bottom:12px;font-size:13px;color:#8D939B}
 /* when */
 .cases{display:grid;gap:14px}
@@ -125,6 +126,12 @@ details p{margin:0 0 18px;color:var(--mute)}
 .cont strong{font-size:clamp(20px,3vw,28px);font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 footer{background:var(--dark);color:#8D939B;font-size:14px;padding:28px 0}
 footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.tape{height:12px;background:repeating-linear-gradient(-45deg,var(--acc) 0 14px,var(--dark) 14px 28px)}
+.wait{display:grid;gap:14px}@media(min-width:760px){.wait{grid-template-columns:repeat(3,1fr)}}
+.wait div{border-top:4px solid var(--ink);padding-top:16px}.wait p{margin:0;color:var(--mute);font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.chips span{padding:10px 16px;border:1.5px solid var(--ink);border-radius:var(--r);font-weight:700;font-size:15px}
+.msg{margin-top:26px;max-width:340px;background:#E7F8E0;border-radius:10px 10px 10px 2px;padding:14px 16px;font-size:14px;line-height:1.5;color:#1D2B1D;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.msg b{display:block;font-size:12px;color:#3C7A3C;margin-bottom:4px;letter-spacing:.02em}
 /* sticky bar */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--dark);border-top:1px solid #2A2E34}
 .bar .btn{flex:1;min-height:54px;padding:0 10px;font-size:16px}
@@ -145,9 +152,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 
 <section class="hero"><div class="wrap">
   <div>
-    <p class="over">Частный эвакуатор · Новосибирск</p>
-    <h1>Машина не&nbsp;едет? Перевезём её туда, куда нужно</h1>
-    <p>Звоните или оставьте заявку. Водитель уточнит детали и&nbsp;сразу назовёт цену.</p>
+    <h1>Эвакуатор <em>в Новосибирске</em></h1>
+    <p>Перевезу машину после поломки или ДТП. Позвоните или напишите, что случилось, и&nbsp;я&nbsp;сразу назову цену.</p>
     <div class="cta">
       <a class="btn" href="tel:+79132073814"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Позвонить</a>
       <a class="btn line" href="#zayavka">Вызвать эвакуатор</a>
@@ -155,21 +161,35 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <a class="bigtel" href="tel:+79132073814"><small>Звонок и WhatsApp</small>+7 913 207-38-14</a>
   </div>
   <div class="pic" aria-hidden="true">
-    <svg viewBox="0 0 400 220" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 160h360" stroke="#3A3F46" stroke-width="2"/>
-      <path d="M40 150V92h78l26 36h40v22" stroke="#FFC400" stroke-width="5"/>
-      <path d="M58 104h46l14 22H58z" stroke="#FFC400" stroke-width="3"/>
-      <path d="M184 150h176l-4-22H184z" stroke="#FFC400" stroke-width="5"/>
-      <path d="M200 128l26-22h78l26 22" stroke="#E8EAED" stroke-width="3"/>
-      <path d="M232 106l8-18h52l14 18" stroke="#E8EAED" stroke-width="3"/>
-      <circle cx="86" cy="156" r="16" stroke="#FFC400" stroke-width="5" fill="#1C1F24"/>
-      <circle cx="226" cy="156" r="16" stroke="#FFC400" stroke-width="5" fill="#1C1F24"/>
-      <circle cx="320" cy="156" r="16" stroke="#FFC400" stroke-width="5" fill="#1C1F24"/>
-      <circle cx="244" cy="128" r="9" stroke="#E8EAED" stroke-width="3"/><circle cx="312" cy="128" r="9" stroke="#E8EAED" stroke-width="3"/>
+    <svg viewBox="0 0 480 300" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <defs><pattern id="hz" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="16" fill="#FFC400"/><rect x="8" width="8" height="16" fill="#121417"/></pattern>
+      <linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B4652"/><stop offset="1" stop-color="#232A31"/></linearGradient></defs>
+      <g fill="#20242A"><rect x="18" y="96" width="34" height="140"/><rect x="58" y="70" width="26" height="166"/><rect x="90" y="112" width="40" height="124"/><rect x="138" y="58" width="22" height="178"/><rect x="168" y="100" width="44" height="136"/><rect x="220" y="80" width="30" height="156"/><rect x="258" y="118" width="48" height="118"/><rect x="314" y="64" width="26" height="172"/><rect x="348" y="104" width="40" height="132"/><rect x="396" y="86" width="30" height="150"/><rect x="434" y="120" width="34" height="116"/></g>
+      <g fill="#2C323A"><rect x="64" y="84" width="5" height="7"/><rect x="74" y="84" width="5" height="7"/><rect x="64" y="100" width="5" height="7"/><rect x="144" y="74" width="5" height="7"/><rect x="226" y="96" width="5" height="7"/><rect x="236" y="96" width="5" height="7"/><rect x="320" y="80" width="5" height="7"/><rect x="402" y="102" width="5" height="7"/><rect x="412" y="102" width="5" height="7"/></g>
+      <rect x="0" y="236" width="480" height="64" fill="#1A1D21"/>
+      <path d="M0 270h480" stroke="#3A3F46" stroke-width="3" stroke-dasharray="26 18"/>
+      <path d="M60 206h376v14H60z" fill="#2A2F36"/>
+      <path d="M36 192h300l8 14H44z" fill="url(#hz)"/>
+      <path d="M36 192h300" stroke="#FFC400" stroke-width="3"/>
+      <path d="M340 206V128a8 8 0 0 1 8-8h52c6 0 10 3 13 8l22 38c2 3 3 6 3 10v30z" fill="#FFC400"/>
+      <path d="M356 132h40c3 0 5 1 7 4l16 28h-63z" fill="url(#gl)"/>
+      <path d="M344 178h94" stroke="#121417" stroke-width="2" opacity=".35"/>
+      <rect x="420" y="184" width="16" height="8" rx="2" fill="#FFF3C4"/>
+      <rect x="360" y="112" width="26" height="8" rx="3" fill="#FF8A00"/>
+      <path d="M352 108l-6-6M394 108l6-6M373 104v-8" stroke="#FF8A00" stroke-width="2.5" opacity=".8"/>
+      <path d="M78 192v-22l20-4 30-26c5-4 10-6 17-6h70c8 0 14 3 19 8l26 26 34 6c7 1 10 5 10 12v6z" fill="#E8EAED"/>
+      <path d="M140 160l20-18h34v18zM204 142h12c5 0 9 2 12 5l15 13h-39z" fill="url(#gl)"/>
+      <path d="M202 140v22M78 180h226" stroke="#B9BEC5" stroke-width="2"/>
+      <rect x="290" y="172" width="12" height="7" rx="2" fill="#FFC400"/>
+      <path d="M318 198l22-4" stroke="#B9BEC5" stroke-width="3"/>
+      <g stroke="#121417" stroke-width="5"><circle cx="122" cy="192" r="15" fill="#3A3F46"/><circle cx="262" cy="192" r="15" fill="#3A3F46"/></g>
+      <g><circle cx="112" cy="232" r="20" fill="#121417" stroke="#4A5059" stroke-width="5"/><circle cx="166" cy="232" r="20" fill="#121417" stroke="#4A5059" stroke-width="5"/><circle cx="394" cy="232" r="20" fill="#121417" stroke="#4A5059" stroke-width="5"/>
+      <circle cx="112" cy="232" r="6" fill="#FFC400"/><circle cx="166" cy="232" r="6" fill="#FFC400"/><circle cx="394" cy="232" r="6" fill="#FFC400"/></g>
     </svg>
     <span>Здесь будет фото вашего эвакуатора</span>
   </div>
 </div></section>
+<div class="tape" aria-hidden="true"></div>
 
 <section id="kogda"><div class="wrap">
   <p class="over">Когда звонить</p>
@@ -186,6 +206,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <li>Ехать своим ходом опасно</li>
       <li>Нужно доставить на&nbsp;ремонт или стоянку</li>
     </ul></div>
+  </div>
+  <div class="chips" aria-label="Куда можно отвезти"><span>В автосервис</span><span>Домой</span><span>На стоянку</span><span>К дилеру</span><span>В другой район</span></div>
+</div></section>
+
+<section id="poka" style="padding-top:0"><div class="wrap">
+  <p class="over">Пока ждёте</p>
+  <h2>Что сделать до&nbsp;приезда эвакуатора</h2>
+  <div class="wait">
+    <div><h3>Обозначьте машину</h3><p>Включите аварийку. После ДТП выставьте знак: в&nbsp;городе не&nbsp;ближе 15&nbsp;м, за&nbsp;городом 30&nbsp;м.</p></div>
+    <div><h3>Сфотографируйте</h3><p>Машину со&nbsp;всех сторон и&nbsp;место, где она стоит. Фото пригодятся и&nbsp;водителю, и&nbsp;страховой.</p></div>
+    <div><h3>Подготовьте</h3><p>Ключи и&nbsp;документы на&nbsp;машину. Если колёса не&nbsp;крутятся или руль заблокирован, скажите об&nbsp;этом сразу.</p></div>
   </div>
 </div></section>
 
@@ -218,6 +249,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <h2>Вызвать эвакуатор</h2>
     <p class="lead">Заполните, что знаете, и&nbsp;нажмите кнопку. Откроется WhatsApp с&nbsp;готовым сообщением водителю, останется только отправить.</p>
     <a class="btn" href="tel:+79132073814" style="width:100%;max-width:340px">Или позвонить водителю</a>
+    <div class="msg" aria-hidden="true"><b>Так выглядит заявка у&nbsp;водителя</b>Здравствуйте! Нужен эвакуатор.<br>Откуда: Красный проспект, 25<br>Куда: автосервис на&nbsp;Станционной<br>Машина: Kia Rio<br>Что случилось: не&nbsp;заводится<br>Колёса крутятся: да</div>
   </div>
   <form id="f" novalidate>
     <label class="full">Откуда забрать
