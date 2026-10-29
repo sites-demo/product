@@ -54,7 +54,7 @@ section{padding:60px 0;scroll-margin-top:12px}
 @media(min-width:900px){.cta .btn{flex:0 0 auto}}
 .hero .btn.line{color:#fff;border-color:rgba(255,255,255,.35)}
 .art{background:var(--dark2);border:1px solid #2E5240;border-radius:14px;overflow:hidden}
-.art svg{width:100%;height:auto;display:block}
+.art{position:relative;margin:0}.art img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}.art figcaption{position:absolute;left:12px;right:12px;bottom:12px;width:fit-content;max-width:calc(100% - 24px);padding:9px 14px;border-radius:10px;background:rgba(19,38,28,.86);color:#F3F1EC;font-size:14px;font-weight:600;line-height:1.35;backdrop-filter:blur(6px)}
 /* calc */
 #calc{background:var(--bg)}
 .calc{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
@@ -184,39 +184,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <a class="btn line" href="https://t.me/Allexilin7" target="_blank" rel="noopener">Отправить фото в Telegram</a>
     </div>
   </div>
-  <div class="art" aria-hidden="true">
-    <svg viewBox="0 0 560 400">
-      <rect width="560" height="400" fill="#1C3628"/>
-      <g fill="#22402F"><rect x="20" y="150" width="60" height="170"/><rect x="90" y="110" width="44" height="210"/><rect x="146" y="170" width="70" height="150"/><rect x="380" y="130" width="54" height="190"/><rect x="444" y="90" width="40" height="230"/><rect x="494" y="160" width="56" height="160"/></g>
-      <g fill="#2E5240"><rect x="30" y="165" width="10" height="12"/><rect x="52" y="165" width="10" height="12"/><rect x="30" y="195" width="10" height="12"/><rect x="100" y="125" width="9" height="12"/><rect x="118" y="125" width="9" height="12"/><rect x="100" y="155" width="9" height="12"/><rect x="392" y="148" width="10" height="12"/><rect x="412" y="148" width="10" height="12"/><rect x="454" y="108" width="8" height="12"/><rect x="454" y="138" width="8" height="12"/><rect x="506" y="178" width="10" height="12"/><rect x="528" y="178" width="10" height="12"/></g>
-      <g fill="#8FD39E"><rect x="30" y="225" width="10" height="12"/><rect x="118" y="185" width="9" height="12"/><rect x="412" y="208" width="10" height="12"/></g>
-      <rect y="320" width="560" height="80" fill="#15291F"/>
-      <g fill="#F3F1EC" opacity=".35"><rect x="20" y="356" width="50" height="5" rx="2"/><rect x="110" y="356" width="50" height="5" rx="2"/><rect x="200" y="356" width="50" height="5" rx="2"/><rect x="290" y="356" width="50" height="5" rx="2"/><rect x="380" y="356" width="50" height="5" rx="2"/><rect x="470" y="356" width="50" height="5" rx="2"/></g>
-      <!-- truck -->
-      <ellipse cx="276" cy="322" rx="200" ry="7" fill="#0E1F17"/>
-      <rect x="104" y="276" width="352" height="12" rx="3" fill="#13261C"/>
-      <rect x="96" y="150" width="250" height="126" rx="6" fill="#F3F1EC"/>
-      <rect x="96" y="150" width="250" height="20" rx="6" fill="#3E9A55"/>
-      <rect x="96" y="264" width="250" height="12" fill="#DCD8CF"/>
-      <text x="221" y="222" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="26" fill="#13261C">MOVING</text>
-      <text x="221" y="250" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-weight="800" font-size="26" fill="#3E9A55">TOWN</text>
-      <path d="M352 192h62c4 0 7 1.5 9.5 4.5L452 232c3 3.5 4 7 4 11v39h-104z" fill="#3E9A55"/>
-      <path d="M364 204h46l26 30h-72z" fill="#CDE6D4"/>
-      <path d="M398 204v78" stroke="#33844A" stroke-width="2"/>
-      <rect x="402" y="242" width="12" height="4" rx="2" fill="#13261C" opacity=".5"/>
-      <rect x="352" y="270" width="106" height="14" rx="3" fill="#33844A"/>
-      <rect x="444" y="250" width="12" height="10" rx="2" fill="#FFE2A8"/>
-      <rect x="358" y="198" width="6" height="18" rx="2" fill="#13261C"/>
-      <g fill="#13261C"><path d="M126 288a32 32 0 0 1 64 0z"/><path d="M182 288a32 32 0 0 1 64 0z"/><path d="M378 288a32 32 0 0 1 64 0z"/></g>
-      <g><circle cx="158" cy="296" r="24" fill="#0F1F17"/><circle cx="158" cy="296" r="10" fill="#A3B5A9"/><circle cx="214" cy="296" r="24" fill="#0F1F17"/><circle cx="214" cy="296" r="10" fill="#A3B5A9"/><circle cx="410" cy="296" r="24" fill="#0F1F17"/><circle cx="410" cy="296" r="10" fill="#A3B5A9"/></g>
-      <!-- boxes -->
-      <g><rect x="40" y="262" width="48" height="40" rx="3" fill="#C99A62"/><rect x="40" y="262" width="48" height="7" fill="#B4844E"/><rect x="60" y="262" width="8" height="40" fill="#E8C99B" opacity=".7"/>
-      <rect x="474" y="248" width="56" height="48" rx="3" fill="#C99A62"/><rect x="474" y="248" width="56" height="8" fill="#B4844E"/><rect x="498" y="248" width="9" height="48" fill="#E8C99B" opacity=".7"/>
-      <rect x="484" y="214" width="40" height="34" rx="3" fill="#D6AB74"/><rect x="484" y="214" width="40" height="6" fill="#B4844E"/></g>
-      <!-- route -->
-      <g transform="translate(330 46)"><rect width="196" height="74" rx="10" fill="#13261C"/><circle cx="22" cy="24" r="7" fill="none" stroke="#8FD39E" stroke-width="3"/><circle cx="22" cy="52" r="7" fill="#3E9A55"/><path d="M22 32v12" stroke="#6E8A77" stroke-width="2" stroke-dasharray="3 3"/><rect x="40" y="18" width="120" height="10" rx="5" fill="#2E5240"/><rect x="40" y="46" width="94" height="10" rx="5" fill="#2E5240"/><rect x="168" y="16" width="18" height="14" rx="3" fill="#1F9D5B"/><rect x="142" y="44" width="44" height="14" rx="3" fill="#2E5240"/></g>
-    </svg>
-  </div>
+  <figure class="art">
+    <img src="hero.webp" srcset="hero-m.webp 720w, hero.webp 1200w" sizes="(max-width: 860px) 100vw, 540px" width="1200" height="900" alt="Грузчик Moving town упаковывает мебель в стрейч-плёнку перед переездом" fetchpriority="high">
+    <figcaption>Каждую вещь упакуем в плёнку перед погрузкой</figcaption>
+  </figure>
 </div></section>
 
 <section id="calc"><div class="wrap">
