@@ -54,7 +54,7 @@ section{padding:60px 0;scroll-margin-top:12px}
 @media(min-width:900px){.cta .btn{flex:0 0 auto}}
 .hero .btn.line{color:#fff;border-color:rgba(255,255,255,.35)}.hero .btn{white-space:nowrap}
 .art{background:var(--dark2);border:1px solid #2E5240;border-radius:14px;overflow:hidden}
-.art{position:relative;margin:0}.art img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}.art figcaption{position:absolute;left:12px;right:12px;bottom:12px;width:fit-content;max-width:calc(100% - 24px);padding:9px 14px;border-radius:10px;background:rgba(19,38,28,.86);color:#F3F1EC;font-size:14px;font-weight:600;line-height:1.35;backdrop-filter:blur(6px)}
+.art{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:none;border:0;border-radius:0;overflow:visible}.art img{display:block;width:100%;height:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:var(--dark2)}.art img.big{grid-column:1/-1;aspect-ratio:16/10;object-position:50% 60%}
 /* calc */
 #calc{background:var(--bg)}
 .calc{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
@@ -184,10 +184,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <a class="btn line" href="https://t.me/Allexilin7" target="_blank" rel="noopener">Отправить фото в Telegram</a>
     </div>
   </div>
-  <figure class="art">
-    <img src="hero.webp" srcset="hero-m.webp 720w, hero.webp 1200w" sizes="(max-width: 860px) 100vw, 540px" width="1200" height="900" alt="Грузчик Moving town упаковывает мебель в стрейч-плёнку перед переездом" fetchpriority="high">
-    <figcaption>Каждую вещь упакуем в плёнку перед погрузкой</figcaption>
-  </figure>
+  <div class="art">
+    <img class="big" src="hero.webp" srcset="hero-m.webp 720w, hero.webp 1200w" sizes="(max-width: 899px) 100vw, 560px" width="1200" height="900" alt="Грузчик упаковывает мебель в стрейч-плёнку перед переездом" fetchpriority="high">
+    <img src="photo-loading.webp" width="640" height="480" alt="Бригада грузит шкаф в машину" loading="lazy">
+    <img src="photo-boxes.webp" width="640" height="426" alt="Вещи в коробках у машины после переезда" loading="lazy">
+  </div>
 </div></section>
 
 <section id="calc"><div class="wrap">
