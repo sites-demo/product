@@ -9,10 +9,15 @@ segs=[
  ("task","И напишет уже по конкретной задаче.",1.0),
  ("less","Меньше объяснений в переписке. Больше ясности для клиента.",1.0),
  ("brand","Стажа́р. Сайты для бизнеса.",0.97),
- ("cta","Нужен такой сайт? Напишите «сайт» в Телеграм.",1.0),
+ ("cta","Нужен такой сайт? Заходите на студио-сайт точка ру.",1.0),
 ]
+import sys as _s
+ONLY=_s.argv[2:]
+prev=json.load(open('align.json'))
 out=[]
 for i,(k,t,sp) in enumerate(segs):
+    if ONLY and k not in ONLY:
+        out.append(next(p for p in prev if p['key']==k));continue
     body={"text":t,"model_id":"eleven_multilingual_v2",
       "voice_settings":{"stability":0.55,"similarity_boost":0.75,"style":0.05,"use_speaker_boost":True,"speed":sp},
       "previous_text":" ".join(s[1] for s in segs[:i]) or None,

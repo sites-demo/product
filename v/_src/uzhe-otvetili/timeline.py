@@ -1,7 +1,7 @@
 import json, subprocess
 a={s['key']:s for s in json.load(open('align.json'))}
 order=['q','fam','link','site','task','less','brand','cta']
-gap_after={'q':0.45,'fam':0.35,'link':0.75,'site':0.4,'task':0.45,'less':0.45,'brand':0.3,'cta':0.95}
+gap_after={'q':0.45,'fam':0.35,'link':0.75,'site':0.4,'task':0.45,'less':0.45,'brand':0.3,'cta':0.6}
 def dur(k): return float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0',f'audio/seg_{k}.mp3']))
 def words(s):
     w='';out=[]
