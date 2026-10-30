@@ -349,7 +349,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 /* phones: shorter page, nothing lost on desktop */
 @media(max-width:599px){
-.cmp .r.mx{display:none}
+.cmp .r:nth-child(n+6){display:none}
 .pgrid .inc{display:none}
 .biz .lead,.stat p,.stat hr,.stat .mini{display:none}
 .stat{padding:22px}
@@ -360,6 +360,11 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 .steps li h3{margin-bottom:2px}
 .map,.map iframe{min-height:220px}
 }
+[hidden]{display:none!important}
+.mtchip{position:fixed;z-index:45;left:12px;bottom:84px;max-width:calc(100% - 24px);display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:#0D1B14;color:#E2EBE4;border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.35;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+.mtchip a{color:#8FD39E;font-weight:800}.mtchip button{border:0;background:none;color:#fff;font:700 13.5px Manrope,Arial,sans-serif;text-decoration:underline;cursor:pointer;padding:4px 0}
+@media(min-width:900px){.mtchip{bottom:16px;max-width:520px}}
+.team .av i.pic{background-size:cover;background-position:center}
 /* mobile bar */
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(242,244,240,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
 .mbar .btn{flex:1;min-height:52px;font-size:17px;padding:0 12px}
@@ -404,7 +409,7 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
   <a class="logo" href="#"><img src="logo.png" alt="Moving town. Двигаемся к лучшему" width="642" height="137"></a>
   <span class="sp"></span>
   <nav class="nav"><a href="#prices">Цены</a><a href="#services">Услуги</a><a href="#reviews">Отзывы</a><a href="#calc">Расчёт по фото</a><a href="#contacts">Контакты</a></nav>
-  <div class="hcall"><a class="tel" href="tel:+78312310695">+7 (831) 231-06-95</a><small>Ежедневно 8:00–22:00</small></div>
+  <div class="hcall"><a class="tel" href="tel:+78312310695" data-c="contacts.phone">+7 (831) 231-06-95</a><small data-t="Ежедневно {contacts.from}–{contacts.to}">Ежедневно 8:00–22:00</small></div>
   <a class="btn" href="#order">Перезвоните мне</a>
 </div></header>
 
@@ -413,130 +418,85 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
   <svg class="route" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path id="rp" d="M-40 700 C 180 640 300 470 520 520 S 820 690 960 470 S 1160 120 1480 70"/><circle class="rdot" r="4.5"><animateMotion dur="16s" repeatCount="indefinite"><mpath href="#rp"/></animateMotion></circle></svg>
   <div class="wrap">
   <div>
-    <a class="rate a1" href="https://yandex.ru/maps/org/muving_taun/52265900654/reviews/" target="_blank" rel="noopener"><span class="stars" aria-hidden="true">★★★★★</span><b>5,0</b><span>251 оценка на Яндексе</span></a>
-    <h1 class="a2"><span class="city">Переезд в Нижнем Новгороде</span>без сюрпризов <em>в&nbsp;цене<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 7 C 25 2.5 70 2 99 6"/></svg></em></h1>
-    <p class="sub a3">Упакуем, разберём, перевезём и соберём. Цену называем до переезда, работаем по договору, платите после.</p>
-    <p class="hprice a3">Бригада и машина <b>3 300 ₽/ч</b>, однушка <b>от 9 600 ₽</b></p>
+    <a class="rate a1" href="https://yandex.ru/maps/org/muving_taun/52265900654/reviews/" target="_blank" rel="noopener"><span class="stars" aria-hidden="true">★★★★★</span><b data-c="rating.value">5,0</b><span data-t="{ratingsW} на Яндексе">251 оценка на Яндексе</span></a>
+    <h1 class="a2"><span class="city" data-c="hero.city">Переезд в Нижнем Новгороде</span><span data-c="hero.title">без сюрпризов</span> <em><span data-c="hero.accent">в&nbsp;цене</span><svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 7 C 25 2.5 70 2 99 6"/></svg></em></h1>
+    <p class="sub a3" data-c="hero.sub">Упакуем, разберём, перевезём и соберём. Цену называем до переезда, работаем по договору, платите после.</p>
+    <p class="hprice a3" data-t="Бригада и машина &lt;b&gt;{hero.tilePrice} ₽/ч&lt;/b&gt;, однушка &lt;b&gt;{rooms.0.price}&lt;/b&gt;">Бригада и машина <b>3 300 ₽/ч</b>, однушка <b>от 9 600 ₽</b></p>
     <form class="cb cb-hero a4" data-src="Первый экран" novalidate>
       <div class="cb-body">
-        <div class="cbar"><input class="inp" type="tel" name="cphone" inputmode="tel" autocomplete="tel" placeholder="Ваш телефон" aria-label="Ваш телефон"><button class="btn shine" type="submit">Узнать цену</button></div>
+        <div class="cbar"><input class="inp" type="tel" name="cphone" inputmode="tel" autocomplete="tel" placeholder="Ваш телефон" aria-label="Ваш телефон"><button class="btn shine" type="submit" data-c="hero.button">Узнать цену</button></div>
         <p class="err" role="alert">Проверьте номер, в нём должно быть 11 цифр.</p>
-        <ul class="cmeta"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Перезвоним в течение 5 минут</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Оценка бесплатно</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Скидка 5% за заявку с сайта</li></ul>
-        <p class="alt"><span>или позвоните сами:</span><a href="tel:+78312310695">+7 (831) 231-06-95</a><a class="tgl" href="https://t.me/Allexilin7" target="_blank" rel="noopener">Telegram</a></p>
+        <ul class="cmeta"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-t="Перезвоним в течение {contacts.min} минут">Перезвоним в течение 5 минут</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-c="hero.point">Оценка бесплатно</span></li><li data-show="promo.on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-t="Скидка {promo.pct}% за заявку с сайта">Скидка 5% за заявку с сайта</span></li></ul>
+        <p class="alt"><span>или позвоните сами:</span><a href="tel:+78312310695" data-c="contacts.phone">+7 (831) 231-06-95</a><a class="tgl" href="https://t.me/Allexilin7" target="_blank" rel="noopener">Telegram</a></p>
         <p class="pol">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
       </div>
       <div class="cb-done" hidden></div>
     </form>
   </div>
   <div class="art">
-    <figure class="ph big"><img src="hero.webp" srcset="hero-m.webp 720w, hero.webp 1200w" sizes="(max-width: 899px) 100vw, 330px" width="1200" height="900" alt="Грузчик упаковывает мебель в стрейч-плёнку" fetchpriority="high"><figcaption><b>01</b>Упакуем каждую вещь</figcaption></figure>
-    <figure class="ph"><img src="photo-loading.webp" width="640" height="480" alt="Бригада грузит шкаф в машину"><figcaption><b>02</b>Бережно погрузим</figcaption></figure>
-    <div class="ph tile"><svg class="ti" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 9h4.5L22 12.5V16h-8z"/><circle cx="6" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg><small>2 грузчика и машина</small><b><span data-count="3300">3 300</span> ₽<i>/час</i></b><span class="tl">Оплата после работы</span></div>
-    <div class="float f2"><span class="stars" aria-hidden="true">★★★★★</span><b>Сумма совпала с расчётом</b><small>Так пишут в отзывах на Яндексе</small></div>
+    <figure class="ph big"><img src="hero.webp" srcset="hero-m.webp 720w, hero.webp 1200w" sizes="(max-width: 899px) 100vw, 330px" width="1200" height="900" alt="Грузчик упаковывает мебель в стрейч-плёнку" fetchpriority="high" data-img="hero.photo1"><figcaption><b>01</b><span data-c="hero.cap1">Упакуем каждую вещь</span></figcaption></figure>
+    <figure class="ph"><img src="photo-loading.webp" width="640" height="480" alt="Бригада грузит шкаф в машину" data-img="hero.photo2"><figcaption><b>02</b><span data-c="hero.cap2">Бережно погрузим</span></figcaption></figure>
+    <div class="ph tile"><svg class="ti" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 9h4.5L22 12.5V16h-8z"/><circle cx="6" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg><small data-c="hero.tileLabel">2 грузчика и машина</small><b><span data-count="3300" data-c="hero.tilePrice">3 300</span> ₽<i>/час</i></b><span class="tl" data-c="hero.tileNote">Оплата после работы</span></div>
+    <div class="float f2"><span class="stars" aria-hidden="true">★★★★★</span><b data-c="hero.badgeTitle">Сумма совпала с расчётом</b><small data-c="hero.badgeText">Так пишут в отзывах на Яндексе</small></div>
   </div>
 </div></section>
 
-<div class="facts"><div class="wrap"><ul>
-  <li><b>Без доплат</b><span>За этажи и без скрытых платежей</span></li>
-  <li><b>По договору</b><span>Отвечаем за вещи во время переезда</span></li>
-  <li><b>Оплата после</b><span>Наличными, переводом или по безналу</span></li>
-  <li><b>Круглосуточно</b><span>Переезды без выходных, ночью тоже</span></li>
-</ul></div></div>
+<div class="facts" id="facts"><div class="wrap"><ul data-list="facts"><li><b>Без доплат</b><span>За этажи и без скрытых платежей</span></li><li><b>По договору</b><span>Отвечаем за вещи во время переезда</span></li><li><b>Оплата после</b><span>Наличными, переводом или по безналу</span></li><li><b>Круглосуточно</b><span>Переезды без выходных, ночью тоже</span></li></ul></div></div>
 
 <section class="dark" id="prices"><div class="wrap">
   <p class="over">Цены</p>
-  <h2>Сколько стоит переезд квартиры</h2>
-  <p class="lead">Стартовая стоимость по нашему прайсу. Точную цену назовём по телефону, когда узнаем этажи, лифт и объём вещей.</p>
-  <div class="tbl">
-    <div><b>1 комната</b><span>Машина 18 м³, от 3 часов</span><span>2 грузчика</span><strong>от 9 600 ₽</strong><a href="#order" data-topic="Переезд 1-комнатной квартиры">Узнать точную цену</a></div>
-    <div><b>2 комнаты</b><span>Машина 25 м³, от 4 часов</span><span>2–4 грузчика</span><strong>от 15 600 ₽</strong><a href="#order" data-topic="Переезд 2-комнатной квартиры">Узнать точную цену</a></div>
-    <div><b>3 комнаты</b><span>Машина 32 м³, от 5 часов</span><span>4 грузчика</span><strong>от 26 500 ₽</strong><a href="#order" data-topic="Переезд 3-комнатной квартиры">Узнать точную цену</a></div>
-    <div><b>4 комнаты</b><span>Машина 36 м³, от 8 часов</span><span>6 грузчиков</span><strong>от 36 400 ₽</strong><a href="#order" data-topic="Переезд 4-комнатной квартиры">Узнать точную цену</a></div>
-  </div>
+  <h2 data-c="prices.title">Сколько стоит переезд квартиры</h2>
+  <p class="lead" data-c="prices.lead">Стартовая стоимость по нашему прайсу. Точную цену назовём по телефону, когда узнаем этажи, лифт и объём вещей.</p>
+  <div class="tbl" data-list="rooms"><div><b>1 комната</b><span>Машина 18 м³, от 3 часов</span><span>2 грузчика</span><strong>от 9 600 ₽</strong><a href="#order" data-topic="Переезд, 1 комната">Узнать точную цену</a></div><div><b>2 комнаты</b><span>Машина 25 м³, от 4 часов</span><span>2–4 грузчика</span><strong>от 15 600 ₽</strong><a href="#order" data-topic="Переезд, 2 комнаты">Узнать точную цену</a></div><div><b>3 комнаты</b><span>Машина 32 м³, от 5 часов</span><span>4 грузчика</span><strong>от 26 500 ₽</strong><a href="#order" data-topic="Переезд, 3 комнаты">Узнать точную цену</a></div><div><b>4 комнаты</b><span>Машина 36 м³, от 8 часов</span><span>6 грузчиков</span><strong>от 36 400 ₽</strong><a href="#order" data-topic="Переезд, 4 комнаты">Узнать точную цену</a></div></div>
   <div class="pgrid">
     <div>
-      <h3>Почасовые тарифы</h3>
-      <div class="rates">
-        <div><span>Грузчик на переезде<small>квартира, офис, дача</small></span><b>900 ₽/ч</b></div>
-        <div><span>Разборка, сборка, упаковка</span><b>950 ₽/ч</b></div>
-        <div><span>Машина по городу<small>минимальный заказ 3 часа</small></span><b>от 1 500 ₽/ч</b></div>
-        <div><span>Машина за город<small>оплата в обе стороны</small></span><b>от 35 ₽/км</b></div>
-        <div><span>Грузчики на тяжёлое<small>сейфы, серверы, МФУ от 100 кг</small></span><b>от 1 200 ₽/ч</b></div>
-      </div>
+      <h3 data-c="prices.ratesTitle">Почасовые тарифы</h3>
+      <div class="rates" data-list="rates"><div><span>Грузчик на переезде<small>квартира, офис, дача</small></span><b>900 ₽/ч</b></div><div><span>Разборка, сборка, упаковка</span><b>950 ₽/ч</b></div><div><span>Машина по городу<small>минимальный заказ 3 часа</small></span><b>от 1 500 ₽/ч</b></div><div><span>Машина за город<small>оплата в обе стороны</small></span><b>от 35 ₽/км</b></div><div><span>Грузчики на тяжёлое<small>сейфы, серверы, МФУ от 100 кг</small></span><b>от 1 200 ₽/ч</b></div></div>
     </div>
     <div>
-      <h3>Что делаем на переезде</h3>
-      <ul class="inc">
-        <li>Разбираем и упаковываем мебель, технику и вещи</li>
-        <li>Грузим, перевозим, разгружаем и собираем</li>
-        <li>Этажи отдельно не считаем, вы платите за часы работы</li>
-        <li>Работаем по договору и отвечаем за имущество</li>
-      </ul>
-      <p class="note">Коробки и плёнка по прайсу: коробка 150 ₽, стрейч 1 000 ₽ за рулон. Цены ориентировочные, итог согласуем до начала работ, без скрытых платежей.</p>
+      <h3 data-c="prices.incTitle">Что делаем на переезде</h3>
+      <ul class="inc" data-list="includes"><li>Разбираем и упаковываем мебель, технику и вещи</li><li>Грузим, перевозим, разгружаем и собираем</li><li>Этажи отдельно не считаем, вы платите за часы работы</li><li>Работаем по договору и отвечаем за имущество</li></ul>
+      <p class="note" data-c="prices.note">Коробки и плёнка по прайсу: коробка 150 ₽, стрейч 1 000 ₽ за рулон. Цены ориентировочные, итог согласуем до начала работ, без скрытых платежей.</p>
     </div>
   </div>
 </div></section>
 
 <section id="why" style="background:#fff"><div class="wrap">
   <p class="over">Сравните</p>
-  <h2>Чем мы отличаемся от газели по объявлению</h2>
-  <p class="lead">В отзывах на Яндексе не раз писали, что заплатили ровно столько, сколько назвали по телефону.</p>
-  <div class="cmp" role="table" aria-label="Moving town и перевозчик по объявлению">
-    <div class="r hd" role="row"><span class="k" role="columnheader" aria-hidden="true"></span><span class="a" role="columnheader">Moving town</span><span class="b" role="columnheader">Газель по объявлению</span></div>
-    <div class="r" role="row"><span class="k" role="rowheader">Договор</span><span class="a" role="cell">На каждый переезд</span><span class="b" role="cell">Обычно нет</span></div>
-    <div class="r" role="row"><span class="k" role="rowheader">Цена</span><span class="a" role="cell">Называем до переезда</span><span class="b" role="cell">Часто «посмотрим на месте»</span></div>
-    <div class="r" role="row"><span class="k" role="rowheader">Этажи</span><span class="a" role="cell">Отдельно не считаем</span><span class="b" role="cell">Часто доплата за каждый этаж</span></div>
-    <div class="r mx" role="row"><span class="k" role="rowheader">Упаковка и сборка</span><span class="a" role="cell">Свои материалы, разберём и соберём мебель</span><span class="b" role="cell">Упаковываете сами</span></div>
-    <div class="r" role="row"><span class="k" role="rowheader">Если что-то повредили</span><span class="a" role="cell">Отвечаем по договору</span><span class="b" role="cell">Сложно что-то доказать</span></div>
-    <div class="r mx" role="row"><span class="k" role="rowheader">Отзывы</span><span class="a" role="cell">5,0 на Яндексе, 251 оценка</span><span class="b" role="cell">Не найти</span></div>
-  </div>
+  <h2 data-c="compare.title">Чем мы отличаемся от газели по объявлению</h2>
+  <p class="lead" data-c="compare.lead">В отзывах на Яндексе не раз писали, что заплатили ровно столько, сколько назвали по телефону.</p>
+  <div class="cmp" role="table" aria-label="Moving town и перевозчик по объявлению" data-list="compare"><div class="r hd" role="row"><span class="k" role="columnheader" aria-hidden="true"></span><span class="a" role="columnheader">Moving town</span><span class="b" role="columnheader">Газель по объявлению</span></div><div class="r" role="row"><span class="k" role="rowheader">Договор</span><span class="a" role="cell">На каждый переезд</span><span class="b" role="cell">Обычно нет</span></div><div class="r" role="row"><span class="k" role="rowheader">Цена</span><span class="a" role="cell">Называем до переезда</span><span class="b" role="cell">Часто «посмотрим на месте»</span></div><div class="r" role="row"><span class="k" role="rowheader">Этажи</span><span class="a" role="cell">Отдельно не считаем</span><span class="b" role="cell">Часто доплата за каждый этаж</span></div><div class="r" role="row"><span class="k" role="rowheader">Если что-то повредили</span><span class="a" role="cell">Отвечаем по договору</span><span class="b" role="cell">Сложно что-то доказать</span></div><div class="r" role="row"><span class="k" role="rowheader">Упаковка и сборка</span><span class="a" role="cell">Свои материалы, разберём и соберём мебель</span><span class="b" role="cell">Упаковываете сами</span></div><div class="r" role="row"><span class="k" role="rowheader">Отзывы</span><span class="a" role="cell">5,0 на Яндексе, 251 оценка</span><span class="b" role="cell">Не найти</span></div></div>
 </div></section>
 
-<section id="promo" style="padding-top:0;background:#fff"><div class="wrap"><div class="promo">
-  <div><p class="over">Акция</p><h2>Оставьте заявку на сайте и получите скидку 5%</h2><p>Скидка на переезд для всех, кто оформил заявку через форму или расчёт по фото на сайте.</p></div>
-  <a class="btn" href="#order" data-topic="Акция: скидка 5% за заявку с сайта">Заказать со скидкой</a>
-  <span class="pbig" aria-hidden="true">5%</span>
+<section id="promo" style="padding-top:0;background:#fff" data-show="promo.on"><div class="wrap"><div class="promo">
+  <div><p class="over">Акция</p><h2 data-t="{promo.title} {promo.pct}%">Оставьте заявку на сайте и получите скидку 5%</h2><p data-c="promo.text">Скидка на переезд для всех, кто оформил заявку через форму или расчёт по фото на сайте.</p></div>
+  <a class="btn" href="#order" data-topic="Акция: скидка 5% за заявку с сайта" data-c="promo.button" id="promoBtn">Заказать со скидкой</a>
+  <span class="pbig" aria-hidden="true" data-t="{promo.pct}%">5%</span>
 </div></div></section>
 
 <section id="services" style="padding-top:0"><div class="wrap">
   <p class="over">Услуги</p>
-  <h2>Не только квартиры</h2>
-  <p class="lead">Работаем в Нижнем Новгороде, по области и по всей России.</p>
-  <div class="svc">
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></div><h3>Квартирный переезд</h3><p>Упакуем, вынесем, перевезём и расставим по комнатам. Машина под объём вещей.</p><div class="pr"><b>от 9 600 ₽</b><a href="#order" data-topic="Квартирный переезд">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg></div><h3>Офисный переезд</h3><p>Мебель, техника, документы и серверы. Ночью или в выходные, чтобы офис не простаивал.</p><div class="pr"><b>от 9 600 ₽ <small>за 1–3 рабочих места</small></b><a href="#order" data-topic="Офисный переезд">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 20h20M5 20V10l7-5 7 5v10"/><path d="M10 20v-5h4v5"/></svg></div><h3>Дачный переезд</h3><p>Вещи на дачу весной и обратно осенью, вместе с садовым инвентарём.</p><div class="pr"><b>900 ₽ <small>в час за грузчика</small></b><a href="#order" data-topic="Дачный переезд">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H15a3 3 0 010 6H9a3 3 0 000 6h6.5"/></svg></div><h3>В другой город</h3><p>Москва от 29 900 ₽, Петербург от 59 000 ₽, машина 18 м³ с упаковкой. Дальше по России от 35 ₽ за км.</p><div class="pr"><b>от 29 900 ₽ <small>до Москвы</small></b><a href="#order" data-topic="Переезд в другой город">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="1"/><path d="M9 9V6a3 3 0 016 0v3M12 13v3"/></svg></div><h3>Такелаж</h3><p>Пианино, сейфы, банкоматы, витрины и оборудование. Поднимем и спустим без лифта.</p><div class="pr"><b>от 25 ₽ <small>за кг до 300 кг</small></b><a href="#order" data-topic="Такелаж">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-5 9 5v11H3z"/><path d="M7 20v-7h10v7M7 16h10"/></svg></div><h3>Хранение</h3><p>Мебель, техника и вещи на складе, пока идёт ремонт или ищете новое жильё.</p><div class="pr"><b>от 25 ₽ <small>в сутки за 1 м³</small></b><a href="#order" data-topic="Хранение на складе">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/></svg></div><h3>Упаковка</h3><p>Коробки, стрейч и пузырчатая плёнка, картон. Упакуем сами или привезём материалы.</p><div class="pr"><b>от 150 ₽ <small>за коробку</small></b><a href="#order" data-topic="Упаковочные материалы">Узнать цену →</a></div></article>
-    <article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5a7 7 0 0114 0V21"/></svg></div><h3>Грузчики и вывоз мебели</h3><p>Поднять диван, вынести старую мебель, разгрузить фуру или контейнер.</p><div class="pr"><b>от 900 ₽ <small>в час</small></b><a href="#order" data-topic="Грузчики, вывоз мебели">Узнать цену →</a></div></article>
-  </div>
+  <h2 data-c="services.title">Не только квартиры</h2>
+  <p class="lead" data-c="services.lead">Работаем в Нижнем Новгороде, по области и по всей России.</p>
+  <div class="svc" data-list="services"><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"></path><path d="M9 20v-6h6v6"></path></svg></div><h3>Квартирный переезд</h3><p>Упакуем, вынесем, перевезём и расставим по комнатам. Машина под объём вещей.</p><div class="pr"><b>от 9 600 ₽</b><a href="#order" data-topic="Квартирный переезд">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"></rect><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"></path></svg></div><h3>Офисный переезд</h3><p>Мебель, техника, документы и серверы. Ночью или в выходные, чтобы офис не простаивал.</p><div class="pr"><b>от 9 600 ₽ <small>за 1–3 рабочих места</small></b><a href="#order" data-topic="Офисный переезд">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M5 20V10l7-5 7 5v10"></path><path d="M10 20v-5h4v5"></path></svg></div><h3>Дачный переезд</h3><p>Вещи на дачу весной и обратно осенью, вместе с садовым инвентарём.</p><div class="pr"><b>900 ₽ <small>в час за грузчика</small></b><a href="#order" data-topic="Дачный переезд">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><path d="M8.5 6H15a3 3 0 010 6H9a3 3 0 000 6h6.5"></path></svg></div><h3>В другой город</h3><p>Москва от 29 900 ₽, Петербург от 59 000 ₽, машина 18 м³ с упаковкой. Дальше по России от 35 ₽ за км.</p><div class="pr"><b>от 29 900 ₽ <small>до Москвы</small></b><a href="#order" data-topic="В другой город">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="1"></rect><path d="M9 9V6a3 3 0 016 0v3M12 13v3"></path></svg></div><h3>Такелаж</h3><p>Пианино, сейфы, банкоматы, витрины и оборудование. Поднимем и спустим без лифта.</p><div class="pr"><b>от 25 ₽ <small>за кг до 300 кг</small></b><a href="#order" data-topic="Такелаж">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5v11H3z"></path><path d="M7 20v-7h10v7M7 16h10"></path></svg></div><h3>Хранение</h3><p>Мебель, техника и вещи на складе, пока идёт ремонт или ищете новое жильё.</p><div class="pr"><b>от 25 ₽ <small>в сутки за 1 м³</small></b><a href="#order" data-topic="Хранение">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5z"></path><path d="M3 7.5l9 4.5 9-4.5M12 12v9"></path></svg></div><h3>Упаковка</h3><p>Коробки, стрейч и пузырчатая плёнка, картон. Упакуем сами или привезём материалы.</p><div class="pr"><b>от 150 ₽ <small>за коробку</small></b><a href="#order" data-topic="Упаковка">Узнать цену →</a></div></article><article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"></circle><path d="M5 21v-1.5a7 7 0 0114 0V21"></path></svg></div><h3>Грузчики и вывоз мебели</h3><p>Поднять диван, вынести старую мебель, разгрузить фуру или контейнер.</p><div class="pr"><b>от 900 ₽ <small>в час</small></b><a href="#order" data-topic="Грузчики и вывоз мебели">Узнать цену →</a></div></article></div>
 </div></section>
 
 <section id="reviews"><div class="wrap">
   <p class="over">Отзывы</p>
-  <h2>Что пишут о нас на Яндексе</h2>
-  <p class="lead" style="margin-bottom:18px">Коротко пересказали несколько отзывов. Полные тексты на Яндекс Картах.</p>
+  <h2 data-c="reviews.title">Что пишут о нас на Яндексе</h2>
+  <p class="lead" style="margin-bottom:18px" data-c="reviews.lead">Коротко пересказали несколько отзывов. Полные тексты на Яндекс Картах.</p>
   <div class="rhead">
-    <span class="big">5,0</span>
-    <div><span class="stars" aria-hidden="true">★★★★★</span><p>251 оценка и 223 отзыва на Яндекс Картах</p></div>
+    <span class="big" data-c="rating.value">5,0</span>
+    <div><span class="stars" aria-hidden="true">★★★★★</span><p data-t="{ratingsW} и {reviewsW} на Яндекс Картах">251 оценка и 223 отзыва на Яндекс Картах</p></div>
   </div>
   <div class="rgrid">
-    <div class="cases">
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Офис 1 200 м² за два дня</h3><p>Екатерина пишет, что договор согласовали быстро, мебель и технику обернули плёнкой, а рабочие места разобрали и собрали на новом месте.</p><div class="who"><i>Е</i><span>Екатерина<small>Офисный переезд, отзыв на Яндексе</small></span></div></article>
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Пианино 200 кг в день звонка</h3><p>Елена позвонила днём, а вечером пианино уже стояло на месте.</p><div class="who"><i>Е</i><span>Елена Коновалова<small>Такелаж, июнь 2025</small></span></div></article>
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Сумма совпала с расчётом</h3><p>Александр второй раз переезжал с этой командой, теперь из трёхкомнатной квартиры. Итог совпал с тем, что назвали заранее.</p><div class="who"><i>А</i><span>Александр Б.<small>Квартирный переезд, март 2025</small></span></div></article>
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Нижний → Москва под ключ</h3><p>Андрей переезжал в Москву с пятого этажа без лифта. Упаковали, перевезли и разгрузили на месте.</p><div class="who"><i>А</i><span>Андрей К.<small>Межгород, декабрь 2024</small></span></div></article>
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Дорогое медоборудование</h3><p>Стас перевозил медицинское оборудование на несколько миллионов. Довезли аккуратно, цена не изменилась.</p><div class="who"><i>С</i><span>Стас С.<small>Перевозка оборудования, отзыв на Яндексе</small></span></div></article>
-      <article><span class="stars" aria-hidden="true">★★★★★</span><h3>Шкаф с большими зеркалами</h3><p>Татьяне разобрали шкаф с зеркалами, упаковали его и собрали на новом месте целым.</p><div class="who"><i>Т</i><span>Татьяна Л.<small>Разборка и сборка, август 2025</small></span></div></article>
-    </div>
+    <div class="cases" data-list="reviews"><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Офис 1 200 м² за два дня</h3><p>Екатерина пишет, что договор согласовали быстро, мебель и технику обернули плёнкой, а рабочие места разобрали и собрали на новом месте.</p><div class="who"><i>Е</i><span>Екатерина<small>Офисный переезд, отзыв на Яндексе</small></span></div></article><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Пианино 200 кг в день звонка</h3><p>Елена позвонила днём, а вечером пианино уже стояло на месте.</p><div class="who"><i>Е</i><span>Елена Коновалова<small>Такелаж, июнь 2025</small></span></div></article><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Сумма совпала с расчётом</h3><p>Александр второй раз переезжал с этой командой, теперь из трёхкомнатной квартиры. Итог совпал с тем, что назвали заранее.</p><div class="who"><i>А</i><span>Александр Б.<small>Квартирный переезд, март 2025</small></span></div></article><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Нижний → Москва под ключ</h3><p>Андрей переезжал в Москву с пятого этажа без лифта. Упаковали, перевезли и разгрузили на месте.</p><div class="who"><i>А</i><span>Андрей К.<small>Межгород, декабрь 2024</small></span></div></article><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Дорогое медоборудование</h3><p>Стас перевозил медицинское оборудование на несколько миллионов. Довезли аккуратно, цена не изменилась.</p><div class="who"><i>С</i><span>Стас С.<small>Перевозка оборудования, отзыв на Яндексе</small></span></div></article><article><span class="stars" aria-hidden="true">★★★★★</span><h3>Шкаф с большими зеркалами</h3><p>Татьяне разобрали шкаф с зеркалами, упаковали его и собрали на новом месте целым.</p><div class="who"><i>Т</i><span>Татьяна Л.<small>Разборка и сборка, август 2025</small></span></div></article></div>
     <div class="ywidget">
       <div class="fb"><span class="stars" style="font-size:22px" aria-hidden="true">★★★★★</span><b style="color:var(--ink)">Отзывы с Яндекс Карт</b><span>Загружаются прямо с карточки компании</span></div>
       <iframe src="https://yandex.ru/maps-reviews-widget/52265900654?comments" title="Отзывы о Moving town на Яндекс Картах" loading="lazy"></iframe>
     </div>
   </div>
-  <a class="btn line rmore" href="https://yandex.ru/maps/org/muving_taun/52265900654/reviews/" target="_blank" rel="noopener">Все 223 отзыва на Яндекс Картах</a>
+  <a class="btn line rmore" href="https://yandex.ru/maps/org/muving_taun/52265900654/reviews/" target="_blank" rel="noopener" data-t="Все {reviewsW} на Яндекс Картах">Все 223 отзыва на Яндекс Картах</a>
 </div></section>
 
 <section id="calc"><div class="wrap">
@@ -561,10 +521,10 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
         <div id="roomsBox">
           <span class="lbl">Сколько комнат?</span>
           <div class="opts">
-            <label class="opt"><input type="radio" name="rooms" value="1"><span>1 комната<small>Машина 18 м³</small></span></label>
-            <label class="opt"><input type="radio" name="rooms" value="2"><span>2 комнаты<small>Машина 25 м³</small></span></label>
-            <label class="opt"><input type="radio" name="rooms" value="3"><span>3 комнаты<small>Машина 32 м³</small></span></label>
-            <label class="opt"><input type="radio" name="rooms" value="4"><span>4 и больше<small>Машина 36 м³</small></span></label>
+            <label class="opt"><input type="radio" name="rooms" value="1"><span>1 комната<small data-t="Машина {rooms.0.car}">Машина 18 м³</small></span></label>
+            <label class="opt"><input type="radio" name="rooms" value="2"><span>2 комнаты<small data-t="Машина {rooms.1.car}">Машина 25 м³</small></span></label>
+            <label class="opt"><input type="radio" name="rooms" value="3"><span>3 комнаты<small data-t="Машина {rooms.2.car}">Машина 32 м³</small></span></label>
+            <label class="opt"><input type="radio" name="rooms" value="4"><span>4 и больше<small data-t="Машина {rooms.3.car}">Машина 36 м³</small></span></label>
           </div>
           <p class="rhint" id="rhint" aria-live="polite"></p>
         </div>
@@ -673,65 +633,45 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 <section id="business" style="background:#fff"><div class="wrap biz">
   <div>
     <p class="over">Организациям</p>
-    <h2>Переезд офиса без простоя</h2>
-    <p class="lead">Перевозим офисы, склады, мастерские и оборудование. Планируем так, чтобы в понедельник все сели за свои столы.</p>
-    <ul>
-      <li><span><b>Ночью и в выходные,</b> когда офис не работает</span></li>
-      <li><span><b>Серверы, МФУ, сейфы, медоборудование:</b> упакуем и поднимем без лифта</span></li>
-      <li><span><b>Договор и безналичная оплата</b> для юрлиц и ИП</span></li>
-      <li><span><b>Склады и ТМЦ:</b> разгрузка фур, контейнеров и поддонов</span></li>
-    </ul>
-    <a class="btn" href="#order" data-topic="Офисный переезд">Обсудить переезд офиса</a>
+    <h2 data-c="biz.title">Переезд офиса без простоя</h2>
+    <p class="lead" data-c="biz.lead">Перевозим офисы, склады, мастерские и оборудование. Планируем так, чтобы в понедельник все сели за свои столы.</p>
+    <ul data-list="biz"><li><span><b>Ночью и в выходные,</b> когда офис не работает</span></li><li><span><b>Серверы, МФУ, сейфы, медоборудование:</b> упакуем и поднимем без лифта</span></li><li><span><b>Договор и безналичная оплата</b> для юрлиц и ИП</span></li><li><span><b>Склады и ТМЦ:</b> разгрузка фур, контейнеров и поддонов</span></li></ul>
+    <a class="btn" href="#order" data-topic="Офисный переезд" data-c="biz.button">Обсудить переезд офиса</a>
   </div>
   <div class="stat">
-    <div class="v"><span data-count="1200">1 200</span> м²<small>офиса перевезли за 2 дня</small></div>
-    <p>Мебель и технику обернули плёнкой, документы в коробки, разобрали и собрали рабочие места. Из отзыва Екатерины на Яндекс Картах.</p>
+    <div class="v"><span data-count="1200" data-c="biz.statValue">1 200</span> <span data-c="biz.statUnit">м²</span><small data-c="biz.statCaption">офиса перевезли за 2 дня</small></div>
+    <p data-c="biz.statText">Мебель и технику обернули плёнкой, документы в коробки, разобрали и собрали рабочие места. Из отзыва Екатерины на Яндекс Картах.</p>
     <hr>
-    <div class="mini"><div><b>от 9 600 ₽</b><span>офис на 1–3 рабочих места с разборкой и упаковкой</span></div><div><b>1 200 ₽/ч</b><span>тяжёлое оборудование от 100 кг</span></div></div>
+    <div class="mini" data-list="bizMini"><div><b>от 9 600 ₽</b><span>офис на 1–3 рабочих места с разборкой и упаковкой</span></div><div><b>1 200 ₽/ч</b><span>тяжёлое оборудование от 100 кг</span></div></div>
   </div>
 </div></section>
 
-<section style="padding-top:0;background:#fff"><div class="wrap">
+<section id="steps" style="padding-top:0;background:#fff"><div class="wrap">
   <p class="over">Как всё проходит</p>
-  <h2>От звонка до новоселья</h2>
-  <p class="lead">Без лишних выездов на оценку, если хватает фото.</p>
-  <ol class="steps">
-    <li><h3>Звонок или заявка</h3><p>Расскажите, что и куда везём. Фото можно прислать в Telegram.</p></li>
-    <li><h3>Называем цену</h3><p>Подбираем машину и бригаду, считаем стоимость. Если вещей много, бесплатно приедем посмотреть.</p></li>
-    <li><h3>Договор</h3><p>Фиксируем дату, адреса и состав работ.</p></li>
-    <li><h3>Переезд</h3><p>Приезжаем без опозданий, упаковываем, перевозим и собираем мебель.</p></li>
-    <li><h3>Оплата после</h3><p>Когда всё на месте. Наличными, переводом или по безналу.</p></li>
-  </ol>
+  <h2 data-c="steps.title">От звонка до новоселья</h2>
+  <p class="lead" data-c="steps.lead">Без лишних выездов на оценку, если хватает фото.</p>
+  <ol class="steps" data-list="steps"><li><h3>Звонок или заявка</h3><p>Расскажите, что и куда везём. Фото можно прислать в Telegram.</p></li><li><h3>Называем цену</h3><p>Подбираем машину и бригаду, считаем стоимость. Если вещей много, бесплатно приедем посмотреть.</p></li><li><h3>Договор</h3><p>Фиксируем дату, адреса и состав работ.</p></li><li><h3>Переезд</h3><p>Приезжаем без опозданий, упаковываем, перевозим и собираем мебель.</p></li><li><h3>Оплата после</h3><p>Когда всё на месте. Наличными, переводом или по безналу.</p></li></ol>
 </div></section>
 
 <section id="faq"><div class="wrap">
   <p class="over">Вопросы</p>
-  <h2>Частые вопросы</h2>
-  <p class="lead">Не нашли ответ? Позвоните, расскажем.</p>
-  <div class="faq">
-    <details><summary>Может ли цена вырасти в день переезда?</summary><p>Цену называем до переезда по объёму вещей, этажам и лифту. Этажи отдельно не считаем, вы платите за часы работы, скрытых платежей нет. Если на месте вещей окажется заметно больше или добавится адрес, сначала согласуем это с вами. В отзывах на Яндексе об этом тоже пишут: итог совпал с расчётом.</p></details>
-    <details><summary>Сколько стоит переезд квартиры?</summary><p>Однокомнатная от 9 600 ₽, двухкомнатная от 15 600 ₽, трёхкомнатная от 26 500 ₽. Точную сумму назовём по телефону или по фото вещей.</p></details>
-    <details><summary>Нужно ли упаковывать вещи самим?</summary><p>Нет. Упакуем мебель в стрейч и пузырчатую плёнку, разложим вещи по коробкам, разберём и соберём мебель. Работа 950 ₽ в час за сотрудника, коробки и плёнка по прайсу.</p></details>
-    <details><summary>Можно переехать сегодня или ночью?</summary><p>Переезды выполняем круглосуточно и без выходных. Если свободна бригада, приедем в тот же день, лучше позвонить сразу.</p></details>
-    <details><summary>Как оплачивать?</summary><p>После работы, наличными или переводом. Организации платят по безналу по договору.</p></details>
-    <details><summary>А если что-то повредят?</summary><p>Работаем по договору и отвечаем за имущество во время работ. Хрупкое и дорогое упаковываем отдельно.</p></details>
-    <details><summary>Перевозите пианино и сейфы?</summary><p>Да, это такелаж: от 25 ₽ за кг для груза 100–300 кг. Тяжелее считаем индивидуально после осмотра.</p></details>
-    <details><summary>Возите в другие города?</summary><p>Да. До Москвы от 29 900 ₽, до Петербурга от 59 000 ₽, это машина 18 м³ с упаковкой. В другие города от 35 ₽ за км, оплата в обе стороны.</p></details>
-  </div>
+  <h2 data-c="faq.title">Частые вопросы</h2>
+  <p class="lead" data-c="faq.lead">Не нашли ответ? Позвоните, расскажем.</p>
+  <div class="faq" data-list="faq"><details><summary>Может ли цена вырасти в день переезда?</summary><p>Цену называем до переезда по объёму вещей, этажам и лифту. Этажи отдельно не считаем, вы платите за часы работы, скрытых платежей нет. Если на месте вещей окажется заметно больше или добавится адрес, сначала согласуем это с вами. В отзывах на Яндексе об этом тоже пишут: итог совпал с расчётом.</p></details><details><summary>Сколько стоит переезд квартиры?</summary><p>Однокомнатная от 9 600 ₽, двухкомнатная от 15 600 ₽, трёхкомнатная от 26 500 ₽. Точную сумму назовём по телефону или по фото вещей.</p></details><details><summary>Нужно ли упаковывать вещи самим?</summary><p>Нет. Упакуем мебель в стрейч и пузырчатую плёнку, разложим вещи по коробкам, разберём и соберём мебель. Работа 950 ₽ в час за сотрудника, коробки и плёнка по прайсу.</p></details><details><summary>Можно переехать сегодня или ночью?</summary><p>Переезды выполняем круглосуточно и без выходных. Если свободна бригада, приедем в тот же день, лучше позвонить сразу.</p></details><details><summary>Как оплачивать?</summary><p>После работы, наличными или переводом. Организации платят по безналу по договору.</p></details><details><summary>А если что-то повредят?</summary><p>Работаем по договору и отвечаем за имущество во время работ. Хрупкое и дорогое упаковываем отдельно.</p></details><details><summary>Перевозите пианино и сейфы?</summary><p>Да, это такелаж: от 25 ₽ за кг для груза 100–300 кг. Тяжелее считаем индивидуально после осмотра.</p></details><details><summary>Возите в другие города?</summary><p>Да. До Москвы от 29 900 ₽, до Петербурга от 59 000 ₽, это машина 18 м³ с упаковкой. В другие города от 35 ₽ за км, оплата в обе стороны.</p></details></div>
 </div></section>
 
 <section class="dark" id="order"><div class="wrap ord">
   <div>
     <p class="over">Остались вопросы?</p>
-    <h2>Позвоните, посчитаем по телефону</h2>
-    <a class="bigtel" href="tel:+78312310695">+7 (831) 231-06-95</a>
-    <p class="hrs">Принимаем звонки ежедневно с 8:00 до 22:00</p>
-    <div class="team"><span class="av"><i>А</i><i>С</i></span><p><b>Менеджеры Алексей и Сергей.</b> Их по имени благодарят в отзывах на Яндексе.</p></div>
+    <h2 data-c="order.title">Позвоните, посчитаем по телефону</h2>
+    <a class="bigtel" href="tel:+78312310695" data-c="contacts.phone">+7 (831) 231-06-95</a>
+    <p class="hrs" data-t="Принимаем звонки ежедневно с {contacts.from} до {contacts.to}">Принимаем звонки ежедневно с 8:00 до 22:00</p>
+    <div class="team"><span class="av" data-list="team"><i>А</i><i>С</i></span><p><b data-c="teamText.title">Менеджеры Алексей и Сергей.</b> <span data-c="teamText.text">Их по имени благодарят в отзывах на Яндексе.</span></p></div>
   </div>
   <form class="cb" data-src="Финальный блок" novalidate>
     <div class="cb-body">
       <div class="hd"><h3>Или перезвоним сами</h3></div>
-      <p class="hint">Перезвоним в течение 5 минут, с 8:00 до 22:00.</p>
+      <p class="hint" data-t="Перезвоним в течение {contacts.min} минут, с {contacts.from} до {contacts.to}.">Перезвоним в течение 5 минут, с 8:00 до 22:00.</p>
       <span class="topic" id="topic"><span></span><button type="button" aria-label="Убрать тему">×</button></span>
       <div class="row"><input class="inp" type="tel" name="cphone" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" aria-label="Ваш телефон"><button class="btn" type="submit">Перезвоните мне</button></div>
       <p class="err" role="alert">Проверьте номер, в нём должно быть 11 цифр.</p>
@@ -744,14 +684,14 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 
 <section id="contacts"><div class="wrap">
   <p class="over">Контакты</p>
-  <h2>Moving town, Нижний Новгород</h2>
+  <h2 data-c="contacts.name">Moving town, Нижний Новгород</h2>
   <div class="cont" style="margin-top:24px">
     <div class="addr">
-      <p><b>Телефон</b><a href="tel:+78312310695">+7 (831) 231-06-95</a></p>
-      <p><b>Офис</b>ул. Смирнова, 2, 2-й этаж, офис 209</p>
-      <p><b>Звонки</b>Ежедневно с 8:00 до 22:00</p>
-      <p><b>Переезды</b>Круглосуточно, без выходных</p>
-      <p><b>Telegram</b><a href="https://t.me/Allexilin7" target="_blank" rel="noopener">t.me/Allexilin7</a></p>
+      <p><b>Телефон</b><a href="tel:+78312310695" data-c="contacts.phone">+7 (831) 231-06-95</a></p>
+      <p><b>Офис</b><span data-c="contacts.address">ул. Смирнова, 2, 2-й этаж, офис 209</span></p>
+      <p><b>Звонки</b><span data-t="Ежедневно с {contacts.from} до {contacts.to}">Ежедневно с 8:00 до 22:00</span></p>
+      <p><b>Переезды</b><span data-c="contacts.moves">Круглосуточно, без выходных</span></p>
+      <p><b>Telegram</b><a href="https://t.me/Allexilin7" target="_blank" rel="noopener" data-t="t.me/{contacts.telegram}">t.me/Allexilin7</a></p>
     </div>
     <div class="map">
       <div class="fb">Карта Яндекса: ул. Смирнова, 2</div>
@@ -763,19 +703,75 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 
 </main>
 
-<footer><div class="wrap"><span>Moving town, Нижний Новгород, ул. Смирнова, 2</span><a href="tel:+78312310695">+7 (831) 231-06-95</a></div></footer>
+<footer><div class="wrap"><span data-t="{contacts.name}, {contacts.address}">Moving town, Нижний Новгород, ул. Смирнова, 2, 2-й этаж, офис 209</span><a href="tel:+78312310695" data-c="contacts.phone">+7 (831) 231-06-95</a><a href="admin/">Вход для администратора</a></div></footer>
 
 <nav class="mbar" aria-label="Связаться"><a class="btn" href="tel:+78312310695"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z"/></svg>Позвонить</a><a class="btn ghost" href="https://t.me/Allexilin7" target="_blank" rel="noopener" aria-label="Написать в Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4L3 11.2l6.3 2.3L21 4l-8.6 11.4V20l3-3.2 4.4 3.2z"/></svg></a></nav>
 
+<script type="application/json" id="mt-data">{"seo":{"title":"Moving town: переезды в Нижнем Новгороде без сюрпризов в цене","description":"Квартирные, офисные и дачные переезды, межгород, такелаж и хранение в Нижнем Новгороде. Бригада и машина 3 300 ₽ в час, договор, оплата после работы. 5,0 на Яндекс Картах."},"contacts":{"phone":"+7 (831) 231-06-95","telegram":"Allexilin7","address":"ул. Смирнова, 2, 2-й этаж, офис 209","from":"8:00","to":"22:00","min":"5","moves":"Круглосуточно, без выходных","name":"Moving town, Нижний Новгород"},"rating":{"value":"5,0","ratings":"251","reviews":"223"},"hero":{"city":"Переезд в Нижнем Новгороде","title":"без сюрпризов","accent":"в цене","sub":"Упакуем, разберём, перевезём и соберём. Цену называем до переезда, работаем по договору, платите после.","button":"Узнать цену","point":"Оценка бесплатно","badgeTitle":"Сумма совпала с расчётом","badgeText":"Так пишут в отзывах на Яндексе","tileLabel":"2 грузчика и машина","tilePrice":"3 300","tileNote":"Оплата после работы","cap1":"Упакуем каждую вещь","cap2":"Бережно погрузим","photo1":"","photo2":""},"facts":[{"title":"Без доплат","text":"За этажи и без скрытых платежей"},{"title":"По договору","text":"Отвечаем за вещи во время переезда"},{"title":"Оплата после","text":"Наличными, переводом или по безналу"},{"title":"Круглосуточно","text":"Переезды без выходных, ночью тоже"}],"prices":{"title":"Сколько стоит переезд квартиры","lead":"Стартовая стоимость по нашему прайсу. Точную цену назовём по телефону, когда узнаем этажи, лифт и объём вещей.","ratesTitle":"Почасовые тарифы","incTitle":"Что делаем на переезде","note":"Коробки и плёнка по прайсу: коробка 150 ₽, стрейч 1 000 ₽ за рулон. Цены ориентировочные, итог согласуем до начала работ, без скрытых платежей."},"rooms":[{"name":"1 комната","car":"18 м³","hours":"от 3 часов","crew":"2 грузчика","price":"от 9 600 ₽"},{"name":"2 комнаты","car":"25 м³","hours":"от 4 часов","crew":"2–4 грузчика","price":"от 15 600 ₽"},{"name":"3 комнаты","car":"32 м³","hours":"от 5 часов","crew":"4 грузчика","price":"от 26 500 ₽"},{"name":"4 комнаты","car":"36 м³","hours":"от 8 часов","crew":"6 грузчиков","price":"от 36 400 ₽"}],"rates":[{"name":"Грузчик на переезде","note":"квартира, офис, дача","price":"900 ₽/ч"},{"name":"Разборка, сборка, упаковка","note":"","price":"950 ₽/ч"},{"name":"Машина по городу","note":"минимальный заказ 3 часа","price":"от 1 500 ₽/ч"},{"name":"Машина за город","note":"оплата в обе стороны","price":"от 35 ₽/км"},{"name":"Грузчики на тяжёлое","note":"сейфы, серверы, МФУ от 100 кг","price":"от 1 200 ₽/ч"}],"includes":[{"text":"Разбираем и упаковываем мебель, технику и вещи"},{"text":"Грузим, перевозим, разгружаем и собираем"},{"text":"Этажи отдельно не считаем, вы платите за часы работы"},{"text":"Работаем по договору и отвечаем за имущество"}],"compare":{"title":"Чем мы отличаемся от газели по объявлению","lead":"В отзывах на Яндексе не раз писали, что заплатили ровно столько, сколько назвали по телефону.","us":"Moving town","them":"Газель по объявлению"},"compareRows":[{"k":"Договор","a":"На каждый переезд","b":"Обычно нет"},{"k":"Цена","a":"Называем до переезда","b":"Часто «посмотрим на месте»"},{"k":"Этажи","a":"Отдельно не считаем","b":"Часто доплата за каждый этаж"},{"k":"Если что-то повредили","a":"Отвечаем по договору","b":"Сложно что-то доказать"},{"k":"Упаковка и сборка","a":"Свои материалы, разберём и соберём мебель","b":"Упаковываете сами"},{"k":"Отзывы","a":"5,0 на Яндексе, 251 оценка","b":"Не найти"}],"promo":{"on":true,"pct":"5","title":"Оставьте заявку на сайте и получите скидку","text":"Скидка на переезд для всех, кто оформил заявку через форму или расчёт по фото на сайте.","button":"Заказать со скидкой"},"services":{"title":"Не только квартиры","lead":"Работаем в Нижнем Новгороде, по области и по всей России."},"serviceList":[{"icon":"home","title":"Квартирный переезд","text":"Упакуем, вынесем, перевезём и расставим по комнатам. Машина под объём вещей.","price":"от 9 600 ₽","note":""},{"icon":"office","title":"Офисный переезд","text":"Мебель, техника, документы и серверы. Ночью или в выходные, чтобы офис не простаивал.","price":"от 9 600 ₽","note":"за 1–3 рабочих места"},{"icon":"dacha","title":"Дачный переезд","text":"Вещи на дачу весной и обратно осенью, вместе с садовым инвентарём.","price":"900 ₽","note":"в час за грузчика"},{"icon":"route","title":"В другой город","text":"Москва от 29 900 ₽, Петербург от 59 000 ₽, машина 18 м³ с упаковкой. Дальше по России от 35 ₽ за км.","price":"от 29 900 ₽","note":"до Москвы"},{"icon":"rigging","title":"Такелаж","text":"Пианино, сейфы, банкоматы, витрины и оборудование. Поднимем и спустим без лифта.","price":"от 25 ₽","note":"за кг до 300 кг"},{"icon":"storage","title":"Хранение","text":"Мебель, техника и вещи на складе, пока идёт ремонт или ищете новое жильё.","price":"от 25 ₽","note":"в сутки за 1 м³"},{"icon":"box","title":"Упаковка","text":"Коробки, стрейч и пузырчатая плёнка, картон. Упакуем сами или привезём материалы.","price":"от 150 ₽","note":"за коробку"},{"icon":"people","title":"Грузчики и вывоз мебели","text":"Поднять диван, вынести старую мебель, разгрузить фуру или контейнер.","price":"от 900 ₽","note":"в час"}],"reviews":{"title":"Что пишут о нас на Яндексе","lead":"Коротко пересказали несколько отзывов. Полные тексты на Яндекс Картах."},"reviewList":[{"title":"Офис 1 200 м² за два дня","text":"Екатерина пишет, что договор согласовали быстро, мебель и технику обернули плёнкой, а рабочие места разобрали и собрали на новом месте.","name":"Екатерина","meta":"Офисный переезд, отзыв на Яндексе"},{"title":"Пианино 200 кг в день звонка","text":"Елена позвонила днём, а вечером пианино уже стояло на месте.","name":"Елена Коновалова","meta":"Такелаж, июнь 2025"},{"title":"Сумма совпала с расчётом","text":"Александр второй раз переезжал с этой командой, теперь из трёхкомнатной квартиры. Итог совпал с тем, что назвали заранее.","name":"Александр Б.","meta":"Квартирный переезд, март 2025"},{"title":"Нижний → Москва под ключ","text":"Андрей переезжал в Москву с пятого этажа без лифта. Упаковали, перевезли и разгрузили на месте.","name":"Андрей К.","meta":"Межгород, декабрь 2024"},{"title":"Дорогое медоборудование","text":"Стас перевозил медицинское оборудование на несколько миллионов. Довезли аккуратно, цена не изменилась.","name":"Стас С.","meta":"Перевозка оборудования, отзыв на Яндексе"},{"title":"Шкаф с большими зеркалами","text":"Татьяне разобрали шкаф с зеркалами, упаковали его и собрали на новом месте целым.","name":"Татьяна Л.","meta":"Разборка и сборка, август 2025"}],"biz":{"title":"Переезд офиса без простоя","lead":"Перевозим офисы, склады, мастерские и оборудование. Планируем так, чтобы в понедельник все сели за свои столы.","button":"Обсудить переезд офиса","statValue":"1 200","statUnit":"м²","statCaption":"офиса перевезли за 2 дня","statText":"Мебель и технику обернули плёнкой, документы в коробки, разобрали и собрали рабочие места. Из отзыва Екатерины на Яндекс Картах."},"bizList":[{"title":"Ночью и в выходные,","text":"когда офис не работает"},{"title":"Серверы, МФУ, сейфы, медоборудование:","text":"упакуем и поднимем без лифта"},{"title":"Договор и безналичная оплата","text":"для юрлиц и ИП"},{"title":"Склады и ТМЦ:","text":"разгрузка фур, контейнеров и поддонов"}],"bizMini":[{"value":"от 9 600 ₽","label":"офис на 1–3 рабочих места с разборкой и упаковкой"},{"value":"1 200 ₽/ч","label":"тяжёлое оборудование от 100 кг"}],"steps":{"title":"От звонка до новоселья","lead":"Без лишних выездов на оценку, если хватает фото."},"stepList":[{"title":"Звонок или заявка","text":"Расскажите, что и куда везём. Фото можно прислать в Telegram."},{"title":"Называем цену","text":"Подбираем машину и бригаду, считаем стоимость. Если вещей много, бесплатно приедем посмотреть."},{"title":"Договор","text":"Фиксируем дату, адреса и состав работ."},{"title":"Переезд","text":"Приезжаем без опозданий, упаковываем, перевозим и собираем мебель."},{"title":"Оплата после","text":"Когда всё на месте. Наличными, переводом или по безналу."}],"faq":{"title":"Частые вопросы","lead":"Не нашли ответ? Позвоните, расскажем."},"faqList":[{"q":"Может ли цена вырасти в день переезда?","a":"Цену называем до переезда по объёму вещей, этажам и лифту. Этажи отдельно не считаем, вы платите за часы работы, скрытых платежей нет. Если на месте вещей окажется заметно больше или добавится адрес, сначала согласуем это с вами. В отзывах на Яндексе об этом тоже пишут: итог совпал с расчётом."},{"q":"Сколько стоит переезд квартиры?","a":"Однокомнатная от 9 600 ₽, двухкомнатная от 15 600 ₽, трёхкомнатная от 26 500 ₽. Точную сумму назовём по телефону или по фото вещей."},{"q":"Нужно ли упаковывать вещи самим?","a":"Нет. Упакуем мебель в стрейч и пузырчатую плёнку, разложим вещи по коробкам, разберём и соберём мебель. Работа 950 ₽ в час за сотрудника, коробки и плёнка по прайсу."},{"q":"Можно переехать сегодня или ночью?","a":"Переезды выполняем круглосуточно и без выходных. Если свободна бригада, приедем в тот же день, лучше позвонить сразу."},{"q":"Как оплачивать?","a":"После работы, наличными или переводом. Организации платят по безналу по договору."},{"q":"А если что-то повредят?","a":"Работаем по договору и отвечаем за имущество во время работ. Хрупкое и дорогое упаковываем отдельно."},{"q":"Перевозите пианино и сейфы?","a":"Да, это такелаж: от 25 ₽ за кг для груза 100–300 кг. Тяжелее считаем индивидуально после осмотра."},{"q":"Возите в другие города?","a":"Да. До Москвы от 29 900 ₽, до Петербурга от 59 000 ₽, это машина 18 м³ с упаковкой. В другие города от 35 ₽ за км, оплата в обе стороны."}],"order":{"title":"Позвоните, посчитаем по телефону"},"teamText":{"title":"Менеджеры Алексей и Сергей.","text":"Их по имени благодарят в отзывах на Яндексе."},"team":[{"name":"Алексей","photo":""},{"name":"Сергей","photo":""}]}</script>
 <script>
 (function(){
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* content: texts, prices and lists live in #mt-data; the admin overrides them */
+var MT_DEF=JSON.parse(document.getElementById('mt-data').textContent);
+var PREVIEW=/[?&]preview=1/.test(location.search);
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
+function merge(a,b){if(Array.isArray(b))return b;if(b&&typeof b==='object'&&a&&typeof a==='object'&&!Array.isArray(a)){var o={},k;for(k in a)o[k]=a[k];for(k in b)o[k]=merge(a[k],b[k]);return o}return b===undefined?a:b}
+function get(o,path){return path.split('.').reduce(function(a,k){return a==null?a:a[k]},o)}
+function pl(n,f){n=(parseInt(String(n).replace(/\D/g,''),10)||0)%100;var m=n%10;return f[n>10&&n<20?2:m===1?0:m>=2&&m<=4?1:2]}
+function tpl(t,V){return t.replace(/\{([\w.]+)\}/g,function(_,k){var v=get(V,k);return esc(v==null?'':v)})}
+function safeUrl(u){u=String(u||'');return /^(data:image\/|https:\/\/|[\w.\/-]+$)/.test(u)?u.replace(/['"()\\\s]/g,''):''}
+var IC={home:'<path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/>',office:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/>',dacha:'<path d="M2 20h20M5 20V10l7-5 7 5v10"/><path d="M10 20v-5h4v5"/>',route:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H15a3 3 0 010 6H9a3 3 0 000 6h6.5"/>',rigging:'<rect x="5" y="9" width="14" height="11" rx="1"/><path d="M9 9V6a3 3 0 016 0v3M12 13v3"/>',storage:'<path d="M3 9l9-5 9 5v11H3z"/><path d="M7 20v-7h10v7M7 16h10"/>',box:'<path d="M3 7.5l9-4.5 9 4.5v9l-9 4.5-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5M12 12v9"/>',people:'<circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5a7 7 0 0114 0V21"/>',truck:'<path d="M2 6h12v10H2zM14 9h4.5L22 12.5V16h-8z"/><circle cx="6" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'};
+function map(a,f){return (a||[]).map(f).join('')}
+var LIST={
+  facts:function(C){return map(C.facts,function(x){return '<li><b>'+esc(x.title)+'</b><span>'+esc(x.text)+'</span></li>'})},
+  rooms:function(C){return map(C.rooms,function(x){return '<div><b>'+esc(x.name)+'</b><span>Машина '+esc(x.car)+', '+esc(x.hours)+'</span><span>'+esc(x.crew)+'</span><strong>'+esc(x.price)+'</strong><a href="#order" data-topic="Переезд, '+esc(x.name)+'">Узнать точную цену</a></div>'})},
+  rates:function(C){return map(C.rates,function(x){return '<div><span>'+esc(x.name)+(x.note?'<small>'+esc(x.note)+'</small>':'')+'</span><b>'+esc(x.price)+'</b></div>'})},
+  includes:function(C){return map(C.includes,function(x){return '<li>'+esc(x.text)+'</li>'})},
+  compare:function(C){return '<div class="r hd" role="row"><span class="k" role="columnheader" aria-hidden="true"></span><span class="a" role="columnheader">'+esc(C.compare.us)+'</span><span class="b" role="columnheader">'+esc(C.compare.them)+'</span></div>'+map(C.compareRows,function(x){return '<div class="r" role="row"><span class="k" role="rowheader">'+esc(x.k)+'</span><span class="a" role="cell">'+esc(x.a)+'</span><span class="b" role="cell">'+esc(x.b)+'</span></div>'})},
+  services:function(C){return map(C.serviceList,function(x){return '<article><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(IC[x.icon]||IC.box)+'</svg></div><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p><div class="pr"><b>'+esc(x.price)+(x.note?' <small>'+esc(x.note)+'</small>':'')+'</b><a href="#order" data-topic="'+esc(x.title)+'">Узнать цену →</a></div></article>'})},
+  reviews:function(C){return map(C.reviewList,function(x){return '<article><span class="stars" aria-hidden="true">★★★★★</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p><div class="who"><i>'+esc(String(x.name||'?').trim().charAt(0).toUpperCase())+'</i><span>'+esc(x.name)+'<small>'+esc(x.meta)+'</small></span></div></article>'})},
+  biz:function(C){return map(C.bizList,function(x){return '<li><span><b>'+esc(x.title)+'</b> '+esc(x.text)+'</span></li>'})},
+  bizMini:function(C){return map(C.bizMini,function(x){return '<div><b>'+esc(x.value)+'</b><span>'+esc(x.label)+'</span></div>'})},
+  steps:function(C){return map(C.stepList,function(x){return '<li><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p></li>'})},
+  faq:function(C){return map(C.faqList,function(x){return '<details><summary>'+esc(x.q)+'</summary><p>'+esc(x.a)+'</p></details>'})},
+  team:function(C){return map(C.team,function(x){var u=safeUrl(x.photo);return u?'<i class="pic" style="background-image:url(\''+u+'\')"></i>':'<i>'+esc(String(x.name||'?').trim().charAt(0).toUpperCase())+'</i>'})}
+};
+function each(sel,f){[].forEach.call(document.querySelectorAll(sel),f)}
+function renderAll(C){
+  MT=C;var r=C.rating||{},V=merge(C,{ratingsW:r.ratings+' '+pl(r.ratings,['оценка','оценки','оценок']),reviewsW:r.reviews+' '+pl(r.reviews,['отзыв','отзыва','отзывов'])});
+  each('[data-c]',function(el){var v=get(C,el.dataset.c);if(v!=null)el.textContent=v});
+  each('[data-t]',function(el){el.innerHTML=tpl(el.dataset.t,V)});
+  each('[data-show]',function(el){el.hidden=!get(C,el.dataset.show)});
+  each('[data-list]',function(el){var f=LIST[el.dataset.list];if(f)el.innerHTML=f(C)});
+  each('[data-img]',function(el){if(el.dataset.orig==null){el.dataset.orig=el.getAttribute('src');el.dataset.origSet=el.getAttribute('srcset')||''}var u=safeUrl(get(C,el.dataset.img));if(u){el.removeAttribute('srcset');el.src=u}else{el.src=el.dataset.orig;if(el.dataset.origSet)el.setAttribute('srcset',el.dataset.origSet)}});
+  each('[data-count]',function(el){var d=el.textContent.replace(/\D/g,'');if(d)el.dataset.count=d});
+  var tel=String(C.contacts.phone).replace(/\D/g,'');if(tel[0]==='8')tel='7'+tel.slice(1);
+  each('a[href^="tel:"]',function(a){a.href='tel:+'+tel});
+  each('a[href*="t.me/"]',function(a){a.href='https://t.me/'+String(C.contacts.telegram).replace(/^(https?:\/\/)?t\.me\//,'').replace(/^@/,'')});
+  var pb=document.getElementById('promoBtn');if(pb)pb.dataset.topic='Акция: скидка '+C.promo.pct+'% за заявку с сайта';
+  if(C.seo){document.title=C.seo.title;var md=document.querySelector('meta[name=description]');if(md)md.content=C.seo.description}
+}
+window.MT_render=function(c){renderAll(merge(MT_DEF,c||{}))};
+var MT=MT_DEF,saved=null;
+if(!PREVIEW){try{saved=JSON.parse(lsGet('mt-content')||'null')}catch(e){}if(saved)renderAll(merge(MT_DEF,saved))}
+if(PREVIEW){
+  document.documentElement.classList.add('pv');
+  addEventListener('message',function(ev){if(ev.origin!==location.origin)return;var d=ev.data||{};
+    if(d.type==='mt-content'&&d.content&&typeof d.content==='object')renderAll(merge(MT_DEF,d.content));
+    if(d.type==='mt-scroll'){var t=d.id&&document.getElementById(d.id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});else scrollTo({top:0,behavior:'smooth'})}});
+  parent.postMessage({type:'mt-ready'},location.origin);
+}
+if(saved){var chip=document.createElement('div');chip.className='mtchip';chip.innerHTML='Версия из админки, сохранена только в этом браузере. <a href="admin/">Админка</a><button type="button">Вернуть исходную</button>';document.body.appendChild(chip);chip.querySelector('button').addEventListener('click',function(){try{localStorage.removeItem('mt-content')}catch(e){}location.reload()})}
+/* demo: requests are also kept for the admin "Заявки" tab */
+function logLead(src,text,phone){var a=[];try{a=JSON.parse(lsGet('mt-leads')||'[]')}catch(e){}a.unshift({t:Date.now(),src:src,phone:phone||'',text:text});lsSet('mt-leads',JSON.stringify(a.slice(0,50)))}
+function promoLine(){return MT.promo&&MT.promo.on?'Скидка '+MT.promo.pct+'% за заявку с сайта':''}
 function mask(el){var pos=el.selectionStart==null?el.value.length:el.selectionStart,before=el.value.slice(0,pos).replace(/\D/g,'').length;var d=el.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7'){d='7'+d;before++}d=d.slice(0,11);var s='+7';if(d.length>1)s+=' '+d.slice(1,4);if(d.length>4)s+=' '+d.slice(4,7);if(d.length>7)s+='-'+d.slice(7,9);if(d.length>9)s+='-'+d.slice(9,11);el.value=d?s:'';if(document.activeElement===el){var n=0,i=0;while(i<el.value.length&&n<before){if(/\d/.test(el.value[i]))n++;i++}el.setSelectionRange(i,i)}}
 /* hide the bottom bar while the keyboard is open */
 document.addEventListener('focusin',function(e){if(e.target.matches('input[type=tel],input:not([type]),input[type=date],textarea'))document.body.classList.add('kbd')});
 document.addEventListener('focusout',function(){setTimeout(function(){if(!document.activeElement||!document.activeElement.matches('input[type=tel],input:not([type]),input[type=date],textarea'))document.body.classList.remove('kbd')},50)});
 [].forEach.call(document.querySelectorAll('input[type=tel]'),function(el){el.addEventListener('input',function(){mask(el)})});
-function thanks(){var h=new Date().getHours();return h>=8&&h<22?'Спасибо, перезвоним в течение 5 минут':'Спасибо, перезвоним утром, после 8:00'}
+function thanks(){var h=new Date().getHours(),a=parseInt(MT.contacts.from,10),b=parseInt(MT.contacts.to,10);return h>=a&&h<b?'Спасибо, перезвоним в течение '+MT.contacts.min+' минут':'Спасибо, перезвоним утром, после '+MT.contacts.from}
 var BOT='<div class="msg"><div class="who"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/></svg></i><span>Бот заявок Moving town<small>Так заявка придёт менеджеру в Telegram</small></span></div><div class="bubble"></div></div>';
 
 /* callback forms */
@@ -791,7 +787,7 @@ document.addEventListener('click',function(e){var a=e.target.closest('a[data-top
     var nm=cf.querySelector('[name=cname]'),lines=['Перезвонить клиенту','Телефон: '+t.value];
     if(nm&&nm.value.trim())lines.push('Имя: '+nm.value.trim());
     if(cf.dataset.topic)lines.push('Тема: '+cf.dataset.topic);
-    lines.push('Откуда: '+cf.dataset.src);lines.push('Скидка 5% за заявку с сайта');
+    lines.push('Откуда: '+cf.dataset.src);if(promoLine())lines.push(promoLine());logLead(cf.dataset.src,lines.join('\n'),t.value);
     var d=cf.querySelector('.cb-done');
     d.innerHTML='<div class="done-h"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><h3 style="margin:0;font-size:21px">'+thanks()+'</h3></div>'+BOT;
     d.querySelector('.bubble').textContent=lines.join('\n');
@@ -804,8 +800,7 @@ var f=document.getElementById('f'),steps=[].slice.call(f.querySelectorAll('.step
 var prog=document.getElementById('prog'),sn=document.getElementById('stepname');
 steps.forEach(function(){prog.appendChild(document.createElement('i'))});
 var photos=[];
-var PRICE={1:'от 9 600 ₽',2:'от 15 600 ₽',3:'от 26 500 ₽',4:'от 36 400 ₽'};
-var CAR={1:'18 м³',2:'25 м³',3:'32 м³',4:'36 м³'};
+function room(k){return MT.rooms[k-1]||{price:'',car:''}}
 function val(n){var e=f.querySelector('[name="'+n+'"]:checked');return e?e.value:''}
 function show(i){
   cur=i;steps.forEach(function(s,k){s.classList.toggle('on',k===i)});
@@ -839,9 +834,9 @@ function upd(){
   h+='<dt>Фото</dt><dd'+(photos.length?'':' class="empty"')+'>'+(photos.length?'<span class="ph">'+photos.slice(0,6).map(function(p){return'<img src="'+p.url+'" alt="">'}).join('')+'</span>':'нет')+'</dd>';
   document.getElementById('sumList').innerHTML=h;
   var est=document.getElementById('est');
-  if(val('type')==='Квартира'&&val('rooms')){var k=val('rooms');est.innerHTML='<small>Ориентир по прайсу</small><b>'+PRICE[k]+'</b><p>Машина '+CAR[k]+'. Точную цену менеджер назовёт по фото и этажам.</p>'}
+  if(val('type')==='Квартира'&&val('rooms')){var k=val('rooms');est.innerHTML='<small>Ориентир по прайсу</small><b>'+esc(room(k).price)+'</b><p>Машина '+esc(room(k).car)+'. Точную цену менеджер назовёт по фото и этажам.</p>'}
   else est.innerHTML='<small>Стоимость</small><b>По заявке</b><p>Выберите размер квартиры для ориентира по прайсу. Для остальных услуг менеджер рассчитает стоимость по маршруту и фото.</p>';
-  var rh=document.getElementById('rhint');if(val('type')==='Квартира'&&val('rooms')){rh.innerHTML='Ориентир по прайсу: <b>'+PRICE[val('rooms')]+'</b>, машина '+CAR[val('rooms')];rh.classList.add('on')}else rh.classList.remove('on');
+  var rh=document.getElementById('rhint');if(val('type')==='Квартира'&&val('rooms')){rh.innerHTML='Ориентир по прайсу: <b>'+esc(room(val('rooms')).price)+'</b>, машина '+esc(room(val('rooms')).car);rh.classList.add('on')}else rh.classList.remove('on');
   document.getElementById('tgField').hidden=val('via')!=='Telegram';
 }
 f.addEventListener('input',upd);f.addEventListener('change',upd);
@@ -866,7 +861,7 @@ f.addEventListener('submit',function(e){
   if(val('via')==='Telegram'&&tg)lines.push('Telegram: '+(tg[0]==='@'?tg:'@'+tg));
   lines.push('Связаться: '+val('via'));
   lines.push('Фото: '+(photos.length?photos.length+' шт.':'нет'));
-  lines.push('Откуда: расчёт по фото, скидка 5%');
+  lines.push('Откуда: расчёт по фото'+(promoLine()?', '+promoLine().toLowerCase():''));logLead('Расчёт по фото',lines.join('\n'),ph.value);
   var b=document.getElementById('bubble');
   b.innerHTML=esc(lines.join('\n'))+(photos.length?'<div class="ph">'+photos.map(function(p){return'<img src="'+p.url+'" alt="">'}).join('')+'</div>':'');
   steps.forEach(function(s){s.classList.remove('on')});prog.style.display='none';sn.style.display='none';
@@ -879,7 +874,7 @@ show(0);upd();
 /* motion */
 var top=document.querySelector('.top');
 function sc(){top.classList.toggle('sc',scrollY>8)}addEventListener('scroll',sc,{passive:true});sc();
-var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var calm=matchMedia('(prefers-reduced-motion: reduce)').matches||PREVIEW;
 if(calm){var r=document.querySelector('.route');if(r&&r.pauseAnimations)r.pauseAnimations()}
 function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0')}
 function count(el){var to=+el.dataset.count,t0=null;function step(t){if(!t0)t0=t;var k=Math.min((t-t0)/1100,1),e=1-Math.pow(1-k,3);el.textContent=fmt(Math.round(to*e));if(k<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
