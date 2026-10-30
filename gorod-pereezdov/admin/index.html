@@ -64,8 +64,8 @@ a{color:inherit}
 .f small{display:block;color:var(--mute);font-size:12.5px;margin-top:5px;line-height:1.4}
 .in{width:100%;min-height:46px;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--r);background:#fff;font-size:16px;line-height:1.4}
 .in:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(62,154,85,.18)}
-textarea.in{resize:vertical;min-height:84px}
-.tg{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:700;font-size:15px}
+textarea.in{resize:vertical;min-height:84px;overflow:hidden}
+.f>.tg,.tg{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:700;font-size:15px;margin:0}
 .tg input{position:absolute;opacity:0;pointer-events:none}
 .tg i{width:48px;height:28px;border-radius:20px;background:#C9D1C8;position:relative;flex:none;transition:background .2s}
 .tg i:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
@@ -116,8 +116,10 @@ textarea.in{resize:vertical;min-height:84px}
 .frame{flex:1;position:relative;overflow:hidden}
 .frame iframe{position:absolute;top:0;left:0;border:0;background:#fff;transform-origin:0 0}
 .frame.phone iframe{left:50%;top:16px;border-radius:18px;box-shadow:0 20px 40px -20px rgba(0,0,0,.4)}
-.pvbtn{position:fixed;z-index:30;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));box-shadow:0 12px 28px -10px rgba(19,38,28,.55);min-height:50px;border-radius:30px;padding:0 20px}
-@media(min-width:1240px){.pvbtn{display:none}}
+.abar{position:fixed;z-index:30;left:0;right:0;bottom:0;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+.abar .b{flex:1;min-height:48px}
+@media(min-width:1240px){.abar{display:none}}
+@media(max-width:1239px){#save{display:none}}
 .ov{position:fixed;inset:0;z-index:50;background:#fff;display:flex;flex-direction:column}
 .ov .pvbar .b{min-height:38px}
 .ov iframe{flex:1;width:100%;border:0}
@@ -154,7 +156,7 @@ textarea.in{resize:vertical;min-height:84px}
       <div class="frame" id="frameBox"><iframe id="frame" src="../?preview=1" title="Предпросмотр сайта"></iframe></div>
     </aside>
   </div>
-  <button class="b pvbtn" id="pvbtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Предпросмотр</button>
+  <div class="abar"><button class="b ghost" id="pvbtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Предпросмотр</button><button class="b" id="save2" type="button">Сохранить</button></div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -297,11 +299,12 @@ function renderSection(s){
     if(f.t==='list')return listHtml(f);
     return field(f,f.k,get(S,f.k));
   }).join('')+'<div class="foot"><button type="button" class="b" data-save="1">Сохранить</button><button type="button" class="b danger" data-resetsec="1">Вернуть раздел к исходному</button></div>';
+  growAll();
 }
 function listDef(k){for(var i=0;i<SECTIONS.length;i++){var fs=SECTIONS[i].fields||[];for(var j=0;j<fs.length;j++)if(fs[j].k===k&&fs[j].t==='list')return fs[j]}}
 
 var ed=$('#ed');
-ed.addEventListener('input',function(e){var el=e.target,p=el.dataset.p;if(!p||el.dataset.icon)return;
+ed.addEventListener('input',function(e){var el=e.target,p=el.dataset.p;if(el.tagName==='TEXTAREA')grow(el);if(!p||el.dataset.icon)return;
   set(S,p,el.dataset.bool?el.checked:el.value);
   var it=el.closest('.it');if(it){var lf=listDef(it.parentNode.dataset.list);if(lf&&p.split('.').pop()===lf.sum){var t=it.querySelector('summary .t');t.textContent=el.value.trim()||'Без названия';t.classList.toggle('empty',!el.value.trim())}}
   changed()});
@@ -322,7 +325,9 @@ ed.addEventListener('click',function(e){
   if(b.dataset.mv){var j=i+(+b.dataset.mv);if(j<0||j>=a.length)return;var x=a[i];a[i]=a[j];a[j]=x;openItem=it.open?key+'.'+j:null}
   rerender();changed();
 });
-ed.addEventListener('toggle',function(e){var it=e.target;if(it.classList&&it.classList.contains('it')&&it.open)openItem=it.parentNode.dataset.list+'.'+it.dataset.i},true);
+ed.addEventListener('toggle',function(e){var it=e.target;if(it.classList&&it.classList.contains('it')&&it.open){openItem=it.parentNode.dataset.list+'.'+it.dataset.i;[].forEach.call(it.querySelectorAll('textarea.in'),grow)}},true);
+function grow(t){t.style.height='auto';t.style.height=(t.scrollHeight+3)+'px'}
+function growAll(){[].forEach.call(ed.querySelectorAll('textarea.in'),grow)}
 function rerender(){var y=innerWidth<900?scrollY:ed.scrollTop;renderSection(sec(cur));if(innerWidth<900)scrollTo(0,y);else ed.scrollTop=y}
 function loadImage(file,path){
   if(!/^image\//.test(file.type)){toast('Это не похоже на фото',1);return}
@@ -336,7 +341,7 @@ function save(){
   if(!lsSet('mt-content',JSON.stringify(S))){toast('Не хватило места в браузере. Попробуйте фото поменьше.',1);return}
   setDirty(false);toast('Сохранено. На сайте в этом браузере уже новая версия.');
 }
-$('#save').addEventListener('click',save);
+$('#save').addEventListener('click',save);$('#save2').addEventListener('click',save);
 addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();save()}});
 addEventListener('beforeunload',function(e){if(dirty){e.preventDefault();e.returnValue=''}});
 
