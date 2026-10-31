@@ -406,9 +406,6 @@ if('IntersectionObserver' in window&&!RM){
   $$('.rv').forEach(function(el){io.observe(el)});
 }else{$$('.rv').forEach(function(el){el.classList.add('in')})}
 
-/* count up */
-if(!RM)$$('[data-count]').forEach(function(b){var t=+b.dataset.count;if(t<5)return;var s=null;b.textContent='0';function f(ts){if(!s)s=ts;var p=Math.min(1,(ts-s)/1200);b.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}setTimeout(function(){requestAnimationFrame(f)},700)});
-
 /* hero slideshow */
 var meta=[["Графит", "Детейлинг"], ["Кедровый дом", "Гостевой дом"], ["Высота 2,7", "Натяжные потолки"], ["Тягач 74", "Эвакуатор"], ["Енот", "Ветклиника"]],keys=$$('.laptop .scr img').map(function(i){return i.src.split('/').pop().replace('.webp','')}),cur=0,toast=$('.toast');
 function show(n){$$('.laptop .scr img').forEach(function(im,i){im.classList.toggle('on',i===n)});$$('.phone .scr img').forEach(function(im,i){im.classList.toggle('on',i===n)});var k=$('.slide-k');if(k)k.textContent=keys[n];$('.slide-n').textContent=meta[n][0];$('.slide-t').textContent=meta[n][1]}
