@@ -19,7 +19,7 @@ header{border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 20px;min-height:78px;padding-block:10px}
 .brand{display:inline-flex;align-items:center;gap:12px;min-height:44px}
 .brand svg{width:34px;height:auto;flex:none}
-.brand b{font:500 24px/1 var(--serif);letter-spacing:-.01em}
+.brand b{display:block;font:500 24px/1 var(--serif);letter-spacing:-.01em}.brand>span{display:flex;flex-direction:column;justify-content:center}
 .brand small{display:block;font-size:12px;color:rgba(241,234,216,.5);margin-top:3px;letter-spacing:.01em}
 nav.top{display:flex;align-items:center;gap:6px 26px;flex-wrap:wrap;font-size:15px}
 nav.top a:not(.btn){color:var(--muted);padding-block:10px;transition:color .2s}
@@ -76,7 +76,7 @@ h2{font:500 clamp(32px,3.8vw,58px)/1.06 var(--serif);letter-spacing:-.02em;text-
 .slide.on{clip-path:polygon(0 0,100% 0,140% 100%,0 100%)}
 .slide.under{clip-path:polygon(0 0,100% 0,140% 100%,0 100%);transition:none}
 .slide picture,.slide img{display:block;width:100%}
-.slide img{height:auto;transform:translateY(0);will-change:transform}
+.slide img{height:auto;transform:translateY(0)}
 .slide.run img{transition:transform 7s cubic-bezier(.45,0,.35,1);transform:translateY(var(--shift,0))}
 .edge{position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--accent);transform-origin:top;pointer-events:none;opacity:0}
 .show-foot{display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;margin-top:16px;font-size:14px;color:var(--muted)}
