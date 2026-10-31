@@ -179,7 +179,7 @@ h2{font:500 clamp(32px,3.8vw,58px)/1.06 var(--serif);letter-spacing:-.02em;text-
 .num-c,.timeline .n{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--bg);font:600 14px/1 Manrope,sans-serif;letter-spacing:.04em;color:var(--muted);font-variant-numeric:tabular-nums;transition:background .4s,border-color .4s,color .4s}
 .timeline .n{position:absolute;top:0;left:0}
 .timeline li.lit .n{background:var(--accent);border-color:var(--accent);color:var(--ink)}
-.timeline h3{font:500 23px/1.2 var(--serif);margin:0 0 10px}
+.timeline h3{font:500 23px/1.2 var(--serif);margin:0 0 10px;white-space:nowrap}@media(max-width:420px){.timeline h3{white-space:normal}}
 .timeline p{margin:0;color:var(--muted);font-size:16px}
 .timeline .pay{margin-top:auto;padding-top:18px;font-size:14px;font-weight:600;color:var(--accent)}
 /* trust */
