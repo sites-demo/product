@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:O;src:url(onest-cyrillic.woff2) format('woff2');unicode-range:U+0400-04FF;font-weight:100 900}
+@font-face{font-family:O;src:url(onest-latin.woff2) format('woff2');font-weight:100 900}
+body{margin:0}</style></head><body><canvas id="c" width="1080" height="1920"></canvas><script type="module">
+// Shorts covers: the video frame plus the first words of the title, huge, so they read in the grid
+const c=document.getElementById('c').getContext('2d');
+function rr(x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+async function cover(src,lines,{y=860,bg='#d63c30',fg='#ffffff',key='#fff3c4'}={}){
+  const img=new Image();img.src=src;await img.decode();c.drawImage(img,0,0,1080,1920);
+  c.font='900 150px O';const lh=160;const w=Math.max(...lines.map(l=>c.measureText(l).width))+100;const h=lines.length*lh+70;
+  c.save();c.translate(540,y+h/2);c.rotate(-.035);c.translate(-540,-(y+h/2));
+  c.fillStyle='rgba(0,0,0,.35)';rr(540-w/2+10,y+16,w,h,48);c.fill();
+  c.fillStyle=bg;rr(540-w/2,y,w,h,48);c.fill();
+  c.textAlign='center';lines.forEach((l,i)=>{c.fillStyle=i===lines.length-1?key:fg;c.fillText(l,540,y+35+130+i*lh);});
+  c.restore();return document.getElementById('c').toDataURL('image/png');}
+await document.fonts.load('900 150px O','АБВ');
+window.make=async(which)=>which==='zag'?cover('covers/f_zag.png',['САЙТ','ЗАВИС'],{y:800,bg:'#0d1510',fg:'#f3eee4',key:'#9be26a'}):cover('covers/f_per.png',['ПЕРЕОБУВКА','ШИН'],{y:1060});
+window.READY=true;
+</script></body></html>
