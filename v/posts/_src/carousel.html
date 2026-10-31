@@ -15,13 +15,12 @@ function rr(x,y,w,h,r){r=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+r,y);c.arc
 function wrap(text,maxW){const out=[];for(const para of text.split('\n')){const words=para.split(' ');let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW&&cur){out.push(cur);cur=w}else cur=t}out.push(cur)}return out;}
 function statusBar(dark=false,time='23:47'){
   c.fillStyle=dark?'#fff':'#000';c.font=font(40,700);c.fillText(time,70,92);
-  // signal, wifi, battery
-  for(let i=0;i<4;i++){rr(820+i*16,92-12-i*7,11,12+i*7,3);c.fill();}
-  // wi-fi: a dot and two arcs fanning up from it
-  {const cx=912,cy=100;c.strokeStyle=c.fillStyle;c.lineWidth=6.5;c.lineCap='round';
+  // signal, wifi, battery: all three sit on one baseline (y 94) and share a centre (y ~79)
+  for(let i=0;i<4;i++){rr(820+i*16,94-12-i*7,11,12+i*7,3);c.fill();}
+  {const cx=912,cy=90;c.strokeStyle=c.fillStyle;c.lineWidth=6.5;c.lineCap='round';
    for(const r of [13,25]){c.beginPath();c.arc(cx,cy,r,-Math.PI*0.76,-Math.PI*0.24);c.stroke();}
-   c.beginPath();c.arc(cx,cy-1,4.6,0,7);c.fill();c.lineCap='butt';}
-  rr(950,66,64,32,9);c.lineWidth=3;c.stroke();rr(955,71,44,22,5);c.fill();rr(1017,76,5,12,2.5);c.fill();
+   c.beginPath();c.arc(cx,cy-0.5,4.6,0,7);c.fill();c.lineCap='butt';}
+  rr(950,64,64,30,9);c.lineWidth=3;c.stroke();rr(955,69,44,20,5);c.fill();rr(1017,73,5,12,2.5);c.fill();
 }
 function heart(x,y,s,col){c.fillStyle=col;c.beginPath();c.moveTo(x,y+s*.35);c.bezierCurveTo(x,y,x-s*.5,y,x-s*.5,y+s*.35);c.bezierCurveTo(x-s*.5,y+s*.65,x,y+s*.85,x,y+s);c.bezierCurveTo(x,y+s*.85,x+s*.5,y+s*.65,x+s*.5,y+s*.35);c.bezierCurveTo(x+s*.5,y,x,y,x,y+s*.35);c.fill();}
 
