@@ -20,7 +20,7 @@ header{border-bottom:1px solid var(--line)}
 .brand{display:inline-flex;align-items:center;gap:12px;min-height:44px}
 .brand svg{width:34px;height:auto;flex:none}
 .brand b{font:500 24px/1 var(--serif);letter-spacing:-.01em}
-.brand small{display:block;font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.01em}
+.brand small{display:block;font-size:12px;color:rgba(241,234,216,.5);margin-top:3px;letter-spacing:.01em}
 nav.top{display:flex;align-items:center;gap:6px 26px;flex-wrap:wrap;font-size:15px}
 nav.top a:not(.btn){color:var(--muted);padding-block:10px;transition:color .2s}
 nav.top a:not(.btn):hover,nav.top a[aria-current=page]{color:var(--cream)}
