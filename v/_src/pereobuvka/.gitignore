@@ -1,0 +1,7 @@
+node_modules/
+*.woff2
+logo_src.jpg
+*.wav
+video_only.mp4
+final.mp4
+prev/
