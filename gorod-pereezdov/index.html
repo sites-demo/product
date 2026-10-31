@@ -374,6 +374,8 @@ footer a{display:inline-block;padding:4px 0;margin:-4px 0;text-decoration:none}
 .mbar .btn{flex:1;min-height:52px;font-size:17px;padding:0 12px}
 .mbar .btn.ghost{flex:0 0 auto;width:56px;padding:0}
 @media(min-width:900px){.mbar{display:none}}
+/* wide phones in landscape (touch, low screen) keep the phone layout */
+@media(pointer:coarse) and (max-height:540px){body{padding-bottom:80px}.top{position:relative}.mbar{display:flex}.mtchip{bottom:84px}.hero{padding:30px 0 48px}}
 .kbd .mbar{display:none}
 /* motion */
 .top{transition:box-shadow .25s}.top.sc{box-shadow:0 8px 24px -16px rgba(19,38,28,.45)}
