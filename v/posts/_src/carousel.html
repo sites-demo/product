@@ -1,14 +1,14 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
 <style>
-@font-face{font-family:G;src:url(golos-text-cyrillic.woff2) format('woff2');unicode-range:U+0400-04FF,U+00AB,U+00BB;font-weight:400 900}
-@font-face{font-family:G;src:url(golos-text-latin.woff2) format('woff2');font-weight:400 900}
+@font-face{font-family:O;src:url(onest-cyrillic.woff2) format('woff2');unicode-range:U+0400-04FF,U+00AB,U+00BB;font-weight:100 900}
+@font-face{font-family:O;src:url(onest-latin.woff2) format('woff2');font-weight:100 900}
 html,body{margin:0;background:#000}canvas{display:block}
 </style></head><body>
 <canvas id="c" width="1080" height="1920"></canvas>
 <script type="module">
 // Meme carousels drawn as native phone screenshots: notes app and messenger chats.
-const W=1080,H=1920;const F='G, sans-serif';
+const W=1080,H=1920;const F='O, sans-serif';
 const font=(px,w=600)=>`${w} ${px}px ${F}`;
 const cv=document.getElementById('c');const c=cv.getContext('2d');
 function rr(x,y,w,h,r){r=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
@@ -17,8 +17,11 @@ function statusBar(dark=false,time='23:47'){
   c.fillStyle=dark?'#fff':'#000';c.font=font(40,700);c.fillText(time,70,92);
   // signal, wifi, battery
   for(let i=0;i<4;i++){rr(820+i*16,92-12-i*7,11,12+i*7,3);c.fill();}
-  c.lineWidth=6;c.strokeStyle=c.fillStyle;c.beginPath();c.arc(912,96,24,-2.4,-.74);c.stroke();c.beginPath();c.arc(912,96,12,-2.4,-.74);c.stroke();
-  rr(950,66,64,32,9);c.lineWidth=3;c.stroke();rr(955,71,44,22,5);c.fill();
+  // wi-fi: a dot and two arcs fanning up from it
+  {const cx=912,cy=100;c.strokeStyle=c.fillStyle;c.lineWidth=6.5;c.lineCap='round';
+   for(const r of [13,25]){c.beginPath();c.arc(cx,cy,r,-Math.PI*0.76,-Math.PI*0.24);c.stroke();}
+   c.beginPath();c.arc(cx,cy-1,4.6,0,7);c.fill();c.lineCap='butt';}
+  rr(950,66,64,32,9);c.lineWidth=3;c.stroke();rr(955,71,44,22,5);c.fill();rr(1017,76,5,12,2.5);c.fill();
 }
 function heart(x,y,s,col){c.fillStyle=col;c.beginPath();c.moveTo(x,y+s*.35);c.bezierCurveTo(x,y,x-s*.5,y,x-s*.5,y+s*.35);c.bezierCurveTo(x-s*.5,y+s*.65,x,y+s*.85,x,y+s);c.bezierCurveTo(x,y+s*.85,x+s*.5,y+s*.65,x+s*.5,y+s*.35);c.bezierCurveTo(x+s*.5,y,x,y,x,y+s*.35);c.fill();}
 
@@ -44,7 +47,7 @@ function awfulSite(x,y,w,h){
   c.restore();
 }
 const K1=[
-  ()=>{notesFrame();let y=notesText(['5 стадий принятия, что бизнесу нужен сайт'],520,112,800);notesText(['листай →'],y+70,48,500,'#8e8e93');},
+  ()=>{notesFrame();let y=notesText(['5 стадий принятия, что бизнесу нужен сайт'],560,120,800,'#000',1.08);notesText(['листай →'],y+60,50,600,'#8e8e93');},
   ...[
     ['ОТРИЦАНИЕ','«Меня и так все знают.\nНу, Серёга знает»'],
     ['ГНЕВ','«Какой нах** сайт,\nу меня Авито»'],
@@ -52,10 +55,10 @@ const K1=[
     ['ДЕПРЕССИЯ','«Племянник сделал»'],
     ['ПРИНЯТИЕ','«Ладно. Сколько стоит, чтобы было не как у племянника?»'],
   ].map(([stage,quote],i)=>()=>{notesFrame();
-    notesText(['5 стадий принятия, что бизнесу нужен сайт'],400,44,600,'#8e8e93');
-    c.fillStyle=NOTE_Y;c.font=font(44,800);c.fillText(`${i+1} / 5`,80,520);
-    let y=notesText([stage],640,128,900);
-    y=notesText([quote],y+50,78,600);
+    notesText(['5 стадий принятия, что бизнесу нужен сайт'],410,46,600,'#8e8e93',1.15);
+    c.fillStyle=NOTE_Y;c.font=font(48,800);c.fillText(`${i+1} / 5`,80,560);
+    let y=notesText([stage],700,136,800,'#000',1.05);
+    y=notesText([quote],y+40,90,700,'#000',1.14);
     if(stage==='ДЕПРЕССИЯ')awfulSite(80,y+30,W-160,720);
   }),
 ];
@@ -70,19 +73,19 @@ function chatHeader(name,sub,avatarCol,avatarText,{heartAfter=false}={}){
   c.fillStyle='#8e8e93';c.font=font(28,500);c.fillText(sub,W/2,300-4);c.textAlign='left';
   c.fillStyle='#d9d9d9';c.fillRect(0,318,W,2);
 }
-function bubble(y,text,{out=false,size=56,name='',nameCol='#2f7cf6',time='',col=null}={}){
-  c.font=font(size,500);const lines=wrap(text,640);const lh=size*1.25;
+function bubble(y,text,{out=false,size=58,name='',nameCol='#2f7cf6',time='',col=null}={}){
+  c.font=font(size,600);const lines=wrap(text,640);const lh=size*1.25;
   const w=Math.max(...lines.map(l=>c.measureText(l).width),name?c.measureText(name).width*0.7:0)+80;const h=lines.length*lh+50+(name?52:0)+(time?30:0);
   const x=out?W-50-w:50;
   c.fillStyle=col||(out?'#2f7cf6':'#e9e9eb');rr(x,y,w,h,46);c.fill();
   let yy=y+30;
   if(name){c.fillStyle=nameCol;c.font=font(36,700);c.fillText(name,x+40,yy+30);yy+=52;}
-  c.fillStyle=out?'#fff':'#000';c.font=font(size,500);lines.forEach((l,i)=>c.fillText(l,x+40,yy+size*.9+i*lh));
+  c.fillStyle=out?'#fff':'#000';c.font=font(size,600);lines.forEach((l,i)=>c.fillText(l,x+40,yy+size*.9+i*lh));
   if(time){c.fillStyle=out?'rgba(255,255,255,.75)':'#8e8e93';c.font=font(26,500);c.textAlign='right';c.fillText(time,x+w-34,y+h-20);c.textAlign='left';}
   return y+h+22;
 }
 function sys(y,text){c.font=font(32,600);const w=c.measureText(text).width+60;c.fillStyle='rgba(0,0,0,.08)';rr(W/2-w/2,y,w,64,32);c.fill();c.fillStyle='#6d6d72';c.textAlign='center';c.fillText(text,W/2,y+44);c.textAlign='left';return y+90;}
-function hook(text,y=380){c.font=font(84,900);const lines=wrap(text,880);const h=lines.length*96+60;
+function hook(text,y=380){c.font=font(86,800);const lines=wrap(text,880);const h=lines.length*96+60;
   c.fillStyle='rgba(0,0,0,.86)';rr(60,y,W-120,h,40);c.fill();c.fillStyle='#fff';c.textAlign='center';lines.forEach((l,i)=>c.fillText(l,W/2,y+30+80+i*96));c.textAlign='left';return y+h;}
 
 // К2: no prices on the site
