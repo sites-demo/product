@@ -1,0 +1,122 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:G;src:url(golos-text-cyrillic.woff2) format('woff2');unicode-range:U+0400-04FF,U+00AB,U+00BB;font-weight:400 900}
+@font-face{font-family:G;src:url(golos-text-latin.woff2) format('woff2');font-weight:400 900}
+html,body{margin:0;background:#000}canvas{display:block}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+// Meme carousels drawn as native phone screenshots: notes app and messenger chats.
+const W=1080,H=1920;const F='G, sans-serif';
+const font=(px,w=600)=>`${w} ${px}px ${F}`;
+const cv=document.getElementById('c');const c=cv.getContext('2d');
+function rr(x,y,w,h,r){r=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function wrap(text,maxW){const out=[];for(const para of text.split('\n')){const words=para.split(' ');let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW&&cur){out.push(cur);cur=w}else cur=t}out.push(cur)}return out;}
+function statusBar(dark=false,time='23:47'){
+  c.fillStyle=dark?'#fff':'#000';c.font=font(40,700);c.fillText(time,70,92);
+  // signal, wifi, battery
+  for(let i=0;i<4;i++){rr(820+i*16,92-12-i*7,11,12+i*7,3);c.fill();}
+  c.lineWidth=6;c.strokeStyle=c.fillStyle;c.beginPath();c.arc(912,96,24,-2.4,-.74);c.stroke();c.beginPath();c.arc(912,96,12,-2.4,-.74);c.stroke();
+  rr(950,66,64,32,9);c.lineWidth=3;c.stroke();rr(955,71,44,22,5);c.fill();
+}
+function heart(x,y,s,col){c.fillStyle=col;c.beginPath();c.moveTo(x,y+s*.35);c.bezierCurveTo(x,y,x-s*.5,y,x-s*.5,y+s*.35);c.bezierCurveTo(x-s*.5,y+s*.65,x,y+s*.85,x,y+s);c.bezierCurveTo(x,y+s*.85,x+s*.5,y+s*.65,x+s*.5,y+s*.35);c.bezierCurveTo(x+s*.5,y,x,y,x,y+s*.35);c.fill();}
+
+// ---------------- К1: notes app ----------------
+const NOTE_Y='#e2a400';
+function notesFrame(){
+  c.fillStyle='#ffffff';c.fillRect(0,0,W,H);statusBar();
+  c.strokeStyle=NOTE_Y;c.lineWidth=8;c.lineCap='round';c.lineJoin='round';c.beginPath();c.moveTo(80,170);c.lineTo(56,196);c.lineTo(80,222);c.stroke();
+  c.fillStyle=NOTE_Y;c.font=font(48,500);c.fillText('Заметки',100,212);
+  c.beginPath();c.arc(990,196,30,0,7);c.lineWidth=6;c.stroke();for(let i=-1;i<=1;i++){c.beginPath();c.arc(990+i*12,196,4,0,7);c.fill();}
+  c.fillStyle='#8e8e93';c.font=font(34,500);c.textAlign='center';c.fillText('31 октября 2026 г. в 23:47',W/2,300);c.textAlign='left';
+}
+function notesText(lines,y,size,weight=700,col='#000',lh=1.18){c.fillStyle=col;c.font=font(size,weight);let yy=y;for(const l of lines){for(const w of wrap(l,W-160)){c.fillText(w,80,yy);yy+=size*lh;}}return yy;}
+function awfulSite(x,y,w,h){
+  c.save();c.translate(x,y);
+  c.fillStyle='#00ffff';c.fillRect(0,0,w,h);c.strokeStyle='#000';c.lineWidth=6;c.strokeRect(0,0,w,h);
+  c.fillStyle='#ff00ff';c.fillRect(0,0,w,110);c.fillStyle='#ffff00';c.font='700 64px "Comic Sans MS","Times New Roman",serif';c.fillText('ШИНОМОНТАЖ!!!',30,78);
+  c.fillStyle='#0000ee';c.font='400 40px "Times New Roman",serif';c.fillText('>>> Добро пожаловать на наш САЙТ <<<',24,170);
+  c.fillStyle='#ff0000';c.font='700 46px "Comic Sans MS",serif';c.fillText('Цены: ЗВОНИТЕ',24,250);
+  c.fillStyle='#000';c.fillRect(24,290,w-48,180);c.fillStyle='#0f0';c.font='400 34px monospace';c.fillText('Вы посетитель № 000017',44,370);c.fillText('сайт в разработке',44,430);
+  c.fillStyle='#ffa500';for(let i=0;i<6;i++){c.beginPath();c.arc(70+i*120,540,34,0,7);c.fill();}
+  c.fillStyle='#000';c.font='400 30px "Times New Roman",serif';c.fillText('© Племянник Дима, 2026',24,h-30);
+  c.restore();
+}
+const K1=[
+  ()=>{notesFrame();let y=notesText(['5 стадий принятия, что бизнесу нужен сайт'],520,112,800);notesText(['листай →'],y+70,48,500,'#8e8e93');},
+  ...[
+    ['ОТРИЦАНИЕ','«Меня и так все знают.\nНу, Серёга знает»'],
+    ['ГНЕВ','«Какой нах** сайт,\nу меня Авито»'],
+    ['ТОРГ','«Племянник сделает.\nЕму 14, он в Майнкрафте дом построил»'],
+    ['ДЕПРЕССИЯ','«Племянник сделал»'],
+    ['ПРИНЯТИЕ','«Ладно. Сколько стоит, чтобы было не как у племянника?»'],
+  ].map(([stage,quote],i)=>()=>{notesFrame();
+    notesText(['5 стадий принятия, что бизнесу нужен сайт'],400,44,600,'#8e8e93');
+    c.fillStyle=NOTE_Y;c.font=font(44,800);c.fillText(`${i+1} / 5`,80,520);
+    let y=notesText([stage],640,128,900);
+    y=notesText([quote],y+50,78,600);
+    if(stage==='ДЕПРЕССИЯ')awfulSite(80,y+30,W-160,720);
+  }),
+];
+
+// ---------------- messenger chats ----------------
+function chatHeader(name,sub,avatarCol,avatarText,{heartAfter=false}={}){
+  c.fillStyle='#f7f7f7';c.fillRect(0,0,W,300);statusBar();
+  c.strokeStyle='#2f7cf6';c.lineWidth=8;c.lineCap='round';c.lineJoin='round';c.beginPath();c.moveTo(70,200);c.lineTo(46,226);c.lineTo(70,252);c.stroke();
+  c.fillStyle=avatarCol;c.beginPath();c.arc(W/2,170,56,0,7);c.fill();c.fillStyle='#fff';c.font=font(54,700);c.textAlign='center';c.fillText(avatarText,W/2,190);
+  c.fillStyle='#000';c.font=font(40,600);const nw=c.measureText(name).width;c.fillText(name,W/2-(heartAfter?18:0),270);
+  if(heartAfter)heart(W/2+nw/2+8,244,34,'#ff3b5c');
+  c.fillStyle='#8e8e93';c.font=font(28,500);c.fillText(sub,W/2,300-4);c.textAlign='left';
+  c.fillStyle='#d9d9d9';c.fillRect(0,318,W,2);
+}
+function bubble(y,text,{out=false,size=56,name='',nameCol='#2f7cf6',time='',col=null}={}){
+  c.font=font(size,500);const lines=wrap(text,640);const lh=size*1.25;
+  const w=Math.max(...lines.map(l=>c.measureText(l).width),name?c.measureText(name).width*0.7:0)+80;const h=lines.length*lh+50+(name?52:0)+(time?30:0);
+  const x=out?W-50-w:50;
+  c.fillStyle=col||(out?'#2f7cf6':'#e9e9eb');rr(x,y,w,h,46);c.fill();
+  let yy=y+30;
+  if(name){c.fillStyle=nameCol;c.font=font(36,700);c.fillText(name,x+40,yy+30);yy+=52;}
+  c.fillStyle=out?'#fff':'#000';c.font=font(size,500);lines.forEach((l,i)=>c.fillText(l,x+40,yy+size*.9+i*lh));
+  if(time){c.fillStyle=out?'rgba(255,255,255,.75)':'#8e8e93';c.font=font(26,500);c.textAlign='right';c.fillText(time,x+w-34,y+h-20);c.textAlign='left';}
+  return y+h+22;
+}
+function sys(y,text){c.font=font(32,600);const w=c.measureText(text).width+60;c.fillStyle='rgba(0,0,0,.08)';rr(W/2-w/2,y,w,64,32);c.fill();c.fillStyle='#6d6d72';c.textAlign='center';c.fillText(text,W/2,y+44);c.textAlign='left';return y+90;}
+function hook(text,y=380){c.font=font(84,900);const lines=wrap(text,880);const h=lines.length*96+60;
+  c.fillStyle='rgba(0,0,0,.86)';rr(60,y,W-120,h,40);c.fill();c.fillStyle='#fff';c.textAlign='center';lines.forEach((l,i)=>c.fillText(l,W/2,y+30+80+i*96));c.textAlign='left';return y+h;}
+
+// К2: no prices on the site
+const K2MSG=[['Сколько стоит?','14:02'],['Ну примерно?','14:05'],['Хотя бы от скольки??','14:11'],['Алло','14:20'],['Ладно, у других на сайте всё написано, пока','14:21']];
+function k2(n,{reply=false,deleted=false,hookOn=false}={}){
+  c.fillStyle='#ffffff';c.fillRect(0,0,W,H);
+  chatHeader('Клиент','был(а) недавно','#8e8e93','К');
+  let y=380;if(hookOn)y=hook('Что пишут клиенты, если на сайте нет цен')+40;
+  for(let i=0;i<n;i++)y=bubble(y,K2MSG[i][0],{time:K2MSG[i][1]});
+  if(reply){y=sys(y+10,'через 3 часа');y=bubble(y,'Здравствуйте! Зависит от задачи :)',{out:true,time:'17:24'});}
+  if(deleted){y=sys(y+20,'Клиент удалил чат');}
+}
+const K2=[()=>k2(1,{hookOn:true}),()=>k2(2),()=>k2(3),()=>k2(4),()=>k2(5),()=>k2(5,{reply:true}),()=>k2(5,{reply:true,deleted:true})];
+
+// К4: family chat
+const K4MSG=[
+  ['Сынок, ты где работаешь вообще?',{name:'Мама',nameCol:'#ff3b5c'}],
+  ['Делаю сайты',{out:true}],
+  ['А нормальная работа когда?',{name:'Мама',nameCol:'#ff3b5c'}],
+  ['Внучок, а сайт — это как Одноклассники?',{name:'Бабушка',nameCol:'#8e5cf6'}],
+  ['Ба, мне шиномонтаж написал, сайт хотят',{out:true}],
+  ['Ну хоть шиномонтаж. Это серьёзные люди',{name:'Мама',nameCol:'#ff3b5c'}],
+];
+const K4STEPS=[[2,true],[3],[4],[5],[6]];
+function k4(n,hookOn){
+  c.fillStyle='#ffffff';c.fillRect(0,0,W,H);
+  chatHeader('Семья','Мама, Бабушка, вы','#ff9f43','С',{heartAfter:true});
+  let y=380;if(hookOn)y=hook('Мне 18, я делаю сайты')+40;
+  for(let i=0;i<n;i++)y=bubble(y,K4MSG[i][0],K4MSG[i][1]);
+}
+const K4=K4STEPS.map(([n,h])=>()=>k4(n,!!h));
+
+window.SETS={k1_5stadiy:K1,k2_net_cen:K2,k4_mne_18:K4};
+window.renderSlide=(set,i)=>{c.setTransform(1,0,0,1,0,0);window.SETS[set][i]();return cv.toDataURL('image/png');};
+for(const w of [900,800,700,600,500])await document.fonts.load(font(100,w),'АБВЁЙабв ABC');
+window.READY=true;
+</script></body></html>
