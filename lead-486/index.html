@@ -30,7 +30,7 @@ section{padding:64px 0;scroll-margin-top:8px}
 .lead{color:var(--mute);font-size:18px;max-width:560px;margin:0 0 32px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 28px;border-radius:var(--r);background:var(--sun);color:var(--navy);font:600 17px/1.15 var(--body);text-decoration:none;border:0;cursor:pointer;text-align:center}
 @media(hover:hover){.btn:hover{background:var(--sun-d)}}
-.btn:focus-visible,.slot:focus-within,.tile input:focus-visible+.tb,.ck input:focus-visible+span,a:focus-visible,select:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+.btn:focus-visible,.slot:has(input:focus-visible),.tile input:focus-visible+.tb,.ck input:focus-visible+span,a:focus-visible,select:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .contacts a:focus-visible{outline-color:#fff}
 .btn.tg{background:var(--tg);color:#fff}
 @media(hover:hover){.btn.tg:hover{background:var(--tg-d)}}
@@ -39,9 +39,9 @@ section{padding:64px 0;scroll-margin-top:8px}
 .btn svg{width:22px;height:22px;flex:none}
 /* header: not sticky */
 .top{background:#fff;border-bottom:1px solid var(--line);position:relative;z-index:30}
-.top .wrap{display:flex;align-items:center;gap:28px;min-height:76px;padding-top:8px;padding-bottom:8px}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:76px;padding-top:8px;padding-bottom:8px}
 .logo{display:block;flex:none;line-height:0;min-width:0}
-.logo img{height:56px;width:auto;max-width:calc(100vw - 112px)}
+.logo img{height:56px;width:auto;max-width:calc(100vw - 100px)}
 .wm{font-family:var(--head);font-weight:700;font-size:24px;line-height:1;color:var(--red)}
 .nav{display:none;gap:28px;margin-left:12px}
 .nav a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0}
@@ -52,7 +52,7 @@ section{padding:64px 0;scroll-margin-top:8px}
 .top .tel small{font-size:13px;color:var(--mute)}
 .top .call{width:48px;height:48px;border-radius:var(--r);background:var(--sun);display:grid;place-items:center;flex:none}
 .top .call svg{width:22px;height:22px}
-@media(min-width:900px){.nav{display:flex}.top .tel{display:block}.top .call{display:none}.top .wrap{min-height:84px}.logo img{height:64px}}
+@media(min-width:900px){.top .wrap{gap:28px}.nav{display:flex}.top .tel{display:block}.top .call{display:none}.top .wrap{min-height:84px}.logo img{height:64px}}
 /* hero */
 .hero{background:var(--sky);color:var(--navy);padding:0;overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
@@ -140,7 +140,7 @@ form .btn{width:100%}
 .after p{margin:0;font-size:15px}
 .after .row{display:flex;flex-wrap:wrap;gap:10px}
 .after .btn{min-height:52px;flex:1 1 200px;font-size:16px}
-.after textarea{min-height:110px;font-size:14px}
+.after textarea{min-height:110px;font-size:16px}
 /* services */
 .sv{display:grid;gap:40px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:960px){.sv{grid-template-columns:minmax(0,6fr) minmax(0,5fr);column-gap:72px;align-items:start}}
@@ -168,7 +168,7 @@ form .btn{width:100%}
 .contacts .lead{color:#B9CBE3}
 .cg{display:grid;gap:48px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:900px){.cg{grid-template-columns:minmax(0,5fr) minmax(0,6fr);column-gap:80px}}
-.big{display:block;font-family:var(--head);font-weight:600;font-size:clamp(26px,4vw,38px);text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.2;padding:4px 0}
+.big{display:block;font-family:var(--head);font-weight:600;font-size:clamp(26px,4vw,38px);text-decoration:none;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.2;padding:4px 0}
 .cl{display:grid;gap:12px;margin-top:8px}
 .addr{margin:0;padding:0;list-style:none}
 .addr li{padding:12px 0;border-top:1px solid #3B5A86;display:flex;flex-wrap:wrap;gap:0 16px;justify-content:space-between;align-items:center;font-size:18px}
@@ -183,6 +183,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 .bar .btn{flex:1;min-width:0;min-height:54px;padding:8px 10px;font-size:16px}
 .bar .btn.ghost{flex:0 0 auto}
 @media(min-width:900px){.bar{display:none}}
+@media(max-width:340px){.bar .btn.ghost{flex:0 1 auto;font-size:0;gap:0;padding:8px 14px}.bar .btn:not(.ghost){flex:2}}
 @media(max-width:230px){.btn svg{display:none}.btn{padding:12px 8px}form{padding:16px 10px}.wrap{padding-left:10px;padding-right:10px}.top .wrap{gap:6px}.top .call{width:44px;height:44px}.slots{grid-template-columns:1fr}.slot{min-height:70px}.tiles{grid-template-columns:1fr}.cks{grid-template-columns:1fr}.hero .ph{margin:0 -10px}.big{white-space:normal;font-size:20px}.facts b{min-width:0}.addr li{font-size:16px}.agree,.fallback{overflow-wrap:anywhere}.fallback a{white-space:normal}}
 </style>
 </head><body>
@@ -348,7 +349,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <footer><div class="wrap"><span>Стиралкин, химчистка и прачечная, Воронеж</span><span>Демо-версия сайта</span></div></footer>
 
 <div class="bar" id="bar">
-  <a class="btn ghost" href="tel:+74732299249"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Позвонить</a>
+  <a class="btn ghost" href="tel:+74732299249" aria-label="Позвонить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Позвонить</a>
   <a class="btn" href="#ocenka">Оценить по фото</a>
 </div>
 
@@ -372,12 +373,13 @@ function val(n){return (f.elements[n].value||'').trim()}
 function item(){var e=f.querySelector('input[name=item]:checked');return e?e.value:other.value}
 function fail(m){err.textContent=m;err.classList.add('on');err.scrollIntoView({block:'center'});err.focus({preventScroll:true})}
 f.addEventListener('input',function(){err.classList.remove('on')});
+f.addEventListener('keydown',function(e){if(e.key==='Enter'&&/^(radio|checkbox)$/.test(e.target.type||''))e.preventDefault()});
 f.addEventListener('submit',function(e){
   e.preventDefault();err.classList.remove('on');
   var it=item(),phone=val('phone'),ph=photos();
   if(!it)return fail('Выберите, что нужно почистить.');
   if(!ph.length)return fail('Приложите хотя бы одно фото: пятна или бирки.');
-  if(phone&&phone.replace(/\D/g,'').length<10){f.elements.phone.focus();return fail('Проверьте телефон или оставьте поле пустым.')}
+  if(phone&&phone.replace(/\D/g,'').length<10){err.textContent='Проверьте телефон или оставьте поле пустым.';err.classList.add('on');f.elements.phone.focus();return}
   var st=[].slice.call(f.querySelectorAll('input[name=stain]:checked')).map(function(x){return x.value}).join(', ');
   var t=['Здравствуйте. Хочу оценить чистку по фото.','Вещь: '+it,'Пятно: '+(st||'уточню')];
   if(val('note'))t.push('Комментарий: '+val('note'));
@@ -386,10 +388,9 @@ f.addEventListener('submit',function(e){
   t.push('Фото пришлю следующим сообщением ('+ph.length+' шт.)');
   lastText=t.join('\n');
   var url='https://t.me/'+TG+'?text='+encodeURIComponent(lastText);
-  var w=window.open(url,'_blank');if(!w)location.href=url;
+  var w=window.open(url,'_blank'),hh=document.getElementById('afterHint');hh.textContent='';if(!w){hh.innerHTML='Telegram не открылся сам. <a href="'+url+'" target="_blank" rel="noopener">Открыть Telegram</a>'}
   document.getElementById('sendph').hidden=false;
   document.getElementById('afterTxt').innerHTML='<b>Остался второй шаг: фото.</b> Telegram не даёт сайту прикрепить фото к сообщению. Нажмите кнопку и выберите в списке чат «СТИРАЛКИН химчистка» (@stiralkin36).';
-  document.getElementById('afterHint').textContent='';
   after.classList.add('on');after.scrollIntoView({block:'center'});
 });
 document.getElementById('sendph').addEventListener('click',function(){
