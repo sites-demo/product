@@ -198,5 +198,13 @@
     "city": "Екатеринбург",
     "title": "Скин Ателье · Консультации и уход за кожей · Екатеринбург",
     "thumb": "/assets/portfolio/thumbs/skin-atelier.webp"
+  },
+  {
+    "slug": "emal",
+    "name": "Эмаль",
+    "niche": "Стоматологическая клиника",
+    "city": "Ярославль",
+    "title": "Эмаль · Стоматологическая клиника · Ярославль",
+    "thumb": "/assets/portfolio/thumbs/emal.webp"
   }
 ]
