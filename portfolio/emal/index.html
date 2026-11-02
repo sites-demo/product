@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Стоматологическая клиника «Эмаль» в Ярославле: лечение, протезирование, эстетическая стоматология и имплантация. Запись на осмотр по телефону.">
+<title>Эмаль · Стоматология · Ярославль</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000'/%3E%3Ctext x='32' y='45' font-family='Arial' font-weight='700' font-size='38' text-anchor='middle' fill='%23fff'%3EЭ%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.className='js'</script>
+<style>
+@font-face{font-family:"Onest";font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/onest-cyrillic.woff2) format("woff2");unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:"Onest";font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/onest-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:#fff;color:#000;font-family:"Onest",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,h4,p{margin:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
+a:focus-visible,button:focus-visible{outline:3px solid #000;outline-offset:3px}
+
+/* шапка: уезжает вместе со страницей, на телефоне не липнет */
+.nav{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:8px 16px;min-height:64px}
+.logo{display:flex;flex-direction:column;line-height:1;text-transform:uppercase;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.logo small{margin-top:7px;font-size:9px;font-weight:600;letter-spacing:.02em;text-transform:none}
+.nav-r{display:none;align-items:center;gap:22px}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid #000;background:#fff;font-size:14px;font-weight:600;transition:background .2s,color .2s,transform .2s}
+.pill:hover{background:#000;color:#fff}
+.nav-tel{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.burger{position:relative;width:46px;height:46px;display:grid;place-items:center}
+.burger i{position:absolute;width:24px;height:2px;background:#000;border-radius:2px;transition:transform .3s cubic-bezier(.76,0,.24,1),opacity .3s}
+.burger i:nth-child(1){transform:translateY(-7px)}.burger i:nth-child(3){transform:translateY(7px)}
+.menu-open .burger i:nth-child(1){transform:rotate(45deg)}.menu-open .burger i:nth-child(2){opacity:0}.menu-open .burger i:nth-child(3){transform:rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:60;pointer-events:none}
+.drawer .bd{position:absolute;inset:0;background:rgba(0,0,0,.2);backdrop-filter:blur(4px);opacity:0;transition:opacity .4s}
+.drawer .panel{position:absolute;top:0;right:0;height:100%;width:85%;max-width:380px;background:#fff;box-shadow:0 0 60px rgba(0,0,0,.25);transform:translateX(100%);transition:transform .5s cubic-bezier(.76,0,.24,1);display:flex;flex-direction:column;justify-content:center;padding:0 32px;overflow:auto}
+.menu-open .drawer{pointer-events:auto}.menu-open .drawer .bd{opacity:1}.menu-open .drawer .panel{transform:none}
+.drawer .x{position:absolute;top:12px;right:12px;width:46px;height:46px;font-size:32px;line-height:1}
+.drawer nav a{display:block;padding:6px 0;font-size:36px;font-weight:700;line-height:1.15;opacity:0;transform:translateX(32px);transition:opacity .5s,transform .5s cubic-bezier(.76,0,.24,1)}
+.menu-open .drawer nav a{opacity:1;transform:none}
+.drawer .foot{margin-top:28px;padding-top:24px;border-top:1px solid #e5e5e5}
+.drawer .foot p{font-size:14px;font-weight:600;margin-bottom:14px}
+.btn-black{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:999px;background:#000;color:#fff;font-size:15px;font-weight:600;transition:background .2s}
+.btn-black:hover{background:#262626}
+
+/* разделы */
+.sec{position:relative;width:100%;display:flex;flex-direction:column;gap:6px;padding:6px 12px;overflow:hidden}
+.mc{position:relative;overflow:hidden;border-radius:12px;background-color:#ece6e2;background-repeat:no-repeat}
+.rev{will-change:opacity,transform}
+.js .rev{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0)*120ms)}
+.js .rev.in{opacity:1;transform:none}
+
+/* 1: первый экран */
+#top{min-height:100svh;padding-top:84px;gap:6px}
+.bar{flex:none;min-height:56px;display:flex;align-items:center;justify-content:center;padding:6px 14px;font-weight:700;font-size:18px;line-height:1.15;text-align:center}
+.hero{flex:1;min-height:340px}
+.hero .t1{position:absolute;z-index:2;top:16px;left:16px;max-width:210px;font-size:12px;font-weight:600;line-height:16px}
+.hero .t2{position:absolute;z-index:2;bottom:20px;left:12px}
+.hero .t2 span{display:block;margin-bottom:6px;font-size:12px;font-weight:600}
+.hero h1{font-size:clamp(3rem,11vw,11rem);font-weight:700;line-height:.8;letter-spacing:-.025em}
+.hero .t3{position:absolute;z-index:2;right:16px;bottom:24px;color:#fff;font-size:12px;font-weight:600;text-align:right;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+
+/* 2: галерея */
+#smile{padding-top:6px}
+.g2{display:grid;grid-template-columns:1fr;gap:6px}
+.g2 .mc{min-height:170px}
+.g2 .c1{min-height:240px}
+.g2 .c3{min-height:210px}
+.g2 h2{position:absolute;z-index:2;top:16px;left:20px;color:#fff;font-size:26px;font-weight:700}
+.g2 .sub{position:absolute;z-index:2;bottom:16px;left:20px;color:#fff;font-size:12px;font-weight:600}
+.g2 .c1 p{position:absolute;z-index:2;left:20px;bottom:76px;max-width:70%;color:#fff;font-size:12px;font-weight:600;line-height:16px;text-shadow:0 1px 10px rgba(0,0,0,.3)}
+.cta{position:absolute;z-index:2;right:16px;bottom:16px;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;background:#fff;color:#000;font-size:16px;font-weight:700;transition:transform .25s}
+.cta:hover{transform:scale(1.05)}
+.g2 .c2 h2{font-size:clamp(3rem,7vw,6rem);line-height:.9;letter-spacing:-.02em}
+.svc{position:absolute;inset:0;z-index:2;display:flex;flex-wrap:wrap;gap:6px;padding:8px}
+.svc a{flex:1 1 calc(50% - 6px);min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:12px;border-radius:12px;color:#000;background:rgba(255,255,255,.38);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);transition:transform .3s}
+.svc a:hover{transform:translateY(-3px)}
+.svc a.on{background:rgba(255,255,255,.9);color:#000;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.svc h3{font-size:20px;font-weight:700;line-height:1.05;overflow-wrap:anywhere}
+.svc .n{align-self:flex-end;width:32px;height:32px;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600}
+
+/* 3: имплантация */
+#impl{padding-top:6px}
+.g3{display:grid;grid-template-columns:1fr;gap:6px}
+.col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.card{border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;min-height:180px}
+.card.a{background:#fafaf9;flex:1.2;gap:14px}
+.card.b{background:#e4e4e7;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:12px;flex:.8;min-height:160px}
+.card h2{font-size:clamp(2.4rem,5.4vw,5.6rem);font-weight:700;line-height:.95;letter-spacing:-.02em}
+.card p.s{font-size:12px;font-weight:600}
+.card.b .l{font-size:12px;font-weight:600;margin-bottom:8px}
+.card.b h3{font-size:20px;font-weight:700;line-height:24px;max-width:15em}
+.card.b .cta{position:static;flex:none;background:#fff}
+.imgs{display:flex;gap:6px;flex:1;min-height:150px}
+.imgs div{flex:1;min-width:0;border-radius:12px;overflow:hidden;background:#e7eef0}
+.imgs img,.patient img{width:100%;height:100%;object-fit:cover;display:block}
+.patient{position:relative;overflow:hidden;border-radius:12px;min-height:420px;background:#e8dfd8}
+.patient .ov{position:absolute;left:12px;right:12px;bottom:12px;display:flex;gap:6px}
+.ov a{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;height:144px;padding:12px;border-radius:12px;transition:transform .3s}
+.ov a:hover{transform:translateY(-3px)}
+.ov .w{background:#fff;color:#000}
+.ov .g{background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);color:#fff}
+.ov h4{font-size:18px;font-weight:700;line-height:20px}
+.ar{align-self:flex-end;width:36px;height:36px;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center}
+.ar svg{width:14px;height:14px;transform:rotate(-45deg)}
+
+/* контакты */
+#contacts{padding-top:6px;padding-bottom:12px}
+.cont{border-radius:12px;background:#000;color:#fff;padding:28px 20px;display:grid;gap:28px}
+.cont h2{font-size:clamp(2.2rem,6vw,5rem);font-weight:700;line-height:.98;letter-spacing:-.02em}
+.cont .tel{display:inline-flex;align-items:center;min-height:48px;margin-top:20px;font-size:clamp(1.8rem,4.4vw,3.4rem);font-weight:700;font-variant-numeric:tabular-nums;border-bottom:3px solid #fff}
+.cont dl{margin:0;display:grid;gap:18px;align-content:end}
+.cont dt{font-size:12px;font-weight:600;color:#a3a3a3;margin-bottom:4px}
+.cont dd{margin:0;font-size:17px;font-weight:600;line-height:1.35}
+.legal{padding:14px 4px 4px;font-size:12px;line-height:1.5;color:#52525b}
+.legal b{display:block;margin-bottom:6px;color:#000;font-size:13px}
+.legal a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px;margin-right:18px}
+
+@media(max-width:767px){
+ .hero .t2,.hero h1{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+ .g2 .c0::after,.g2 .c1::after,.g2 .c2::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.04) 45%,rgba(0,0,0,.45))}
+ .g2 .c2 h2{color:#fff}
+ .card.b{flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:18px}
+ .card.b h3{max-width:none}
+ .g2 h2,.g2 .sub,.g2 .c1 p{text-shadow:0 1px 12px rgba(0,0,0,.35)}
+}
+@media(min-width:768px){
+ .sec{gap:8px;padding:8px 20px}
+ .nav{padding:12px 24px}
+ .logo{font-size:26px}.logo small{font-size:9px;margin-top:8px}
+ .burger{display:none}.nav-r{display:flex}
+ #top{padding-top:96px;height:100vh;min-height:640px}
+ .bar{min-height:80px;font-size:30px}
+ .hero .t1{top:28px;left:28px;max-width:300px;font-size:14px;line-height:20px}
+ .hero .t2{bottom:40px;left:16px}.hero .t2 span{font-size:14px;margin-bottom:8px}
+ .hero .t3{right:32px;bottom:40px;font-size:14px}
+ #smile{height:100vh;min-height:640px}
+ .g2{flex:1;min-height:0;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr .8fr;gap:8px;grid-template-areas:"a b" "c b" "d d"}
+ .g2 .c0{grid-area:a}.g2 .c1{grid-area:b}.g2 .c2{grid-area:c}.g2 .c3{grid-area:d}
+ .g2 .mc{min-height:0;border-radius:16px}
+ .g2 h2{top:24px;left:28px;font-size:30px;color:#000}
+ .g2 .sub{bottom:24px;left:28px;font-size:14px;color:#000}
+ .g2 .c1 p{left:28px;bottom:80px;font-size:14px;line-height:20px}
+ .cta{right:24px;bottom:24px;min-height:64px;padding:0 32px;font-size:20px}
+ .g2 .c2 h2{color:#000}
+ .svc{gap:8px;padding:12px;flex-wrap:nowrap}
+ .svc a{flex:1;padding:20px;border-radius:16px}
+ .svc h3{font-size:34px}
+ .svc .n{width:48px;height:48px;font-size:14px}
+ #impl{height:100vh;min-height:640px}
+ .g3{flex:1;min-height:0;grid-template-columns:1fr 1fr;gap:8px}
+ .col{gap:8px}
+ .card{padding:28px;border-radius:16px;min-height:0}
+ .card p.s,.card.b .l{font-size:14px}
+ .card.b h3{font-size:30px;line-height:32px}
+ .imgs{gap:8px;min-height:0}.imgs div{border-radius:16px}
+ .patient{border-radius:16px;min-height:0}
+ .patient .ov{left:20px;right:20px;bottom:20px;gap:8px}
+ .ov a{height:208px;padding:20px;border-radius:16px}
+ .ov h4{font-size:24px;line-height:28px}
+ .ar{width:48px;height:48px}
+ .cont{padding:44px 40px;grid-template-columns:1.2fr .8fr;border-radius:16px}
+ .legal{padding:18px 8px 6px;font-size:13px}
+}
+@media(max-width:360px){.bar{font-size:16px}.svc h3{font-size:17px}.logo{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.js .rev{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+ <a class="logo" href="#top" aria-label="Эмаль, стоматология, на главную">Эмаль<small>стоматологическая клиника</small></a>
+ <div class="nav-r">
+  <a class="pill" href="#services">Услуги</a>
+  <a class="nav-tel" href="tel:+79000002600">Срочная помощь: +7&nbsp;(900)&nbsp;000-26-00</a>
+ </div>
+ <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+ <div class="bd" id="bd"></div>
+ <div class="panel">
+  <button class="x" id="close" aria-label="Закрыть меню">×</button>
+  <nav aria-label="Разделы">
+   <a href="#top" style="transition-delay:.1s">Главная</a>
+   <a href="#services" style="transition-delay:.16s">Услуги</a>
+   <a href="#smile" style="transition-delay:.22s">Галерея</a>
+   <a href="#impl" style="transition-delay:.28s">Имплантация</a>
+   <a href="#contacts" style="transition-delay:.34s">Контакты</a>
+  </nav>
+  <div class="foot">
+   <p>Срочная помощь: +7&nbsp;(900)&nbsp;000-26-00</p>
+   <a class="btn-black" href="tel:+79000002600">Записаться на приём</a>
+  </div>
+ </div>
+</div>
+
+<main>
+ <!-- 1 -->
+ <section class="sec" id="top">
+  <div class="mc bar rev" style="--i:0" data-mask="s1">Лечение и протезирование</div>
+  <div class="mc bar rev" style="--i:1" data-mask="s1">Современное оборудование</div>
+  <div class="mc bar rev" style="--i:2" data-mask="s1">Понятный план лечения</div>
+  <div class="mc hero rev" style="--i:3" data-mask="s1">
+   <p class="t1">Сначала осмотр и план лечения,<br>потом согласованная цена</p>
+   <div class="t2"><span>Стоматологическая клиника в Ярославле</span><h1>Здоровые<br>зубы</h1></div>
+   <p class="t3">Запись на осмотр по телефону</p>
+  </div>
+ </section>
+
+ <!-- 2 -->
+ <section class="sec" id="smile">
+  <div class="g2" id="services">
+   <div class="mc c0 rev" style="--i:0" data-mask="s2"><h2>Галерея улыбок</h2><p class="sub">Эстетическая стоматология</p></div>
+   <div class="mc c1 rev" style="--i:1" data-mask="s2">
+    <p>Хотите красивую улыбку?<br>Запишитесь на консультацию.</p>
+    <a class="cta" href="tel:+79000002600">Позвонить</a>
+   </div>
+   <div class="mc c2 rev" style="--i:2" data-mask="s2"><h2>Новая<br>улыбка</h2></div>
+   <div class="mc c3 rev" style="--i:3" data-mask="s2">
+    <div class="svc">
+     <a class="on" href="#contacts"><h3>Виниры</h3><span class="n">01</span></a>
+     <a href="#contacts"><h3>Коронки</h3><span class="n">02</span></a>
+     <a href="#contacts"><h3>Отбеливание</h3><span class="n">03</span></a>
+     <a href="#contacts"><h3>Импланты</h3></a>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 3 -->
+ <section class="sec" id="impl">
+  <div class="g3">
+   <div class="col">
+    <div class="card a rev" style="--i:0"><h2>Имплантация<br>зубов</h2><p class="s">Восстановим утраченные зубы</p></div>
+    <div class="imgs rev" style="--i:1">
+     <div><img src="/assets/portfolio/emal/implant-1.webp" alt="Модель зубной коронки и основания импланта" width="1280" height="1280" loading="lazy" decoding="async"></div>
+     <div><img src="/assets/portfolio/emal/implant-2.webp" alt="Схема установки импланта в десну" width="1280" height="1280" loading="lazy" decoding="async"></div>
+    </div>
+    <div class="card b rev" style="--i:2">
+     <div><p class="l">Консультация</p><h3>Протезирование и восстановление зубов</h3></div>
+     <a class="cta" href="tel:+79000002600">Записаться</a>
+    </div>
+   </div>
+   <div class="patient rev" style="--i:3">
+    <img src="/assets/portfolio/emal/patient.webp" alt="Улыбающаяся пациентка" width="1280" height="1928" loading="lazy" decoding="async">
+    <div class="ov">
+     <a class="w" href="#contacts"><h4>Как проходит<br>имплантация</h4><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+     <a class="g" href="#contacts"><h4>Уход<br>за имплантами</h4><span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <!-- контакты -->
+ <section class="sec" id="contacts">
+  <div class="cont rev" style="--i:0">
+   <div>
+    <h2>Запишитесь<br>на осмотр</h2>
+    <a class="tel" href="tel:+79000002600">+7&nbsp;(900)&nbsp;000-26-00</a>
+   </div>
+   <dl>
+    <div><dt>Адрес</dt><dd>Ярославль, ул.&nbsp;Свободы, 1</dd></div>
+    <div><dt>Часы работы</dt><dd>Понедельник&ndash;суббота, 9:00&ndash;20:00</dd></div>
+    <div><dt>Срочная помощь</dt><dd>Звоните в рабочие часы, подберём ближайшее время</dd></div>
+   </dl>
+  </div>
+ </section>
+</main>
+
+<footer class="sec" style="padding-top:0">
+ <div class="legal">
+  <b>Имеются противопоказания. Необходима консультация специалиста.</b>
+  © 2026 Эмаль, Ярославль<br>
+  <a href="/portfolio/emal/privacy/">Политика конфиденциальности</a><a href="https://www.studio-sait.ru/">Сайт сделан студией «Стожар»</a>
+ </div>
+</footer>
+
+<script>
+(function(){
+ var root=document.documentElement,body=document.body;
+ var burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
+ function setMenu(o){body.classList.toggle('menu-open',o);burger.setAttribute('aria-expanded',o);drawer.setAttribute('aria-hidden',!o);body.style.overflow=o?'hidden':''}
+ burger.addEventListener('click',function(){setMenu(!body.classList.contains('menu-open'))});
+ document.getElementById('bd').addEventListener('click',function(){setMenu(false)});
+ document.getElementById('close').addEventListener('click',function(){setMenu(false)});
+ drawer.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+ addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false)});
+
+ /* карточки, из которых складывается одна большая фотография */
+ var SRC={s1:'/assets/portfolio/emal/hero.webp',s2:'/assets/portfolio/emal/smile.webp'};
+ var FOCAL={s1:function(m){return m?.7:.8},s2:function(m){return m?.65:.8}};
+ function offs(el,sec){var x=0,y=0;while(el&&el!==sec){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent}return[x,y]}
+ function setup(key,sec){
+  var cards=[].slice.call(sec.querySelectorAll('[data-mask="'+key+'"]'));
+  var im=new Image();
+  function apply(){
+   if(!im.naturalWidth)return;
+   var sw=sec.clientWidth,sh=sec.clientHeight,m=sw<768;
+   var iw=im.naturalWidth*(sh/im.naturalHeight),over=iw>sw?iw-sw:0,fo=over*FOCAL[key](m);
+   cards.forEach(function(c){var o=offs(c,sec);
+    c.style.backgroundImage='url('+SRC[key]+')';
+    c.style.backgroundSize='auto '+sh+'px';
+    c.style.backgroundPosition=(-(o[0]+fo))+'px '+(-o[1])+'px'});
+  }
+  im.onload=apply;im.src=SRC[key];
+  if('ResizeObserver' in window)new ResizeObserver(apply).observe(sec);else addEventListener('resize',apply);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(apply);
+ }
+ setup('s1',document.getElementById('top'));
+ setup('s2',document.getElementById('smile'));
+
+ /* появление блоков */
+ var els=[].slice.call(document.querySelectorAll('.rev'));
+ if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});}
+ else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})}
+
+ /* длинные слова в заголовках не должны вылезать за экран */
+ function fit(){document.querySelectorAll('h1,.card h2,.cont h2').forEach(function(h){h.style.fontSize='';var s=parseFloat(getComputedStyle(h).fontSize),i=0;while(h.scrollWidth>h.clientWidth+1&&s>20&&i<60){s-=1;h.style.fontSize=s+'px';i++}})}
+ fit();if(document.fonts)document.fonts.ready.then(fit);addEventListener('resize',fit);
+})();
+</script>
+</body>
+</html>
