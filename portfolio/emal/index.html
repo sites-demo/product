@@ -529,7 +529,7 @@ select.in-x{appearance:none;-webkit-appearance:none;background:#fff url("data:im
 
  /* мозаика: карточки показывают разные окна одной фотографии */
  var SRC={s1:'/assets/portfolio/emal/hero.webp',s2:'/assets/portfolio/emal/smile.webp'};
- var FOCAL={s1:function(m){return m?.7:.8},s2:function(m){return m?.65:.8}};
+ var FOCAL={s1:function(m){return m?.8:.8},s2:function(m){return m?.65:.8}};
  function offs(el,sec){var x=0,y=0;while(el&&el!==sec){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent}return[x,y]}
  function setup(key,sec){
   var cards=[].slice.call(sec.querySelectorAll('[data-mask="'+key+'"]')),im=new Image(),raf=0;
