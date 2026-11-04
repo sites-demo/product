@@ -321,6 +321,11 @@ html:not(.js) #pm{display:none}
 .calc>*,.breed>*,.opts,.opt{min-width:0}.opt .on{overflow-wrap:anywhere}
 .chip{max-width:100%;white-space:normal;text-align:left;line-height:1.2;padding-block:8px}
 @media(max-width:899px){.calc,.breed{grid-template-columns:minmax(0,1fr)}}
+
+.req{display:grid;gap:24px}@media(min-width:900px){.req{grid-template-columns:1fr 1.2fr;align-items:center}}
+.req-box{padding:24px;border-radius:20px;background:var(--bg2);border:1px solid var(--line);display:grid;gap:18px}
+.req-box .chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--accInk)}
+.req-box .btn{justify-content:center}
 </style>
 <script>document.documentElement.classList.add('js')</script></head><body>
 <header class="hero hero-split"><nav class="topnav wrap" aria-label="Разделы"><span class="logo">Автодримстайл</span><span class="links"><a href="#mod">Услуги</a><a href="#reviews">Отзывы</a><a href="#gallery">Фото</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></span><a class="tphone" href="tel:+79652301559">+7 965 230-15-59</a></nav><div class="kb" aria-hidden="true"><video class="hv" autoplay muted loop playsinline preload="auto" poster="https://images.pexels.com/videos/4822550/pexels-photo-4822550.jpeg?auto=compress&w=1280" src="https://videos.pexels.com/video-files/4822550/4822550-hd_1280_720_30fps.mp4"></video></div>
@@ -400,6 +405,8 @@ if(window.GLASS){var gb=$('#gbtn'),sel=function(k){var g=GLASS[k];if(!g||!g[1])r
 // dent
 var df=$('#df');if(df){df.addEventListener('change',function(){var f=Array.prototype.slice.call(df.files||[]),txt='Здравствуйте. Хочу узнать цену удаления вмятины, фото прикладываю.',l=$('#dlink');
  if(f.length&&navigator.canShare&&navigator.canShare({files:f})){navigator.share({files:f,text:txt}).catch(function(){})}else{$('#dnote').hidden=false;location.href=l.href}})}
+// request
+var rb=$('#rbtn');if(rb){var rs=function(c){$$('.req-box .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});if(rb.dataset.wa==='1')rb.href=rb.dataset.base+'?text='+encodeURIComponent('Здравствуйте. Хочу заказать: '+c.dataset.n.toLowerCase()+'.')};$$('.req-box .chip').forEach(function(c){c.onclick=function(){rs(c)}});var f0=$('.req-box .chip');if(f0)rs(f0)}
 // lightbox
 var lb=$('#lb');if(lb&&lb.showModal){var gs=$$('.bento .gi'),li=0,lim=$('img',lb);var show=function(k){li=(k+gs.length)%gs.length;lim.src=gs[li].dataset.full};
 gs.forEach(function(g,k){g.addEventListener('click',function(){show(k);lb.showModal()})});
