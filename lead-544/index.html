@@ -67,9 +67,9 @@ h2{font-size:clamp(28px,5.2vw,52px)}
 @media(min-width:900px){.hero-split{grid-template-columns:1fr 1.05fr;min-height:min(100svh,860px)}
 .hero-split .kb{order:2;height:auto}.hero-split .hero-in{order:1;align-self:center;width:auto;margin:0;padding:64px 48px 64px max(20px,calc((100vw - 1180px)/2))}}
 
-.hero-band{background:var(--bg);color:var(--ink);padding-top:28px}
+.hero-band{background:var(--bg);color:var(--ink);padding-top:28px;display:flex;flex-direction:column}.hero-band .kb{order:2;width:100%}
 .hero-band .hero-in{padding-bottom:28px}
-.hero-band h1{font-size:clamp(50px,13vw,200px);line-height:.9}
+.hero-band h1{font-size:clamp(54px,15vw,200px);line-height:.9}
 .hero-band .kb{height:56svh;min-height:300px;margin-top:8px}
 .hero-band .chip-r{background:var(--bg2);border-color:var(--line)}
 .hero-band .btn-line{color:var(--ink)}
@@ -162,9 +162,10 @@ output{display:block;font:var(--hw) clamp(44px,8vw,84px)/1 var(--fh);letter-spac
 .car{width:100%;height:auto;overflow:visible}
 .car .body{fill:var(--bg2);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
 .light .car .body{fill:#fff}
-.car .glass{fill:#0b0d10;opacity:var(--t,.6);stroke:var(--ink);stroke-width:2;transition:opacity .45s ease}
+.car .gbase{fill:url(#sky)}.car .streak{fill:#fff;opacity:.55}
+.car .glass{fill:#07080a;opacity:var(--t,.6);stroke:var(--ink);stroke-width:2;transition:opacity .45s ease}
 .car .glass.g-front{fill-opacity:1}
-.car .wheel{fill:var(--ink)}.car .hub{fill:var(--bg2)}
+.car .wheel{fill:#0d0e10;stroke:var(--ink);stroke-width:2.5}.car .hub{fill:var(--mute)}
 .tint-val{display:flex;align-items:baseline;gap:10px;margin-top:8px}
 .tint-val b{font:var(--hw) clamp(56px,10vw,104px)/1 var(--fh);color:var(--acc);letter-spacing:-.04em}
 .light .tint-val b{color:var(--ink)}
@@ -224,17 +225,19 @@ input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 /* dent */
 .dent-grid{display:grid;gap:28px}
 @media(min-width:900px){.dent-grid{grid-template-columns:1.2fr 1fr;align-items:center}}
-.zebra{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#3a3d42,#14161a);aspect-ratio:400/260}
-.zebra svg{width:100%;height:100%}
+.zebra svg{width:100%;height:auto;aspect-ratio:400/260;border-radius:16px;background:linear-gradient(160deg,#3a3d42,#14161a);display:block}
 .zl{fill:none;stroke:#f4f4f2;stroke-width:9;stroke-linecap:round}
 .zebra .bent{animation:bent 6s ease-in-out infinite}.zebra .flat{animation:flat 6s ease-in-out infinite}
 @keyframes bent{0%,35%{opacity:1}55%,90%{opacity:0}100%{opacity:1}}
 @keyframes flat{0%,35%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
-.zcap{position:absolute;left:12px;right:12px;bottom:10px;font-size:13px;color:#fff;background:rgba(0,0,0,.55);padding:8px 10px;border-radius:8px}
+.zcap{display:block;font-size:13px;color:var(--mute);margin-top:10px}
 .steps{margin:0 0 22px;padding-left:22px}.steps li{margin:8px 0}
 .file{position:relative;overflow:hidden}.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.kb img:not(.on){display:none}.js .rv{opacity:1;transform:none}.js .rv h2{clip-path:none}}
+
+.breed-out,.sum{position:sticky;top:10px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+@media(max-width:899px){.breed-out,.sum{order:-1;padding:16px 18px}.breed-out output,.sum output{font-size:44px}.breed-out .note,.sum .note{display:none}.breed-out .btn,.sum .btn{margin-top:10px;min-height:48px}.topcar{width:min(100%,250px)}}
 </style>
 <script>document.documentElement.classList.add('js')</script></head><body>
 <div class="demo-bar"><span>Пример сайта для «Glass Point» от студии «Стожар». Данные и фото из вашей карточки на Яндекс Картах, кнопки ведут на ваши настоящие контакты.</span></div>
@@ -296,7 +299,7 @@ var tr=$('#tr');if(tr){var V=[70,50,35,15,5],O=[.18,.38,.56,.8,.94],car=$('.car'
 // calc
 var ct=$('#ct');if(ct){var cb=$('#cbtn'),bx=$$('.opt input');var cu=function(){var s=0,n=[];bx.forEach(function(b){if(b.checked){s+=+b.value;n.push(b.dataset.n)}});ct.textContent=rub(s);
  if(cb.dataset.wa==='1')cb.href=cb.dataset.base+'?text='+encodeURIComponent('Здравствуйте. Хочу записаться: '+(n.join(', ')||'нужна консультация')+'.')};bx.forEach(function(b){b.addEventListener('change',cu)});
- if(bx[0]){bx[0].checked=true;if(bx[2])bx[2].checked=true}cu()}
+ if(bx[0]){bx[0].checked=true}cu()}
 // breed
 var bp=$('#bp');if(bp){var bb=$('#bbtn');$$('.mod-breed .chip').forEach(function(c){c.onclick=function(){$$('.mod-breed .chip').forEach(function(x){x.setAttribute('aria-pressed','false')});c.setAttribute('aria-pressed','true');
  $('#bn').textContent=c.dataset.n;bp.textContent=rub(c.dataset.p);bb.href=bb.dataset.base+'?text='+encodeURIComponent('Здравствуйте. Хочу записаться на груминг: '+c.dataset.n+'.')}})}

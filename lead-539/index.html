@@ -67,9 +67,9 @@ h2{font-size:clamp(28px,5.2vw,52px)}
 @media(min-width:900px){.hero-split{grid-template-columns:1fr 1.05fr;min-height:min(100svh,860px)}
 .hero-split .kb{order:2;height:auto}.hero-split .hero-in{order:1;align-self:center;width:auto;margin:0;padding:64px 48px 64px max(20px,calc((100vw - 1180px)/2))}}
 
-.hero-band{background:var(--bg);color:var(--ink);padding-top:28px}
+.hero-band{background:var(--bg);color:var(--ink);padding-top:28px;display:flex;flex-direction:column}.hero-band .kb{order:2;width:100%}
 .hero-band .hero-in{padding-bottom:28px}
-.hero-band h1{font-size:clamp(50px,13vw,200px);line-height:.9}
+.hero-band h1{font-size:clamp(54px,15vw,200px);line-height:.9}
 .hero-band .kb{height:56svh;min-height:300px;margin-top:8px}
 .hero-band .chip-r{background:var(--bg2);border-color:var(--line)}
 .hero-band .btn-line{color:var(--ink)}
@@ -162,9 +162,10 @@ output{display:block;font:var(--hw) clamp(44px,8vw,84px)/1 var(--fh);letter-spac
 .car{width:100%;height:auto;overflow:visible}
 .car .body{fill:var(--bg2);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
 .light .car .body{fill:#fff}
-.car .glass{fill:#0b0d10;opacity:var(--t,.6);stroke:var(--ink);stroke-width:2;transition:opacity .45s ease}
+.car .gbase{fill:url(#sky)}.car .streak{fill:#fff;opacity:.55}
+.car .glass{fill:#07080a;opacity:var(--t,.6);stroke:var(--ink);stroke-width:2;transition:opacity .45s ease}
 .car .glass.g-front{fill-opacity:1}
-.car .wheel{fill:var(--ink)}.car .hub{fill:var(--bg2)}
+.car .wheel{fill:#0d0e10;stroke:var(--ink);stroke-width:2.5}.car .hub{fill:var(--mute)}
 .tint-val{display:flex;align-items:baseline;gap:10px;margin-top:8px}
 .tint-val b{font:var(--hw) clamp(56px,10vw,104px)/1 var(--fh);color:var(--acc);letter-spacing:-.04em}
 .light .tint-val b{color:var(--ink)}
@@ -224,17 +225,19 @@ input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 /* dent */
 .dent-grid{display:grid;gap:28px}
 @media(min-width:900px){.dent-grid{grid-template-columns:1.2fr 1fr;align-items:center}}
-.zebra{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#3a3d42,#14161a);aspect-ratio:400/260}
-.zebra svg{width:100%;height:100%}
+.zebra svg{width:100%;height:auto;aspect-ratio:400/260;border-radius:16px;background:linear-gradient(160deg,#3a3d42,#14161a);display:block}
 .zl{fill:none;stroke:#f4f4f2;stroke-width:9;stroke-linecap:round}
 .zebra .bent{animation:bent 6s ease-in-out infinite}.zebra .flat{animation:flat 6s ease-in-out infinite}
 @keyframes bent{0%,35%{opacity:1}55%,90%{opacity:0}100%{opacity:1}}
 @keyframes flat{0%,35%{opacity:0}55%,90%{opacity:1}100%{opacity:0}}
-.zcap{position:absolute;left:12px;right:12px;bottom:10px;font-size:13px;color:#fff;background:rgba(0,0,0,.55);padding:8px 10px;border-radius:8px}
+.zcap{display:block;font-size:13px;color:var(--mute);margin-top:10px}
 .steps{margin:0 0 22px;padding-left:22px}.steps li{margin:8px 0}
 .file{position:relative;overflow:hidden}.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.kb img:not(.on){display:none}.js .rv{opacity:1;transform:none}.js .rv h2{clip-path:none}}
+
+.breed-out,.sum{position:sticky;top:10px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+@media(max-width:899px){.breed-out,.sum{order:-1;padding:16px 18px}.breed-out output,.sum output{font-size:44px}.breed-out .note,.sum .note{display:none}.breed-out .btn,.sum .btn{margin-top:10px;min-height:48px}.topcar{width:min(100%,250px)}}
 </style>
 <script>document.documentElement.classList.add('js')</script></head><body>
 <div class="demo-bar"><span>Пример сайта для «БункерХ» от студии «Стожар». Данные и фото из вашей карточки на Яндекс Картах, кнопки ведут на ваши настоящие контакты.</span></div>
@@ -246,6 +249,9 @@ input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 <div class="tint-grid"><div class="tint-stage">
 <svg class="car" viewBox="0 0 640 230" role="img" aria-label="Машина сбоку, стёкла меняют затемнение">
 <path class="body" d="M28 168c-6-24 6-40 34-46l70-12 62-44c14-10 30-15 48-15h150c20 0 38 7 52 20l46 42 72 10c34 5 50 22 50 47v10c0 8-6 14-14 14h-36a46 46 0 0 0-90 0H182a46 46 0 0 0-90 0H44c-9 0-15-6-16-14z"/>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9f1f5"/><stop offset=".55" stop-color="#b7c6cf"/><stop offset="1" stop-color="#8fa2ad"/></linearGradient></defs>
+<path class="gbase" d="M318 64h76c13 0 24 5 33 14l36 34H318z"/><path class="gbase" d="M300 64h-56c-12 0-24 4-34 11l-48 37h138z"/>
+<path class="streak" d="M352 70l-26 38h14l26-38z"/><path class="streak" d="M262 70l-30 38h12l30-38z"/>
 <path class="glass g-front" d="M318 64h76c13 0 24 5 33 14l36 34H318z"/>
 <path class="glass g-rear" d="M300 64h-56c-12 0-24 4-34 11l-48 37h138z"/>
 <circle class="wheel" cx="137" cy="182" r="34"/><circle class="wheel" cx="497" cy="182" r="34"/>
@@ -255,7 +261,7 @@ input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
 <input id="tr" type="range" min="0" max="4" step="1" value="2" aria-describedby="tlaw">
 <div class="ticks"><span>70%</span><span>50%</span><span>35%</span><span>15%</span><span>5%</span></div>
 <p id="tlaw" class="law">Лобовое и передние боковые по закону не темнее 70%. Задние стёкла можно затонировать сильнее.</p>
-<ul class="mini"><li><span>Тонировка передних стёкол</span><b>2 500 ₽</b></li><li><span>Тонировка задних стёкол</span><b>4 500 ₽</b></li><li><span>Атермальная тонировка передних</span><b>4 000 ₽</b></li><li><span>Атермальная тонировка лобового</span><b>6 500 ₽</b></li><li><span>Бронирование фар</span><b>5 000 ₽</b></li></ul><p class="note">Цены из карточки на Яндекс Картах</p></div></div></div></section><section class="sec prices rv"><div class="wrap"><div class="sec-h"><span class="eyebrow">Прайс</span><h2>Цены</h2></div>
+<p class="tint-ask">Тонировка от 2 500 ₽, все цены ниже. Подберём плёнку под вашу машину.</p><a class="btn btn-acc" href="https://wa.me/79268282882?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5.%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D1%82%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D1%83.%20%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%B0%3A%20" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 2a7 7 0 1 1-3.6 13l-.3-.2-2.3.6.6-2.2-.2-.4A7 7 0 0 1 12 5z"/></svg><span>Записаться в WhatsApp</span></a></div></div></div></section><section class="sec prices rv"><div class="wrap"><div class="sec-h"><span class="eyebrow">Прайс</span><h2>Цены</h2></div>
 <ul class="plist"><li><span>Тонировка передних стёкол</span><i></i><b>2 500 ₽</b></li><li><span>Тонировка задних стёкол</span><i></i><b>4 500 ₽</b></li><li><span>Атермальная тонировка передних</span><i></i><b>4 000 ₽</b></li><li><span>Атермальная тонировка лобового</span><i></i><b>6 500 ₽</b></li><li><span>Бронирование фар</span><i></i><b>5 000 ₽</b></li><li><span>Тонировка задних фонарей</span><i></i><b>2 500 ₽</b></li></ul><p class="note">Цены из карточки компании на Яндекс Картах.</p></div></section><section class="sec trust rv"><div class="wrap trust-grid">
 <div class="score"><div class="big">5,0</div><div class="stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg></div><p>618 оценок на Яндекс Картах</p></div>
 <div><div class="sec-h"><span class="eyebrow">Что пишут клиенты</span><h2>Положительные упоминания в отзывах</h2></div>
@@ -297,7 +303,7 @@ var tr=$('#tr');if(tr){var V=[70,50,35,15,5],O=[.18,.38,.56,.8,.94],car=$('.car'
 // calc
 var ct=$('#ct');if(ct){var cb=$('#cbtn'),bx=$$('.opt input');var cu=function(){var s=0,n=[];bx.forEach(function(b){if(b.checked){s+=+b.value;n.push(b.dataset.n)}});ct.textContent=rub(s);
  if(cb.dataset.wa==='1')cb.href=cb.dataset.base+'?text='+encodeURIComponent('Здравствуйте. Хочу записаться: '+(n.join(', ')||'нужна консультация')+'.')};bx.forEach(function(b){b.addEventListener('change',cu)});
- if(bx[0]){bx[0].checked=true;if(bx[2])bx[2].checked=true}cu()}
+ if(bx[0]){bx[0].checked=true}cu()}
 // breed
 var bp=$('#bp');if(bp){var bb=$('#bbtn');$$('.mod-breed .chip').forEach(function(c){c.onclick=function(){$$('.mod-breed .chip').forEach(function(x){x.setAttribute('aria-pressed','false')});c.setAttribute('aria-pressed','true');
  $('#bn').textContent=c.dataset.n;bp.textContent=rub(c.dataset.p);bb.href=bb.dataset.base+'?text='+encodeURIComponent('Здравствуйте. Хочу записаться на груминг: '+c.dataset.n+'.')}})}
