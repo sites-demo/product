@@ -74,8 +74,8 @@ h2{font-size:clamp(28px,5.2vw,52px)}
 .hero-band .kb{height:56svh;min-height:300px;margin-top:8px}
 .hero-band .chip-r{background:var(--bg2);border-color:var(--line)}
 .hero-band .btn-line{color:var(--ink)}
-@media(min-width:900px){.hero-band .hero-in{display:grid;grid-template-columns:1.3fr 1fr;column-gap:48px}
-.hero-band .kicker,.hero-band h1{grid-column:1/-1}.hero-band .tag{margin-top:24px}.hero-band .chips-r,.hero-band .hbtns{grid-column:2}.hero-band .lead{grid-column:1}}
+@media(min-width:900px){.hero-band{padding-top:0}.hero-band .hero-in{display:grid;grid-template-columns:1.25fr 1fr;grid-template-areas:"k k" "h h" "t c" "l b";column-gap:56px;padding-top:40px;align-items:end}
+.hero-band .kicker{grid-area:k}.hero-band h1{grid-area:h}.hero-band .tag{grid-area:t;margin-top:24px}.hero-band .lead{grid-area:l;align-self:start}.hero-band .chips-r{grid-area:c;justify-self:end;margin:0}.hero-band .hbtns{grid-area:b;justify-self:end;align-self:start}}
 
 .marq{overflow:hidden;white-space:nowrap;border-block:1px solid var(--line);background:var(--bg2);color:var(--mute);font:500 15px/1 var(--fb);padding:15px 0}
 .marq div{display:inline-block;animation:mq 60s linear infinite;padding-left:20px}
@@ -333,7 +333,7 @@ html:not(.js) #pm{display:none}
 </style>
 <script>document.documentElement.classList.add('js')</script></head><body>
 <header class="hero hero-split"><nav class="topnav wrap" aria-label="Разделы"><span class="logo">У Альберта</span><span class="links"><a href="#mod">Услуги</a><a href="#reviews">Отзывы</a><a href="#gallery">Фото</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></span><a class="tphone" href="tel:+79918536299">+7 991 853-62-99</a></nav><div class="kb" aria-hidden="true"><video class="hv" autoplay muted loop playsinline preload="auto" poster="https://images.pexels.com/videos/6157985/pexels-photo-6157985.jpeg?auto=compress&w=1280" src="https://videos.pexels.com/video-files/6157985/6157985-sd_960_540_30fps.mp4"></video></div>
-<div class="hero-in wrap"><p class="kicker">Магнитогорск · Челябинская область</p><h1>У Альберта</h1><p class="tag">Тонировка автостёкол</p>
+<div class="hero-in wrap"><p class="kicker">Магнитогорск · Советская улица</p><h1>У Альберта</h1><p class="tag">Тонировка автостёкол</p>
 <p class="lead">Тонировка стёкол, атермальная плёнка, тонировка фар и фонарей. Пн-пт 09:00–18:00.</p><div class="chips-r"><span class="chip-r"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></svg><b>4,7</b> · 196 оценок на Картах</span></div><div class="hbtns"><a class="btn btn-acc " href="tel:+79918536299"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg><span>Позвонить</span></a><a class="btn btn-line " href="https://wa.me/79080874484" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 2a7 7 0 1 1-3.6 13l-.3-.2-2.3.6.6-2.2-.2-.4A7 7 0 0 1 12 5z"/></svg><span>Написать в WhatsApp</span></a></div></div></header>
 <main><section class="sec mod-tint rv" id="mod"><div class="wrap">
 <div class="sec-h"><span class="eyebrow">Подбор плёнки</span><h2>Подберите, насколько темно</h2></div>
