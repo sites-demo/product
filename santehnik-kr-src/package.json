@@ -1,0 +1,32 @@
+{
+  "name": "santehnik-kr",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "place": "node scripts/place.mjs",
+    "preview": "vite preview --port 4173 --strictPort",
+    "shots": "node scripts/shots.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "0.180.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "playwright": "1.65.0",
+    "sharp": "0.35.5",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  }
+}
