@@ -1,0 +1,24 @@
+{
+  "name": "moving-town",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "tsc --noEmit",
+    "build": "npm run check && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@types/three": "0.180.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.7"
+  }
+}
