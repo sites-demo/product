@@ -54,7 +54,6 @@ export function Frost() {
     <section className="frost" id="pogoda" aria-labelledby="frost-h">
       <div className="wrap frost-grid">
         <div>
-          <p className="eyebrow eyebrow-light">Едете впервые</p>
           <h2 id="frost-h">Что надеть в Якутске</h2>
           <p className="lead lead-light">
             Передвиньте термометр, и мы подскажем, как одеться и что учесть. {live !== null && <>Сейчас в городе {fmtT(live)}.</>}
@@ -99,10 +98,7 @@ export function Frost() {
             <h3>Что надеть</h3>
             <ul>
               {b.wear.map((w) => (
-                <li key={w}>
-                  <Icon name="check" />
-                  {w}
-                </li>
+                <li key={w}>{w}</li>
               ))}
             </ul>
           </div>
@@ -110,10 +106,7 @@ export function Frost() {
             <h3>Что учесть</h3>
             <ul>
               {b.tips.map((w) => (
-                <li key={w}>
-                  <Icon name="snow" />
-                  {w}
-                </li>
+                <li key={w}>{w}</li>
               ))}
             </ul>
           </div>

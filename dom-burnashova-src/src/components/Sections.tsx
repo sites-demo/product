@@ -46,10 +46,7 @@ export function Gallery() {
     <section className="gal" id="foto" aria-labelledby="gal-h">
       <div className="wrap">
         <div className="sec-head gal-head">
-          <div>
-            <p className="eyebrow">Фото хозяев</p>
-            <h2 id="gal-h">Как выглядит дом</h2>
-          </div>
+          <h2 id="gal-h">Как выглядит дом</h2>
           <div className="tabs" role="tablist" aria-label="Что показать">
             {GALLERY.map((x) => (
               <button key={x.id} type="button" role="tab" aria-selected={tab === x.id} className={'chip' + (tab === x.id ? ' chip-on' : '')} onClick={() => setTab(x.id)}>
@@ -88,7 +85,6 @@ export function NewYear() {
     <section className="ny" aria-labelledby="ny-h">
       <div className="wrap ny-grid">
         <div className="ny-txt">
-          <p className="eyebrow eyebrow-light">Праздники</p>
           <h2 id="ny-h">Новый год большой компанией</h2>
           <p className="lead lead-light">Ёлка, камин, длинный стол на всю гостиную и гирлянда на доме. Так дом выглядел в прошлые праздники, на фото хозяев. Даты на Новый год лучше занять заранее.</p>
           <button type="button" className="btn btn-amber" onClick={pick}>
@@ -130,10 +126,9 @@ export function Way() {
     <section className="way" id="doroga" aria-labelledby="way-h">
       <div className="wrap way-grid">
         <div>
-          <p className="eyebrow">Как добраться</p>
-          <h2 id="way-h">{ADDRESS[0].toUpperCase() + ADDRESS.slice(1)}</h2>
+          <h2 id="way-h">Как добраться</h2>
           <p className="way-sub">
-            {CITY}, {DISTRICT}. В черте города, при этом гости в отзывах отмечают тишину.
+            <b>{ADDRESS[0].toUpperCase() + ADDRESS.slice(1)}</b>, {CITY}, {DISTRICT}. В черте города, при этом гости в отзывах отмечают тишину.
           </p>
           <ul className="way-list">
             {ROUTES.map((r) => (
@@ -202,15 +197,11 @@ export function Reviews() {
           </a>
         </div>
         <div className="revs-txt">
-          <p className="eyebrow">Отзывы гостей</p>
           <h2 id="revs-h">Что гости пишут о доме</h2>
           <p className="lead">Пересказали своими словами, о чём чаще всего пишут в отзывах. Гости пишут, что многие приезжают повторно. Сами отзывы с именами открыты в карточке 2ГИС.</p>
           <ul className="praise">
             {PRAISE.map((p) => (
-              <li key={p}>
-                <Icon name="check" />
-                {p}
-              </li>
+              <li key={p}>{p}</li>
             ))}
           </ul>
         </div>
@@ -252,7 +243,6 @@ export function Faq() {
     <section className="faq" id="voprosy" aria-labelledby="faq-h">
       <div className="wrap faq-grid">
         <div>
-          <p className="eyebrow">Вопросы</p>
           <h2 id="faq-h">Коротко о главном</h2>
           <p className="lead">Не нашли ответ? Напишите или позвоните, хозяева на связи каждый день {HOURS}.</p>
         </div>

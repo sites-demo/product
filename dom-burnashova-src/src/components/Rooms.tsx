@@ -113,7 +113,6 @@ export function Rooms() {
     <section className="rooms" id="dom" aria-labelledby="rooms-h">
       <div className="wrap">
         <div className="sec-head">
-          <p className="eyebrow">Дом и двор</p>
           <h2 id="rooms-h">Загляните в дом, прежде чем бронировать</h2>
           <p className="lead">Покрутите дом, откройте этаж и нажмите на комнату или место во дворе. Появятся настоящие фото и что там есть.</p>
         </div>
@@ -221,10 +220,7 @@ function ZoneCard({ z }: { z: Zone }) {
       <p className="ztext">{z.text}</p>
       <ul className="zfacts">
         {z.facts.map((f) => (
-          <li key={f}>
-            <Icon name="check" />
-            {f}
-          </li>
+          <li key={f}>{f}</li>
         ))}
       </ul>
       <a className="btn btn-amber btn-wide" href="#bron">

@@ -56,7 +56,6 @@ export function Booking() {
     <section className="booking" id="bron" aria-labelledby="bron-h">
       <div className="wrap">
         <div className="sec-head">
-          <p className="eyebrow">Бронь напрямую</p>
           <h2 id="bron-h">Заявка на дом за минуту</h2>
           <p className="lead">Выберите даты и сколько вас. Текст заявки соберётся сам, останется отправить его хозяевам в WhatsApp или Telegram. Они ответят, свободен ли дом, и назовут цену.</p>
         </div>
@@ -64,14 +63,12 @@ export function Booking() {
         <div className="bk-grid">
           <div className="bk-main">
             <div className="bk-block">
-              <h3 className="bk-t">
-                <span>1</span>Даты
+              <h3 className="bk-t">Даты
               </h3>
               <Calendar checkIn={b.checkIn} checkOut={b.checkOut} onChange={b.setDates} />
             </div>
             <div className="bk-block">
-              <h3 className="bk-t">
-                <span>2</span>Гости
+              <h3 className="bk-t">Гости
               </h3>
               <div className="steps">
                 <Stepper label="Взрослые" hint={b.adults ? undefined : 'Сколько вас?'} value={b.adults} min={0} max={30} onChange={b.setAdults} />
@@ -79,8 +76,7 @@ export function Booking() {
               </div>
             </div>
             <div className="bk-block">
-              <h3 className="bk-t">
-                <span>3</span>Повод и пожелания
+              <h3 className="bk-t">Повод и пожелания
               </h3>
               <div className="pchips" role="group" aria-label="Повод">
                 {PURPOSES.map((p) => (
@@ -101,7 +97,7 @@ export function Booking() {
           </div>
 
           <aside className="bk-sum" id="zayavka" aria-label="Ваша заявка">
-            <p className="eyebrow">Ваша заявка</p>
+            <h3 className="bk-sum-h">Ваша заявка</h3>
             <dl>
               <div>
                 <dt>Заезд</dt>
