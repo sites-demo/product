@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import content from './src/site-content.json'
 
 export default defineConfig({
-  base: '/gorod-pereezdov-4/',
+  base: '/gorod-pereezdov/',
   plugins: [{
     name: 'moving-town-content',
     transformIndexHtml() {

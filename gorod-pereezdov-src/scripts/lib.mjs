@@ -5,7 +5,7 @@ import { extname, join, resolve } from 'node:path'
 import { homedir } from 'node:os'
 import { chromium, webkit } from 'playwright'
 
-export const BASE = '/gorod-pereezdov-4/'
+export const BASE = '/gorod-pereezdov/'
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
