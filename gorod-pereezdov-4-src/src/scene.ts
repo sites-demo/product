@@ -1,15 +1,17 @@
 import * as T from 'three'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { createTruck } from './truckModel'
+import { ROUTE, type RoutePhase } from './route'
 
-export type RoutePhase = 'still' | 'packing' | 'driving' | 'arrived'
+export type { RoutePhase }
 
 export function mountScene(host: HTMLDivElement, {
-  onReady, onPhase, onUnavailable,
+  onReady, onPhase, onUnavailable, onTick,
 }: {
   onReady: () => void
   onPhase: (phase: RoutePhase) => void
   onUnavailable: () => void
+  onTick?: (progress: number) => void
 }) {
   const renderer = new T.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' })
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5))
@@ -170,15 +172,14 @@ export function mountScene(host: HTMLDivElement, {
     return { group, x, z }
   }
 
+  // Где коробки стоят у старого дома и куда их ставим у нового.
   const parcels = [
-    parcel(-5.92, 0.8, 0.58, kraft),
-    parcel(-6.2, 1.47, 0.49, kraftLight),
-    parcel(-5.55, 1.63, 0.39, kraft),
+    { ...parcel(-5.92, 0.8, 0.58, kraft), drop: [-0.72, 0, 1.08], turn: 0.18 },
+    { ...parcel(-6.2, 1.47, 0.49, kraftLight), drop: [-1.48, 0, 0.86], turn: -0.3 },
+    { ...parcel(-5.55, 1.63, 0.39, kraft), drop: [-0.7, 0.522, 1.06], turn: 0.42 },
   ]
 
-  const depart = 1450
-  const arrive = 5200
-  const duration = 5900
+  const { depart, arrive, unloaded, duration } = ROUTE
   const cycle = duration + 500
   const dissolve = 320
   const preference = matchMedia('(prefers-reduced-motion: reduce)')
@@ -191,9 +192,12 @@ export function mountScene(host: HTMLDivElement, {
   let playing = true
   let dissolving = false
   let phase: RoutePhase | undefined
+  // Лёгкий наклон сцены за курсором мыши.
+  const aim = { x: 0, y: 0 }
+  const tilt = { x: 0, y: 0 }
 
   function paint(time: number, still: boolean) {
-    const nextPhase = still ? 'still' : time < depart ? 'packing' : time < arrive ? 'driving' : 'arrived'
+    const nextPhase = still ? 'still' : time < depart ? 'packing' : time < arrive ? 'driving' : 'unloading'
     if (phase !== nextPhase) {
       phase = nextPhase
       onPhase(phase)
@@ -203,20 +207,31 @@ export function mountScene(host: HTMLDivElement, {
     const truckX = startX + distance * travel
     truck.position.set(truckX, 0, truckLane)
     const load = T.MathUtils.smoothstep(time, 1090, depart)
-    doors.forEach(({ hinge, side }) => { hinge.rotation.y = side * 1.4 * (1 - load) })
+    const open = still ? 0 : T.MathUtils.smoothstep(time, arrive + 60, arrive + 520)
+    doors.forEach(({ hinge, side }) => { hinge.rotation.y = side * 1.4 * (1 - load + open) })
     wheels.forEach(wheel => { wheel.rotation.z = -distance * travel / (truckScale * 0.43) })
-    parcels.forEach(({ group, x, z }, index) => {
+    const rear = truckX - 1.91
+    parcels.forEach(({ group, x, z, drop, turn }, index) => {
       const packed = T.MathUtils.smoothstep(time, 190 + index * 148, 820 + index * 118)
-      group.visible = packed < 1
+      const out = still ? 0 : T.MathUtils.smootherstep(time, arrive + 420 + index * 330, arrive + 900 + index * 330)
+      group.visible = packed < 1 || out > 0
+      if (out > 0) {
+        group.position.set(T.MathUtils.lerp(rear, drop[0], out), T.MathUtils.lerp(0.74, drop[1], out) + Math.sin(out * Math.PI) * 0.42,
+          T.MathUtils.lerp(truckLane + 0.15, drop[2], out))
+        group.rotation.y = T.MathUtils.lerp(0.08, turn, out)
+        return
+      }
       group.position.set(T.MathUtils.lerp(x, -4.58, packed), Math.min(0.74, packed * 1.08), T.MathUtils.lerp(z, truckLane + 0.15, packed))
       group.rotation.y = packed * 0.2 - 0.12
     })
     guide.scale.x = 0.055 + travel * 0.945
-    windowGlow.emissiveIntensity = 0.08 + 0.95 * T.MathUtils.smoothstep(time, arrive - 100, duration)
+    windowGlow.emissiveIntensity = 0.08 + 0.95 * T.MathUtils.smoothstep(time, unloaded - 500, duration)
     const follow = still ? 0 : (travel - 0.5) * 0.52
-    camera.position.set(4.55 + follow, 7.1, 12.8)
+    model.rotation.y = tilt.x * 0.075
+    camera.position.set(4.55 + follow, 7.1 - tilt.y * 0.9, 12.8)
     camera.lookAt(follow, 0.84, 0)
     renderer.render(scene, camera)
+    onTick?.(still ? 0 : time / duration)
     if (!ready) {
       ready = true
       onReady()
@@ -225,6 +240,9 @@ export function mountScene(host: HTMLDivElement, {
 
   function render(time: number) {
     frame = 0
+    tilt.x += (aim.x - tilt.x) * 0.08
+    tilt.y += (aim.y - tilt.y) * 0.08
+    const settling = Math.abs(aim.x - tilt.x) + Math.abs(aim.y - tilt.y) > 0.002
     if (preference.matches) {
       paint(3400, true)
       return
@@ -246,7 +264,7 @@ export function mountScene(host: HTMLDivElement, {
       outgoingFrame.style.opacity = String(1 - T.MathUtils.smoothstep(elapsed, 0, dissolve))
       dissolving = elapsed < dissolve
     }
-    if (playing) requestFrame()
+    if (playing || settling) requestFrame()
   }
 
   function requestFrame() {
@@ -282,6 +300,19 @@ export function mountScene(host: HTMLDivElement, {
     requestFrame()
   }
 
+  const stage = host.parentElement ?? host
+  function onPointer(event: PointerEvent) {
+    if (event.pointerType !== 'mouse' || preference.matches) return
+    const rect = stage.getBoundingClientRect()
+    aim.x = T.MathUtils.clamp((event.clientX - rect.left) / rect.width * 2 - 1, -1, 1)
+    aim.y = T.MathUtils.clamp((event.clientY - rect.top) / rect.height * 2 - 1, -1, 1)
+    requestFrame()
+  }
+  function onLeave() {
+    aim.x = aim.y = 0
+    requestFrame()
+  }
+
   function onVisibilityChange() {
     if (document.hidden) suspend()
     else requestFrame()
@@ -305,6 +336,8 @@ export function mountScene(host: HTMLDivElement, {
   document.addEventListener('visibilitychange', onVisibilityChange)
   preference.addEventListener('change', onPreferenceChange)
   canvas.addEventListener('webglcontextlost', contextLost)
+  stage.addEventListener('pointermove', onPointer)
+  stage.addEventListener('pointerleave', onLeave)
   resize()
 
   return {
@@ -313,6 +346,15 @@ export function mountScene(host: HTMLDivElement, {
       suspend()
       if (playing) requestFrame()
     },
+    seek(time: number) {
+      elapsed = T.MathUtils.clamp(time, 0, duration)
+      lastTime = 0
+      dissolving = false
+      outgoingFrame.style.opacity = '0'
+      suspend()
+      if (!preference.matches) paint(elapsed, false)
+      requestFrame()
+    },
     destroy() {
       cancelAnimationFrame(frame)
       resizeObserver.disconnect()
@@ -320,6 +362,8 @@ export function mountScene(host: HTMLDivElement, {
       document.removeEventListener('visibilitychange', onVisibilityChange)
       preference.removeEventListener('change', onPreferenceChange)
       canvas.removeEventListener('webglcontextlost', contextLost)
+      stage.removeEventListener('pointermove', onPointer)
+      stage.removeEventListener('pointerleave', onLeave)
       const geometries = new Set<T.BufferGeometry>()
       const materials = new Set<T.Material>()
       scene.traverse(object => {

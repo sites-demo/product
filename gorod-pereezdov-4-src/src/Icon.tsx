@@ -1,7 +1,4 @@
 const paths: Record<string, React.ReactNode> = {
-  arrow: <path d="M4 12h15m-6-6 6 6-6 6" />,
-  upRight: <path d="M6 18 18 6M7 6h11v11" />,
-  back: <path d="M20 12H5m6 6-6-6 6-6" />,
   pin: <><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></>,
   phone: <path d="M7 3H4a1 1 0 0 0-1 1 17 17 0 0 0 17 17 1 1 0 0 0 1-1v-3l-5-2-1.5 2a13 13 0 0 1-7.5-7.5L9 8 7 3Z" />,
   send: <><path d="m21 3-7.5 18-3.5-7-7-3.5L21 3Z"/><path d="M21 3 10 14"/></>,

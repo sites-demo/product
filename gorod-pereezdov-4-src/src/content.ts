@@ -36,16 +36,20 @@ function readContent(template: unknown, value: unknown): unknown {
   return typeof value === typeof template ? value : template
 }
 
+export const STORE = 'mt-v4:'
+const isBrowser = typeof window !== 'undefined'
+
 export function useSiteContent() {
-  const [preview] = useState(() => new URLSearchParams(location.search).get('preview') === '1')
-  const [site, setSite] = useState<SiteContent>(() => {
-    if (preview) return defaults
+  const [preview] = useState(() => isBrowser && new URLSearchParams(location.search).get('preview') === '1')
+  // Первый кадр всегда из файла: так он совпадает с готовой разметкой. Правки из админки подхватываем сразу после.
+  const [site, setSite] = useState<SiteContent>(defaults)
+  useEffect(() => {
+    if (preview) return
     try {
-      return readContent(defaults, JSON.parse(localStorage.getItem('mt-v2:mt-content') ?? 'null')) as SiteContent
-    } catch {
-      return defaults
-    }
-  })
+      const saved = localStorage.getItem(STORE + 'mt-content')
+      if (saved) setSite(readContent(defaults, JSON.parse(saved)) as SiteContent)
+    } catch { /* без правок остаётся текст из файла */ }
+  }, [preview])
   useEffect(() => {
     if (!preview || window.parent === window) return
     function update(event: MessageEvent) {

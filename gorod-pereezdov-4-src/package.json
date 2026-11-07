@@ -1,12 +1,14 @@
 {
-  "name": "moving-town",
+  "name": "gorod-pereezdov-4",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "check": "tsc --noEmit",
-    "build": "npm run check && vite build",
+    "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "place": "node scripts/place.mjs",
+    "phones": "node scripts/check.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -217,9 +217,9 @@ var SECTIONS=[
  {id:'tg',ic:UI.send,title:'Уведомления в Telegram',special:'tg'}
 ];
 
-function lsGet(k){try{return localStorage.getItem('mt-v2:'+k)}catch(e){return null}}
-function lsSet(k,v){try{localStorage.setItem('mt-v2:'+k,v);return true}catch(e){return false}}
-function lsDel(k){try{localStorage.removeItem('mt-v2:'+k)}catch(e){}}
+function lsGet(k){try{return localStorage.getItem('mt-v4:'+k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem('mt-v4:'+k,v);return true}catch(e){return false}}
+function lsDel(k){try{localStorage.removeItem('mt-v4:'+k)}catch(e){}}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function clone(o){return JSON.parse(JSON.stringify(o))}
 function merge(a,b){if(Array.isArray(b))return b;if(b&&typeof b==='object'&&a&&typeof a==='object'&&!Array.isArray(a)){var o={},k;for(k in a)o[k]=a[k];for(k in b)o[k]=merge(a[k],b[k]);return o}return b===undefined?a:b}
@@ -234,8 +234,8 @@ function setDirty(v){dirty=v;var st=$('#status');st.textContent=v?'Есть не
 
 /* ---------- login ---------- */
 function enter(){$('#login').hidden=true;$('#app').hidden=false;boot()}
-if(sessionStorage.getItem('mt-v2:mt-auth')==='1')enter();
-$('#lform').addEventListener('submit',function(e){e.preventDefault();if(!$('#pw').value)return;try{sessionStorage.setItem('mt-v2:mt-auth','1')}catch(x){}enter()});
+if(sessionStorage.getItem('mt-v4:mt-auth')==='1')enter();
+$('#lform').addEventListener('submit',function(e){e.preventDefault();if(!$('#pw').value)return;try{sessionStorage.setItem('mt-v4:mt-auth','1')}catch(x){}enter()});
 
 /* ---------- data ---------- */
 function boot(){

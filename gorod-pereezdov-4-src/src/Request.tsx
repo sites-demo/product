@@ -10,6 +10,13 @@ const types = [
 const lifts = ['Нет', 'Обычный', 'Грузовой']
 const extras = ['Упаковка вещей', 'Разборка и сборка мебели', 'Пианино, сейф или другой тяжёлый груз', 'Хранение на складе', 'Вывоз старой мебели']
 const methods = ['Звонок', 'WhatsApp', 'Telegram', 'MAX']
+// Ориентиры для типов, где нет выбора комнат. Все цифры из прайса компании.
+const estimates: Record<string, [string, string]> = {
+  'Офис': ['от 9 600 ₽', 'Офис на 1–3 рабочих места с разборкой и упаковкой. Больше мест посчитаем по списку.'],
+  'Дача или дом': ['900 ₽/ч', 'За грузчика. Машину подберём по объёму вещей, по городу от 1 500 ₽ в час.'],
+  'Отдельные вещи': ['3 300 ₽/ч', '2 грузчика и машина. Машину заказываем минимум на 3 часа.'],
+  'В другой город': ['от 29 900 ₽', 'До Москвы, машина 18 м³ с упаковкой. До Петербурга от 59 000 ₽, дальше от 35 ₽ за км.'],
+}
 const steps = [
   ['Что перевозим?', 'Выберите тип переезда.'],
   ['Откуда забираем?', 'Укажите адрес, этаж и наличие лифта, если уже знаете.'],
@@ -101,19 +108,21 @@ function Handoff({ message, site, photos = 0, edit }: { message: string; site: S
     <textarea aria-label="Текст заявки" ref={textarea} value={message} readOnly rows={4} />
     <div className="handoff-actions">
       <a className="button primary" href={telegramLink(site.contacts.telegram, message)} target="_blank" rel="noopener noreferrer">
-        Открыть Telegram <Icon name="upRight" size={17} />
+        Открыть Telegram
       </a>
       <button type="button" className="button secondary" onClick={copy}>Копировать</button>
     </div>
     <p role="status" className="copy-status">{status}</p>
-    <button type="button" className="text-button" onClick={edit}><Icon name="back" size={17} /> Редактировать заявку</button>
+    <button type="button" className="text-button" onClick={edit}>Редактировать заявку</button>
   </div>
 }
 
 const defaultStop = { address: '', floor: 1, lift: 'Нет' }
 
-export function Request({ site, staticPreview }: { site: SiteContent; staticPreview: boolean }) {
-  const [mobile, setMobile] = useState(() => matchMedia('(max-width: 700px)').matches)
+export type Preset = { rooms: number; n: number }
+
+export function Request({ site, staticPreview, preset }: { site: SiteContent; staticPreview: boolean; preset?: Preset }) {
+  const [mobile, setMobile] = useState(false)
   useEffect(() => {
     const query = matchMedia('(max-width: 700px)')
     const sync = () => setMobile(query.matches)
@@ -144,6 +153,10 @@ export function Request({ site, staticPreview }: { site: SiteContent; staticPrev
   const phoneInput = useRef<HTMLInputElement>(null)
   const telegramInput = useRef<HTMLInputElement>(null)
   const room = type === 'Квартира' && rooms !== null ? site.rooms[rooms] : undefined
+  const typeEstimate = estimates[type]
+  const estimate = room
+    ? [room.price, `Машина ${room.car}, ${room.crew.toLowerCase()}. Точную цену менеджер уточнит по маршруту и вещам.`]
+    : typeEstimate ?? [site.rooms[0]?.price ?? 'По заявке', 'Это однокомнатная. Выберите число комнат, и цифра станет точнее.']
   const dateText = date ? new Date(date + 'T12:00:00').toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }) : ''
   const end = step === steps.length - 1
   const selectedStop = step === 2 ? to : from
@@ -159,6 +172,14 @@ export function Request({ site, staticPreview }: { site: SiteContent; staticPrev
 
 
   useEffect(() => () => photosRef.current.forEach(photo => URL.revokeObjectURL(photo.url)), [])
+  // Клик по строке в ценах открывает расчёт с уже выбранной квартирой.
+  useEffect(() => {
+    if (!preset) return
+    setType('Квартира')
+    setRooms(preset.rooms)
+    setMessage('')
+    setStep(0)
+  }, [preset])
   useEffect(() => {
     if (!focusStep.current || message) return
     focusStep.current = false
@@ -207,7 +228,7 @@ export function Request({ site, staticPreview }: { site: SiteContent; staticPrev
       stop.address.trim() || stop.floor > 1 || stop.lift !== 'Нет'
         ? `${label}: ${stop.address.trim() || 'адрес уточню'}, этаж ${stop.floor}, лифт: ${stop.lift.toLowerCase()}` : ''
     setMessage([
-      'Здравствуйте! Хочу рассчитать переезд.',
+      'Здравствуйте. Хочу рассчитать переезд.',
       `Что перевозим: ${type}${room ? ', ' + room.name : ''}`,
       route('Откуда', from), route('Куда', to), dateText && 'Дата: ' + dateText,
       extra.length > 0 && 'Дополнительно: ' + extra.join(', '), comment.trim() && 'Комментарий: ' + comment.trim(),
@@ -221,10 +242,12 @@ export function Request({ site, staticPreview }: { site: SiteContent; staticPrev
     <div className="form-panel">
       {message ? <Handoff site={site} message={message} photos={photos.length} edit={() => { focusStep.current = true; setMessage('') }} /> :
         <form noValidate onSubmit={submit}>
-          <div className="form-progress" aria-hidden="true">
-            {steps.map(([label], index) => <span key={label} data-filled={index <= step} />)}
+          <div className="form-progress">
+            {steps.map(([label], index) => <button key={label} type="button" data-filled={index <= step}
+              aria-label={`Шаг ${index + 1}. ${label}`} aria-current={index === step ? 'step' : undefined}
+              onClick={() => index !== step && go(index)}><span /></button>)}
           </div>
-          <div className="step-number">ШАГ {step + 1} ИЗ {steps.length}</div>
+          <div className="step-number">Шаг {step + 1} из {steps.length}</div>
           <div className="form-step" key={step}>
             <h3 ref={heading} tabIndex={-1}>{steps[step][0]}</h3>
             <p className="form-hint">{steps[step][1]}</p>
@@ -288,16 +311,16 @@ export function Request({ site, staticPreview }: { site: SiteContent; staticPrev
           </div>
           {mobile && <MovePreview data={visual} mobile staticPreview={staticPreview} />}
           <div className="form-nav">
-            {step > 0 && <button type="button" className="button secondary" onClick={() => go(step - 1)}><Icon name="back" size={17} /> Назад</button>}
-            <button type="submit" className="button primary">{end ? 'Подготовить заявку' : 'Дальше'} <Icon name="arrow" size={18} /></button>
+            {step > 0 && <button type="button" className="button secondary" onClick={() => go(step - 1)}>Назад</button>}
+            <button type="submit" className="button primary">{end ? 'Подготовить заявку' : 'Дальше'}</button>
           </div>
         </form>}
     </div>
     <aside className="request-summary" aria-label="Сводка заявки">
       <h3 className="summary-label">Ваша заявка</h3>
       {!mobile && <MovePreview data={visual} staticPreview={staticPreview} />}
-      <div className="estimate"><span>Ориентир по стоимости</span><strong>{room?.price ?? 'По заявке'}</strong>
-        <p>{room ? `Машина ${room.car}, ${room.crew.toLowerCase()}. Точную цену менеджер уточнит по маршруту и вещам.` : 'Подберём машину и бригаду по вашим ответам.'}</p>
+      <div className="estimate" aria-live="polite"><span>Ориентир по стоимости</span><strong>{estimate[0]}</strong>
+        <p>{estimate[1]}</p>
       </div>
       <dl>
         <div><dt>Переезд</dt><dd>{type}{room ? ', ' + room.name : ''}</dd></div>
@@ -326,7 +349,7 @@ export function Callback({ site, topic, clearTopic }: { site: SiteContent; topic
       input.current?.focus()
       return
     }
-    setMessage(['Здравствуйте! Перезвоните мне, пожалуйста.', 'Телефон: ' + tel,
+    setMessage(['Здравствуйте. Перезвоните мне, пожалуйста.', 'Телефон: ' + tel,
       topic && 'Тема: ' + topic, site.promo.on && `Заявка с сайта, скидка ${site.promo.pct}%.`].filter(Boolean).join('\n'))
   }
 
@@ -338,7 +361,7 @@ export function Callback({ site, topic, clearTopic }: { site: SiteContent; topic
         {topic && <div className="topic"><span>{topic}</span><button type="button" aria-label="Убрать тему" onClick={clearTopic}><Icon name="close" size={16} /></button></div>}
         <label className="field">Ваш телефон<input ref={input} type="tel" autoComplete="tel" maxLength={25} value={phone} placeholder="+7 900 123-45-67" aria-describedby={error ? 'callback-error' : undefined} aria-invalid={error} onChange={event => { setPhone(event.target.value); setError(false) }} /></label>
         {error && <p className="form-error" id="callback-error" role="alert">Укажите телефон в формате +7 900 123-45-67.</p>}
-        <button className="button primary" type="submit">Подготовить запрос <Icon name="arrow" size={18} /></button>
+        <button className="button primary" type="submit">Подготовить запрос</button>
         <p className="callback-note">Запрос нужно будет отправить в Telegram. Или <a href={telephone(contacts.phone)}>позвоните нам</a>.</p>
       </form>}
   </div>
