@@ -37,11 +37,8 @@ fieldset{border:0;padding:0;min-inline-size:0}
 .inline-link:hover{text-decoration-thickness:2px}
 .header{position:relative;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
 .header-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px}
-.brand{display:inline-flex;align-items:center;gap:10px;flex-shrink:0;text-decoration:none;font-weight:850;font-size:18px;line-height:1;letter-spacing:-.07em}
-.brand-mark{display:grid;place-items:center;width:41px;height:41px;background:var(--dark);border-radius:8px;color:var(--lime)}
-.brand small{display:block;margin-top:6px;font-size:8px;font-weight:740;letter-spacing:.14em}
-.brand-space{letter-spacing:-.03em}
-.brand-light .brand-mark{color:var(--dark);background:var(--lime)}
+.brand{display:inline-flex;align-items:center;flex-shrink:0;min-height:44px;text-decoration:none}
+.brand img{height:46px;width:auto}
 .main-nav{display:flex;align-items:center;gap:clamp(15px,2.8vw,37px)}
 .main-nav a,.header-phone{min-height:44px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:14px;font-weight:630}
 .main-nav a{color:#43584b}
@@ -341,6 +338,7 @@ button.route-step:hover,.route-step[aria-pressed=true]{color:var(--ink)}
   body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
   .wrap{width:calc(100% - 36px)}
   .header-phone{width:44px;padding:0;justify-content:center}
+  .brand img{height:36px}
   .header-phone span{display:none}
   .hero{grid-template-columns:minmax(0,1fr);padding-block:34px 25px;gap:22px}
   .hero h1{font-size:clamp(48px,10.6vw,72px)}
@@ -392,8 +390,7 @@ button.route-step:hover,.route-step[aria-pressed=true]{color:var(--ink)}
 }
 @media(max-width:370px){
   .wrap{width:calc(100% - 28px)}
-  .brand{font-size:16px;gap:7px}
-  .brand-mark{width:36px;height:36px}
+  .brand img{height:30px}
   .hero h1{font-size:43px}
   .hero-actions{column-gap:10px}
   .hero-actions .primary{padding-inline:11px;font-size:14px}

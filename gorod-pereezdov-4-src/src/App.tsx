@@ -10,11 +10,8 @@ const mapWidget = 'https://yandex.ru/map-widget/v1/?oid=52265900654&ol=biz&z=16'
 const factIcons = ['shield', 'doc', 'wallet', 'clock']
 
 function Brand({ light }: { light?: boolean }) {
-  return <a className={light ? 'brand brand-light' : 'brand'} href="#top" aria-label="Moving Town, на главную">
-    <span className="brand-mark"><svg viewBox="0 0 36 36" width="33" height="33" fill="none" aria-hidden="true">
-      <path d="M7 25V12l8 7 7-7h8m-4 0v13" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg></span>
-    <span>MOVING<span className="brand-space"> </span>TOWN<small>ГОРОД ПЕРЕЕЗДОВ</small></span>
+  return <a className={light ? 'brand brand-light' : 'brand'} href="#top" aria-label="Moving town, на главную">
+    <img src={media(light ? 'logo-light.png' : 'logo.png')} alt="" width="642" height="137" />
   </a>
 }
 

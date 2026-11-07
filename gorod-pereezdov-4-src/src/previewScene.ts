@@ -60,7 +60,7 @@ export function mountPreviewScene(host: HTMLDivElement, onReady: (ready: boolean
   const cargo = new T.Group()
   scene.add(cargo)
   ground(cargo, 6.4, 3.05)
-  const { truck, decal } = createTruck(renderer.capabilities.getMaxAnisotropy())
+  const { truck, decal } = createTruck(renderer.capabilities.getMaxAnisotropy(), () => schedule())
   truck.position.set(0.1, 0.035, -0.43)
   cargo.add(truck)
 

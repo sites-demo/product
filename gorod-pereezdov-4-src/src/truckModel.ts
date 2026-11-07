@@ -1,7 +1,7 @@
 import * as T from 'three'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 
-export function createTruck(anisotropy: number) {
+export function createTruck(anisotropy: number, onDecal?: () => void) {
   const truck = new T.Group()
   const material = (color: number, roughness = 0.68, metalness = 0) =>
     new T.MeshStandardMaterial({ color, roughness, metalness })
@@ -97,32 +97,20 @@ export function createTruck(anisotropy: number) {
     }
   }
 
+  // Борт машины: настоящий логотип компании, грузится картинкой и дорисовывается, когда готов.
   const sign = document.createElement('canvas')
-  sign.width = 768
-  sign.height = 290
+  sign.width = 1024
+  sign.height = 388
   const pen = sign.getContext('2d')!
-  pen.fillStyle = '#183e31'
-  pen.beginPath()
-  pen.roundRect(28, 69, 142, 142, 32)
-  pen.fill()
-  pen.strokeStyle = '#d5ed91'
-  pen.lineWidth = 12
-  pen.lineCap = 'round'
-  pen.lineJoin = 'round'
-  pen.beginPath()
-  pen.moveTo(57, 169)
-  pen.lineTo(57, 113)
-  pen.lineTo(87, 140)
-  pen.lineTo(112, 113)
-  pen.lineTo(141, 113)
-  pen.moveTo(126, 113)
-  pen.lineTo(126, 169)
-  pen.stroke()
-  pen.font = '800 89px Arial, sans-serif'
-  pen.fillText('MOVING', 198, 136)
-  pen.fillText('TOWN', 198, 223)
-  pen.font = '700 24px Arial, sans-serif'
-  pen.fillText('ПЕРЕЕЗДЫ ПО РОССИИ', 201, 268)
+  const logo = new Image()
+  logo.onload = () => {
+    const width = 940
+    const height = width * logo.naturalHeight / logo.naturalWidth
+    pen.drawImage(logo, (sign.width - width) / 2, (sign.height - height) / 2, width, height)
+    decal.needsUpdate = true
+    onDecal?.()
+  }
+  logo.src = import.meta.env.BASE_URL + 'logo.png'
   const decal = new T.CanvasTexture(sign)
   decal.colorSpace = T.SRGBColorSpace
   decal.anisotropy = Math.min(anisotropy, 4)

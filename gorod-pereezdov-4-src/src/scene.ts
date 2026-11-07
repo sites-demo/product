@@ -100,11 +100,14 @@ export function mountScene(host: HTMLDivElement, {
   for (let x = -5.42; x <= 5.43; x += 0.61) {
     box(model, lane, x, 0.006, 1.98, 0.28, 0.02, 0.044, 0.008).castShadow = false
   }
+  // Дверь нового дома: к ней ведёт линия маршрута и туда заносят коробки.
+  const door = { x: 4.08, y: 0.23, z: -0.62 }
+  const routeLength = door.x + 5.45
   const guide = new T.Group()
   guide.position.set(-5.45, 0.026, 1.98)
   model.add(guide)
-  box(guide, routeLight, 5.45, 0, 0, 10.9, 0.025, 0.065, 0.012).castShadow = false
-  for (const x of [-5.45, 5.45]) {
+  box(guide, routeLight, routeLength / 2, 0, 0, routeLength, 0.025, 0.065, 0.012).castShadow = false
+  for (const x of [-5.45, door.x]) {
     mesh(model, new T.CylinderGeometry(0.31, 0.31, 0.065, 20), edge, x, 0.032, 1.98)
     mesh(model, new T.CylinderGeometry(0.17, 0.17, 0.043, 18), x < 0 ? routeLight : tape, x, 0.084, 1.98).castShadow = false
   }
@@ -154,10 +157,12 @@ export function mountScene(host: HTMLDivElement, {
     mesh(model, new T.IcosahedronGeometry(height * 0.39, 1), pine, x, height * 0.75, z)
   }
 
-  const { truck, doors, wheels, decal } = createTruck(renderer.capabilities.getMaxAnisotropy())
+  const { truck, doors, wheels, decal } = createTruck(renderer.capabilities.getMaxAnisotropy(), () => requestFrame())
   const truckScale = 0.79
   const startX = -2.67
-  const distance = 5.39
+  // Машина встаёт кабиной к углу дома, чтобы дверь дома было видно.
+  const stop = 1.15
+  const distance = stop - startX
   const truckLane = 0.75
   truck.scale.setScalar(truckScale)
   model.add(truck)
@@ -172,12 +177,51 @@ export function mountScene(host: HTMLDivElement, {
     return { group, x, z }
   }
 
-  // Где коробки стоят у старого дома и куда их ставим у нового.
   const parcels = [
-    { ...parcel(-5.92, 0.8, 0.58, kraft), drop: [-0.72, 0, 1.08], turn: 0.18 },
-    { ...parcel(-6.2, 1.47, 0.49, kraftLight), drop: [-1.48, 0, 0.86], turn: -0.3 },
-    { ...parcel(-5.55, 1.63, 0.39, kraft), drop: [-0.7, 0.522, 1.06], turn: 0.42 },
+    parcel(-5.92, 0.8, 0.58, kraft),
+    parcel(-6.2, 1.47, 0.49, kraftLight),
+    parcel(-5.55, 1.63, 0.39, kraft),
   ]
+
+  // Разгрузка: из кузова назад, вдоль ближнего края дороги к дому, на крыльцо и в дверь.
+  const walkLane = 1.9
+  const unloadLegs = [
+    { x: stop - 3.25, y: 0, z: truckLane, ms: 360, lift: 0.36, hops: 1, scale: 1 },
+    { x: stop - 3.25, y: 0, z: walkLane, ms: 240, lift: 0.08, hops: 1, scale: 1 },
+    { x: door.x, y: 0, z: walkLane, ms: 820, lift: 0.1, hops: 5, scale: 1 },
+    { x: door.x, y: 0, z: 0.05, ms: 380, lift: 0.1, hops: 2, scale: 0.85 },
+    { x: door.x, y: door.y, z: door.z, ms: 180, lift: 0.18, hops: 1, scale: 0.62 },
+    { x: door.x, y: door.y, z: -1.05, ms: 260, lift: 0, hops: 0, scale: 0.62 },
+  ]
+  const unloadTotal = unloadLegs.reduce((sum, leg) => sum + leg.ms, 0)
+  const unloadGap = 330
+
+  function carry(group: T.Group, index: number, time: number) {
+    let t = time - (ROUTE.arrive + 520) - index * unloadGap
+    if (t <= 0) return false
+    if (t >= unloadTotal) {
+      group.visible = false
+      return true
+    }
+    let x = stop - 1.91, y = 0.74, z = truckLane + 0.15, size = 1
+    for (const leg of unloadLegs) {
+      if (t > leg.ms) {
+        t -= leg.ms
+        x = leg.x; y = leg.y; z = leg.z; size = leg.scale
+        continue
+      }
+      const u = t / leg.ms
+      const e = leg.hops > 1 ? u : T.MathUtils.smootherstep(u, 0, 1)
+      group.visible = true
+      group.position.set(T.MathUtils.lerp(x, leg.x, e),
+        T.MathUtils.lerp(y, leg.y, e) + Math.abs(Math.sin(u * Math.PI * Math.max(1, leg.hops))) * leg.lift,
+        T.MathUtils.lerp(z, leg.z, e))
+      group.scale.setScalar(T.MathUtils.lerp(size, leg.scale, e))
+      group.rotation.y = 0
+      return true
+    }
+    return true
+  }
 
   const { depart, arrive, unloaded, duration } = ROUTE
   const cycle = duration + 500
@@ -207,25 +251,19 @@ export function mountScene(host: HTMLDivElement, {
     const truckX = startX + distance * travel
     truck.position.set(truckX, 0, truckLane)
     const load = T.MathUtils.smoothstep(time, 1090, depart)
-    const open = still ? 0 : T.MathUtils.smoothstep(time, arrive + 60, arrive + 520)
+    const open = still ? 0 : T.MathUtils.smoothstep(time, arrive + 60, arrive + 520) - T.MathUtils.smoothstep(time, unloaded - 100, unloaded + 350)
     doors.forEach(({ hinge, side }) => { hinge.rotation.y = side * 1.4 * (1 - load + open) })
     wheels.forEach(wheel => { wheel.rotation.z = -distance * travel / (truckScale * 0.43) })
-    const rear = truckX - 1.91
-    parcels.forEach(({ group, x, z, drop, turn }, index) => {
+    parcels.forEach(({ group, x, z }, index) => {
+      if (!still && carry(group, index, time)) return
       const packed = T.MathUtils.smoothstep(time, 190 + index * 148, 820 + index * 118)
-      const out = still ? 0 : T.MathUtils.smootherstep(time, arrive + 420 + index * 330, arrive + 900 + index * 330)
-      group.visible = packed < 1 || out > 0
-      if (out > 0) {
-        group.position.set(T.MathUtils.lerp(rear, drop[0], out), T.MathUtils.lerp(0.74, drop[1], out) + Math.sin(out * Math.PI) * 0.42,
-          T.MathUtils.lerp(truckLane + 0.15, drop[2], out))
-        group.rotation.y = T.MathUtils.lerp(0.08, turn, out)
-        return
-      }
+      group.visible = packed < 1
+      group.scale.setScalar(1)
       group.position.set(T.MathUtils.lerp(x, -4.58, packed), Math.min(0.74, packed * 1.08), T.MathUtils.lerp(z, truckLane + 0.15, packed))
       group.rotation.y = packed * 0.2 - 0.12
     })
     guide.scale.x = 0.055 + travel * 0.945
-    windowGlow.emissiveIntensity = 0.08 + 0.95 * T.MathUtils.smoothstep(time, unloaded - 500, duration)
+    windowGlow.emissiveIntensity = 0.08 + 0.95 * T.MathUtils.smoothstep(time, unloaded - 600, unloaded + 300)
     const follow = still ? 0 : (travel - 0.5) * 0.52
     model.rotation.y = tilt.x * 0.075
     camera.position.set(4.55 + follow, 7.1 - tilt.y * 0.9, 12.8)
