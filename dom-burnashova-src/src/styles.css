@@ -105,7 +105,7 @@ p {
   gap: 10px;
   min-height: 54px;
   padding: 0 24px;
-  border-radius: 999px;
+  border-radius: 10px;
   border: 1.5px solid transparent;
   font: 600 16px/1.1 var(--ft);
   text-decoration: none;
@@ -170,7 +170,7 @@ p {
 .chip {
   border: 1px solid var(--line);
   background: var(--card);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 8px 15px;
   min-height: 44px;
   font-size: 14.5px;
@@ -780,7 +780,7 @@ section {
   display: inline-flex;
   background: rgba(10, 18, 27, 0.82);
   border: 1px solid var(--nline);
-  border-radius: 999px;
+  border-radius: 12px;
   padding: 4px;
   gap: 2px;
 }
@@ -788,7 +788,7 @@ section {
   border: 0;
   background: transparent;
   color: var(--nmute);
-  border-radius: 999px;
+  border-radius: 8px;
   min-height: 42px;
   padding: 0 15px;
   font-size: 14.5px;
@@ -804,7 +804,7 @@ section {
   background: rgba(10, 18, 27, 0.82);
   color: var(--nink);
   border: 1px solid var(--nline);
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 9px 16px;
   font-size: 14px;
 }
@@ -888,10 +888,8 @@ section {
   gap: 12px;
 }
 .zg-t {
-  font: 600 12px/1.2 var(--ft);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute);
+  font: 600 15px/1.2 var(--ft);
+  color: var(--ink);
   margin-bottom: 8px;
 }
 .zg-list {
@@ -906,7 +904,7 @@ section {
   min-height: 44px;
   border: 1px solid var(--line);
   background: var(--card);
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 4px 14px 4px 6px;
   font-size: 14.5px;
   font-weight: 500;
@@ -916,7 +914,7 @@ section {
 .zchip b {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: 6px;
   display: grid;
   place-items: center;
   background: var(--bg2);
@@ -1014,21 +1012,15 @@ section {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 7px;
-  font-size: 15.5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14.5px;
 }
 .zfacts li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-.zfacts .ic {
-  width: 18px;
-  height: 18px;
-  margin-top: 3px;
-  flex: none;
-  color: var(--amber-d);
+  background: var(--bg2);
+  border-radius: 6px;
+  padding: 5px 10px;
 }
 .zcard .btn {
   margin-top: 4px;
@@ -1070,20 +1062,12 @@ section {
   }
 }
 .bk-t {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   font-size: 22px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
-.bk-t span {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink);
-  display: grid;
-  place-items: center;
-  font: 600 14px/1 var(--ft);
+.bk-sum-h {
+  font-size: 22px;
+  margin-bottom: 8px;
 }
 .steps {
   display: grid;
@@ -1338,18 +1322,14 @@ section {
   display: grid;
   gap: 12px;
 }
+.fcard ul {
+  gap: 0;
+}
 .fcard li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
   font-size: 15.5px;
   line-height: 1.45;
-}
-.fcard .ic {
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-  color: var(--frost);
+  padding: 10px 0;
+  border-top: 1px solid var(--nline);
 }
 
 /* ---------- Дорога и карта ---------- */
@@ -1439,12 +1419,11 @@ section {
   }
 }
 .revs-score {
-  background: var(--card);
-  border-radius: 18px;
-  padding: 28px;
   display: grid;
   justify-items: start;
   gap: 8px;
+  align-self: start;
+  padding-top: 6px;
 }
 .revs-score > b {
   font: 600 88px/0.95 var(--fh);
@@ -1600,7 +1579,7 @@ section {
 .bb-go {
   display: grid;
   place-items: center;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--amber);
   font-weight: 600;
   font-size: 15px;
@@ -1830,28 +1809,20 @@ section {
 .praise {
   list-style: none;
   padding: 0;
-  margin: 26px 0 0;
+  margin: 28px 0 0;
   display: grid;
-  gap: 10px;
+  column-gap: 32px;
 }
 @media (min-width: 640px) {
   .praise {
     grid-template-columns: 1fr 1fr;
-    gap: 12px 24px;
   }
 }
 .praise li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 16.5px;
-}
-.praise .ic {
-  width: 19px;
-  height: 19px;
-  margin-top: 3px;
-  flex: none;
-  color: var(--amber-d);
+  border-top: 1px solid var(--line);
+  padding: 13px 0 14px;
+  font: 500 19px/1.35 var(--fh);
+  letter-spacing: -0.005em;
 }
 .way-sub {
   color: var(--mute);
@@ -2017,4 +1988,12 @@ section {
 }
 .bk-preview summary {
   padding: 10px 0;
+}
+
+.way-sub b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.revs-in {
+  align-items: start;
 }
