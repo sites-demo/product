@@ -1,0 +1,31 @@
+/* Первый экран: фара в 3D, стекло мутное или чистое */
+.hl-hero { position: relative; border-radius: 16px; overflow: hidden; isolation: isolate; border: 1px solid var(--line); background: radial-gradient(110% 90% at 50% 38%, #262b31 0%, var(--stage, #0c0e10) 72%); display: flex; flex-direction: column; }
+.hl-canvas { position: relative; height: clamp(260px, 70vw, 560px); opacity: 0; transition: opacity .8s ease; }
+.hl-canvas.ready { opacity: 1; }
+.hl-canvas canvas { position: absolute; inset: 0; display: block; }
+@media (min-width: 1024px) { .hl-hero .hl-canvas { height: auto; flex: 1; min-height: 520px; } }
+.hl-toggle { margin: 0 12px 12px; align-self: flex-start; }
+@media (min-width: 1024px) { .hl-toggle { position: absolute; left: 14px; bottom: 14px; margin: 0; } }
+
+/* Свет на стене */
+.beam { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #17191c; }
+.beam canvas { display: block; width: 100%; height: clamp(240px, 52vw, 520px); }
+.beam-l, .beam-r { position: absolute; top: 14px; font-size: 14px; color: rgba(255, 255, 255, .78); background: rgba(0, 0, 0, .45); padding: 6px 10px; border-radius: 8px; pointer-events: none; max-width: 45%; }
+.beam-l { left: 14px; }
+.beam-r { right: 14px; text-align: right; }
+.beam input[type='range'] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.beam input[type='range']:focus-visible { opacity: .01; }
+.beam:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Фара в разборе */
+.hl-explode { display: grid; gap: 18px; }
+@media (min-width: 960px) { .hl-explode { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px; align-items: start; } }
+.hl-stage { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(110% 90% at 50% 40%, #262b31 0%, var(--stage, #0c0e10) 72%); }
+.hl-stage .hl-canvas { height: clamp(260px, 66vw, 520px); }
+.hl-open { position: absolute; left: 12px; bottom: 12px; background: color-mix(in srgb, var(--bg) 80%, transparent); backdrop-filter: blur(6px); }
+.hl-parts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hl-parts button { width: 100%; text-align: left; display: grid; gap: 4px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; }
+.hl-parts button[aria-pressed='true'] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.hl-parts b { font-size: 18px; font-weight: 650; }
+.hl-parts span { color: var(--muted); font-size: 15px; }
+.hl-parts em { font-style: normal; font-weight: 650; margin-top: 2px; }

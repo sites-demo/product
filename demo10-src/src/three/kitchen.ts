@@ -19,7 +19,8 @@ export type KitchenConfig = {
   handles: 'gola' | 'bar'
 }
 
-export type KitchenScene = { set: (c: KitchenConfig) => void; destroy: () => void }
+/** Сборка по шагам: 0 пустая стена, 1 корпуса, 2 фасады, 3 столешница и техника, 4 подсветка. */
+export type KitchenScene = { set: (c: KitchenConfig) => void; setStage: (n: number) => void; destroy: () => void }
 
 const DEPTH = 0.6, PLINTH = 0.1, BASE_H = 0.72, TOP_T = 0.038
 const COUNTER_Y = PLINTH + BASE_H
@@ -92,6 +93,21 @@ function stoneTexture(hex: string, kind: CounterKind) {
   })
 }
 
+function glowTexture() {
+  const c = document.createElement('canvas')
+  c.width = 4; c.height = 128
+  const g = c.getContext('2d')!
+  const grd = g.createLinearGradient(0, 0, 0, 128)
+  grd.addColorStop(0, 'rgba(255,214,160,0.55)')
+  grd.addColorStop(0.35, 'rgba(255,214,160,0.18)')
+  grd.addColorStop(1, 'rgba(255,214,160,0)')
+  g.fillStyle = grd
+  g.fillRect(0, 0, 4, 128)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
 function floorTexture() {
   return canvasTex((g, s) => {
     const r = rng(19)
@@ -111,9 +127,9 @@ function floorTexture() {
   }, 512, 4)
 }
 
-type Mats = Record<'facade' | 'carcass' | 'counter' | 'plinth' | 'handle' | 'steel' | 'black' | 'led' | 'wall' | 'floor' | 'splash', THREE.Material>
+type Mats = Record<'facade' | 'carcass' | 'inner' | 'glow' | 'counter' | 'plinth' | 'handle' | 'steel' | 'black' | 'led' | 'wall' | 'floor' | 'splash', THREE.Material>
 
-export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: { onReady?: () => void } = {}): KitchenScene {
+export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: { onReady?: () => void; stage?: number } = {}): KitchenScene {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75))
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -146,6 +162,10 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
     steel: new THREE.MeshStandardMaterial({ color: '#c7cbd0', roughness: 0.22, metalness: 1 }),
     black: new THREE.MeshPhysicalMaterial({ color: '#0d0e10', roughness: 0.12, clearcoat: 1 }),
     led: new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 2.0, 1.7) }),
+    // Пустой корпус без фасада: видна внутренность, она темнее кромок.
+    inner: new THREE.MeshStandardMaterial({ color: '#b8b0a4', roughness: 0.9 }),
+    // Тёплое пятно от ленты на фартуке.
+    glow: new THREE.MeshBasicMaterial({ map: glowTexture(), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }),
     wall: new THREE.MeshStandardMaterial({ color: '#e4dfd7', roughness: 0.95 }),
     floor: new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.75 }),
   }
@@ -187,8 +207,18 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
     mesh.position.set(x, y, z)
     mesh.castShadow = shadow
     mesh.receiveShadow = true
+    mesh.userData.layer = layerOf(m)
     parent.add(mesh)
     return mesh
+  }
+  // К какому шагу сборки относится деталь: по её материалу.
+  const layerOf = (m: THREE.Material) => {
+    if (!mats) return 0
+    if (m === mats.carcass || m === mats.plinth || m === mats.inner) return 1
+    if (m === mats.facade || m === mats.handle) return 2
+    if (m === mats.counter || m === mats.splash || m === mats.steel || m === mats.black) return 3
+    if (m === mats.led || m === mats.glow) return 4
+    return 0
   }
 
   type Kind = 'doors' | 'drawers' | 'sink' | 'hob' | 'tall'
@@ -233,12 +263,14 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
       if (kind === 'tall') {
         box(w, TALL_H - PLINTH, DEPTH - 0.02, m.carcass, x + w / 2, PLINTH + (TALL_H - PLINTH) / 2, (DEPTH - 0.02) / 2, g)
         box(w - 0.01, PLINTH, DEPTH - 0.08, m.plinth, x + w / 2, PLINTH / 2, (DEPTH - 0.08) / 2, g)
+        box(w - 0.036, TALL_H - PLINTH - 0.036, 0.004, m.inner, x + w / 2, PLINTH + (TALL_H - PLINTH) / 2, DEPTH - 0.019, g, false)
         facadePanels(g, m, c, x, w, PLINTH, TALL_H - PLINTH, DEPTH - 0.02, [0.3, 0.7], 1)
         x += w
         continue
       }
       box(w, BASE_H, DEPTH - 0.02, m.carcass, x + w / 2, PLINTH + BASE_H / 2, (DEPTH - 0.02) / 2, g)
       box(w, PLINTH, DEPTH - 0.08, m.plinth, x + w / 2, PLINTH / 2, (DEPTH - 0.08) / 2, g)
+      box(w - 0.036, BASE_H - 0.036, 0.004, m.inner, x + w / 2, PLINTH + BASE_H / 2, DEPTH - 0.019, g, false)
       const golaH = c.handles === 'gola' ? 0.035 : 0
       const fh = BASE_H - golaH
       const rows = kind === 'drawers' ? [0.25, 0.375, 0.375] : kind === 'hob' ? [0.5, 0.5] : [1]
@@ -251,6 +283,7 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
         geos.push(tap.geometry)
         tap.position.set(x + w / 2, COUNTER_Y + TOP_T + 0.2, 0.12)
         tap.castShadow = true
+        tap.userData.layer = 3
         g.add(tap)
         box(0.024, 0.2, 0.024, m.steel, x + w / 2 - 0.11, COUNTER_Y + TOP_T + 0.1, 0.12, g)
       }
@@ -260,6 +293,7 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
       }
       if (c.uppers && kind !== 'hob') {
         box(w, UP_H, UP_D, m.carcass, x + w / 2, UP_Y + UP_H / 2, UP_D / 2, g)
+        box(w - 0.036, UP_H - 0.036, 0.004, m.inner, x + w / 2, UP_Y + UP_H / 2, UP_D + 0.001, g, false)
         facadePanels(g, m, c, x, w, UP_Y, UP_H, UP_D, [1], w > 0.5 ? 2 : 1)
         box(w - 0.04, 0.008, 0.02, m.led, x + w / 2, UP_Y - 0.006, UP_D - 0.06, g, false)
       }
@@ -268,7 +302,15 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
     // Столешница одним куском над нижними шкафами, с небольшим свесом.
     const topLen = withTall ? len - 0.6 : len
     box(topLen, TOP_T, DEPTH + 0.02, m.counter, topLen / 2, COUNTER_Y + TOP_T / 2, (DEPTH + 0.02) / 2, g)
-    if (c.uppers) box(topLen, UP_Y - COUNTER_Y - TOP_T, 0.012, m.splash, topLen / 2, (UP_Y + COUNTER_Y + TOP_T) / 2, 0.006, g, false)
+    if (c.uppers) {
+      box(topLen, UP_Y - COUNTER_Y - TOP_T, 0.012, m.splash, topLen / 2, (UP_Y + COUNTER_Y + TOP_T) / 2, 0.006, g, false)
+      const gh = 0.34
+      const glow = new THREE.Mesh(new THREE.PlaneGeometry(topLen - 0.04, gh), m.glow)
+      geos.push(glow.geometry)
+      glow.position.set(topLen / 2, UP_Y - gh / 2, 0.0135)
+      glow.userData.layer = 4
+      g.add(glow)
+    }
     return g
   }
 
@@ -328,6 +370,16 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
     }
     goalYaw = yaw = c.layout === 'corner' ? 0.38 : c.layout === 'u' ? 0.08 : -0.3
     scene.add(kitchen)
+    pieces = []
+    kitchen.updateMatrixWorld(true)
+    kitchen.traverse(obj => {
+      const L = obj.userData.layer as number | undefined
+      if (!L || !(obj as THREE.Mesh).isMesh) return
+      // Фасады подлетают спереди (в своей системе координат перед шкафов смотрит в +z), остальное опускается сверху.
+      const dir = L === 2 ? new THREE.Vector3(0, 0, 0.35) : new THREE.Vector3(0, 0.45, 0)
+      pieces.push({ obj, layer: L, base: obj.position.clone(), dir })
+    })
+    applyStage()
     bounds = new THREE.Box3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(a, TALL_H, c.layout === 'island' ? DEPTH + 2.1 : c.layout === 'straight' ? DEPTH : b))
     sun.position.set(a * 0.25 - 2, 4.5, 5)
     sun.target.position.set(a / 2, 0.6, 0.8)
@@ -381,13 +433,41 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
   el.addEventListener('pointerup', () => { drag = false })
   el.addEventListener('pointercancel', () => { drag = false })
 
+  // Шаги сборки: у каждого слоя своя доля появления от 0 до 1.
+  let pieces: { obj: THREE.Object3D; layer: number; base: THREE.Vector3; dir: THREE.Vector3 }[] = []
+  let stage = o.stage ?? 4
+  const shown = [1, 1, 1, 1, 1].map((_, i) => (i <= stage ? 1 : 0))
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const applyStage = () => {
+    for (const p of pieces) {
+      const t = shown[p.layer]
+      const e = 1 - (1 - t) * (1 - t) * (1 - t)
+      p.obj.visible = t > 0.01
+      p.obj.position.copy(p.base).addScaledVector(p.dir, 1 - e)
+    }
+    // Когда включается подсветка, общий свет приглушается, чтобы ленты было видно.
+    if (o.stage !== undefined) sun.intensity = 2.8 - 1.2 * shown[4]
+  }
+  const stepStage = () => {
+    let busy = false
+    for (let i = 1; i <= 4; i++) {
+      const goal = i <= stage ? 1 : 0
+      if (still) shown[i] = goal
+      else if (Math.abs(shown[i] - goal) > 0.002) { shown[i] += (goal - shown[i]) * 0.12; busy = true }
+      else shown[i] = goal
+    }
+    applyStage()
+    return busy
+  }
+
   let raf = 0, visible = true
   const frame = () => {
     raf = 0
     yaw += (goalYaw - yaw) * 0.14
+    const building = stepStage()
     place()
     renderer.render(scene, camera)
-    if (Math.abs(goalYaw - yaw) > 0.0005 && visible) req()
+    if ((building || Math.abs(goalYaw - yaw) > 0.0005) && visible) req()
   }
   function req() { if (!raf && visible) raf = requestAnimationFrame(frame) }
   const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) req() })
@@ -401,10 +481,12 @@ export function createKitchenScene(host: HTMLElement, first: KitchenConfig, o: {
 
   return {
     set: c => { build(c); req() },
+    setStage: n => { stage = Math.max(0, Math.min(4, n)); req() },
     destroy: () => {
       cancelAnimationFrame(raf)
       io.disconnect(); ro.disconnect()
       for (const g of geos) g.dispose()
+      fixed.glow.map?.dispose()
       for (const m of [...dynamic, ...Object.values(fixed)]) m.dispose()
       for (const t of dynTex) t.dispose()
       floorTex.dispose(); env.dispose(); pmrem.dispose()

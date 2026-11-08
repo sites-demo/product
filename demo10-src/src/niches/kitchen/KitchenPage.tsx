@@ -4,9 +4,11 @@ import { Footer } from '../../ui/Footer'
 import { Contacts } from '../../ui/Contacts'
 import { MobileBar } from '../../ui/MobileBar'
 import { RatingLine } from '../../ui/RatingLine'
-import { Facts, Praise, Prices, Services, Steps, Works } from '../../ui/Sections'
+import { Facts, Praise, Prices, Services, Works } from '../../ui/Sections'
 import { asset, telHref } from '../../ui/links'
 import { Configurator } from './Configurator'
+import { Assembly } from './Assembly'
+import '../body/body.css'
 import './kitchen.css'
 
 const NAV: [string, string][] = [['#project', 'Собрать кухню'], ['#works', 'Наши кухни'], ['#prices', 'Цены'], ['#steps', 'Как заказать'], ['#contacts', 'Контакты']]
@@ -46,7 +48,7 @@ export function KitchenPage({ site }: { site: Site }) {
 
       <Works site={site} title="Кухни, которые мы сделали" skip={1} />
       <Prices site={site} />
-      <Steps site={site} />
+      <Assembly site={site} />
       <Services site={site} title="Что ещё делаем" />
       <Facts site={site} />
       <Praise site={site} />

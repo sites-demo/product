@@ -1,6 +1,7 @@
 // Сцена с машиной: студийный свет, тень на полу, вращение пальцем, выбор детали касанием.
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { hexStudio } from './hexStudio'
 import { buildCar, carMaterials, type BodyType, type Car, type PanelId } from './car'
 
 export type CarSceneOptions = {
@@ -8,6 +9,8 @@ export type CarSceneOptions = {
   paint: string
   accent: string
   dark?: boolean
+  /** Свет в отражениях: обычная студия или соты детейлинг-бокса. */
+  studio?: 'room' | 'hex'
   /** Начальный поворот машины, радианы. */
   yaw?: number
   autoRotate?: boolean
@@ -57,9 +60,9 @@ export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene 
 
   const scene = new THREE.Scene()
   const pmrem = new THREE.PMREMGenerator(renderer)
-  const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+  const env = pmrem.fromScene(o.studio === 'hex' ? hexStudio() : new RoomEnvironment(), o.studio === 'hex' ? 0.012 : 0.04).texture
   scene.environment = env
-  scene.environmentIntensity = o.dark ? 0.75 : 1
+  scene.environmentIntensity = o.studio === 'hex' ? 1 : o.dark ? 0.75 : 1
 
   const key = new THREE.DirectionalLight('#ffffff', o.dark ? 1.6 : 1.2)
   key.position.set(3, 6, 4)

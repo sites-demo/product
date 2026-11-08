@@ -40,3 +40,10 @@
 .cfg-panel .send { display: grid; gap: 8px; }
 .cfg-panel .send-note { font-size: 14px; color: var(--muted); text-wrap: pretty; }
 .cfg-panel .send-note a { color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+/* Сборка кухни при прокрутке: светлая версия раздела с этапами */
+.asm-stage { background: var(--bg); }
+.asm-canvas { background: linear-gradient(#ece7df, #ddd5ca); }
+.asm .repair-steps p { color: var(--muted); }
+.asm .repair-dots li { background: var(--line); }
+.asm .repair-dots li.done { background: color-mix(in srgb, var(--ink) 40%, transparent); }
