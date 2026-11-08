@@ -26,13 +26,16 @@ export function RepairSteps({ paint }: { paint: string }) {
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return
       io.disconnect()
-      import('../../three/doorRepair').then(({ createDoorScene }) => {
-        if (dead) return
-        try {
-          s = createDoorScene(el, { paint, onReady: () => setReady(true) })
-          scene.current = s
-        } catch { /* остаются тексты */ }
-      })
+      import('../../three/doorRepair')
+        .then(({ createDoorScene }) => (dead ? undefined : createDoorScene(el, { paint })))
+        .then(made => {
+          if (!made) return
+          if (dead) { made.destroy(); return }
+          s = made
+          scene.current = made
+          setReady(true)
+        })
+        .catch(() => { /* остаются тексты */ })
     }, { rootMargin: '600px 0px' })
     io.observe(el)
     return () => { dead = true; io.disconnect(); s?.destroy(); scene.current = null }

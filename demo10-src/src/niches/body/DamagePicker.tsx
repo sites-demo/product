@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Site } from '../../types'
-import type { BodyType, PanelId } from '../../three/car'
+import type { PanelId } from '../../three/carModel'
 import type { CarScene } from '../../three/carScene'
 import { handoff, telHref } from '../../ui/links'
 import { Poster } from '../../ui/Poster'
@@ -14,7 +14,7 @@ const NAMES: Record<PanelId, string> = {
   quarterRL: 'Заднее левое крыло', quarterRR: 'Заднее правое крыло',
   sillL: 'Левый порог', sillR: 'Правый порог', mirrorL: 'Левое зеркало', mirrorR: 'Правое зеркало',
 }
-const partName = (p: PanelId, body: BodyType) => (p === 'trunk' && body !== 'sedan' ? 'Дверь багажника' : NAMES[p])
+const partName = (p: PanelId) => NAMES[p]
 
 // Куда повернуть машину, чтобы выбранная деталь была видна.
 const VIEW: Record<PanelId, number> = {
@@ -36,8 +36,6 @@ const PAINTS = [
   { name: 'чёрный', hex: '#17191c' }, { name: 'красный', hex: '#9c171c' }, { name: 'синий', hex: '#1f3d78' },
 ]
 
-const BODIES: [BodyType, string][] = [['sedan', 'Седан'], ['hatch', 'Хэтчбек'], ['crossover', 'Кроссовер']]
-
 // Цвет отметки: акцент сайта, если он не сливается с цветом машины.
 function markColor(accent: string, paint: string) {
   const rgb = (h: string) => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16))
@@ -46,11 +44,10 @@ function markColor(accent: string, paint: string) {
   return d < 140 ? '#ffb21a' : accent
 }
 
-export function damageText(o: { model: string; body: BodyType; paint: string; parts: PanelId[]; kinds: string[] }) {
-  const body = BODIES.find(b => b[0] === o.body)![1].toLowerCase()
+export function damageText(o: { model: string; paint: string; parts: PanelId[]; kinds: string[] }) {
   const lines = ['Здравствуйте. Хочу узнать цену кузовного ремонта.']
-  lines.push(`Машина: ${o.model.trim() || body}, цвет ${o.paint}.`)
-  lines.push(o.parts.length ? `Что повреждено: ${o.parts.map(p => partName(p, o.body).toLowerCase()).join(', ')}.` : 'Что повреждено: покажу на фото.')
+  lines.push(o.model.trim() ? `Машина: ${o.model.trim()}, цвет ${o.paint}.` : `Цвет машины: ${o.paint}.`)
+  lines.push(o.parts.length ? `Что повреждено: ${o.parts.map(p => partName(p).toLowerCase()).join(', ')}.` : 'Что повреждено: покажу на фото.')
   if (o.kinds.length) lines.push(`Что случилось: ${o.kinds.map(k => k.toLowerCase()).join(', ')}.`)
   lines.push('Сейчас пришлю фото.')
   return lines.join('\n')
@@ -62,7 +59,6 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
   const [state, setState] = useState<'wait' | 'ready' | 'fail'>('wait')
   const [parts, setParts] = useState<PanelId[]>([])
   const [kinds, setKinds] = useState<string[]>([])
-  const [body, setBody] = useState<BodyType>(site.car?.type ?? 'sedan')
   const [paint, setPaint] = useState(PAINTS[paintDefault])
   const [model, setModel] = useState('')
   const [hover, setHover] = useState<PanelId | null>(null)
@@ -81,23 +77,23 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
     let s: CarScene | undefined
     const el = host.current
     if (!el) return
-    import('../../three/carScene').then(({ createCarScene }) => {
-      if (dead) return
-      try {
-        s = createCarScene(el, {
-          type: body, paint: paint.hex, accent: markColor(site.theme.accent, paint.hex),
-          dark: site.theme.dark, onPick: toggle, onHover: setHover,
-        })
-        scene.current = s
-        s.setMarked(parts)
+    import('../../three/carScene')
+      .then(({ createCarScene }) => (dead ? undefined : createCarScene(el, {
+        type: 'sedan', paint: paint.hex, accent: markColor(site.theme.accent, paint.hex),
+        dark: site.theme.dark, onPick: toggle, onHover: setHover,
+      })))
+      .then(made => {
+        if (!made) return
+        if (dead) { made.destroy(); return }
+        s = made
+        scene.current = made
+        made.setMarked(parts)
         setState('ready')
-      } catch {
-        setState('fail')
-      }
-    }, () => setState('fail'))
+      })
+      .catch(() => setState('fail'))
     return () => { dead = true; s?.destroy(); scene.current = null }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [body])
+  }, [])
 
   useEffect(() => {
     const s = scene.current
@@ -115,7 +111,7 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
     scene.current?.turnTo(VIEW[p])
   }
 
-  const text = useMemo(() => damageText({ model, body, paint: paint.name, parts, kinds }), [model, body, paint, parts, kinds])
+  const text = useMemo(() => damageText({ model, paint: paint.name, parts, kinds }), [model, paint, parts, kinds])
   const send = handoff(site, text)
   const copy = async () => {
     try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2500) } catch { /* без буфера обмена просто откроется чат */ }
@@ -127,11 +123,8 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
       {state === 'wait' && !site.posters?.includes('car') && <div className="stage-wait" aria-hidden="true"><span /></div>}
       <p className="stage-hint" aria-live="polite">{state === 'fail'
         ? 'Объёмная модель не открылась на этом устройстве. Выберите детали списком.'
-        : hover ? partName(hover, body) : 'Покрутите машину и нажмите на деталь, где повреждение'}</p>
+        : hover ? partName(hover) : 'Покрутите машину и нажмите на деталь, где повреждение'}</p>
       <div className="stage-tools">
-        <div className="seg" role="group" aria-label="Кузов">
-          {BODIES.map(([id, label]) => <button key={id} type="button" aria-pressed={body === id} onClick={() => setBody(id)}>{label}</button>)}
-        </div>
         <div className="swatches" role="group" aria-label="Цвет машины">
           {PAINTS.map(c => <button key={c.hex} type="button" aria-pressed={paint.hex === c.hex} title={c.name} aria-label={`Цвет ${c.name}`} style={{ background: c.hex }} onClick={() => setPaint(c)} />)}
         </div>
@@ -141,14 +134,14 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
     <form className="picker" onSubmit={e => e.preventDefault()}>
       <h2 className="picker-title">Что повреждено</h2>
       {parts.length ? <ul className="picked">
-        {parts.map(p => <li key={p}><button type="button" onClick={() => toggle(p)} aria-label={`Убрать: ${partName(p, body)}`}>{partName(p, body)}<Icon name="close" size={16} /></button></li>)}
+        {parts.map(p => <li key={p}><button type="button" onClick={() => toggle(p)} aria-label={`Убрать: ${partName(p)}`}>{partName(p)}<Icon name="close" size={16} /></button></li>)}
       </ul> : <p className="picked-empty">Нажмите на деталь на машине или выберите списком. Можно несколько.</p>}
 
       <details className="parts">
         <summary>Выбрать деталь списком</summary>
         {GROUPS.map(([g, ids]) => <div key={g} className="parts-group">
           <p>{g}</p>
-          <div>{ids.map(p => <button key={p} type="button" aria-pressed={parts.includes(p)} onClick={() => pickFromList(p)}>{partName(p, body)}</button>)}</div>
+          <div>{ids.map(p => <button key={p} type="button" aria-pressed={parts.includes(p)} onClick={() => pickFromList(p)}>{partName(p)}</button>)}</div>
         </div>)}
       </details>
 
