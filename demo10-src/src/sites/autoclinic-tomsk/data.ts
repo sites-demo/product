@@ -25,6 +25,7 @@ export const site: Site = {
     { source: '2ГИС', value: '4,9', count: 359, url: 'https://2gis.ru/tomsk/firm/70000001007231077' },
     { source: 'Яндекс Карты', value: '4,9', count: 165, unit: 'оценок', url: 'https://yandex.ru/maps/org/auto_clinic/1288460945/' },
   ],
+  posters: ['align'],
   map: { oid: '1288460945' },
   theme: {
     bg: '#f7f7f6', surface: '#eeeeeb', ink: '#151515', muted: '#5f6062', line: '#dcdcd8',

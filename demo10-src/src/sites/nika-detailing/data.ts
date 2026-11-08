@@ -16,6 +16,7 @@ export const site: Site = {
   hours: 'Круглосуточно',
   phones: [{ display: '+7 913 415-80-00', tel: '+79134158000' }],
   ratings: [{ source: '2ГИС', value: '4,8', count: 802, url: 'https://2gis.ru/novokuznetsk/firm/70000001046051036' }],
+  posters: ['studio'],
   map: { oid: '1122278900' },
   theme: {
     bg: '#0b0d10', surface: '#14181d', ink: '#eef2f6', muted: '#9aa4b0', line: 'rgba(255,255,255,.12)',

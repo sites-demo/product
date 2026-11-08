@@ -23,6 +23,7 @@ export const site: Site = {
     { source: '2ГИС', value: '4,7', count: 217, url: 'https://2gis.ru/omsk/firm/70000001040421170' },
     { source: 'Яндекс Карты', value: '4,8', count: 87, unit: 'оценок', url: 'https://yandex.ru/maps/org/kukhni_yelena/148248519938/' },
   ],
+  posters: ['kitchen'],
   map: { oid: '148248519938' },
   theme: {
     bg: '#1b1916', surface: '#25221e', ink: '#f2eee6', muted: '#aea796', line: 'rgba(255,255,255,.12)',
@@ -36,10 +37,10 @@ export const site: Site = {
   },
   kitchen: {
     facades: [
+      { name: 'Зелёный', hex: '#4e6a52', finish: 'matte' },
       { name: 'Белый', hex: '#efede8', finish: 'matte' },
       { name: 'Шпон дуба', hex: '#b48a60', finish: 'wood' },
       { name: 'Графит', hex: '#37393c', finish: 'matte' },
-      { name: 'Зелёный', hex: '#4e6a52', finish: 'matte' },
       { name: 'Бордо', hex: '#6c2a33', finish: 'matte' },
       { name: 'Серо-голубой', hex: '#a3b2b9', finish: 'matte' },
     ],

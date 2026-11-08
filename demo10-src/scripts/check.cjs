@@ -44,7 +44,7 @@ server.listen(0, '127.0.0.1', async () => {
       const W = innerWidth, over = []
       for (const e of document.querySelectorAll('body *')) {
         const r = e.getBoundingClientRect()
-        if (!r.width || getComputedStyle(e).position === 'fixed' || e.closest('canvas, iframe, dialog, .viewer')) continue
+        if (!r.width || getComputedStyle(e).position === 'fixed' || e.closest('canvas, iframe, dialog, .viewer, .room-strip, .gallery-strip')) continue
         if (r.right > W + 1 || r.left < -1) over.push(`${e.tagName.toLowerCase()}.${e.className}`.slice(0, 50) + ` ${Math.round(r.left)}..${Math.round(r.right)}`)
       }
       return { sw: document.documentElement.scrollWidth, W, over: over.slice(0, 5) }

@@ -28,7 +28,24 @@ function outline(scale = 1) {
 
 const bulge = (x: number, y: number) => 0.045 * Math.max(0, 1 - (x / 0.42) ** 2) * Math.max(0, 1 - (y / 0.16) ** 2)
 
-export function createHeadlightScene(host: HTMLElement, o: { accent: string; onReady?: () => void }): HeadlightScene {
+// Мягкое пятно света для свечения линз: белый центр, прозрачный край.
+function glowTexture() {
+  const c = document.createElement('canvas')
+  c.width = c.height = 128
+  const g = c.getContext('2d')!
+  const r = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+  r.addColorStop(0, 'rgba(255,255,255,1)')
+  r.addColorStop(0.18, 'rgba(255,255,255,.85)')
+  r.addColorStop(0.45, 'rgba(255,255,255,.22)')
+  r.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = r
+  g.fillRect(0, 0, 128, 128)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
+export function createHeadlightScene(host: HTMLElement, o: { accent: string; glow?: boolean; onReady?: () => void }): HeadlightScene {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75))
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -59,6 +76,8 @@ export function createHeadlightScene(host: HTMLElement, o: { accent: string; onR
 
   const root = new THREE.Group()
   scene.add(root)
+  const glowMap = o.glow ? glowTexture() : null
+  const glows: THREE.Sprite[] = []
   const groups: Record<HeadPart, THREE.Group> = { housing: new THREE.Group(), mask: new THREE.Group(), lens: new THREE.Group(), glass: new THREE.Group() }
   for (const g of Object.values(groups)) root.add(g)
 
@@ -105,6 +124,13 @@ export function createHeadlightScene(host: HTMLElement, o: { accent: string; onR
       u.add(fin)
     }
     groups.lens.add(u)
+    if (o.glow) {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowMap, color: '#ffffff', blending: THREE.AdditiveBlending, transparent: true, depthWrite: false }))
+      sp.position.set(x, 0.005, 0.03)
+      sp.renderOrder = 3
+      glows.push(sp)
+      root.add(sp)
+    }
   }
 
   // Стекло фары: выпуклое, по контуру корпуса.
@@ -173,6 +199,15 @@ export function createHeadlightScene(host: HTMLElement, o: { accent: string; onR
     m.glass.roughness = 0.7 * (1 - clear) + 0.02
     m.glass.opacity = 0.6 * (1 - clear) + 0.16
     m.glass.clearcoat = 0.2 + 0.8 * clear
+    // Мутное стекло рассеивает свет: пятно большое, тусклое и жёлтое. Прозрачное: яркая точка без ореола.
+    for (const sp of glows) {
+      const k = 0.36 - 0.2 * clear
+      sp.scale.set(k, k, 1)
+      const mat = sp.material
+      mat.color.setRGB(1, 0.78 + 0.22 * clear, 0.45 + 0.55 * clear)
+      mat.opacity = 0.42 + 0.58 * clear
+    }
+    m.drl.color.setRGB(1.1 + 1.3 * clear, 1 + 1.6 * clear, 0.7 + 2.3 * clear)
     for (const [k, g] of Object.entries(groups)) {
       g.traverse(x => {
         const mesh = x as THREE.Mesh
@@ -226,6 +261,8 @@ export function createHeadlightScene(host: HTMLElement, o: { accent: string; onR
       io.disconnect(); ro.disconnect()
       for (const g of geos) g.dispose()
       for (const mm of Object.values(m)) mm.dispose()
+      for (const sp of glows) sp.material.dispose()
+      glowMap?.dispose()
       env.dispose(); pmrem.dispose()
       renderer.dispose()
       renderer.domElement.remove()

@@ -22,6 +22,7 @@ export const site: Site = {
   telegram: 'KRM_42',
   vk: 'https://vk.ru/krm.kitchens.rooms.materials',
   ratings: [{ source: '2ГИС', value: '4,7', count: 638, url: 'https://2gis.ru/kemerovo/firm/70000001044082409' }],
+  posters: ['kitchen'],
   map: { oid: '32689311379' },
   theme: {
     bg: '#f6f4f0', surface: '#ece8e1', ink: '#1c1a17', muted: '#625d55', line: '#dcd6cc',
@@ -42,9 +43,9 @@ export const site: Site = {
       { name: 'Орех', hex: '#6a4932', finish: 'wood' },
     ],
     counters: [
+      { name: 'Дерево', hex: '#a87b50', kind: 'wood' },
       { name: 'Белый мрамор', hex: '#eeedea', kind: 'stone' },
       { name: 'Чёрный камень', hex: '#232324', kind: 'dark' },
-      { name: 'Дерево', hex: '#a87b50', kind: 'wood' },
       { name: 'Бетон', hex: '#9f9d98', kind: 'concrete' },
     ],
     who: 'Дизайнер',

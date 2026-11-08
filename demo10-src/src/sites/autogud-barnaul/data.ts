@@ -22,6 +22,7 @@ export const site: Site = {
   whatsapp: '79050845944',
   telegram: '+79050845944',
   ratings: [{ source: '2ГИС', value: '4,9', count: 290, url: 'https://2gis.ru/barnaul/firm/70000001036339684' }],
+  posters: ['car'],
   map: { oid: '177255517164' },
   theme: {
     bg: '#f6f5f1', surface: '#ecebe5', ink: '#141414', muted: '#5d5c57', line: '#dad8d0',

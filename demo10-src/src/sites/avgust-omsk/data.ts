@@ -22,6 +22,7 @@ export const site: Site = {
   whatsapp: '79045854099',
   email: 'cto-avgust@yandex.ru',
   ratings: [{ source: '2ГИС', value: '4,9', count: 904, url: 'https://2gis.ru/omsk/firm/282003257689407' }],
+  posters: ['car'],
   map: { oid: '1256430793' },
   theme: {
     bg: '#f5f6f8', surface: '#e9edf2', ink: '#0f1720', muted: '#5a6573', line: '#d6dce3',

@@ -15,6 +15,14 @@ export function HeadlightView({ site, mode, parts, clearDefault = false }: { sit
   const [clear, setClear] = useState(clearDefault)
   const [open, setOpen] = useState(mode === 'explode')
   const [active, setActive] = useState<HeadPart | null>(null)
+  const [touched, setTouched] = useState(false)
+
+  // Первый экран сам показывает разницу: мутное стекло и после полировки, пока человек не нажмёт сам.
+  useEffect(() => {
+    if (mode !== 'hero' || touched || !ready || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setClear(v => !v), 2800)
+    return () => clearInterval(id)
+  }, [mode, touched, ready])
 
   useEffect(() => {
     const el = host.current
@@ -26,7 +34,7 @@ export function HeadlightView({ site, mode, parts, clearDefault = false }: { sit
       io.disconnect()
       import('../../three/headlight').then(({ createHeadlightScene }) => {
         if (dead) return
-        try { s = createHeadlightScene(el, { accent }); scene.current = s; setReady(true) } catch { /* без 3D остаются тексты */ }
+        try { s = createHeadlightScene(el, { accent, glow: mode === 'hero' }); scene.current = s; setReady(true) } catch { /* без 3D остаются тексты */ }
       })
     }, { rootMargin: '400px 0px' })
     io.observe(el)
@@ -44,8 +52,8 @@ export function HeadlightView({ site, mode, parts, clearDefault = false }: { sit
   if (mode === 'hero') return <div className="hl-hero">
     <div className={'hl-canvas' + (poster ? ' has-poster' : '') + (ready ? ' ready' : '')} ref={host} role="img" aria-label={clear ? 'Фара после полировки: стекло прозрачное' : 'Фара до полировки: стекло мутное и жёлтое'}><Poster site={site} name="headlight" /></div>
     <div className="seg hl-toggle" role="group" aria-label="Состояние стекла">
-      <button type="button" aria-pressed={!clear} onClick={() => setClear(false)}>Мутное стекло</button>
-      <button type="button" aria-pressed={clear} onClick={() => setClear(true)}>После полировки</button>
+      <button type="button" aria-pressed={!clear} onClick={() => { setTouched(true); setClear(false) }}>Мутное стекло</button>
+      <button type="button" aria-pressed={clear} onClick={() => { setTouched(true); setClear(true) }}>После полировки</button>
     </div>
   </div>
 

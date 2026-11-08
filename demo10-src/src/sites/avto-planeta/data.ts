@@ -24,6 +24,7 @@ export const site: Site = {
     { source: '2ГИС', value: '4,7', count: 197, url: 'https://2gis.ru/novokuznetsk/firm/70000001020139044' },
     { source: 'Яндекс Карты', value: '4,7', count: 22, unit: 'оценки', url: 'https://yandex.ru/maps/org/avto_planeta/201226217436/' },
   ],
+  posters: ['car'],
   map: { oid: '201226217436' },
   theme: {
     bg: '#0f1114', surface: '#181b1f', ink: '#eff1f4', muted: '#9ba3ad', line: 'rgba(255,255,255,.12)',

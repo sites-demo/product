@@ -26,6 +26,7 @@ export const site: Site = {
     { source: '2ГИС', value: '4,9', count: 222, url: 'https://2gis.ru/barnaul/firm/70000001049036649' },
     { source: 'Яндекс Карты', value: '4,7', count: 26, unit: 'оценок', url: 'https://yandex.ru/maps/org/bossfar/23199845130/' },
   ],
+  posters: ['headlight'],
   map: { oid: '23199845130' },
   theme: {
     bg: '#0e0f11', surface: '#17191c', ink: '#f1f2f4', muted: '#9ea3aa', line: 'rgba(255,255,255,.12)',

@@ -72,6 +72,13 @@ export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene 
   scene.add(rim)
 
   const mats = carMaterials(o.paint)
+  if (o.studio === 'hex') {
+    // Под сотами чёткое зеркало на простой модели рябит. Чуть матовее лак: отражение мягче и дороже.
+    mats.paint.roughness = 0.42
+    mats.paint.clearcoatRoughness = 0.13
+    mats.glass.clearcoatRoughness = 0.22
+    mats.glass.roughness = 0.3
+  }
   const car = buildCar(o.type, mats)
   const turntable = new THREE.Group()
   turntable.add(car.group)

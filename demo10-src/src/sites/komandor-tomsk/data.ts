@@ -23,6 +23,7 @@ export const site: Site = {
   whatsapp: '79016142007',
   vk: 'https://vk.ru/alexeymebeltomsk',
   ratings: [{ source: '2ГИС', value: '5,0', count: 344, url: 'https://2gis.ru/tomsk/firm/70000001029644378' }],
+  posters: ['kitchen'],
   map: { text: 'Томск, улица Пушкина, 59/1' },
   theme: {
     bg: '#1c1d1f', surface: '#26282b', ink: '#f1efec', muted: '#a5a5a5', line: 'rgba(255,255,255,.13)',
@@ -36,8 +37,8 @@ export const site: Site = {
   },
   kitchen: {
     facades: [
-      { name: 'Белый', hex: '#eeece6', finish: 'matte' },
       { name: 'Синий', hex: '#2f4762', finish: 'matte' },
+      { name: 'Белый', hex: '#eeece6', finish: 'matte' },
       { name: 'Бежевый глянец', hex: '#d9c9b1', finish: 'gloss' },
       { name: 'Дерево', hex: '#ae825a', finish: 'wood' },
       { name: 'Графит', hex: '#3a3c40', finish: 'matte' },
