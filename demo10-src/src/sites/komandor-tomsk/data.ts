@@ -25,6 +25,7 @@ export const site: Site = {
   ratings: [{ source: '2ГИС', value: '5,0', count: 344, url: 'https://2gis.ru/tomsk/firm/70000001029644378' }],
   posters: ['kitchen'],
   map: { text: 'Томск, улица Пушкина, 59/1' },
+  logo: { src: 'logo.webp', w: 400, h: 326, height: 46 },
   theme: {
     bg: '#1c1d1f', surface: '#26282b', ink: '#f1efec', muted: '#a5a5a5', line: 'rgba(255,255,255,.13)',
     accent: '#ff6633', onAccent: '#1a1a1a', stage: '#2a2c2f', dark: true, heading: 'onest', body: 'onest', headingWeight: 700,

@@ -26,6 +26,7 @@ export const site: Site = {
   ],
   posters: ['car'],
   map: { oid: '201226217436' },
+  logo: { src: 'logo.webp', w: 720, h: 142 },
   theme: {
     bg: '#0f1114', surface: '#181b1f', ink: '#eff1f4', muted: '#9ba3ad', line: 'rgba(255,255,255,.12)',
     accent: '#ff8562', onAccent: '#1a0c06', stage: '#0b0c0e', dark: true, heading: 'manrope', body: 'manrope', headingWeight: 800,

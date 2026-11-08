@@ -41,7 +41,7 @@ export type Site = {
   ratings: Rating[]
   /** Виджет Яндекс Карт: id организации или координаты. */
   map?: { oid?: string; lat?: number; lon?: number; text?: string }
-  logo?: { src: string; w: number; h: number; onDark?: string }
+  logo?: { src: string; w: number; h: number; onDark?: string; /** Высота в шапке, если логотип почти квадратный и в 40 px не читается. */ height?: number }
   theme: {
     bg: string
     surface: string
@@ -85,7 +85,7 @@ export type Site = {
     roomPhotos?: Photo[]
     roomsNote?: string
     activities: { winter: string[]; summer: string[] }
-    features: { id: string; title: string; text: string; photo?: Photo }[]
+    features: { id: string; title: string; text: string; photo?: Photo; /** Короткое имя для меню. */ nav?: string }[]
     offers?: { title: string; text: string }[]
   }
   /** Для автосервиса: с чем приезжают, списком для заявки. */

@@ -6,7 +6,7 @@ export function Brand({ site, light }: { site: Site; light?: boolean }) {
   const logo = site.logo
   const src = logo && (light && logo.onDark ? logo.onDark : logo.src)
   return <a className="brand" href="#top" aria-label={`${site.name}, в начало страницы`}>
-    {src ? <img src={asset(src)} alt="" width={logo!.w} height={logo!.h} /> : <span className="brand-name">{site.name}</span>}
+    {src ? <img src={asset(src)} alt="" width={logo!.w} height={logo!.h} style={logo!.height ? { height: logo!.height, maxWidth: 'none' } : undefined} /> : <span className="brand-name">{site.name}</span>}
   </a>
 }
 

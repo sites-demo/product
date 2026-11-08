@@ -25,6 +25,7 @@ export const site: Site = {
   ],
   posters: ['kitchen'],
   map: { oid: '148248519938' },
+  logo: { src: 'logo.webp', w: 720, h: 196 },
   theme: {
     bg: '#1b1916', surface: '#25221e', ink: '#f2eee6', muted: '#aea796', line: 'rgba(255,255,255,.12)',
     accent: '#a7ac6b', onAccent: '#16170f', stage: '#2a2722', dark: true, heading: 'lora', body: 'manrope', headingWeight: 500,
@@ -106,6 +107,5 @@ export const site: Site = {
     p('02', 'Кухня-столовая с деревянным столом'),
     p('09', 'Выдвижной ящик с медной мойкой'),
     p('10', 'Ящик с органайзером для посуды'),
-    p('17', 'Барная стойка с подсветкой и витриной'),
   ],
 }

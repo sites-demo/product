@@ -20,7 +20,7 @@ export function HotelPage({ site }: { site: Site }) {
   // После загрузки показываем тот сезон, что сейчас за окном: с ноября по март зима.
   useEffect(() => { const m = new Date().getMonth(); setSeason(m >= 10 || m <= 2 ? 'winter' : 'summer') }, [])
   const photo = h.seasons[season]
-  const nav: [string, string][] = [['#rooms', 'Номера'], ['#season', 'Чем заняться'], ...h.features.map(f => [`#${f.id}`, f.title] as [string, string]), ['#contacts', 'Как добраться']]
+  const nav: [string, string][] = [['#rooms', 'Номера'], ['#season', 'Чем заняться'], ...h.features.map(f => [`#${f.id}`, f.nav ?? f.title] as [string, string]), ['#contacts', 'Как добраться']]
   return <>
     <Header site={site} nav={nav.slice(0, 5)} />
     <main>

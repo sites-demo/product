@@ -24,6 +24,7 @@ export const site: Site = {
   ratings: [{ source: '2ГИС', value: '4,7', count: 638, url: 'https://2gis.ru/kemerovo/firm/70000001044082409' }],
   posters: ['kitchen'],
   map: { oid: '32689311379' },
+  logo: { src: 'logo.svg', w: 1080, h: 709, onDark: 'logo-light.svg' },
   theme: {
     bg: '#f6f4f0', surface: '#ece8e1', ink: '#1c1a17', muted: '#625d55', line: '#dcd6cc',
     accent: '#1d7547', onAccent: '#ffffff', stage: '#e7e3dc', heading: 'manrope', body: 'manrope', headingWeight: 700,
