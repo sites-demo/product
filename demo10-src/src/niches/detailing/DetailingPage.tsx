@@ -8,6 +8,7 @@ import { RatingLine } from '../../ui/RatingLine'
 import { Facts, Praise, Works } from '../../ui/Sections'
 import { telHref } from '../../ui/links'
 import { OrderBuilder } from './OrderBuilder'
+import { Poster } from '../../ui/Poster'
 import '../body/body.css'
 import './detailing.css'
 
@@ -32,7 +33,7 @@ function Studio({ site }: { site: Site }) {
     return () => { dead = true; destroy?.() }
   }, [site])
   return <div className="dstudio">
-    <div className={ready ? 'dstudio-canvas ready' : 'dstudio-canvas'} ref={host} role="img" aria-label="Чёрная машина в боксе под светом сот" />
+    <div className={'dstudio-canvas' + (site.posters?.includes('studio') ? ' has-poster' : '') + (ready ? ' ready' : '')} ref={host} role="img" aria-label="Чёрная машина в боксе под светом сот"><Poster site={site} name="studio" /></div>
     <p className="stage-hint">Потяните, чтобы повернуть машину</p>
   </div>
 }

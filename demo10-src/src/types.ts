@@ -75,6 +75,17 @@ export type Site = {
     parts: { part: 'glass' | 'lens' | 'mask' | 'housing'; title: string; text: string; price?: string }[]
     issues: string[]
   }
+  /** Для загородного отеля: фото двух сезонов, номера, чем заняться летом и зимой. Только то, что есть у них. */
+  hotel?: {
+    seasons: { winter: Photo; summer: Photo }
+    /** Какой сезон показать сразу, пока страница не узнала дату. */
+    season?: 'winter' | 'summer'
+    rooms: { name: string; text?: string; photo?: Photo; price?: string }[]
+    roomsNote?: string
+    activities: { winter: string[]; summer: string[] }
+    features: { id: string; title: string; text: string; photo?: Photo }[]
+    offers?: { title: string; text: string }[]
+  }
   /** Для детейлинга: показывать ли лампу с царапинами (только если студия правда полирует) и цвет капота. */
   detailing?: { polish?: boolean; paint?: string }
   /** Как проходит заказ, словами самой компании. */
@@ -88,6 +99,8 @@ export type Site = {
   /** Что хвалят клиенты, своими словами (не цитаты). */
   praise?: string[]
   photos: Photo[]
+  /** Для каких 3D-сцен есть картинка-заглушка в public/posters (её снимает scripts/posters.cjs). */
+  posters?: string[]
   /** Что ещё не подтвердили владельцы: на страницу не выводится. */
   todo?: string[]
 }

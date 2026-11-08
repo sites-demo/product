@@ -3,6 +3,7 @@ import type { Site } from '../../types'
 import type { KitchenConfig, KitchenScene, Layout } from '../../three/kitchen'
 import { handoff, telHref } from '../../ui/links'
 import { Icon } from '../../ui/Icon'
+import { Poster } from '../../ui/Poster'
 
 const LAYOUTS: [Layout, string][] = [['straight', 'Прямая'], ['corner', 'Угловая'], ['u', 'П-образная'], ['island', 'С островом']]
 const fmt = (m: number) => m.toFixed(1).replace('.', ',') + ' м'
@@ -72,7 +73,7 @@ export function Configurator({ site }: { site: Site }) {
 
   return <div className="cfg">
     <div className={'cfg-stage cfg-' + state}>
-      <div className="cfg-canvas" ref={host} role="img" aria-label="Кухня в 3D: меняется вместе с выбором справа. Её можно повернуть пальцем." />
+      <div className={'cfg-canvas' + (site.posters?.includes('kitchen') ? ' has-poster' : '') + (state === 'ready' ? ' ready' : '')} ref={host} role="img" aria-label="Кухня в 3D: меняется вместе с выбором справа. Её можно повернуть пальцем."><Poster site={site} name="kitchen" /></div>
       {state === 'fail' && <p className="cfg-fail">Объёмная модель не открылась на этом устройстве, но выбор ниже всё равно попадёт в сообщение.</p>}
     </div>
     <form className="cfg-panel" onSubmit={e => e.preventDefault()}>

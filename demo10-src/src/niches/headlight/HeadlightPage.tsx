@@ -66,7 +66,7 @@ export function HeadlightPage({ site }: { site: Site }) {
             <RatingLine site={site} />
           </div>
           <div className="est-grid">
-            <HeadlightView accent={site.theme.accent} mode="hero" />
+            <HeadlightView site={site} mode="hero" />
             <Ask site={site} />
           </div>
         </div>
@@ -88,7 +88,7 @@ export function HeadlightPage({ site }: { site: Site }) {
             <h2>Что внутри фары и что с этим делаем</h2>
             <p>Нажмите на деталь, чтобы увидеть её в фаре.</p>
           </div>
-          <HeadlightView accent={site.theme.accent} mode="explode" parts={site.headlight.parts} clearDefault />
+          <HeadlightView site={site} mode="explode" parts={site.headlight.parts} clearDefault />
         </div>
       </section> : null}
 

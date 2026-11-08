@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import type { HeadPart, HeadlightScene } from '../../three/headlight'
+import type { Site } from '../../types'
+import { Poster } from '../../ui/Poster'
 
 export type PartInfo = { part: HeadPart; title: string; text: string; price?: string }
 
 /** Фара в 3D: в первом экране стекло мутнеет и проясняется, в разделе ниже фара разбирается на детали. */
-export function HeadlightView({ accent, mode, parts, clearDefault = false }: { accent: string; mode: 'hero' | 'explode'; parts?: PartInfo[]; clearDefault?: boolean }) {
+export function HeadlightView({ site, mode, parts, clearDefault = false }: { site: Site; mode: 'hero' | 'explode'; parts?: PartInfo[]; clearDefault?: boolean }) {
+  const accent = site.theme.accent
+  const poster = mode === 'hero' && !!site.posters?.includes('headlight')
   const host = useRef<HTMLDivElement>(null)
   const scene = useRef<HeadlightScene | null>(null)
   const [ready, setReady] = useState(false)
@@ -38,7 +42,7 @@ export function HeadlightView({ accent, mode, parts, clearDefault = false }: { a
   }, [clear, open, active, ready])
 
   if (mode === 'hero') return <div className="hl-hero">
-    <div className={ready ? 'hl-canvas ready' : 'hl-canvas'} ref={host} role="img" aria-label={clear ? 'Фара после полировки: стекло прозрачное' : 'Фара до полировки: стекло мутное и жёлтое'} />
+    <div className={'hl-canvas' + (poster ? ' has-poster' : '') + (ready ? ' ready' : '')} ref={host} role="img" aria-label={clear ? 'Фара после полировки: стекло прозрачное' : 'Фара до полировки: стекло мутное и жёлтое'}><Poster site={site} name="headlight" /></div>
     <div className="seg hl-toggle" role="group" aria-label="Состояние стекла">
       <button type="button" aria-pressed={!clear} onClick={() => setClear(false)}>Мутное стекло</button>
       <button type="button" aria-pressed={clear} onClick={() => setClear(true)}>После полировки</button>

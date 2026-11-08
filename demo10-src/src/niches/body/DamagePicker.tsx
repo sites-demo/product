@@ -3,6 +3,7 @@ import type { Site } from '../../types'
 import type { BodyType, PanelId } from '../../three/car'
 import type { CarScene } from '../../three/carScene'
 import { handoff, telHref } from '../../ui/links'
+import { Poster } from '../../ui/Poster'
 import { Icon } from '../../ui/Icon'
 
 const NAMES: Record<PanelId, string> = {
@@ -122,8 +123,8 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
 
   return <div className="est-grid">
     <div className={'stage stage-' + state}>
-      <div className="stage-canvas" ref={host} aria-label="Машина в 3D. Покрутите её и нажмите на деталь, где повреждение. Детали можно выбрать и списком ниже." role="img" />
-      {state === 'wait' && <div className="stage-wait" aria-hidden="true"><span /></div>}
+      <div className={'stage-canvas' + (site.posters?.includes('car') ? ' has-poster' : '') + (state === 'ready' ? ' ready' : '')} ref={host} aria-label="Машина в 3D. Покрутите её и нажмите на деталь, где повреждение. Детали можно выбрать и списком ниже." role="img"><Poster site={site} name="car" /></div>
+      {state === 'wait' && !site.posters?.includes('car') && <div className="stage-wait" aria-hidden="true"><span /></div>}
       <p className="stage-hint" aria-live="polite">{state === 'fail'
         ? 'Объёмная модель не открылась на этом устройстве. Выберите детали списком.'
         : hover ? partName(hover, body) : 'Покрутите машину и нажмите на деталь, где повреждение'}</p>

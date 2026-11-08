@@ -163,15 +163,15 @@ export function createHeadlightScene(host: HTMLElement, o: { accent: string; onR
 
   let explode = 0, goalExplode = 0, clear = 0, goalClear = 0
   let active: HeadPart | null = null
-  const tint = new THREE.Color('#d9b36b'), white = new THREE.Color('#ffffff')
+  const tint = new THREE.Color('#cfa458'), white = new THREE.Color('#ffffff')
   const apply = () => {
     groups.glass.position.z = 0.36 * explode
     groups.lens.position.z = 0.19 * explode
     groups.mask.position.z = 0.09 * explode
     groups.housing.position.z = -0.04 * explode
     m.glass.color.copy(tint).lerp(white, clear)
-    m.glass.roughness = 0.5 * (1 - clear) + 0.02
-    m.glass.opacity = 0.78 * (1 - clear) + 0.16
+    m.glass.roughness = 0.7 * (1 - clear) + 0.02
+    m.glass.opacity = 0.6 * (1 - clear) + 0.16
     m.glass.clearcoat = 0.2 + 0.8 * clear
     for (const [k, g] of Object.entries(groups)) {
       g.traverse(x => {

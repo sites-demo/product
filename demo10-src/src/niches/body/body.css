@@ -28,12 +28,6 @@
 @keyframes wait { from { opacity: .35; } to { opacity: 1; } }
 .stage-tools { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; padding: 0 12px 12px; }
 @media (min-width: 1024px) { .stage-tools { position: absolute; left: 14px; right: 14px; bottom: 14px; padding: 0; } }
-.seg { display: inline-flex; flex-wrap: wrap; max-width: 100%; padding: 3px; border-radius: 10px; background: color-mix(in srgb, var(--bg) 82%, transparent); border: 1px solid var(--line); backdrop-filter: blur(6px); }
-.seg button { flex: 1 1 auto; border: 0; background: transparent; padding: 8px 12px; border-radius: 7px; font-size: 14px; cursor: pointer; color: var(--muted); }
-.seg button[aria-pressed='true'] { background: var(--ink); color: var(--bg); }
-.swatches { display: flex; gap: 7px; }
-.swatches button { width: 30px; height: 30px; border-radius: 8px; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--line); cursor: pointer; padding: 0; }
-.swatches button[aria-pressed='true'] { box-shadow: 0 0 0 2px var(--ink); }
 
 .picker { background: var(--surface); border-radius: 16px; padding: 22px; display: grid; gap: 20px; align-content: start; border: 1px solid var(--line); }
 @media (max-width: 420px) { .picker { padding: 18px 16px; } }
