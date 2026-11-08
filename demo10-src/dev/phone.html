@@ -1,0 +1,10 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><style>body{margin:0;background:#f1efeb}.c{height:300px}</style></head>
+<body><div class="c" id="a"></div><div class="c" id="b"></div><script type="module">
+import { createCarScene } from '../src/three/carScene'
+const q = new URLSearchParams(location.search)
+const s = createCarScene(document.getElementById('a'), { type: q.get('type') || 'sedan', paint: q.get('paint') || '#e7e4df', accent: '#e4572e', yaw: -0.65, autoRotate: false })
+s.setMarked(['doorFR','fenderFR'])
+createCarScene(document.getElementById('b'), { type: q.get('type') || 'sedan', paint: '#1c2026', accent: '#2f9bff', yaw: 0.6, autoRotate: false, dark: true })
+document.getElementById('b').style.background='#0c0e11'
+window.__ready = true
+</script></body></html>

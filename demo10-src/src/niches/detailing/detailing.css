@@ -1,0 +1,34 @@
+.dh { padding: 34px 0 40px; }
+@media (min-width: 1024px) { .dh { padding: 48px 0 64px; } }
+.dh-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.dstudio { position: relative; margin-top: 24px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(90% 80% at 50% 30%, #1b1e23 0%, #060708 75%); }
+.dstudio-canvas { position: relative; height: clamp(260px, 62vw, 620px); cursor: grab; touch-action: pan-y; opacity: 0; transition: opacity .9s ease; }
+.dstudio-canvas.ready, .dstudio-canvas.has-poster { opacity: 1; }
+.dstudio-canvas canvas { position: absolute; inset: 0; display: block; }
+
+/* Выбор услуг */
+.order { display: grid; gap: 24px; }
+@media (min-width: 1024px) { .order { grid-template-columns: minmax(0, 1fr) 380px; gap: 40px; align-items: start; } .order-side { position: sticky; top: 24px; } }
+.order-list { display: grid; gap: 32px; }
+.order-group h3 { margin-bottom: 10px; }
+.order-group ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.order-group button { width: 100%; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 14px; align-items: center; text-align: left; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; }
+.order-group button[aria-pressed='true'] { border-color: var(--accent); }
+.order-box { width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--muted); }
+button[aria-pressed='true'] .order-box { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 3px var(--surface); }
+.order-name { display: grid; gap: 2px; min-width: 0; }
+.order-name b { font-weight: 600; }
+.order-name small { color: var(--muted); font-size: 14px; }
+.order-price { white-space: nowrap; font-weight: 600; }
+@media (max-width: 420px) { .order-group button { grid-template-columns: 22px minmax(0, 1fr); } .order-price { grid-column: 2; white-space: normal; } }
+.order-picked { list-style: none; margin: -6px 0 0; padding: 0; display: grid; gap: 6px; font-size: 15px; }
+.order-picked li { display: flex; justify-content: space-between; gap: 12px; }
+.order-picked li span:last-child { white-space: nowrap; color: var(--muted); }
+.order-total { font: var(--hw) 24px/1.2 var(--hf); }
+
+/* Лампа над капотом */
+.swirl { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #0b0c0e; height: clamp(260px, 56vw, 540px); }
+.swirl canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: pan-y; }
+.swirl-l, .swirl-r { position: absolute; top: 14px; font-size: 14px; color: rgba(255, 255, 255, .78); background: rgba(0, 0, 0, .45); padding: 6px 10px; border-radius: 8px; pointer-events: none; }
+.swirl-l { left: 14px; }
+.swirl-r { right: 14px; }
