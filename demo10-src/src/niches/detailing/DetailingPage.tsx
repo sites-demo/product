@@ -21,14 +21,15 @@ function Studio({ site }: { site: Site }) {
     const el = host.current
     if (!el) return
     let dead = false, destroy: (() => void) | undefined
-    import('../../three/carScene').then(({ createCarScene }) => {
-      if (dead) return
-      try {
-        const s = createCarScene(el, { type: site.car?.type ?? 'sedan', paint: site.detailing?.paint ?? '#0c0d10', accent: site.theme.accent, dark: true, studio: 'hex', yaw: -0.8 })
+    import('../../three/carScene')
+      .then(({ createCarScene }) => (dead ? undefined : createCarScene(el, { type: site.car?.type ?? 'sedan', paint: site.detailing?.paint ?? '#0c0d10', accent: site.theme.accent, dark: true, studio: 'hex', yaw: -0.8 })))
+      .then(s => {
+        if (!s) return
+        if (dead) { s.destroy(); return }
         destroy = s.destroy
         setReady(true)
-      } catch { /* без 3D остаётся фон */ }
-    })
+      })
+      .catch(() => { /* без 3D остаётся фон */ })
     return () => { dead = true; destroy?.() }
   }, [site])
   return <div className="dstudio">
@@ -82,7 +83,7 @@ export function DetailingPage({ site }: { site: Site }) {
       <Praise site={site} />
       <Contacts site={site} />
     </main>
-    <Footer site={site} nav={nav} />
+    <Footer site={site} nav={nav} carCredit />
     <MobileBar site={site} action="Выбрать услуги" href="#order" />
   </>
 }

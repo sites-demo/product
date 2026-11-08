@@ -1,6 +1,7 @@
-// Дверь крупным планом в малярном боксе: полосы света отражаются в лаке.
+// Дверь настоящей модели крупным планом в малярном боксе: полосы света отражаются в лаке.
 // По вмятине полосы гнутся, после ремонта снова идут ровно. Этап задаётся числом 0..4.
 import * as THREE from 'three'
+import { loadCar } from './carModel'
 
 export type DoorScene = { setStage: (s: number) => void; destroy: () => void }
 
@@ -9,17 +10,7 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 
-// Поверхность боковины: выпуклость, изгиб по длине, ребро и завал над ним.
-function surf(x: number, y: number) {
-  const t = (y - 0.6) / 0.48
-  let z = 0.05 * (1 - t * t)
-  z -= 0.07 * (x / 1.5) ** 2
-  z += 0.004 * Math.exp(-(((y - 0.84) / 0.012) ** 2))
-  if (y > 0.84) z -= (y - 0.84) * 0.16
-  return z
-}
-
-const DENT = new THREE.Vector2(-0.12, 0.7)
+const DENT = new THREE.Vector2(-0.16, 0.64)
 const DENT_R = 0.15
 const DENT_DEPTH = 0.02
 
@@ -60,16 +51,8 @@ function boothEnvironment(renderer: THREE.WebGLRenderer) {
   return tex
 }
 
-function panelGeometry(x0: number, x1: number, y0: number, y1: number, nx: number, ny: number) {
-  const g = new THREE.PlaneGeometry(x1 - x0, y1 - y0, nx, ny)
-  g.translate((x0 + x1) / 2, (y0 + y1) / 2, 0)
-  const p = g.attributes.position as THREE.BufferAttribute
-  for (let i = 0; i < p.count; i++) p.setZ(i, surf(p.getX(i), p.getY(i)))
-  g.computeVertexNormals()
-  return g
-}
-
-export function createDoorScene(host: HTMLElement, o: { paint: string; onReady?: () => void }): DoorScene {
+export async function createDoorScene(host: HTMLElement, o: { paint: string; onReady?: () => void }): Promise<DoorScene> {
+  const car = await loadCar(o.paint)
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75))
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -79,28 +62,32 @@ export function createDoorScene(host: HTMLElement, o: { paint: string; onReady?:
   const scene = new THREE.Scene()
   const env = boothEnvironment(renderer)
   scene.environment = env
+  scene.add(car.group)
+  // Без «металлика» в лаке: в боксе полосы света должны идти чисто, иначе зерно спорит с вмятиной.
+  for (const m of car.paint) { m.roughness = 0.3; m.clearcoatRoughness = 0.02; m.normalMap = null; m.needsUpdate = true }
 
-  const paint = new THREE.MeshPhysicalMaterial({ color: o.paint, metalness: 0.45, roughness: 0.32, clearcoat: 1, clearcoatRoughness: 0.02 })
-  const sidePaint = paint.clone()
-  const black = new THREE.MeshStandardMaterial({ color: '#0b0c0e', roughness: 0.6 })
-  const glass = new THREE.MeshPhysicalMaterial({ color: '#0a0d10', metalness: 0, roughness: 0.04, clearcoat: 1 })
-  const chrome = new THREE.MeshStandardMaterial({ color: '#d7dbe0', metalness: 1, roughness: 0.12 })
-
-  // Этап работ передаётся в шейдер двери: металл, грунт, матовая краска, царапины.
+  // Правая передняя дверь: на ней показываем этапы. Вмятина рисуется в шейдере через нормаль,
+  // поэтому полосы света гнутся плавно, даже где сетка модели крупная.
+  const doorMeshes = car.panels.get('doorFR') ?? []
+  const paint = doorMeshes[0].material as THREE.MeshPhysicalMaterial
+  paint.normalMap = null
   const u = {
     uMetal: { value: 0 }, uPrimer: { value: 0 }, uMatte: { value: 0 }, uScratch: { value: 1 },
-    uDent: { value: DENT.clone() },
+    uDent: { value: DENT.clone() }, uDepth: { value: DENT_DEPTH }, uR: { value: DENT_R },
+    uNM: { value: new THREE.Matrix3() },
   }
   paint.onBeforeCompile = sh => {
     Object.assign(sh.uniforms, u)
     sh.vertexShader = sh.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vObj;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;')
+      .replace('#include <common>', '#include <common>\nvarying vec3 vObj;\nvarying vec3 vObjN;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;\nvObjN = normal;')
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', `#include <common>
 varying vec3 vObj;
-uniform float uMetal, uPrimer, uMatte, uScratch;
+varying vec3 vObjN;
+uniform float uMetal, uPrimer, uMatte, uScratch, uDepth, uR;
 uniform vec2 uDent;
+uniform mat3 uNM;
 float seg(vec2 p, vec2 a, vec2 b) { vec2 pa = p - a, ba = b - a; float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0); return length(pa - ba * h); }
 float scratches(vec2 p) {
   vec2 q = p - uDent;
@@ -111,7 +98,26 @@ float scratches(vec2 p) {
   d = min(d, seg(q, vec2(0.02, 0.14), vec2(0.3, 0.16)));
   d = min(d, seg(q, vec2(-0.12, -0.06), vec2(0.06, -0.045)));
   return 1.0 - smoothstep(0.0012, 0.0032, d);
+}
+// Глубина вмятины: вытянутая ямка с заломом по линии удара.
+float dentH(vec2 p) {
+  float dx = (p.x - uDent.x) / uR, dy = (p.y - uDent.y) / (uR * 0.55);
+  float crease = 0.4 * exp(-(dy * dy) / 0.05) * exp(-(dx * dx) / 0.9);
+  return -uDepth * (exp(-(dx * dx + dy * dy)) + crease);
 }`)
+      .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+if (uDepth > 0.0001) {
+  float e = 0.002;
+  float hx = (dentH(vObj.xy + vec2(e, 0.0)) - dentH(vObj.xy - vec2(e, 0.0))) / (2.0 * e);
+  float hy = (dentH(vObj.xy + vec2(0.0, e)) - dentH(vObj.xy - vec2(0.0, e))) / (2.0 * e);
+  vec3 nObj = normalize(normalize(vObjN) + vec3(-hx, -hy, 0.0));
+  normal = normalize(uNM * nObj);
+  #ifdef DOUBLE_SIDED
+    normal *= faceDirection;
+  #endif
+}`)
+      .replace('#include <clearcoat_normal_fragment_maps>', `#include <clearcoat_normal_fragment_maps>
+clearcoatNormal = normal;`)
       .replace('#include <color_fragment>', `#include <color_fragment>
 vec2 q = (vObj.xy - uDent) * vec2(1.0, 1.45);
 float dd = length(q);
@@ -120,7 +126,6 @@ float n1 = fract(sin(dot(floor(vObj.xy * 900.0), vec2(12.9898, 78.233))) * 43758
 // Зачистка: голый металл, вокруг кольца старого грунта и краски, как после шлифовки.
 float inMetal = 1.0 - smoothstep(0.135, 0.145, dd);
 float ring1 = (1.0 - smoothstep(0.16, 0.168, dd)) * (1.0 - inMetal);
-float ring2 = (1.0 - smoothstep(0.18, 0.19, dd)) * (1.0 - inMetal) * (1.0 - ring1);
 float sanded = (1.0 - smoothstep(0.2, 0.24, dd + 0.01 * sin(ang * 7.0)));
 float mMetal = inMetal * uMetal;
 float edge = 0.26 + 0.005 * sin(ang * 3.0 + 1.3) + 0.003 * sin(ang * 7.0);
@@ -147,68 +152,14 @@ metalnessFactor = mix(metalnessFactor, 0.0, max(mPrimer, mScr));`)
       .replace('#include <lights_physical_fragment>', `#include <lights_physical_fragment>
 material.clearcoat *= 1.0 - max(max(mSand, mPrimer), max(mMatte, mScr));`)
   }
+  paint.needsUpdate = true
 
-  const group = new THREE.Group()
-  scene.add(group)
-  const GAP = 0.006
-  const door = new THREE.Mesh(panelGeometry(-0.56 + GAP, 0.56 - GAP, 0.27, 0.985, 340, 220), paint)
-  const fender = new THREE.Mesh(panelGeometry(-1.6, -0.56 - GAP, 0.27, 0.985, 90, 80), sidePaint)
-  const rear = new THREE.Mesh(panelGeometry(0.56 + GAP, 1.7, 0.27, 0.985, 90, 80), sidePaint)
-  const sill = new THREE.Mesh(panelGeometry(-1.6, 1.7, 0.16, 0.27 - GAP, 60, 6), sidePaint)
-  group.add(door, fender, rear, sill)
-  // Тёмная подложка: в щелях между деталями видно чёрное.
-  const back = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.0), black)
-  back.position.set(0.05, 0.57, -0.06)
-  group.add(back)
-  // Стекло, уплотнитель и стойка над дверью.
-  const win = new THREE.Mesh(new THREE.PlaneGeometry(3.3, 0.42), glass)
-  win.position.set(0.05, 1.2, -0.02)
-  win.rotation.x = -0.32
-  const seal = new THREE.Mesh(new THREE.BoxGeometry(3.3, 0.02, 0.04), black)
-  seal.position.set(0.05, 0.995, -0.005)
-  const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.44, 0.03), black)
-  pillar.position.set(0.56, 1.2, -0.01)
-  pillar.rotation.x = -0.32
-  group.add(win, seal, pillar)
-  const handle = new THREE.Mesh(new THREE.CapsuleGeometry(0.016, 0.12, 6, 16), chrome)
-  handle.rotation.z = Math.PI / 2
-  handle.position.set(0.3, 0.8, surf(0.3, 0.8) + 0.014)
-  handle.scale.set(1, 1, 0.55)
-  group.add(handle)
-
-  // Вмятина: меняем точки двери рядом с центром и считаем нормали по самой поверхности.
-  const pos = door.geometry.attributes.position as THREE.BufferAttribute
-  const nor = door.geometry.attributes.normal as THREE.BufferAttribute
-  const near: number[] = []
-  for (let i = 0; i < pos.count; i++) {
-    const dx = pos.getX(i) - DENT.x, dy = pos.getY(i) - DENT.y
-    if (dx * dx + dy * dy < (DENT_R * 3) ** 2) near.push(i)
-  }
-  const height = (x: number, y: number, depth: number) => {
-    const dx = (x - DENT.x) / DENT_R, dy = (y - DENT.y) / (DENT_R * 0.55)
-    // Вытянутая вмятина с заломом по линии удара.
-    const crease = 0.4 * Math.exp(-(dy * dy) / 0.05) * Math.exp(-(dx * dx) / 0.9)
-    return surf(x, y) - depth * (Math.exp(-(dx * dx + dy * dy)) + crease)
-  }
-  let lastDepth = -1
-  const setDent = (depth: number) => {
-    if (Math.abs(depth - lastDepth) < 1e-5) return
-    lastDepth = depth
-    const e = 0.002
-    for (const i of near) {
-      const x = pos.getX(i), y = pos.getY(i)
-      pos.setZ(i, height(x, y, depth))
-      const zx = (height(x + e, y, depth) - height(x - e, y, depth)) / (2 * e)
-      const zy = (height(x, y + e, depth) - height(x, y - e, depth)) / (2 * e)
-      const l = Math.hypot(zx, zy, 1)
-      nor.setXYZ(i, -zx / l, -zy / l, 1 / l)
-    }
-    pos.needsUpdate = true
-    nor.needsUpdate = true
-  }
-
+  // Где дверь: смотрим на неё сбоку, чуть спереди и сверху.
+  const doorBox = new THREE.Box3()
+  for (const m of doorMeshes) doorBox.expandByObject(m)
+  const look = doorBox.getCenter(new THREE.Vector3())
+  look.y = Math.min(look.y, 0.72)
   const camera = new THREE.PerspectiveCamera(24, 1, 0.05, 30)
-  const look = new THREE.Vector3(-0.02, 0.6, 0)
   let base = new THREE.Vector3()
   const fit = () => {
     const r = host.getBoundingClientRect()
@@ -218,34 +169,38 @@ material.clearcoat *= 1.0 - max(max(mSand, mPrimer), max(mMatte, mScr));`)
     renderer.domElement.style.height = '100%'
     camera.aspect = w / h
     // Дверь целиком в кадре: на узком экране отодвигаемся дальше.
-    const halfW = 0.68, halfH = 0.42
+    const halfW = (doorBox.max.x - doorBox.min.x) / 2 + 0.08, halfH = 0.5
     const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))
     const dist = Math.max(halfH / t, halfW / (t * camera.aspect)) * 1.05
-    base = new THREE.Vector3(0.62, 0.86, dist).normalize().multiplyScalar(dist)
-    base.y = 0.6 + dist * 0.12
+    base = new THREE.Vector3(look.x + dist * 0.42, look.y + dist * 0.14, look.z + dist * 0.9)
     camera.updateProjectionMatrix()
     req()
   }
 
-  let target = 0, stage = 0, raf = 0, visible = true, t0 = performance.now()
+  let target = 0, stage = 0, raf = 0, visible = true
+  const t0 = performance.now()
   const apply = () => {
     const s = stage
-    setDent(DENT_DEPTH * (1 - smooth(0.25, 1, s)))
+    u.uDepth.value = DENT_DEPTH * (1 - smooth(0.25, 1, s))
     u.uScratch.value = 1 - smooth(0.2, 0.8, s)
     u.uMetal.value = smooth(0.3, 0.9, s) * (1 - smooth(1.3, 1.9, s))
     u.uPrimer.value = smooth(1.3, 1.9, s) * (1 - smooth(2.3, 2.9, s))
     u.uMatte.value = smooth(2.3, 2.9, s) * (1 - smooth(3.2, 3.95, s))
   }
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const mv = new THREE.Matrix4()
   const frame = (now: number) => {
     raf = 0
     const d = target - stage
-    stage += Math.abs(d) < 0.002 ? d : d * 0.09
+    stage += still || Math.abs(d) < 0.002 ? d : d * 0.09
     apply()
     // Камера чуть плывёт: полосы света скользят по лаку, как при осмотре в боксе.
     const k = still ? 0 : (now - t0) / 1000
-    camera.position.set(base.x + Math.sin(k * 0.35) * 0.08, base.y + Math.sin(k * 0.23) * 0.03, base.z)
+    camera.position.set(base.x + Math.sin(k * 0.35) * 0.1, base.y + Math.sin(k * 0.23) * 0.03, base.z)
     camera.lookAt(look)
+    camera.updateMatrixWorld()
+    mv.multiplyMatrices(camera.matrixWorldInverse, doorMeshes[0].matrixWorld)
+    u.uNM.value.getNormalMatrix(mv)
     renderer.render(scene, camera)
     if (visible && (!still || Math.abs(target - stage) > 0.001)) req()
   }
@@ -257,9 +212,10 @@ material.clearcoat *= 1.0 - max(max(mSand, mPrimer), max(mMatte, mScr));`)
   document.addEventListener('visibilitychange', onVis)
   const ro = new ResizeObserver(fit)
   ro.observe(host)
+  scene.updateMatrixWorld(true)
   fit()
   apply()
-  renderer.render(scene, camera)
+  frame(performance.now())
   o.onReady?.()
 
   return {
@@ -268,8 +224,7 @@ material.clearcoat *= 1.0 - max(max(mSand, mPrimer), max(mMatte, mScr));`)
       cancelAnimationFrame(raf)
       io.disconnect(); ro.disconnect()
       document.removeEventListener('visibilitychange', onVis)
-      scene.traverse(m => { const g = (m as THREE.Mesh).geometry; if (g) g.dispose() })
-      for (const m of [paint, sidePaint, black, glass, chrome]) m.dispose()
+      car.dispose()
       env.dispose()
       renderer.dispose()
       renderer.domElement.remove()

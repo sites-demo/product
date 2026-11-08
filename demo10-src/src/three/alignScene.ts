@@ -2,7 +2,7 @@
 // До регулировки передние колёса смотрят врозь и завалены, лучи красные. После колёса ровные, лучи зелёные.
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
-import { buildCar, carMaterials, type BodyType } from './car'
+import { loadCar, type BodyType } from './carModel'
 
 export type AlignScene = { set: (t: number) => void; destroy: () => void }
 
@@ -10,7 +10,8 @@ export type AlignScene = { set: (t: number) => void; destroy: () => void }
 const TOE = [0.07, -0.05, 0.025, -0.02]
 const CAMBER = [0.06, 0.0, 0.0, 0.03]
 
-export function createAlignScene(host: HTMLElement, o: { type: BodyType; paint: string; accent: string; onReady?: () => void }): AlignScene {
+export async function createAlignScene(host: HTMLElement, o: { type?: BodyType; paint: string; accent: string; onReady?: () => void }): Promise<AlignScene> {
+  const car = await loadCar(o.paint)
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75))
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -24,16 +25,13 @@ export function createAlignScene(host: HTMLElement, o: { type: BodyType; paint: 
   key.position.set(2, 6, 3)
   scene.add(key)
 
-  const mats = carMaterials(o.paint)
-  // Кузов как стекло: видно колёса и лучи сквозь него.
-  for (const k of ['paint', 'glass', 'dark', 'trim', 'chrome', 'head', 'tail'] as const) {
-    const m = mats[k] as THREE.MeshStandardMaterial
+  // Кузов как стекло: видно колёса и лучи сквозь него. Салон на стенде не нужен.
+  for (const m of [...car.paint, ...car.glass, ...car.body] as THREE.MeshStandardMaterial[]) {
     m.transparent = true
-    m.opacity = k === 'paint' ? 0.16 : 0.1
+    m.opacity = car.paint.includes(m as THREE.MeshPhysicalMaterial) ? 0.16 : 0.08
     m.depthWrite = false
   }
-  mats.seam.opacity = 0.25
-  const car = buildCar(o.type, mats)
+  for (const o of car.interior) o.visible = false
   scene.add(car.group)
 
   // Пол стенда и разметка.

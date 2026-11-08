@@ -2,7 +2,7 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { hexStudio } from './hexStudio'
-import { buildCar, carMaterials, type BodyType, type Car, type PanelId } from './car'
+import { loadCar, type BodyType, type Car, type PanelId } from './carModel'
 
 export type CarSceneOptions = {
   type: BodyType
@@ -49,7 +49,8 @@ export function shadowTexture(dark: boolean) {
   return t
 }
 
-export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene {
+export async function createCarScene(host: HTMLElement, o: CarSceneOptions): Promise<CarScene> {
+  const car = await loadCar(o.paint)
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75))
   renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -60,7 +61,7 @@ export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene 
 
   const scene = new THREE.Scene()
   const pmrem = new THREE.PMREMGenerator(renderer)
-  const env = pmrem.fromScene(o.studio === 'hex' ? hexStudio() : new RoomEnvironment(), o.studio === 'hex' ? 0.012 : 0.04).texture
+  const env = pmrem.fromScene(o.studio === 'hex' ? hexStudio() : new RoomEnvironment(), o.studio === 'hex' ? 0.025 : 0.04).texture
   scene.environment = env
   scene.environmentIntensity = o.studio === 'hex' ? 1 : o.dark ? 0.75 : 1
 
@@ -71,15 +72,10 @@ export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene 
   rim.position.set(-5, 3, -4)
   scene.add(rim)
 
-  const mats = carMaterials(o.paint)
   if (o.studio === 'hex') {
-    // Под сотами чёткое зеркало на простой модели рябит. Чуть матовее лак: отражение мягче и дороже.
-    mats.paint.roughness = 0.42
-    mats.paint.clearcoatRoughness = 0.13
-    mats.glass.clearcoatRoughness = 0.22
-    mats.glass.roughness = 0.3
+    // Под сотами чуть матовее лак: отражение мягче и дороже.
+    for (const m of car.paint) { m.roughness = 0.36; m.clearcoatRoughness = 0.15; m.normalMap = null }
   }
-  const car = buildCar(o.type, mats)
   const turntable = new THREE.Group()
   turntable.add(car.group)
   scene.add(turntable)
@@ -90,7 +86,7 @@ export function createCarScene(host: HTMLElement, o: CarSceneOptions): CarScene 
   turntable.add(shadow)
 
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 60)
-  const target = new THREE.Vector3(0, 0.62, 0)
+  const target = new THREE.Vector3(0, car.shape.H * 0.42, 0)
 
   let width = 1, height = 1
   const fit = () => {

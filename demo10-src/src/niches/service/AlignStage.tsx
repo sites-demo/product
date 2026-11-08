@@ -14,10 +14,14 @@ export function AlignStage({ site }: { site: Site }) {
     const el = host.current
     if (!el) return
     let dead = false, s: AlignScene | undefined
-    import('../../three/alignScene').then(({ createAlignScene }) => {
-      if (dead) return
-      try { s = createAlignScene(el, { type: site.car?.type ?? 'sedan', paint: '#c9ced4', accent: site.theme.accent }); scene.current = s; setReady(true) } catch { /* остаётся снимок */ }
-    })
+    import('../../three/alignScene')
+      .then(({ createAlignScene }) => (dead ? undefined : createAlignScene(el, { paint: '#c9ced4', accent: site.theme.accent })))
+      .then(made => {
+        if (!made) return
+        if (dead) { made.destroy(); return }
+        s = made; scene.current = made; setReady(true)
+      })
+      .catch(() => { /* остаётся снимок */ })
     return () => { dead = true; s?.destroy(); scene.current = null }
   }, [site])
   useEffect(() => { scene.current?.set(after ? 1 : 0) }, [after, ready])

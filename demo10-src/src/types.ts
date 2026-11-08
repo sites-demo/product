@@ -1,4 +1,4 @@
-import type { BodyType } from './three/car'
+import type { BodyType } from './three/carModel'
 
 export type FontName = 'manrope' | 'onest' | 'golos' | 'lora' | 'cormorant'
 
