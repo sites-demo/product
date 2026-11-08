@@ -46,7 +46,7 @@ export function HotelPage({ site }: { site: Site }) {
       <section className="section" id="rooms">
         <div className="wrap">
           <div className="section-head"><h2>Номера</h2>{h.roomsNote && <p>{h.roomsNote}</p>}</div>
-          <ul className="rooms">
+          {h.rooms.some(r => r.photo) ? <ul className="rooms">
             {h.rooms.map(r => <li key={r.name}>
               {r.photo && <img src={asset(r.photo.src)} alt={r.photo.alt} width={r.photo.w} height={r.photo.h} loading="lazy" decoding="async" />}
               <div className="room-text">
@@ -55,7 +55,10 @@ export function HotelPage({ site }: { site: Site }) {
                 {r.price && <b>{r.price}</b>}
               </div>
             </li>)}
-          </ul>
+          </ul> : <>
+            <ul className="room-list">{h.rooms.map(r => <li key={r.name}><h3>{r.name}</h3>{r.text && <p>{r.text}</p>}</li>)}</ul>
+            {h.roomPhotos?.length ? <div className="room-strip">{h.roomPhotos.map(p => <img key={p.src} src={asset(p.src)} alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" />)}</div> : null}
+          </>}
         </div>
       </section>
 

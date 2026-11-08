@@ -69,3 +69,13 @@
 .offers li { border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 8px; }
 .offers h3 { font-size: 24px; }
 .offers p { color: var(--muted); }
+
+/* Категории номеров списком и лента фото номеров */
+.room-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+@media (min-width: 760px) { .room-list { grid-template-columns: repeat(2, 1fr); column-gap: 48px; } }
+.room-list li { padding: 18px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.room-list h3 { font-size: 26px; }
+.room-list p { color: var(--muted); }
+.room-strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 32px -20px 0; padding: 0 20px 8px; }
+@media (min-width: 760px) { .room-strip { margin: 40px -32px 0; padding: 0 32px 8px; } }
+.room-strip img { flex: 0 0 auto; height: clamp(220px, 34vw, 380px); width: auto; border-radius: 12px; scroll-snap-align: start; object-fit: cover; }

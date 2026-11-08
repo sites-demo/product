@@ -105,11 +105,11 @@ export function Configurator({ site }: { site: Site }) {
       </div>
       <div className="send">
         <a className="btn btn-accent" href={send.href} target="_blank" rel="noopener noreferrer" onClick={() => { if (send.copy) void copy() }}>
-          <Icon name={site.whatsapp ? 'wa' : 'tg'} />{site.whatsapp ? 'Отправить проект в WhatsApp' : send.label}
+          <Icon name={send.icon} />{site.whatsapp ? 'Отправить проект в WhatsApp' : send.label}
         </a>
         <button type="button" className="btn btn-ghost" onClick={copy}><Icon name="copy" />{copied ? 'Текст скопирован' : 'Скопировать текст'}</button>
       </div>
-      <p className="send-note">Это набросок, а не расчёт. {k.who ?? 'Дизайнер'} посмотрит размеры и фото помещения и назовёт цену. Можно позвонить: <a href={telHref(site.phones[0].tel)}>{site.phones[0].display}</a></p>
+      <p className="send-note">{send.intro} Это набросок, а не расчёт. {k.who ?? 'Дизайнер'} посмотрит размеры и фото помещения и назовёт цену. Можно позвонить: <a href={telHref(site.phones[0].tel)}>{site.phones[0].display}</a></p>
     </form>
   </div>
 }

@@ -57,7 +57,7 @@ export function Booking({ site }: { site: Site }) {
       </select>
     </label>
     <a className="btn btn-accent book-send" href={send.href} target="_blank" rel="noopener noreferrer" onClick={() => { if (send.copy) void copy() }}>
-      <Icon name={site.whatsapp ? 'wa' : 'tg'} />Узнать про свободные номера
+      <Icon name={send.icon} />{send.icon === 'phone' ? 'Позвонить и узнать про номера' : 'Узнать про свободные номера'}
     </a>
     <p className="book-note">Администратор ответит, есть ли места на эти даты, и назовёт цену. Или позвоните: <a href={telHref(site.phones[0].tel)}>{site.phones[0].display}</a></p>
   </form>

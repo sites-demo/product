@@ -40,7 +40,7 @@ export type Site = {
   email?: string
   ratings: Rating[]
   /** Виджет Яндекс Карт: id организации или координаты. */
-  map?: { oid?: string; lat?: number; lon?: number }
+  map?: { oid?: string; lat?: number; lon?: number; text?: string }
   logo?: { src: string; w: number; h: number; onDark?: string }
   theme: {
     bg: string
@@ -81,11 +81,15 @@ export type Site = {
     /** Какой сезон показать сразу, пока страница не узнала дату. */
     season?: 'winter' | 'summer'
     rooms: { name: string; text?: string; photo?: Photo; price?: string }[]
+    /** Фото номеров без привязки к категории. */
+    roomPhotos?: Photo[]
     roomsNote?: string
     activities: { winter: string[]; summer: string[] }
     features: { id: string; title: string; text: string; photo?: Photo }[]
     offers?: { title: string; text: string }[]
   }
+  /** Для автосервиса: с чем приезжают, списком для заявки. */
+  service?: { symptoms: string[] }
   /** Для детейлинга: показывать ли лампу с царапинами (только если студия правда полирует) и цвет капота. */
   detailing?: { polish?: boolean; paint?: string }
   /** Как проходит заказ, словами самой компании. */
@@ -93,6 +97,10 @@ export type Site = {
   /** Цены, которые компания публикует сама: «Кухня Лайт», «от 190 000 ₽». */
   prices?: { title: string; price: string; text?: string }[]
   pricesNote?: string
+  /** Заголовок раздела с ценами, если там условия, а не цены. */
+  pricesTitle?: string
+  /** Готовые коллажи «до и после» из карточки компании. */
+  beforeAfter?: Photo[]
   services: Service[]
   servicesNote?: string
   facts: { title: string; text: string }[]

@@ -11,15 +11,17 @@ export const waHref = (phone: string, text?: string) =>
 export const tgHref = (user: string) => `https://t.me/${user.replace(/^@/, '')}`
 
 /** Куда отправить готовый текст заявки: WhatsApp с текстом, иначе Telegram (текст копируем), иначе звонок. */
-export function handoff(site: Site, text: string): { href: string; label: string; copy: boolean } {
-  if (site.whatsapp) return { href: waHref(site.whatsapp, text), label: 'Отправить в WhatsApp', copy: false }
-  if (site.telegram) return { href: tgHref(site.telegram), label: 'Отправить в Telegram', copy: true }
-  return { href: telHref(site.phones[0].tel), label: 'Позвонить', copy: true }
+export type Handoff = { href: string; label: string; copy: boolean; icon: 'wa' | 'tg' | 'phone'; intro: string }
+export function handoff(site: Site, text: string): Handoff {
+  if (site.whatsapp) return { href: waHref(site.whatsapp, text), label: 'Отправить в WhatsApp', copy: false, icon: 'wa', intro: 'Откроется WhatsApp с готовым текстом.' }
+  if (site.telegram) return { href: tgHref(site.telegram), label: 'Отправить в Telegram', copy: true, icon: 'tg', intro: 'Текст скопируется и откроется Telegram, останется вставить его в чат.' }
+  return { href: telHref(site.phones[0].tel), label: 'Позвонить', copy: true, icon: 'phone', intro: 'Текст скопируется, по нему удобно рассказать по телефону.' }
 }
 
 export function mapSrc(site: Site) {
   const m = site.map
   if (!m) return null
+  if (m.text) return `https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(m.text)}&z=16`
   if (m.oid) return `https://yandex.ru/map-widget/v1/?oid=${m.oid}&ol=biz&z=16`
   if (m.lat && m.lon) return `https://yandex.ru/map-widget/v1/?ll=${m.lon},${m.lat}&z=16&pt=${m.lon},${m.lat},pm2rdm`
   return null

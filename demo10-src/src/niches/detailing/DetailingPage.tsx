@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Site } from '../../types'
 import { Header } from '../../ui/Header'
 import { Footer } from '../../ui/Footer'
@@ -8,11 +8,10 @@ import { RatingLine } from '../../ui/RatingLine'
 import { Facts, Praise, Works } from '../../ui/Sections'
 import { telHref } from '../../ui/links'
 import { OrderBuilder } from './OrderBuilder'
+import { SwirlLight } from './SwirlLight'
 import { Poster } from '../../ui/Poster'
 import '../body/body.css'
 import './detailing.css'
-
-const SwirlLight = lazy(() => import('./SwirlLight').then(m => ({ default: m.SwirlLight })))
 
 /** Машина в боксе с сотами над ней. Грузим 3D только в браузере и только когда сцена рядом с экраном. */
 function Studio({ site }: { site: Site }) {
@@ -74,7 +73,7 @@ export function DetailingPage({ site }: { site: Site }) {
             <h2>Что убирает полировка</h2>
             <p>Под ярким светом на тёмной краске видны круговые царапины от мойки щётками и тряпками. Проведите пальцем по капоту: слева лак до полировки, справа после.</p>
           </div>
-          <Suspense fallback={<div className="swirl" />}><SwirlLight paint={site.detailing.paint} /></Suspense>
+          <SwirlLight paint={site.detailing.paint} />
         </div>
       </section>}
 

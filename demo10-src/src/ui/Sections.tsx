@@ -25,6 +25,7 @@ export function Services({ site, title = 'Услуги' }: { site: Site; title?:
 
 export function Prices({ site, title = 'Цены' }: { site: Site; title?: string }) {
   if (!site.prices?.length) return null
+  title = site.pricesTitle ?? title
   return <section className="section" id="prices">
     <div className="wrap">
       <div className="section-head"><h2>{title}</h2>{site.pricesNote && <p>{site.pricesNote}</p>}</div>
@@ -69,6 +70,17 @@ export function Works({ site, title, id = 'works', skip = 0 }: { site: Site; tit
     <div className="wrap">
       <div className="section-head"><h2>{title}</h2></div>
       <Gallery photos={photos} />
+    </div>
+  </section>
+}
+
+/** Коллажи «до и после», как их выложила сама компания. Пары из разных машин не составляем. */
+export function BeforeAfter({ site }: { site: Site }) {
+  if (!site.beforeAfter?.length) return null
+  return <section className="section" id="before-after">
+    <div className="wrap">
+      <div className="section-head"><h2>До и после ремонта</h2><p>Настоящие снимки наших работ: какой машина приехала и какой уехала.</p></div>
+      <Gallery photos={site.beforeAfter} limit={6} />
     </div>
   </section>
 }

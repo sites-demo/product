@@ -81,3 +81,8 @@
 .repair-steps h3 { font-size: clamp(24px, 3vw, 32px); }
 .repair-steps p { color: #c3c9d1; font-size: 18px; max-width: 460px; }
 
+
+/* Стенд развал-схождения: светлый пол, подсказка сверху */
+.align-stage { background: linear-gradient(#f3f5f7, #e6e9ed); }
+.dark .align-stage { background: linear-gradient(#f3f5f7, #e6e9ed); }
+.align-stage .stage-hint { color: #5d6670; }

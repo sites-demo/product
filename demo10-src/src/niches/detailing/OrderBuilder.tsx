@@ -59,11 +59,11 @@ export function OrderBuilder({ site }: { site: Site }) {
       </label>
       <div className="send">
         <a className="btn btn-accent" href={send.href} target="_blank" rel="noopener noreferrer" onClick={() => { if (send.copy) void copy() }}>
-          <Icon name={site.whatsapp ? 'wa' : 'tg'} />{send.label}
+          <Icon name={send.icon} />{send.label}
         </a>
         <button type="button" className="btn btn-ghost" onClick={copy}><Icon name="copy" />{copied ? 'Текст скопирован' : 'Скопировать текст'}</button>
       </div>
-      <p className="send-note">Цена зависит от размера машины и того, насколько она грязная. Мастер уточнит и подскажет свободное время. Можно позвонить: <a href={telHref(site.phones[0].tel)}>{site.phones[0].display}</a></p>
+      <p className="send-note">{send.intro} Цена зависит от размера машины и того, насколько она грязная. Мастер уточнит и подскажет свободное время. Можно позвонить: <a href={telHref(site.phones[0].tel)}>{site.phones[0].display}</a></p>
     </aside>
   </div>
 }
