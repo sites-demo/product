@@ -1,0 +1,42 @@
+/* Первый экран: фото настоящей кухни компании */
+.kh { padding: 28px 0 56px; }
+.kh-in { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 1000px) { .kh { padding: 48px 0 88px; } .kh-in { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; } }
+.kh-text { display: grid; gap: 20px; }
+.kh-text .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 560px; text-wrap: pretty; }
+.kh-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.kh-photo { margin: 0; border-radius: 14px; overflow: hidden; background: var(--surface); aspect-ratio: 4 / 3; }
+.kh-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 999px) { .kh-photo { order: -1; margin: 0 -20px; border-radius: 0; aspect-ratio: 3 / 2; } }
+
+/* Конструктор */
+.cfg-sec { background: var(--surface); }
+.cfg { display: grid; gap: 14px; }
+@media (min-width: 1024px) { .cfg { grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; } }
+.cfg-stage { position: relative; border-radius: 16px; overflow: hidden; background: linear-gradient(#ece7df, #ddd5ca); border: 1px solid var(--line); }
+.cfg-canvas { position: relative; height: clamp(280px, 70vw, 620px); cursor: grab; touch-action: pan-y; }
+.cfg-canvas canvas { position: absolute; inset: 0; display: block; }
+@media (min-width: 1024px) { .cfg-canvas { height: 100%; min-height: 600px; } }
+.cfg-fail { position: absolute; inset: auto 16px 16px; font-size: 14px; color: var(--muted); }
+.cfg-panel { background: var(--bg); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 22px; align-content: start; }
+@media (max-width: 420px) { .cfg-panel { padding: 18px 16px; } }
+.cfg-panel fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.cfg-panel legend { font-weight: 600; padding: 0; margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.cfg-panel legend span { font-weight: 400; color: var(--muted); }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.opts button { padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); font-size: 15px; cursor: pointer; }
+.opts button[aria-pressed='true'] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.opts.two button { flex: 1 1 140px; }
+.sw { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw button { width: 40px; height: 40px; border-radius: 10px; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--line); cursor: pointer; padding: 0; }
+.sw button[aria-pressed='true'] { box-shadow: 0 0 0 2px var(--ink); }
+.sw button.wood { background-image: repeating-linear-gradient(90deg, rgba(80, 50, 20, .18) 0 2px, transparent 2px 7px) !important; }
+.sw button.stone { background-image: linear-gradient(120deg, transparent 40%, rgba(120, 120, 125, .35) 42%, transparent 46%) !important; }
+.sw button.dark { background-image: radial-gradient(rgba(255, 255, 255, .25) 1px, transparent 1.5px) !important; background-size: 6px 6px !important; }
+.range { display: grid; gap: 10px; }
+.range span { display: flex; justify-content: space-between; gap: 12px; font-weight: 600; }
+.range b { font-weight: 600; color: var(--muted); white-space: nowrap; }
+.range input { width: 100%; accent-color: var(--accent); height: 28px; }
+.cfg-panel .send { display: grid; gap: 8px; }
+.cfg-panel .send-note { font-size: 14px; color: var(--muted); text-wrap: pretty; }
+.cfg-panel .send-note a { color: var(--ink); font-weight: 600; white-space: nowrap; }
