@@ -22,7 +22,6 @@ export const site: Site = {
   whatsapp: '79050845944',
   telegram: '+79050845944',
   ratings: [{ source: '2ГИС', value: '4,9', count: 290, url: 'https://2gis.ru/barnaul/firm/70000001036339684' }],
-  posters: ['car'],
   map: { oid: '177255517164' },
   theme: {
     bg: '#f6f5f1', surface: '#ecebe5', ink: '#141414', muted: '#5d5c57', line: '#dad8d0',
@@ -34,7 +33,6 @@ export const site: Site = {
     title: 'Кузовной ремонт и покраска, открыты до полуночи',
     lead: 'Отметьте на машине, что повреждено, и пришлите фото мастеру. Он посмотрит и скажет цену. Работаем каждый день с 7:30 до 24:00.',
   },
-  car: { type: 'hatch' },
   beforeAfter: [
     p('01', 'Toyota Avensis до и после ремонта задней части'),
     p('02', 'Audi до и после ремонта передней части'),

@@ -16,7 +16,6 @@ export const site: Site = {
   hours: 'Круглосуточно',
   phones: [{ display: '+7 913 415-80-00', tel: '+79134158000' }],
   ratings: [{ source: '2ГИС', value: '4,8', count: 802, url: 'https://2gis.ru/novokuznetsk/firm/70000001046051036' }],
-  posters: ['studio'],
   map: { oid: '1122278900' },
   logo: { src: 'logo.webp', w: 600, h: 410, height: 46 },
   theme: {
@@ -30,7 +29,6 @@ export const site: Site = {
     lead: 'До 7 машин одновременно, поэтому окно почти всегда есть. Пока моем, можно посидеть в кафе с кофе и Wi-Fi.',
   },
   detailing: { polish: false, paint: '#0c0d10' },
-  car: { type: 'sedan' },
   services: [
     { group: 'Мойка', title: 'Технологическая мойка', text: 'Без шампуня и протирки', price: 'от 300 ₽' },
     { group: 'Мойка', title: 'Кузов в 1 фазу', text: 'Без протирки', price: 'от 590 ₽' },
@@ -77,8 +75,8 @@ export const site: Site = {
     'Многие ездят сюда больше десяти лет',
   ],
   photos: [
-    p('08', 'Porsche Panamera в боксе после мойки'),
     p('07', 'BMW 6 после мойки в боксе'),
+    p('08', 'Porsche Panamera в боксе после мойки'),
     p('05', 'Машина в пене на мойке'),
     p('11', 'Салон Porsche с красной кожей после чистки'),
     p('12', 'Светлый салон после уборки'),

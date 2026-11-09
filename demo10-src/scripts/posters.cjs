@@ -12,7 +12,7 @@ const dir = join(root, 'dist', slug)
 const out = join(root, 'src', 'sites', slug, 'public')
 const BASE = `/${slug}/`
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.glb': 'model/gltf-binary' }
-const SCENES = [['align', '.align-stage .stage-canvas'], ['car', '.est .stage:not(.align-stage) .stage-canvas'], ['headlight', '.hl-hero .hl-canvas'], ['studio', '.dstudio-canvas'], ['kitchen', '.cfg-canvas']]
+const SCENES = [['headlight', '.hl-hero .hl-canvas'], ['kitchen', '.cfg-canvas']]
 const HIDE = '.stage-hint,.stage-tools,.hl-toggle,.stage-wait,.poster,.mbar{visibility:hidden!important} *{transition:none!important}'
 
 const toWebp = (png, file, q = 80) => {

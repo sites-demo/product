@@ -45,7 +45,7 @@ export function BodyPage({ site }: { site: Site }) {
       <Praise site={site} />
       <Contacts site={site} />
     </main>
-    <Footer site={site} nav={nav} carCredit />
+    <Footer site={site} nav={nav} />
     <MobileBar site={site} action="Оценить ремонт по фото" href="#estimate" />
   </>
 }

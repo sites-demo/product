@@ -2,9 +2,8 @@
 @media (min-width: 1024px) { .dh { padding: 48px 0 64px; } }
 .dh-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .dstudio { position: relative; margin-top: 24px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(90% 80% at 50% 30%, #1b1e23 0%, #060708 75%); }
-.dstudio-canvas { position: relative; height: clamp(260px, 62vw, 620px); cursor: grab; touch-action: pan-y; opacity: 0; transition: opacity .9s ease; }
-.dstudio-canvas.ready, .dstudio-canvas.has-poster { opacity: 1; }
-.dstudio-canvas canvas { position: absolute; inset: 0; display: block; }
+.dstudio { margin-inline: 0; }
+.dstudio img { display: block; width: 100%; height: clamp(240px, 62vw, 620px); object-fit: cover; object-position: 50% 60%; }
 
 /* Выбор услуг */
 .order { display: grid; gap: 24px; }
