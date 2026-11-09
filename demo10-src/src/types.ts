@@ -1,4 +1,3 @@
-import type { BodyType } from './three/carModel'
 
 export type FontName = 'manrope' | 'onest' | 'golos' | 'lora' | 'cormorant'
 
@@ -62,7 +61,6 @@ export type Site = {
   title: string
   description: string
   hero: { title: string; lead: string }
-  car?: { type: BodyType }
   /** Для кухонь: из чего можно собрать кухню в конфигураторе. Только то, что компания делает на самом деле. */
   kitchen?: {
     facades: { name: string; hex: string; finish: 'matte' | 'gloss' | 'wood' }[]

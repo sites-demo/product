@@ -21,7 +21,6 @@ export const site: Site = {
   description: 'Пример',
   hero: { title: 'Фары, которые светят как новые', lead: 'Отметьте, что не так, и отправьте фото фар мастеру. Он посмотрит и назовёт цену.' },
   detailing: { polish: true },
-  car: { type: 'sedan' },
   services: [
     { title: 'Комплексная мойка', price: 'от 1 200 ₽', group: 'Мойка' },
     { title: 'Мойка кузова', price: 'от 600 ₽', group: 'Мойка' },

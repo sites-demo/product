@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { Site } from '../../types'
-import type { PanelId } from '../../three/carModel'
-import type { CarScene } from '../../three/carScene'
+import type { PanelId } from '../../ui/car2d'
 import { handoff, telHref } from '../../ui/links'
-import { Poster } from '../../ui/Poster'
 import { Icon } from '../../ui/Icon'
+import { CarScheme } from './CarScheme'
 
 const NAMES: Record<PanelId, string> = {
   bumperF: 'Передний бампер', bumperR: 'Задний бампер', hood: 'Капот', trunk: 'Крышка багажника', roof: 'Крыша',
@@ -15,12 +14,6 @@ const NAMES: Record<PanelId, string> = {
   sillL: 'Левый порог', sillR: 'Правый порог', mirrorL: 'Левое зеркало', mirrorR: 'Правое зеркало',
 }
 const partName = (p: PanelId) => NAMES[p]
-
-// Куда повернуть машину, чтобы выбранная деталь была видна.
-const VIEW: Record<PanelId, number> = {
-  bumperF: -1.15, hood: -1.0, fenderFR: -0.45, doorFR: -0.1, doorRR: 0.15, quarterRR: 0.5, sillR: 0, mirrorR: -0.5,
-  bumperR: 2.0, trunk: 2.1, quarterRL: 2.6, doorRL: 3.0, doorFL: 3.3, fenderFL: 3.6, sillL: Math.PI, mirrorL: 3.6, roof: -0.7,
-}
 
 const GROUPS: [string, PanelId[]][] = [
   ['Спереди', ['bumperF', 'hood', 'fenderFL', 'fenderFR']],
@@ -54,62 +47,14 @@ export function damageText(o: { model: string; paint: string; parts: PanelId[]; 
 }
 
 export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefault?: number }) {
-  const host = useRef<HTMLDivElement>(null)
-  const scene = useRef<CarScene | null>(null)
-  const [state, setState] = useState<'wait' | 'ready' | 'fail'>('wait')
   const [parts, setParts] = useState<PanelId[]>([])
   const [kinds, setKinds] = useState<string[]>([])
   const [paint, setPaint] = useState(PAINTS[paintDefault])
   const [model, setModel] = useState('')
   const [hover, setHover] = useState<PanelId | null>(null)
   const [copied, setCopied] = useState(false)
-  const last = useRef<PanelId | null>(null)
 
-  const toggle = (p: PanelId) => setParts(prev => {
-    if (prev.includes(p)) return prev.filter(x => x !== p)
-    last.current = p
-    return [...prev, p]
-  })
-
-  // 3D грузится отдельно, страница при этом уже работает: список деталей есть и без него.
-  useEffect(() => {
-    let dead = false
-    let s: CarScene | undefined
-    const el = host.current
-    if (!el) return
-    import('../../three/carScene')
-      .then(({ createCarScene }) => (dead ? undefined : createCarScene(el, {
-        type: 'sedan', paint: paint.hex, accent: markColor(site.theme.accent, paint.hex),
-        dark: site.theme.dark, onPick: toggle, onHover: setHover,
-      })))
-      .then(made => {
-        if (!made) return
-        if (dead) { made.destroy(); return }
-        s = made
-        scene.current = made
-        made.setMarked(parts)
-        setState('ready')
-      })
-      .catch(() => setState('fail'))
-    return () => { dead = true; s?.destroy(); scene.current = null }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    const s = scene.current
-    if (!s) return
-    s.setMarked(parts)
-    if (last.current && parts.includes(last.current)) { s.flash(last.current); last.current = null }
-  }, [parts, state])
-
-  useEffect(() => {
-    scene.current?.setPaint(paint.hex)
-  }, [paint])
-
-  const pickFromList = (p: PanelId) => {
-    toggle(p)
-    scene.current?.turnTo(VIEW[p])
-  }
+  const toggle = (p: PanelId) => setParts(prev => prev.includes(p) ? prev.filter(x => x !== p) : [...prev, p])
 
   const text = useMemo(() => damageText({ model, paint: paint.name, parts, kinds }), [model, paint, parts, kinds])
   const send = handoff(site, text)
@@ -118,12 +63,11 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
   }
 
   return <div className="est-grid">
-    <div className={'stage stage-' + state}>
-      <div className={'stage-canvas' + (site.posters?.includes('car') ? ' has-poster' : '') + (state === 'ready' ? ' ready' : '')} ref={host} aria-label="Машина в 3D. Покрутите её и нажмите на деталь, где повреждение. Детали можно выбрать и списком ниже." role="img"><Poster site={site} name="car" /></div>
-      {state === 'wait' && !site.posters?.includes('car') && <div className="stage-wait" aria-hidden="true"><span /></div>}
-      <p className="stage-hint" aria-live="polite">{state === 'fail'
-        ? 'Объёмная модель не открылась на этом устройстве. Выберите детали списком.'
-        : hover ? partName(hover) : 'Покрутите машину и нажмите на деталь, где повреждение'}</p>
+    <div className="stage stage-scheme">
+      <p className="stage-hint" aria-live="polite">{hover ? partName(hover) : 'Нажмите на деталь, где повреждение. Можно несколько'}</p>
+      <div className="scheme">
+        <CarScheme paint={paint.hex} mark={markColor(site.theme.accent, paint.hex)} marked={parts} hover={hover} onPick={toggle} onHover={setHover} />
+      </div>
       <div className="stage-tools">
         <div className="swatches" role="group" aria-label="Цвет машины">
           {PAINTS.map(c => <button key={c.hex} type="button" aria-pressed={paint.hex === c.hex} title={c.name} aria-label={`Цвет ${c.name}`} style={{ background: c.hex }} onClick={() => setPaint(c)} />)}
@@ -135,13 +79,13 @@ export function DamagePicker({ site, paintDefault = 1 }: { site: Site; paintDefa
       <h2 className="picker-title">Что повреждено</h2>
       {parts.length ? <ul className="picked">
         {parts.map(p => <li key={p}><button type="button" onClick={() => toggle(p)} aria-label={`Убрать: ${partName(p)}`}>{partName(p)}<Icon name="close" size={16} /></button></li>)}
-      </ul> : <p className="picked-empty">Нажмите на деталь на машине или выберите списком. Можно несколько.</p>}
+      </ul> : <p className="picked-empty">Нажмите на деталь на схеме или выберите списком. Можно несколько.</p>}
 
       <details className="parts">
         <summary>Выбрать деталь списком</summary>
         {GROUPS.map(([g, ids]) => <div key={g} className="parts-group">
           <p>{g}</p>
-          <div>{ids.map(p => <button key={p} type="button" aria-pressed={parts.includes(p)} onClick={() => pickFromList(p)}>{partName(p)}</button>)}</div>
+          <div>{ids.map(p => <button key={p} type="button" aria-pressed={parts.includes(p)} onClick={() => toggle(p)}>{partName(p)}</button>)}</div>
         </div>)}
       </details>
 

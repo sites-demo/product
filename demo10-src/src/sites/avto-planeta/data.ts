@@ -24,7 +24,6 @@ export const site: Site = {
     { source: '2ГИС', value: '4,7', count: 197, url: 'https://2gis.ru/novokuznetsk/firm/70000001020139044' },
     { source: 'Яндекс Карты', value: '4,7', count: 22, unit: 'оценки', url: 'https://yandex.ru/maps/org/avto_planeta/201226217436/' },
   ],
-  posters: ['car'],
   map: { oid: '201226217436' },
   logo: { src: 'logo.webp', w: 720, h: 142 },
   theme: {
@@ -37,7 +36,6 @@ export const site: Site = {
     title: 'Кузовной ремонт и покраска в Новокузнецке',
     lead: 'Отметьте на машине, что повреждено, и пришлите фото мастеру. Красим в своей покрасочной камере, на работы даём гарантию до 2 лет.',
   },
-  car: { type: 'crossover' },
   beforeAfter: [
     p('01', 'Серебристый Opel до и после ремонта'),
     p('02', 'Серебристый хэтчбек до и после ремонта'),

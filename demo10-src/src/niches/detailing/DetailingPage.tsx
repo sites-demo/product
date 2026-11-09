@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
 import type { Site } from '../../types'
 import { Header } from '../../ui/Header'
 import { Footer } from '../../ui/Footer'
@@ -6,36 +5,19 @@ import { Contacts } from '../../ui/Contacts'
 import { MobileBar } from '../../ui/MobileBar'
 import { RatingLine } from '../../ui/RatingLine'
 import { Facts, Praise, Works } from '../../ui/Sections'
-import { telHref } from '../../ui/links'
+import { asset, telHref } from '../../ui/links'
 import { OrderBuilder } from './OrderBuilder'
 import { SwirlLight } from './SwirlLight'
-import { Poster } from '../../ui/Poster'
 import '../body/body.css'
 import './detailing.css'
 
-/** Машина в боксе с сотами над ней. Грузим 3D только в браузере и только когда сцена рядом с экраном. */
+/** Первый кадр: их настоящий бокс. Первое фото сайта стоит здесь, в галерее его уже нет. */
 function Studio({ site }: { site: Site }) {
-  const host = useRef<HTMLDivElement>(null)
-  const [ready, setReady] = useState(false)
-  useEffect(() => {
-    const el = host.current
-    if (!el) return
-    let dead = false, destroy: (() => void) | undefined
-    import('../../three/carScene')
-      .then(({ createCarScene }) => (dead ? undefined : createCarScene(el, { type: site.car?.type ?? 'sedan', paint: site.detailing?.paint ?? '#0c0d10', accent: site.theme.accent, dark: true, studio: 'hex', yaw: -0.8 })))
-      .then(s => {
-        if (!s) return
-        if (dead) { s.destroy(); return }
-        destroy = s.destroy
-        setReady(true)
-      })
-      .catch(() => { /* без 3D остаётся фон */ })
-    return () => { dead = true; destroy?.() }
-  }, [site])
-  return <div className="dstudio">
-    <div className={'dstudio-canvas' + (site.posters?.includes('studio') ? ' has-poster' : '') + (ready ? ' ready' : '')} ref={host} role="img" aria-label="Чёрная машина в боксе под светом сот"><Poster site={site} name="studio" /></div>
-    <p className="stage-hint">Потяните, чтобы повернуть машину</p>
-  </div>
+  const ph = site.photos[0]
+  if (!ph) return null
+  return <figure className="dstudio">
+    <img src={asset(ph.src)} alt={ph.alt} width={ph.w} height={ph.h} decoding="async" fetchPriority="high" />
+  </figure>
 }
 
 export function DetailingPage({ site }: { site: Site }) {
@@ -79,11 +61,11 @@ export function DetailingPage({ site }: { site: Site }) {
       </section>}
 
       <Facts site={site} />
-      <Works site={site} title="Фото из студии" />
+      <Works site={site} title="Фото из студии" skip={1} />
       <Praise site={site} />
       <Contacts site={site} />
     </main>
-    <Footer site={site} nav={nav} carCredit />
+    <Footer site={site} nav={nav} />
     <MobileBar site={site} action="Выбрать услуги" href="#order" />
   </>
 }

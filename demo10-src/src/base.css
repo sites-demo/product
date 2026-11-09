@@ -116,8 +116,6 @@ a { color: inherit; }
 .ftr nav a, .ftr-contacts a { text-decoration: none; color: #c9ced4; }
 .ftr nav a:hover, .ftr-contacts a:hover { color: #fff; }
 .ftr-contacts { display: grid; gap: 10px; align-content: start; color: #9aa1a9; font-size: 15px; }
-.ftr-credit { margin-top: 32px; color: #7d848c; font-size: 13px; line-height: 1.5; }
-.ftr-credit a { color: inherit; }
 .ftr-contacts a { font-size: 18px; font-weight: 600; }
 
 /* Нижняя панель на телефоне */

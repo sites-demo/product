@@ -22,7 +22,6 @@ export const site: Site = {
   whatsapp: '79045854099',
   email: 'cto-avgust@yandex.ru',
   ratings: [{ source: '2ГИС', value: '4,9', count: 904, url: 'https://2gis.ru/omsk/firm/282003257689407' }],
-  posters: ['car'],
   map: { oid: '1256430793' },
   theme: {
     bg: '#f5f6f8', surface: '#e9edf2', ink: '#0f1720', muted: '#5a6573', line: '#d6dce3',
@@ -34,7 +33,6 @@ export const site: Site = {
     title: 'Кузовной ремонт и покраска в Омске',
     lead: 'Отметьте на машине, что повреждено, и пришлите фото мастеру. Он посмотрит и назовёт цену. Ремонтируем и по направлению страховой.',
   },
-  car: { type: 'sedan' },
   services: [
     { group: 'Кузов и покраска', title: 'Кузовные работы любой сложности', text: 'Восстанавливаем и геометрию кузова' },
     { group: 'Кузов и покраска', title: 'Полная и частичная покраска', text: 'Своя лаборатория подбора автоэмалей' },

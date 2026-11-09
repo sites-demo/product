@@ -1,4 +1,4 @@
-/* Первый экран: оценка повреждений на 3D-машине */
+/* Первый экран: оценка повреждений по схеме кузова */
 .est { padding: 34px 0 64px; }
 @media (min-width: 1024px) { .est { padding: 48px 0 96px; } }
 .est-head { display: grid; gap: 18px; max-width: 900px; }
@@ -86,3 +86,24 @@
 .align-stage { background: linear-gradient(#f3f5f7, #e6e9ed); }
 .dark .align-stage { background: linear-gradient(#f3f5f7, #e6e9ed); }
 .align-stage .stage-hint { color: #5d6670; }
+
+/* Схема кузова вместо 3D: левый бок, вид сверху, правый бок */
+.stage-scheme, .dark .stage-scheme { background: var(--stage); }
+.scheme { padding: 48px 16px 14px; }
+@media (min-width: 1024px) { .scheme { flex: 1; display: grid; align-content: center; padding: 56px 32px 84px; } }
+.cs-views { display: grid; gap: 10px; max-width: 520px; margin: 0 auto; width: 100%; }
+.cs-views figure { margin: 0; display: grid; gap: 2px; }
+.cs-views figcaption { font-size: 14px; color: var(--muted); }
+.cs { display: block; width: 100%; height: auto; overflow: visible; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.cs-part { cursor: pointer; transition: fill .2s ease; }
+.repair-canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.rd-layer { transition: opacity .7s ease; }
+@media (prefers-reduced-motion: reduce) { .rd-layer, .cs-part { transition: none; } }
+.align-draw { padding: 64px 12px 8px; }
+@media (min-width: 1024px) { .align-draw { flex: 1; display: grid; align-content: center; padding: 72px 28px 84px; } }
+.align-draw svg { display: block; width: 100%; height: auto; overflow: visible; }
+@media (min-width: 1024px) {
+  .cs-views { max-width: 720px; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+  .cs-views figure:nth-child(2) { grid-column: 1 / -1; grid-row: 2; justify-self: center; width: 64%; }
+}
+@media (min-width: 1024px) { .align-stage { align-self: start; } .align-draw { flex: none; } }
