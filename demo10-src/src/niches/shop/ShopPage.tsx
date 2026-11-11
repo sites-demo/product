@@ -17,6 +17,7 @@ export const glovesText = (brand: string, m: Model, oz: string) => [
 ].join('\n')
 
 const gearText = (brand: string, title: string) => `Здравствуйте. Хочу заказать ${brand}: ${title.toLowerCase()}.\nЕсть в наличии?`
+const CLOSURE: Record<string, string> = { 'на липучке': 'Липучка', 'на шнуровке': 'Шнуровка' }
 const defaultOz = (m: Model) => (m.weights.includes('12 oz') ? '12 oz' : m.weights[0])
 
 const Img = ({ p, eager, className }: { p: Photo; eager?: boolean; className?: string }) =>
@@ -45,6 +46,9 @@ function Gloves({ site, shop }: { site: Site; shop: Shop }) {
   const [copied, setCopied] = useState(false)
   const pick = (x: Model) => { setM(x); setPh(0); setOz(w => (x.weights.includes(w) ? w : defaultOz(x))) }
   const photo = m.photos[Math.min(ph, m.photos.length - 1)]
+  // Застёжка отдельно от цвета: иначе чёрно-белые на липучке и на шнуровке выглядят одинаковыми кружками.
+  const closures = [...new Set(shop.models.map(x => x.closure))]
+  const colors = shop.models.filter(x => x.closure === m.closure)
   const text = glovesText(shop.brand, m, oz)
   const copy = async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 3000) } catch { /* без буфера обмена */ } }
   return <div className="gl">
@@ -58,11 +62,17 @@ function Gloves({ site, shop }: { site: Site; shop: Shop }) {
     </div>
     <div className="gl-card">
       <h3 className="gl-name">{m.name}</h3>
-      <p className="gl-sub">{m.closure[0].toUpperCase() + m.closure.slice(1)}{m.note ? `. ${m.note}` : ''}</p>
+      <p className="gl-sub">{m.note}</p>
+      {closures.length > 1 && <div className="gl-row">
+        <span className="gl-label">Застёжка</span>
+        <div className="gl-oz" role="group" aria-label="Застёжка">
+          {closures.map(c => <button key={c} type="button" aria-pressed={c === m.closure} onClick={() => pick(shop.models.find(x => x.closure === c)!)}>{CLOSURE[c] ?? c}</button>)}
+        </div>
+      </div>}
       <div className="gl-row">
         <span className="gl-label">Цвет</span>
         <div className="gl-colors" role="group" aria-label="Цвет перчаток">
-          {shop.models.map(x => <button key={x.id} type="button" aria-pressed={x.id === m.id} onClick={() => pick(x)} aria-label={x.name} title={x.name}
+          {colors.map(x => <button key={x.id} type="button" aria-pressed={x.id === m.id} onClick={() => pick(x)} aria-label={x.name} title={x.name}
             style={{ background: `linear-gradient(135deg, ${x.colors[0]} 50%, ${x.colors[1] ?? x.colors[0]} 50%)` }} />)}
         </div>
       </div>
