@@ -3,6 +3,7 @@ type Haptic = 'light' | 'medium' | 'heavy' | 'rigid' | 'soft'
 interface TgWebApp {
   initData: string
   initDataUnsafe: { user?: { first_name?: string; id?: number } }
+  colorScheme?: 'light' | 'dark'
   ready(): void
   expand(): void
   setHeaderColor(c: string): void
@@ -19,7 +20,11 @@ export function initTg() {
   if (!tg) return
   tg.ready()
   tg.expand()
-  try { tg.setHeaderColor('#0a0a12'); tg.setBackgroundColor('#0a0a12') } catch { /* старые клиенты */ }
+  // Кабинет следует теме Telegram: светлая или тёмная
+  const dark = tg.colorScheme === 'dark'
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+  const bg = dark ? '#000000' : '#f1f1f5'
+  try { tg.setHeaderColor(bg); tg.setBackgroundColor(bg) } catch { /* старые клиенты */ }
 }
 
 export const tapLight = () => { try { tg?.HapticFeedback.impactOccurred('light') } catch { /* */ } }

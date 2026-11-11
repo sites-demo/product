@@ -15,3 +15,4 @@ export const IShield = P('<path d="M12 3 19.5 6v5.5c0 4.7-3.2 8.2-7.5 9.5-4.3-1.
 export const IChevron = P('<path d="m9.5 6 6 6-6 6"/>')
 export const IShare = P('<path d="M12 15V3.5M7.5 8 12 3.5 16.5 8M5 12.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6.5"/>')
 export const IPlus = P('<path d="M12 5v14M5 12h14"/>')
+export const IDoc = P('<path d="M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3.5V8h4.5M9 13h6M9 16.5h4"/>')
