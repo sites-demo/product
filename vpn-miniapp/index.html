@@ -4,253 +4,201 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>VPN · личный кабинет (демо)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>MY VPN · кабинет (демо)</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{
-  --bg:#0d1117; --card:#161b24; --card2:#1d2430; --line:#262f3d;
-  --text:#e9edf3; --muted:#8b96a8; --accent:#3ddc97; --accent-ink:#06281a;
-  --warn:#f5b945; --danger:#ef6b6b; --r:12px;
+  --bg:var(--tg-theme-secondary-bg-color,#f1f1f4);
+  --card:var(--tg-theme-bg-color,#ffffff);
+  --text:var(--tg-theme-text-color,#141416);
+  --muted:var(--tg-theme-hint-color,#8a8a93);
+  --line:rgba(127,127,140,.18);
+  --accent:#3337d6; --accent-ink:#fff; --accent-soft:rgba(51,55,214,.09); --heart:#e5484d;
+  --ok:#2f8f4e; --warn:#b7791f;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:clip}
-body{background:var(--bg);color:var(--text);font:15px/1.45 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
-.app{max-width:480px;margin:0 auto;padding:16px 16px 96px;min-height:100vh}
-.demo-note{font-size:12px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
-.logo{width:34px;height:34px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink)}
-.hello{font-size:13px;color:var(--muted);text-align:right}
-.hello b{display:block;color:var(--text);font-weight:600;font-size:14px}
-h2{font-size:20px;font-weight:800;margin:4px 0 12px;overflow-wrap:anywhere}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
-.muted{color:var(--muted)}
-.small{font-size:13px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.btn{min-width:0;text-align:center}
+body{background:var(--bg);color:var(--text);font:16px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input{font:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.app{max-width:520px;margin:0 auto;padding:12px 16px calc(88px + env(safe-area-inset-bottom))}
+.demo{font-size:12px;color:var(--muted);padding:0 4px 10px}
+.cap{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;padding:18px 16px 6px}
+.group{background:var(--card);border-radius:12px;overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;padding:12px 16px;width:100%;text-align:left;position:relative}
+.item+.item::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:.5px solid var(--line)}
+.item .t{flex:1;min-width:0}
+.item .t small{display:block;color:var(--muted);font-size:13px;margin-top:1px}
+.item .v{color:var(--muted);font-size:15px;text-align:right;white-space:nowrap}
+.chev{width:8px;height:13px;flex:none;opacity:.35}
+.note{font-size:13px;color:var(--muted);padding:6px 16px 0}
 
-/* status */
-.status{text-align:center;padding:22px 16px 18px}
-.power{width:150px;height:150px;border-radius:50%;margin:4px auto 16px;display:grid;place-items:center;position:relative;transition:.3s}
-.power::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--line);transition:.3s}
-.power .inner{width:112px;height:112px;border-radius:50%;background:var(--card2);display:grid;place-items:center;transition:.3s}
-.power svg{width:44px;height:44px;stroke:var(--muted);transition:.3s}
-.on .power::before{border-color:var(--accent);box-shadow:0 0 0 8px rgba(61,220,151,.08),0 0 40px rgba(61,220,151,.25)}
-.on .power .inner{background:var(--accent)}
-.on .power svg{stroke:var(--accent-ink)}
-.connecting .power::before{border-color:var(--warn);animation:pulse 1s infinite}
-@keyframes pulse{50%{opacity:.35}}
-.state{font-size:19px;font-weight:800}
-.sub{font-size:13px;color:var(--muted);margin-top:2px}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
-.stat{background:var(--card2);border-radius:10px;padding:10px 6px}
-.stat b{display:block;font-size:15px}
-.stat span{font-size:11px;color:var(--muted)}
+/* top */
+.top{display:flex;align-items:center;gap:10px;padding:4px 4px 8px}
+.ava{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b5ff0,#2326b8);color:#fff;display:grid;place-items:center;font-weight:600;font-size:17px;flex:none}
+.top b{font-size:17px;font-weight:600;display:block}
+.top small{color:var(--muted);font-size:13px}
 
-.loc{display:flex;align-items:center;gap:12px;width:100%;text-align:left}
-.flag{font-size:22px;width:36px;height:36px;border-radius:10px;background:var(--card2);display:grid;place-items:center;flex:none}
-.loc .t{flex:1;min-width:0}
-.loc .t b{display:block;font-weight:700}
-.ping{font-size:12px;color:var(--accent);font-weight:600}
-.ping.mid{color:var(--warn)}
+/* subscription */
+.subs{background:var(--card);border-radius:12px;padding:16px}
+.subs .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.subs .h b{font-size:15px;font-weight:600}
+.pill{font-size:13px;font-weight:600;padding:2px 8px;border-radius:6px;background:rgba(183,121,31,.12);color:var(--warn)}
+.pill.ok{background:rgba(47,143,78,.12);color:var(--ok)}
+.days{font-size:34px;font-weight:700;letter-spacing:-.02em;margin:8px 0 0;font-variant-numeric:tabular-nums}
+.days span{font-size:17px;font-weight:500;color:var(--muted);letter-spacing:0}
+.meter{display:grid;grid-template-columns:repeat(30,1fr);gap:2px;margin:12px 0 4px}
+.meter i{height:8px;border-radius:1px;background:var(--line)}
+.meter i.f{background:var(--accent)}
+.subs .info{font-size:13px;color:var(--muted)}
+.btn{display:block;width:100%;padding:13px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:16px;text-align:center}
+.btn.sec{background:var(--accent-soft);color:var(--accent)}
+.btn:active{opacity:.8}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 
-.sub-card .bar{height:6px;border-radius:4px;background:var(--card2);margin:12px 0 8px;overflow:hidden}
-.sub-card .bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
-.sub-card.low .bar i{background:var(--warn)}
-
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:15px}
-.btn.ghost{background:var(--card2);color:var(--text);font-weight:700}
-.btn:active{transform:scale(.98)}
-.btn-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:12px}
+/* key */
+.key{font:13px/1.35 ui-monospace,"SF Mono",Menlo,monospace;color:var(--muted);word-break:break-all;padding:12px 16px}
+.cc{font:600 12px ui-monospace,"SF Mono",Menlo,monospace;width:32px;height:24px;border-radius:5px;background:var(--bg);display:grid;place-items:center;flex:none;color:var(--text)}
 
 /* plans */
-.plans{display:grid;gap:8px}
-.plan{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--card);text-align:left;width:100%}
-.plan.sel{border-color:var(--accent);background:#132119}
-.plan .radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
-.plan.sel .radio{border-color:var(--accent)}
-.plan.sel .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
-.plan .t{flex:1}
-.plan .t b{display:block;font-weight:700}
-.plan .p{text-align:right;font-weight:800;font-size:17px}
-.plan .p s{display:block;font-size:12px;color:var(--muted);font-weight:500}
-.tag{display:inline-block;font-size:11px;font-weight:700;background:var(--warn);color:#2a1c00;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:2px}
-.pay{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
-.pay button{padding:12px 6px;border-radius:10px;background:var(--card);border:1.5px solid var(--line);font-weight:700;font-size:13px}
-.pay button.sel{border-color:var(--accent)}
-.promo{display:flex;gap:8px;margin-bottom:14px}
-.promo input{flex:1;min-width:0;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:12px;color:var(--text);font:inherit}
-.promo button{padding:0 16px;border-radius:10px;background:var(--card2);font-weight:700}
+.plan .rd{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center}
+.plan.sel .rd{border-color:var(--accent);background:var(--accent)}
+.plan.sel .rd::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.plan .pr{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.plan .pr small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.save{color:var(--accent);font-size:13px;font-weight:500;margin-left:6px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border-radius:10px;padding:3px;gap:3px}
+.seg button{padding:8px 4px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted)}
+.seg button.sel{background:var(--accent-soft);color:var(--accent)}
+.promo{display:flex;align-items:center;gap:8px}
+.promo input{flex:1;min-width:0;padding:2px 0;outline:0}
+.promo button{color:var(--accent);font-weight:500}
 
-/* devices */
-.dev{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
-.dev:first-of-type{border-top:0}
-.dev .ic{width:36px;height:36px;border-radius:10px;background:var(--card2);display:grid;place-items:center;flex:none}
-.dev .ic svg{width:18px;height:18px;stroke:var(--text)}
-.dev .t{flex:1;min-width:0}
-.dev .t b{display:block;font-weight:700}
-.dev .x{color:var(--muted);font-size:13px;padding:6px}
-.os{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
-.os button{padding:10px 4px;border-radius:10px;background:var(--card2);font-size:13px;font-weight:700;border:1.5px solid transparent}
-.os button.sel{border-color:var(--accent)}
-.steps{margin:4px 0 14px 18px;color:var(--muted);font-size:14px}
-.steps li{margin:6px 0}
-.steps b{color:var(--text)}
-.qr{background:#fff;border-radius:12px;padding:12px;width:184px;height:184px;margin:6px auto 12px}
-.qr img,.qr canvas{width:160px!important;height:160px!important}
-.link{font-size:12px;color:var(--muted);word-break:break-all;background:var(--card2);border-radius:10px;padding:10px;margin-bottom:10px}
-
-/* friends */
-.big{font-size:30px;font-weight:800}
-.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.ref-stats .stat{padding:12px}
-.ref-stats .stat b{font-size:20px}
-
-/* faq */
-details{border-top:1px solid var(--line);padding:12px 0}
-details:first-of-type{border-top:0;padding-top:0}
-summary{font-weight:700;cursor:pointer;list-style:none}
-summary::-webkit-details-marker{display:none}
-details p{color:var(--muted);font-size:14px;margin-top:6px}
+/* steps */
+.steps{counter-reset:s;padding:4px 0}
+.steps li{list-style:none;counter-increment:s;display:flex;gap:12px;padding:10px 16px;font-size:15px}
+.steps li::before{content:counter(s);width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600;display:grid;place-items:center;flex:none;margin-top:1px}
 
 /* nav */
-nav{position:fixed;left:0;right:0;bottom:0;background:rgba(13,17,23,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
-nav .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
-nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);padding:4px 0}
-nav button svg{width:22px;height:22px;stroke:currentColor}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:.5px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);padding:4px 0}
+nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 nav button.act{color:var(--accent)}
-.screen{display:none}
-.screen.act{display:block;animation:in .25s ease}
-@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.screen{display:none}.screen.act{display:block}
+h1{font-size:28px;font-weight:700;letter-spacing:-.01em;padding:8px 4px 2px}
 
-.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;z-index:20}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--card);border-radius:16px 16px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-width:480px;margin:0 auto;transform:translateY(100%);transition:.3s;max-height:85vh;overflow:auto}
-.sheet.open{transform:none}
-.sheet-bg.open{display:block}
-.grip{width:40px;height:4px;border-radius:2px;background:var(--line);margin:-8px auto 14px}
-.toast{position:fixed;left:50%;top:16px;transform:translate(-50%,-80px);background:var(--card2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;z-index:30;transition:.3s;max-width:calc(100% - 32px)}
-.toast.show{transform:translate(-50%,0)}
-.done{text-align:center;padding:10px 0}
-.done .ok{width:64px;height:64px;border-radius:50%;background:var(--accent);margin:0 auto 12px;display:grid;place-items:center}
-.done .ok svg{width:30px;height:30px;stroke:var(--accent-ink)}
-.srv-list .loc{padding:12px 0;border-top:1px solid var(--line)}
-.srv-list .loc:first-child{border-top:0}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.2s;z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--bg);border-radius:14px 14px 0 0;padding:8px 16px calc(20px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto;transform:translateY(100%);transition:.28s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto}
+.sheet.open{transform:none}.sheet-bg.open{opacity:1;pointer-events:auto}
+.grip{width:36px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sheet h3{font-size:20px;font-weight:600;margin:4px 4px 12px}
+.qr{background:#fff;border-radius:12px;padding:14px;width:188px;margin:0 auto 12px}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;background:rgba(30,30,32,.92);color:#fff;padding:9px 14px;border-radius:9px;font-size:14px;z-index:30;transition:.2s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="demo-note">Демо. Название, цвета, тарифы и цены подставляются ваши. Оплата и подключение здесь только имитируются.</div>
-
-  <header>
-    <div class="brand"><div class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div><span id="brandName">Тоннель</span></div>
-    <div class="hello">Привет,<b id="uname">Алексей</b></div>
-  </header>
+  <div class="demo">Демо-кабинет для вашего бота. Оплата и выдача ключа здесь имитируются.</div>
 
   <!-- HOME -->
   <section class="screen act" id="s-home">
-    <div class="card status" id="statusCard">
-      <button class="power" id="powerBtn" aria-label="Подключить">
-        <div class="inner"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.3 7.3a8 8 0 1 0 11.4 0"/></svg></div>
-      </button>
-      <div class="state" id="stateText">Не подключено</div>
-      <div class="sub" id="stateSub">Нажмите, чтобы включить защиту</div>
-      <div class="stats">
-        <div class="stat"><b id="stTime">00:00</b><span>Время</span></div>
-        <div class="stat"><b id="stDown">0 МБ</b><span>Получено</span></div>
-        <div class="stat"><b id="stIp">скрыт</b><span>Ваш IP</span></div>
-      </div>
+    <div class="top">
+      <div class="ava" id="ava">А</div>
+      <div><b id="uname">Алексей</b><small>MY VPN · ID 8843609293</small></div>
     </div>
 
-    <div class="card">
-      <button class="loc" id="locBtn">
-        <div class="flag" id="locFlag">🇳🇱</div>
-        <div class="t"><b id="locName">Нидерланды</b><span class="small muted">Сервер выбирается автоматически</span></div>
-        <span class="ping" id="locPing">38 мс</span>
-      </button>
-    </div>
-
-    <div class="card sub-card low" id="subCard">
-      <div class="row"><b>Подписка до 14 ноября</b><span class="small" style="color:var(--warn);font-weight:700" id="daysLeft">3 дня</span></div>
-      <div class="bar"><i id="subBar" style="width:10%"></i></div>
-      <div class="small muted" id="subHint">Продлите сейчас, чтобы VPN не отключился в дороге</div>
-      <div class="btn-row">
+    <div class="subs" id="subs">
+      <div class="h"><b>Подписка</b><span class="pill" id="pill">Скоро закончится</span></div>
+      <div class="days" id="days">3 <span>дня осталось</span></div>
+      <div class="meter" id="meter"></div>
+      <div class="info" id="until">Действует до 14 ноября · до 3 устройств</div>
+      <div class="two">
         <button class="btn" data-go="plans">Продлить</button>
-        <button class="btn ghost" data-go="devices">Подключить</button>
+        <button class="btn sec" data-go="setup">Подключить</button>
       </div>
     </div>
 
-    <div class="card">
-      <div class="row"><div><b>Месяц бесплатно</b><div class="small muted">За каждого друга, который оплатит подписку</div></div><button class="btn ghost" style="width:auto;padding:10px 14px" data-go="friends">Пригласить</button></div>
+    <div class="cap">Ваш ключ</div>
+    <div class="group">
+      <div class="key" id="keyTxt"></div>
+      <button class="item" id="copyKey"><span class="t">Скопировать ключ</span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+      <button class="item" id="qrBtn"><span class="t">Показать QR-код<small>Для телевизора или второго телефона</small></span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
     </div>
+
+    <div class="cap">Серверы</div>
+    <div class="group" id="servers"></div>
+    <div class="note">Все локации входят в подписку. Переключаются прямо в приложении.</div>
   </section>
 
   <!-- PLANS -->
   <section class="screen" id="s-plans">
-    <h2>Продление подписки</h2>
-    <div class="plans" id="plans"></div>
-    <div class="pay" id="pay">
-      <button class="sel">СБП</button><button>Карта</button><button>Звёзды</button>
-    </div>
-    <div class="promo"><input id="promoIn" placeholder="Промокод" autocomplete="off"><button id="promoBtn">Применить</button></div>
-    <button class="btn" id="payBtn">Оплатить</button>
-    <p class="small muted" style="text-align:center;margin-top:10px">Автопродление можно выключить в любой момент</p>
+    <h1>Тарифы</h1>
+    <div class="cap">Срок</div>
+    <div class="group" id="plans"></div>
+    <div class="cap">Оплата</div>
+    <div class="group"><div class="item"><span class="cc" style="width:40px">СБП</span><span class="t">Система быстрых платежей<small>Оплата через приложение банка</small></span></div></div>
+    <div class="cap">Промокод</div>
+    <div class="group"><div class="item promo"><input id="promoIn" placeholder="Если есть" autocomplete="off"><button id="promoBtn">Применить</button></div></div>
+    <div style="margin-top:16px"><button class="btn" id="payBtn">Оплатить</button></div>
+    <div class="note" style="text-align:center">Любой тариф включает до 3 устройств</div>
+    <div class="note" style="text-align:center">Ключ не меняется при продлении, переподключать ничего не нужно</div>
   </section>
 
-  <!-- DEVICES -->
-  <section class="screen" id="s-devices">
-    <h2>Устройства</h2>
-    <div class="card">
-      <div class="row" style="margin-bottom:6px"><b>Подключено 2 из 5</b><span class="small muted">по подписке</span></div>
-      <div class="dev"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div><div class="t"><b>iPhone 13</b><span class="small muted">Сейчас онлайн</span></div><button class="x">Отключить</button></div>
-      <div class="dev"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg></div><div class="t"><b>MacBook Air</b><span class="small muted">Был вчера в 22:14</span></div><button class="x">Отключить</button></div>
-    </div>
-
-    <div class="card">
-      <b>Добавить устройство</b>
-      <div class="os" id="os"><button class="sel" data-os="ios">iPhone</button><button data-os="android">Android</button><button data-os="win">Windows</button><button data-os="mac">Mac</button></div>
-      <ol class="steps" id="steps"></ol>
-      <button class="btn" id="oneTap">Подключить в один тап</button>
-      <button class="btn ghost" style="margin-top:8px" id="showQr">QR для другого устройства</button>
+  <!-- SETUP -->
+  <section class="screen" id="s-setup">
+    <h1>Подключение</h1>
+    <div class="cap">Устройство</div>
+    <div class="seg" id="os" style="grid-template-columns:repeat(4,1fr)"><button class="sel" data-os="ios">iPhone</button><button data-os="android">Android</button><button data-os="win">Windows</button><button data-os="mac">Mac</button></div>
+    <div class="cap">Три шага</div>
+    <div class="group"><ol class="steps" id="steps"></ol></div>
+    <div style="margin-top:16px"><button class="btn" id="oneTap">Добавить ключ в приложение</button></div>
+    <div class="cap">Не получилось</div>
+    <div class="group">
+      <button class="item" data-faq="0"><span class="t">VPN включён, но сайты не открываются</span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+      <button class="item" data-faq="1"><span class="t">Перестало работать после обновления</span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+      <button class="item" id="support"><span class="t">Написать в поддержку<small>@SeeTheLight11</small></span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
     </div>
   </section>
 
-  <!-- FRIENDS -->
+  <!-- EARN -->
   <section class="screen" id="s-friends">
-    <h2>Приглашайте друзей</h2>
-    <div class="card">
-      <div class="big">+30 дней</div>
-      <div class="muted small">Вам и другу, когда он оплатит первую подписку. Без ограничений по количеству.</div>
-      <div class="ref-stats">
-        <div class="stat"><b>3</b><span>Пришли по ссылке</span></div>
-        <div class="stat"><b>60 дней</b><span>Уже получено</span></div>
-      </div>
-      <div class="link" id="refLink">t.me/your_vpn_bot?start=ref_51204</div>
-      <div class="btn-row" style="margin-top:0">
-        <button class="btn" id="shareBtn">Поделиться</button>
-        <button class="btn ghost" id="copyRef">Скопировать</button>
-      </div>
+    <h1>Заработать</h1>
+    <div class="note" style="padding:4px 4px 0;font-size:15px;color:var(--text)">Приглашайте друзей и получайте 30% с каждой их оплаты. Вывод от 500 ₽.</div>
+    <div class="subs" style="margin-top:14px">
+      <div class="h"><b>Баланс</b><span class="pill ok">30% с оплат</span></div>
+      <div class="days" id="bal">243 <span>₽</span></div>
+      <div class="meter" id="balMeter"></div>
+      <div class="info">До вывода осталось 257 ₽</div>
+      <div class="two"><button class="btn" id="shareBtn">Пригласить</button><button class="btn sec" id="wdBtn">Вывести</button></div>
     </div>
-
-    <h2 style="margin-top:20px">Частые вопросы</h2>
-    <div class="card">
-      <details><summary>Не работает после обновления iOS</summary><p>Откройте приложение, удалите подписку и нажмите «Подключить в один тап» на вкладке «Устройства». Ключ обновится автоматически.</p></details>
-      <details><summary>Можно ли на телевизор?</summary><p>Да, на Android TV. Отсканируйте QR с вкладки «Устройства» в приложении на телевизоре.</p></details>
-      <details><summary>Как вернуть деньги?</summary><p>В течение 3 дней после оплаты, если VPN у вас так и не заработал. Напишите в поддержку.</p></details>
-      <details><summary>Связаться с поддержкой</summary><p>Пишите прямо в бот, отвечаем обычно за 10–15 минут с 9 до 23 по Москве.</p></details>
+    <div class="cap">Ваша ссылка</div>
+    <div class="group">
+      <div class="key" id="refLink">t.me/My_v_p_n_robot?start=ref_8843609293</div>
+      <button class="item" id="copyRef"><span class="t" style="color:var(--accent)">Скопировать ссылку</span></button>
+    </div>
+    <div class="cap">Статистика</div>
+    <div class="group">
+      <div class="item"><span class="t">Друзей приглашено</span><span class="v">7</span></div>
+      <div class="item"><span class="t">Оплатили подписку</span><span class="v">4</span></div>
+      <div class="item"><span class="t">Заработано всего</span><span class="v">243 ₽</span></div>
+    </div>
+    <div class="cap">О сервисе</div>
+    <div class="group">
+      <a class="item" href="https://t.me/my_v_p_n_channel" style="color:inherit;text-decoration:none"><span class="t">Канал<small>@my_v_p_n_channel</small></span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+      <button class="item" onclick="toast('Откроется пользовательское соглашение')"><span class="t">Пользовательское соглашение</span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+      <button class="item" onclick="toast('Откроется политика конфиденциальности')"><span class="t">Политика конфиденциальности</span><svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
     </div>
   </section>
 </div>
 
 <nav><div class="in">
-  <button class="act" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>Главная</button>
-  <button data-go="plans"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Тарифы</button>
-  <button data-go="devices"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Устройства</button>
-  <button data-go="friends"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 4a4 4 0 0 1 0 8M22 21c0-3-1.5-5-4-5.7"/></svg>Друзья</button>
+  <button class="act" data-go="home"><svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Главная</button>
+  <button data-go="plans"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></svg>Тарифы</button>
+  <button data-go="setup"><svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>Подключение</button>
+  <button data-go="friends"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3-5.5 6.5-5.5s6 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c-.3-2.4-1.5-4-3.5-4.8"/></svg>Заработать</button>
 </div></nav>
 
 <div class="sheet-bg" id="sheetBg"></div>
@@ -259,124 +207,113 @@ nav button.act{color:var(--accent)}
 
 <script>
 const tg = window.Telegram && Telegram.WebApp;
-if (tg && tg.initData) {
+const inTg = !!(tg && tg.initData);
+if (inTg) {
   tg.ready(); tg.expand();
-  try { tg.setHeaderColor('#0d1117'); tg.setBackgroundColor('#0d1117'); } catch(e){}
+  try { tg.setHeaderColor('secondary_bg_color'); tg.setBackgroundColor('secondary_bg_color'); } catch(e){}
   const u = tg.initDataUnsafe && tg.initDataUnsafe.user;
-  if (u && u.first_name) document.getElementById('uname').textContent = u.first_name;
+  if (u && u.first_name) { uname.textContent = u.first_name; ava.textContent = u.first_name[0].toUpperCase(); }
 }
-const haptic = t => { try { tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred(t||'light'); } catch(e){} };
+const haptic = t => { try { tg.HapticFeedback.impactOccurred(t||'light'); } catch(e){} };
 const $ = s => document.querySelector(s);
-const toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); };
+const toast = m => { const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2000); };
+const chev = '<svg class="chev" viewBox="0 0 8 13"><path d="M1 1l5.5 5.5L1 12" stroke="currentColor" stroke-width="2" fill="none"/></svg>';
 
-/* navigation */
-function go(id){
+/* nav + Telegram back button */
+let stack=['home'];
+function go(id, back){
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('act', s.id==='s-'+id));
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('act', b.dataset.go===id));
+  if(!back) stack.push(id);
+  if(inTg){ id==='home' ? tg.BackButton.hide() : tg.BackButton.show(); }
   window.scrollTo(0,0); haptic();
 }
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+if(inTg) tg.BackButton.onClick(()=>{ stack.pop(); go(stack[stack.length-1]||'home', true); });
 
-/* connect */
-let on=false, timer=null, sec=0, mb=0;
-const fmt = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-$('#powerBtn').addEventListener('click',()=>{
-  const c=$('#statusCard');
-  if(on){ on=false; clearInterval(timer); c.classList.remove('on');
-    $('#stateText').textContent='Не подключено'; $('#stateSub').textContent='Нажмите, чтобы включить защиту'; $('#stIp').textContent='скрыт'; haptic('medium'); return; }
-  c.classList.add('connecting'); $('#stateText').textContent='Подключаем…'; $('#stateSub').textContent=$('#locName').textContent; haptic('medium');
-  setTimeout(()=>{ c.classList.remove('connecting'); c.classList.add('on'); on=true;
-    $('#stateText').textContent='Защищено'; $('#stateSub').textContent='Трафик идёт через '+$('#locName').textContent;
-    $('#stIp').textContent=cur.ip; sec=0; mb=0;
-    timer=setInterval(()=>{ sec++; mb+=Math.random()*1.6; $('#stTime').textContent=fmt(sec); $('#stDown').textContent=mb<1000?mb.toFixed(0)+' МБ':(mb/1000).toFixed(1)+' ГБ'; },1000);
-    haptic('heavy');
-  },1100);
-});
+/* subscription meter */
+function meter(left){ $('#meter').innerHTML=Array.from({length:30},(_,i)=>`<i class="${i<left?'f':''}"></i>`).join(''); }
+meter(3);
 
-/* servers */
-const servers=[
-  {f:'🇳🇱',n:'Нидерланды',p:38,ip:'185.**.**.12'},
-  {f:'🇩🇪',n:'Германия',p:44,ip:'91.**.**.7'},
-  {f:'🇫🇮',n:'Финляндия',p:29,ip:'95.**.**.40'},
-  {f:'🇰🇿',n:'Казахстан',p:61,ip:'2.**.**.88'},
-  {f:'🇺🇸',n:'США',p:132,ip:'104.**.**.3'},
-  {f:'🇹🇷',n:'Турция',p:74,ip:'78.**.**.21'}
-];
-let cur=servers[0];
+/* key */
+const subUrl='https://sub.my-vpn.example/k/7f3a9c51e2b4';
+$('#keyTxt').textContent=subUrl;
+function copy(t){ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{}).finally(()=>toast('Скопировано')); haptic(); }
+$('#copyKey').addEventListener('click',()=>copy(subUrl));
+
+/* servers: text codes instead of emoji flags */
+const servers=[['NL','Нидерланды','38 мс'],['DE','Германия','44 мс'],['FI','Финляндия','29 мс'],['KZ','Казахстан','61 мс'],['US','США','132 мс']];
+$('#servers').innerHTML=servers.map(s=>`<div class="item"><span class="cc">${s[0]}</span><span class="t">${s[1]}</span><span class="v">${s[2]}</span></div>`).join('');
+
+/* sheet */
 function sheet(html){ $('#sheetBody').innerHTML=html; $('#sheet').classList.add('open'); $('#sheetBg').classList.add('open'); }
 function closeSheet(){ $('#sheet').classList.remove('open'); $('#sheetBg').classList.remove('open'); }
 $('#sheetBg').addEventListener('click',closeSheet);
-$('#locBtn').addEventListener('click',()=>{
-  sheet('<h2>Выбор сервера</h2><div class="srv-list">'+servers.map((s,i)=>
-    `<button class="loc" data-i="${i}"><div class="flag">${s.f}</div><div class="t"><b>${s.n}</b><span class="small muted">${s.p<50?'Быстрый':'Подходит для сайтов этой страны'}</span></div><span class="ping ${s.p>60?'mid':''}">${s.p} мс</span></button>`).join('')+'</div>');
-  document.querySelectorAll('.srv-list .loc').forEach(b=>b.addEventListener('click',()=>{
-    cur=servers[b.dataset.i]; $('#locFlag').textContent=cur.f; $('#locName').textContent=cur.n;
-    const p=$('#locPing'); p.textContent=cur.p+' мс'; p.classList.toggle('mid',cur.p>60);
-    if(on){ $('#stateSub').textContent='Трафик идёт через '+cur.n; $('#stIp').textContent=cur.ip; }
-    closeSheet(); haptic(); toast('Сервер: '+cur.n);
-  }));
+$('#qrBtn').addEventListener('click',()=>{
+  sheet(`<h3>QR-код ключа</h3><div class="qr" id="qrBox"></div><div class="note" style="text-align:center;padding-bottom:14px">Откройте Happ на другом устройстве и нажмите «Сканировать QR»</div><button class="btn sec" id="qrClose">Готово</button>`);
+  if(window.QRCode) new QRCode(document.getElementById('qrBox'),{text:subUrl,width:160,height:160,colorDark:'#141416',colorLight:'#ffffff'});
+  $('#qrClose').addEventListener('click',closeSheet);
 });
 
 /* plans */
 const plans=[
-  {m:1,t:'1 месяц',p:199,o:null,d:'Попробовать'},
-  {m:3,t:'3 месяца',p:499,o:597,d:'166 ₽ в месяц'},
-  {m:6,t:'6 месяцев',p:899,o:1194,d:'150 ₽ в месяц',tag:'Выгодно'},
-  {m:12,t:'12 месяцев',p:1590,o:2388,d:'132 ₽ в месяц'}
+  {m:1,t:'1 месяц',p:135},
+  {m:3,t:'3 месяца',p:375},
+  {m:6,t:'6 месяцев',p:660},
+  {m:12,t:'1 год',p:1200}
 ];
-let sel=2, disc=0;
+let sel=1, disc=0;
+const price=p=>Math.round(p.p*(1-disc));
 function renderPlans(){
   $('#plans').innerHTML=plans.map((p,i)=>{
-    const price=Math.round(p.p*(1-disc));
-    return `<button class="plan ${i===sel?'sel':''}" data-i="${i}"><span class="radio"></span><span class="t"><b>${p.t}${p.tag?`<span class="tag">${p.tag}</span>`:''}</b><span class="small muted">${p.d}</span></span><span class="p">${price} ₽${p.o||disc?`<s>${p.o||p.p} ₽</s>`:''}</span></button>`;}).join('');
+    const per=Math.round(price(p)/p.m), save=Math.round((1-p.p/(plans[0].p*p.m))*100);
+    return `<button class="item plan ${i===sel?'sel':''}" data-i="${i}"><span class="rd"></span><span class="t">${p.t}${save>0?`<span class="save">−${save}%</span>`:''}<small>${per} ₽ в месяц</small></span><span class="pr">${price(p)} ₽</span></button>`;}).join('');
   document.querySelectorAll('.plan').forEach(b=>b.addEventListener('click',()=>{sel=+b.dataset.i;renderPlans();haptic();}));
-  $('#payBtn').textContent='Оплатить '+Math.round(plans[sel].p*(1-disc))+' ₽';
+  $('#payBtn').textContent='Оплатить '+price(plans[sel])+' ₽';
 }
 renderPlans();
-document.querySelectorAll('#pay button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#pay button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');haptic();}));
+document.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');haptic();if(b.dataset.os)renderSteps(b.dataset.os);})));
 $('#promoBtn').addEventListener('click',()=>{
-  const v=$('#promoIn').value.trim();
-  if(!v){toast('Введите промокод');return;}
-  disc=0.1; renderPlans(); toast('Промокод применён, скидка 10%'); haptic('medium');
+  if(!$('#promoIn').value.trim()){toast('Введите промокод');return;}
+  disc=.1; renderPlans(); toast('Скидка 10% применена'); haptic('medium');
 });
 $('#payBtn').addEventListener('click',()=>{
-  const p=plans[sel]; const d=new Date(2026,10,14); d.setMonth(d.getMonth()+p.m);
-  const ds=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
-  sheet(`<div class="done"><div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></div><h2>Оплачено</h2><p class="muted">Подписка продлена до ${ds}. Чек пришёл в чат с ботом.</p><button class="btn" style="margin-top:16px" id="doneBtn">Отлично</button></div>`);
-  try{tg&&tg.HapticFeedback&&tg.HapticFeedback.notificationOccurred('success');}catch(e){}
+  const p=plans[sel], d=new Date(2026,10,14); d.setMonth(d.getMonth()+p.m);
+  const ds=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
+  const total=Math.round((d-new Date(2026,10,11))/864e5);
+  sheet(`<h3>Оплата прошла</h3><div class="group"><div class="item"><span class="t">Тариф</span><span class="v">${p.t}</span></div><div class="item"><span class="t">Списано</span><span class="v">${price(p)} ₽</span></div><div class="item"><span class="t">Действует до</span><span class="v">${ds}</span></div></div><div class="note" style="padding-bottom:14px">Чек отправили в чат с ботом. Ключ остался прежним.</div><button class="btn" id="doneBtn">Готово</button>`);
+  try{tg.HapticFeedback.notificationOccurred('success');}catch(e){}
   $('#doneBtn').addEventListener('click',()=>{closeSheet();go('home');});
-  const total=p.m*30+3; $('#subCard').classList.remove('low');
-  $('#subCard .row b').textContent='Подписка до '+ds.replace(/ г\.$/,'');
-  $('#daysLeft').textContent=total+' дн.'; $('#daysLeft').style.color='var(--accent)';
-  $('#subBar').style.width='100%'; $('#subHint').textContent='Автопродление включено, напомним за 3 дня до списания';
+  $('#days').innerHTML=total+' <span>дней осталось</span>'; meter(30);
+  $('#pill').textContent='Активна'; $('#pill').classList.add('ok');
+  $('#until').textContent='Действует до '+ds+' · до 3 устройств';
 });
 
-/* devices */
+/* setup */
 const guides={
-  ios:['Установите приложение <b>Happ</b> из App Store','Нажмите «Подключить в один тап» ниже','Разрешите добавить конфигурацию VPN'],
-  android:['Установите <b>v2RayTun</b> из Google Play','Нажмите «Подключить в один тап» ниже','Нажмите кнопку включения в приложении'],
-  win:['Скачайте <b>Hiddify</b> для Windows','Скопируйте ссылку или отсканируйте QR','В Hiddify нажмите «Добавить из буфера»'],
-  mac:['Установите <b>Happ</b> из App Store','Нажмите «Подключить в один тап» ниже','Разрешите добавить конфигурацию VPN']
+  ios:['Установите <b>Happ</b> из App Store','Нажмите кнопку ниже, ключ добавится сам','Включите VPN в Happ и разрешите конфигурацию'],
+  android:['Установите <b>Happ</b> или v2RayTun из Google Play','Нажмите кнопку ниже, ключ добавится сам','Нажмите кнопку подключения в приложении'],
+  win:['Скачайте <b>Hiddify</b> для Windows','Скопируйте ключ на главной','В Hiddify выберите «Добавить из буфера обмена»'],
+  mac:['Установите <b>Happ</b> из App Store','Нажмите кнопку ниже, ключ добавится сам','Включите VPN в Happ']
 };
-function renderSteps(os){ $('#steps').innerHTML=guides[os].map(s=>`<li>${s}</li>`).join(''); }
+function renderSteps(os){ $('#steps').innerHTML=guides[os].map(s=>`<li><span>${s}</span></li>`).join(''); }
 renderSteps('ios');
-document.querySelectorAll('#os button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#os button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');renderSteps(b.dataset.os);haptic();}));
-const subUrl='https://sub.your-vpn.ru/k/7f3a9c51e2';
-$('#oneTap').addEventListener('click',()=>{ toast('В рабочей версии откроется приложение с готовым ключом'); haptic('medium'); });
-$('#showQr').addEventListener('click',()=>{
-  sheet(`<h2>Отсканируйте на другом устройстве</h2><div class="qr" id="qrBox"></div><div class="link">${subUrl}</div><button class="btn ghost" id="cpSub">Скопировать ссылку</button>`);
-  if(window.QRCode) new QRCode(document.getElementById('qrBox'),{text:subUrl,width:160,height:160,colorDark:'#0d1117',colorLight:'#ffffff'});
-  $('#cpSub').addEventListener('click',()=>copy(subUrl));
-});
-function copy(t){ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Скопировано')).catch(()=>toast('Скопировано')); haptic(); }
-document.querySelectorAll('.dev .x').forEach(b=>b.addEventListener('click',()=>{ const d=b.closest('.dev'); d.style.opacity='.4'; b.textContent='Отключено'; b.disabled=true; haptic(); }));
+$('#oneTap').addEventListener('click',()=>{ toast('В рабочей версии откроется Happ с вашим ключом'); haptic('medium'); });
+const faq=[
+  ['Сайты не открываются','Выключите и включите VPN в приложении, затем выберите другой сервер. Если не помогло, обновите подписку в приложении (потяните список вниз).'],
+  ['После обновления','Удалите старую подписку в приложении и снова нажмите «Добавить ключ в приложение». Ключ тот же, оплачивать заново не нужно.']
+];
+document.querySelectorAll('[data-faq]').forEach(b=>b.addEventListener('click',()=>{const f=faq[b.dataset.faq];sheet(`<h3>${f[0]}</h3><div class="group"><div class="item"><span class="t">${f[1]}</span></div></div><div style="margin-top:14px"><button class="btn sec" id="fq">Понятно</button></div>`);$('#fq').addEventListener('click',closeSheet);}));
+$('#support').addEventListener('click',()=>{ inTg ? tg.openTelegramLink('https://t.me/SeeTheLight11') : window.open('https://t.me/SeeTheLight11'); });
 
-/* friends */
-$('#copyRef').addEventListener('click',()=>copy($('#refLink').textContent));
+/* earn */
+$('#balMeter').innerHTML=Array.from({length:30},(_,i)=>`<i class="${i<15?'f':''}"></i>`).join('');
+$('#wdBtn').addEventListener('click',()=>toast('Вывод доступен от 500 ₽'));
+$('#copyRef').addEventListener('click',()=>copy('https://'+$('#refLink').textContent));
 $('#shareBtn').addEventListener('click',()=>{
-  const url='https://'+$('#refLink').textContent, text='Пользуюсь этим VPN, по моей ссылке месяц в подарок';
-  if(tg&&tg.initData){ tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text)); }
-  else if(navigator.share){ navigator.share({text,url}).catch(()=>{}); } else copy(url);
+  const url='https://'+$('#refLink').textContent, text='Пользуюсь MY VPN, подключается за пару минут';
+  if(inTg) tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text));
+  else if(navigator.share) navigator.share({text,url}).catch(()=>{}); else copy(url);
 });
 </script>
 </body>
