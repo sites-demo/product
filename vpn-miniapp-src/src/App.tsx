@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import QRCode from 'qrcode'
-import { Tunnel } from './Tunnel'
 import { tg, tapLight, tapHeavy, select, success, userName, openTg } from './tg'
 import { TRIAL, BRAND, BOT, SUPPORT, CHANNEL, USER_ID, SUB_URL, DEVICES_MAX, SERVERS, PLANS, OS_LIST, GUIDES, REF, type Os, type Plan } from './data'
-import { IHome, ICard, IPhone, IGift, ICopy, IQr, ILaptop, IChat, IMegaphone, IShield, IChevron, IShare, IPlus } from './icons'
+import { IHome, ICard, IPhone, IGift, ICopy, IQr, ILaptop, IChat, IMegaphone, IChevron, IShare, IPlus, IDoc } from './icons'
 
 type Tab = 'home' | 'plans' | 'setup' | 'friends'
 const TODAY = new Date(2026, 10, 11)
@@ -16,24 +15,25 @@ const plural = (n: number, one: string, few: string, many: string) => {
   if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few
   return many
 }
+const days = (n: number) => `${n} ${plural(n, 'день', 'дня', 'дней')}`
 const fmtDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
+const rub = (n: number) => n.toLocaleString('ru-RU') + ' ₽'
 
 export function App() {
   const [tab, setTab] = useState<Tab>('home')
   const [until, setUntil] = useState(() => new Date(2026, 10, 14))
   const [newUser, setNewUser] = useState(false)
-  const [energy, setEnergy] = useState(0.35)
   const [sheet, setSheet] = useState<ReactNode>(null)
   const [toast, setToast] = useState('')
+  const [pulse, setPulse] = useState(0)
 
   const daysLeft = Math.max(0, Math.round((+until - +TODAY) / DAY))
-  const low = daysLeft <= 5
 
   const say = (m: string) => { setToast(m); window.clearTimeout((say as any)._t); (say as any)._t = window.setTimeout(() => setToast(''), 2000) }
   const copy = (t: string) => { navigator.clipboard?.writeText(t).catch(() => {}); tapLight(); say('Скопировано') }
   const go = (t: Tab) => { setTab(t); tapLight(); window.scrollTo({ top: 0 }) }
 
-  // Кнопка «назад» в шапке Telegram возвращает на главную
+  // Кнопка «назад» в шапке Telegram
   useEffect(() => {
     if (!tg) return
     const back = () => { if (sheet) setSheet(null); else setTab('home') }
@@ -45,26 +45,31 @@ export function App() {
   const paid = (p: Plan, price: number) => {
     const next = new Date(Math.max(+until, +TODAY))
     if (p.months === 0) next.setTime(+TODAY + TRIAL.days * DAY); else next.setMonth(next.getMonth() + p.months)
-    setUntil(next); setNewUser(false)
-    setEnergy(1); success()
-    window.setTimeout(() => setEnergy(0.55), 2200)
+    setUntil(next); setNewUser(false); setPulse(x => x + 1); success()
     setSheet(<PaidSheet plan={p} price={price} until={next} onDone={() => { setSheet(null); go('home') }} />)
   }
+  const pay = (p: Plan, price: number) => setSheet(<PaySheet plan={p} price={price} onPaid={() => paid(p, price)} />)
+
+  const setMode = (v: boolean) => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); setPulse(x => x + 1); select(); go('home') }
 
   return (
     <div className="app">
-      <header className="bar">
+      <header className="top">
         <div className="brand"><Logo /><span>{BRAND}</span></div>
-        <div className="me"><span className="me-name">{userName()}</span><span className="ava">{userName()[0]}</span></div>
+        <span className="ava" title={userName()}>{userName()[0]}</span>
       </header>
 
       <main key={tab} className="screen">
-        {tab === 'home' && <DemoMode newUser={newUser} set={v => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); select() }} />}
-        {tab === 'home' && <Home newUser={newUser} tryTrial={() => setSheet(<PaySheet plan={TRIAL_PLAN} price={TRIAL.price} onPaid={() => paid(TRIAL_PLAN, TRIAL.price)} />)} daysLeft={daysLeft} until={until} low={low} energy={energy} go={go} copy={copy} openSheet={setSheet} say={say} />}
-        {tab === 'plans' && <Plans until={until} onPay={(p, price) => setSheet(<PaySheet plan={p} price={price} onPaid={() => paid(p, price)} />)} say={say} />}
-        {tab === 'setup' && <Setup copy={copy} say={say} openSheet={setSheet} />}
+        {tab === 'home' && <Home newUser={newUser} daysLeft={daysLeft} until={until} pulse={pulse}
+          tryTrial={() => { tapHeavy(); pay(TRIAL_PLAN, TRIAL.price) }} go={go} copy={copy} openSheet={setSheet} say={say} />}
+        {tab === 'plans' && <Plans until={until} onPay={pay} say={say} />}
+        {tab === 'setup' && <Setup locked={newUser} copy={copy} say={say} openSheet={setSheet} go={go} />}
         {tab === 'friends' && <Friends copy={copy} say={say} />}
-        <p className="demo-note">Демо для бота @{BOT}. Оплата, ключ и цифры здесь примерные, в рабочей версии они берутся из вашей панели.</p>
+
+        <div className="demo">
+          <span>Демо для @{BOT}, цифры примерные</span>
+          <button onClick={() => setMode(!newUser)}>{newUser ? 'Показать с подпиской' : 'Показать как новичок'}</button>
+        </div>
       </main>
 
       <nav className="tabs">
@@ -81,12 +86,11 @@ export function App() {
   )
 }
 
-function Logo() {
+function Logo({ className = 'logo' }: { className?: string }) {
   return (
-    <svg className="logo" viewBox="0 0 32 32" aria-hidden>
-      <rect width="32" height="32" rx="9" fill="url(#lg)" />
-      <path d="M8 21V11l8 6 8-6v10" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-      <defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stopColor="#5157ff" /><stop offset="1" stopColor="#2b2fc4" /></linearGradient></defs>
+    <svg className={className} viewBox="0 0 32 32" aria-hidden>
+      <rect width="32" height="32" rx="8" fill="var(--brand)" />
+      <path d="M8.5 21.5v-11l7.5 6 7.5-6v11" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -95,129 +99,103 @@ function TabBtn({ on, onClick, icon, label }: { on: boolean; onClick: () => void
   return <button className={`tab ${on ? 'on' : ''}`} onClick={onClick}>{icon}<span>{label}</span></button>
 }
 
-/* ---------- Главная ---------- */
-function DemoMode({ newUser, set }: { newUser: boolean; set: (v: boolean) => void }) {
+/* Полоска дней. Заполняется при открытии и после оплаты. */
+function DayStrip({ left, total, pulse }: { left: number; total: number; pulse: number }) {
+  const [shown, setShown] = useState(0)
+  useEffect(() => { setShown(0); const t = window.setTimeout(() => setShown(Math.min(left, total)), 60); return () => window.clearTimeout(t) }, [left, total, pulse])
   return (
-    <div className="demo-mode">
-      <span>Показать кабинет</span>
-      <div className="seg mini">
-        <button className={!newUser ? 'on' : ''} onClick={() => set(false)}>С подпиской</button>
-        <button className={newUser ? 'on' : ''} onClick={() => set(true)}>Новичка</button>
-      </div>
+    <div className="strip" style={{ gridTemplateColumns: `repeat(${total}, 1fr)` }} aria-label={`Осталось ${days(left)}`}>
+      {Array.from({ length: total }, (_, i) => <i key={i} className={i < shown ? 'f' : ''} style={{ transitionDelay: `${i * 15}ms` }} />)}
     </div>
   )
 }
 
-const greet = () => { const h = new Date().getHours(); return h < 5 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер' }
-
-function Home({ newUser, tryTrial, daysLeft, until, low, energy, go, copy, openSheet, say }: {
-  newUser: boolean; tryTrial: () => void; daysLeft: number; until: Date; low: boolean; energy: number
+/* ---------- Главная ---------- */
+function Home({ newUser, daysLeft, until, pulse, tryTrial, go, copy, openSheet, say }: {
+  newUser: boolean; daysLeft: number; until: Date; pulse: number; tryTrial: () => void
   go: (t: Tab) => void; copy: (t: string) => void; openSheet: (n: ReactNode) => void; say: (m: string) => void
 }) {
-  const [server, setServer] = useState(0)
-  const s = SERVERS[server]
+  const low = daysLeft <= 5
   return (
     <>
-      <h1 className="greet">{greet()}, {userName()}</h1>
       {newUser ? (
-        <section className="hero trial">
-          <Tunnel energy={energy * 0.7} />
-          <div className="hero-in">
-            <div className="status ok"><i />Пробный период</div>
-            <div className="days"><b>{TRIAL.price} ₽</b><span>за {TRIAL.days} дня</span></div>
-            <div className="hero-sub">Полный доступ без ограничений. Понравится, продлите от {PLANS[0].price} ₽ в месяц.</div>
-            <HeroStats />
-            <div className="hero-btns">
-              <button className="btn primary" onClick={() => { tapHeavy(); tryTrial() }}>Попробовать</button>
-              <button className="btn glass" onClick={() => go('plans')}>Тарифы</button>
-            </div>
+        <section className="subcard trial">
+          <div className="sc-top"><span>Пробный период</span></div>
+          <div className="sc-big">{TRIAL.price} ₽</div>
+          <div className="sc-sub">{TRIAL.days} дня без ограничений, потом от {rub(PLANS[0].price)} в месяц</div>
+          <div className="sc-btns">
+            <button className="btn white" onClick={tryTrial}>Попробовать</button>
+            <button className="btn outline" onClick={() => go('plans')}>Тарифы</button>
           </div>
+          <Logo className="sc-mark" />
         </section>
       ) : (
-        <section className={`hero ${low ? 'low' : ''}`}>
-          <Tunnel energy={energy} />
-          <div className="hero-in">
-            <div className={`status ${low ? 'warn' : 'ok'}`}><i />{low ? 'Подписка скоро закончится' : 'Подписка активна'}</div>
-            <div className="days"><b>{daysLeft}</b><span>{plural(daysLeft, 'день', 'дня', 'дней')}</span></div>
-            <div className="hero-sub">Действует до {fmtDate(until)}</div>
-            <HeroStats />
-            <div className="hero-btns">
-              <button className="btn primary" onClick={() => go('plans')}>Продлить</button>
-              <button className="btn glass" onClick={() => go('setup')}>Подключить</button>
-            </div>
+        <section className="subcard">
+          <div className="sc-top"><span>Подписка</span>{low && <em>скоро закончится</em>}</div>
+          <div className="sc-big">{days(daysLeft)}</div>
+          <div className="sc-sub">до {fmtDate(until)}, до {DEVICES_MAX} устройств</div>
+          <DayStrip left={daysLeft} total={daysLeft > 31 ? Math.min(daysLeft, 60) : 30} pulse={pulse} />
+          <div className="sc-btns">
+            <button className="btn white" onClick={() => go('plans')}>Продлить</button>
+            <button className="btn outline" onClick={() => go('setup')}>Подключить</button>
           </div>
+          <Logo className="sc-mark" />
         </section>
       )}
 
-      <h2 className="h">Ключ подписки</h2>
+      <h2 className="h">Ключ</h2>
       {newUser ? (
-        <div className="card key-card locked">
-          <code className="key">sub.my-vpn ··· ··· ···</code>
-          <p className="hint">Ключ появится здесь сразу после оплаты, вместе с QR-кодом и инструкцией. Ничего не нужно ждать в чате.</p>
+        <div className="group">
+          <div className="row"><span className="row-t"><b className="muted">Появится сразу после оплаты</b></span></div>
         </div>
       ) : (
-      <div className="card key-card">
-        <code className="key">{SUB_URL}</code>
-        <div className="key-actions">
-          <button className="icon-btn" onClick={() => copy(SUB_URL)}><ICopy size={20} />Скопировать</button>
-          <button className="icon-btn" onClick={() => openSheet(<QrSheet />)}><IQr size={20} />QR-код</button>
+        <div className="group">
+          <div className="keyline"><code>{SUB_URL}</code></div>
+          <Row icon={<ICopy size={20} />} title="Скопировать ключ" onClick={() => copy(SUB_URL)} />
+          <Row icon={<IQr size={20} />} title="QR-код" sub="Для телевизора или второго телефона" onClick={() => openSheet(<QrSheet />)} />
         </div>
-        <p className="hint">При продлении ключ не меняется, ничего переподключать не нужно.</p>
-      </div>
       )}
 
       {!newUser && <>
-      <h2 className="h">Устройства <span className="h-aside">2 из {DEVICES_MAX}</span></h2>
-      <div className="card list">
-        <Row icon={<IPhone size={20} />} title="iPhone 13" sub="Онлайн сейчас" right={<span className="dot-on" />} />
-        <Row icon={<ILaptop size={20} />} title="MacBook Air" sub="Был вчера в 22:14" right={<button className="link-btn" onClick={() => say('Устройство отключено')}>Отключить</button>} />
-        <Row icon={<IPlus size={20} />} title="Добавить устройство" sub="Осталось одно место" onClick={() => go('setup')} accent />
-      </div>
+        <h2 className="h">Устройства<span className="aside">2 из {DEVICES_MAX}</span></h2>
+        <div className="group">
+          <Row icon={<IPhone size={20} />} title="iPhone 13" sub="сейчас онлайн" />
+          <Row icon={<ILaptop size={20} />} title="MacBook Air" sub="вчера в 22:14" right={<button className="link" onClick={() => say('Устройство отключено')}>Отключить</button>} />
+          <Row icon={<IPlus size={20} />} title="Добавить устройство" onClick={() => go('setup')} blue />
+        </div>
       </>}
 
-      <h2 className="h">Серверы <span className="h-aside">все входят в подписку</span></h2>
-      <div className="card list">
-        {SERVERS.map((sv, i) => (
-          <button key={sv.code} className={`row srv ${i === server ? 'sel' : ''}`} onClick={() => { setServer(i); select() }}>
-            <span className="cc">{sv.code}</span>
+      <h2 className="h">Серверы</h2>
+      <div className="group">
+        {SERVERS.map(sv => (
+          <div key={sv.code} className="row">
             <span className="row-t"><b>{sv.name}</b><small>{sv.city}</small></span>
-            <span className="load" title={`Загрузка ${sv.load}%`}><i style={{ width: `${sv.load}%` }} /></span>
             <span className={`ping ${sv.ping > 90 ? 'far' : ''}`}>{sv.ping} мс</span>
-          </button>
+          </div>
         ))}
       </div>
-      <p className="hint pad">{s.city}: пинг {s.ping} мс, загрузка {s.load}%. Сервер переключается прямо в приложении Happ.</p>
+      <p className="note">Сервер выбирается в приложении Happ, все входят в подписку.</p>
     </>
   )
 }
 
-function HeroStats() {
-  return (
-    <div className="hero-stats">
-      <div><b>{DEVICES_MAX}</b><span>устройства</span></div>
-      <div><b>{SERVERS.length}</b><span>локаций</span></div>
-      <div><b>∞</b><span>трафик</span></div>
-    </div>
-  )
-}
-
-function Row({ icon, title, sub, right, onClick, accent }: { icon: ReactNode; title: string; sub?: string; right?: ReactNode; onClick?: () => void; accent?: boolean }) {
+function Row({ icon, title, sub, right, onClick, blue }: { icon?: ReactNode; title: string; sub?: string; right?: ReactNode; onClick?: () => void; blue?: boolean }) {
   const inner = (<>
-    <span className={`row-ic ${accent ? 'accent' : ''}`}>{icon}</span>
-    <span className="row-t"><b>{title}</b>{sub && <small>{sub}</small>}</span>
-    {right ?? (onClick && <span className="chev"><IChevron size={18} /></span>)}
+    {icon && <span className={`row-ic ${blue ? 'blue' : ''}`}>{icon}</span>}
+    <span className="row-t"><b className={blue ? 'blue' : ''}>{title}</b>{sub && <small>{sub}</small>}</span>
+    {right ?? (onClick && !blue && <span className="chev"><IChevron size={18} /></span>)}
   </>)
   return onClick ? <button className="row" onClick={onClick}>{inner}</button> : <div className="row">{inner}</div>
 }
 
 function QrSheet() {
   const [src, setSrc] = useState('')
-  useEffect(() => { QRCode.toDataURL(SUB_URL, { margin: 1, width: 400, color: { dark: '#0a0a12', light: '#ffffff' } }).then(setSrc) }, [])
+  useEffect(() => { QRCode.toDataURL(SUB_URL, { margin: 1, width: 400, color: { dark: '#111111', light: '#ffffff' } }).then(setSrc) }, [])
   return (
     <div className="sheet-body">
       <h3>QR-код ключа</h3>
       <div className="qr">{src && <img src={src} alt="QR-код ключа" />}</div>
-      <p className="hint center">Откройте Happ на телевизоре или втором телефоне и выберите «Сканировать QR».</p>
+      <p className="note center">В Happ: плюс в правом верхнем углу, «Сканировать QR».</p>
     </div>
   )
 }
@@ -234,47 +212,43 @@ function Plans({ until, onPay, say }: { until: Date; onPay: (p: Plan, price: num
 
   return (
     <>
-      <h1 className="title">Продление</h1>
-      <p className="lead">Сейчас подписка действует до {fmtDate(until)}. Новые дни добавятся к оставшимся.</p>
-      <div className="plans">
+      <h1 className="title">Тарифы</h1>
+      <div className="group">
         {PLANS.map((pl, i) => {
           const save = Math.round((1 - pl.price / (base * pl.months)) * 100)
           return (
-            <button key={pl.months} className={`plan ${i === sel ? 'sel' : ''}`} onClick={() => { setSel(i); select() }}>
-              <span className="plan-top"><b>{pl.title}</b>{save > 0 && <em>−{save}%</em>}</span>
-              <span className="plan-price">{price(pl)} ₽</span>
-              <span className="plan-per">{Math.round(price(pl) / pl.months)} ₽ в месяц</span>
-              {i === 2 && <span className="plan-badge">Чаще берут</span>}
+            <button key={pl.months} className={`row plan ${i === sel ? 'sel' : ''}`} onClick={() => { setSel(i); select() }}>
+              <span className="radio" />
+              <span className="row-t"><b>{pl.title}</b><small>{rub(Math.round(price(pl) / pl.months))} в месяц{save > 0 && <span className="save">, выгода {save}%</span>}</small></span>
+              <span className="price">{rub(price(pl))}</span>
             </button>
           )
         })}
       </div>
+      <p className="note">До 3 устройств на любом тарифе. Ключ при продлении не меняется.</p>
 
-      <div className="card list" style={{ marginTop: 14 }}>
-        <div className="row"><span className="row-ic sbp">СБП</span><span className="row-t"><b>Система быстрых платежей</b><small>Оплата в приложении банка, без карты</small></span></div>
+      <h2 className="h">Оплата</h2>
+      <div className="group">
+        <div className="row"><span className="row-ic sbp">СБП</span><span className="row-t"><b>Через приложение банка</b></span></div>
         <div className="row promo">
-          <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="Промокод, если есть" autoComplete="off" />
-          <button className="link-btn" onClick={() => { if (!promo.trim()) return say('Введите промокод'); setDisc(0.1); tapLight(); say('Скидка 10% применена') }}>Применить</button>
+          <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="Промокод" autoComplete="off" />
+          <button className="link" onClick={() => { if (!promo.trim()) return say('Введите промокод'); setDisc(0.1); tapLight(); say('Скидка 10%') }}>Применить</button>
         </div>
       </div>
 
-      <div className="pay-sum">
-        <span>Будет действовать до {fmtDate(newUntil)}</span>
-        <b>{price(p)} ₽</b>
-      </div>
-      <button className="btn primary wide" onClick={() => { tapHeavy(); onPay(p, price(p)) }}>Оплатить {price(p)} ₽</button>
-      <p className="hint center">Чек придёт в чат с ботом. Автопродление можно выключить в любой момент.</p>
+      <button className="btn blue wide" onClick={() => { tapHeavy(); onPay(p, price(p)) }}>Оплатить {rub(price(p))}</button>
+      <p className="note center">Подписка будет до {fmtDate(newUntil)}. Чек придёт в бот.</p>
     </>
   )
 }
 
 function PaySheet({ plan, price, onPaid }: { plan: Plan; price: number; onPaid: () => void }) {
-  useEffect(() => { const t = window.setTimeout(onPaid, 1600); return () => window.clearTimeout(t) }, [])
+  useEffect(() => { const t = window.setTimeout(onPaid, 1500); return () => window.clearTimeout(t) }, [])
   return (
     <div className="sheet-body center">
       <div className="spinner" />
       <h3>Ждём оплату</h3>
-      <p className="hint center">{plan.title} за {price} ₽. В рабочей версии здесь откроется приложение вашего банка.</p>
+      <p className="note center">{plan.title}, {rub(price)}. Здесь откроется приложение банка.</p>
     </div>
   )
 }
@@ -282,46 +256,46 @@ function PaySheet({ plan, price, onPaid }: { plan: Plan; price: number; onPaid: 
 function PaidSheet({ plan, price, until, onDone }: { plan: Plan; price: number; until: Date; onDone: () => void }) {
   return (
     <div className="sheet-body">
-      <div className="paid-ic"><IShield size={30} /></div>
-      <h3 className="center">Оплата прошла</h3>
-      <div className="card list flat">
+      <h3>Оплачено</h3>
+      <div className="group inset">
         <div className="row"><span className="row-t"><b>Тариф</b></span><span className="val">{plan.title}</span></div>
-        <div className="row"><span className="row-t"><b>Списано</b></span><span className="val">{price} ₽</span></div>
+        <div className="row"><span className="row-t"><b>Сумма</b></span><span className="val">{rub(price)}</span></div>
         <div className="row"><span className="row-t"><b>Действует до</b></span><span className="val">{fmtDate(until)}</span></div>
       </div>
-      <button className="btn primary wide" onClick={onDone}>Готово</button>
+      <button className="btn blue wide" onClick={onDone}>Готово</button>
     </div>
   )
 }
 
 /* ---------- Подключение ---------- */
 const FAQ = [
-  ['VPN включён, но сайты не открываются', 'Выключите и включите VPN в приложении и выберите другой сервер. Если не помогло, обновите подписку: потяните список серверов вниз.'],
+  ['VPN включён, но сайты не открываются', 'Выключите и включите VPN, выберите другой сервер. Не помогло: потяните список серверов вниз, подписка обновится.'],
   ['Перестало работать после обновления', 'Удалите старую подписку в приложении и снова нажмите «Добавить ключ». Ключ тот же, платить заново не нужно.'],
-  ['Можно ли на телевизор', 'Да, на Android TV через Happ. Откройте QR-код ключа на главной и отсканируйте его телевизором.'],
+  ['Можно ли на телевизор', 'Да, на Android TV через Happ. Откройте QR-код на главной и отсканируйте его телевизором.'],
 ]
 
-function Setup({ copy, say, openSheet }: { copy: (t: string) => void; say: (m: string) => void; openSheet: (n: ReactNode) => void }) {
+function Setup({ locked, copy, say, openSheet, go }: { locked: boolean; copy: (t: string) => void; say: (m: string) => void; openSheet: (n: ReactNode) => void; go: (t: Tab) => void }) {
   const [os, setOs] = useState<Os>(() => /android/i.test(navigator.userAgent) ? 'android' : /iphone|ipad/i.test(navigator.userAgent) ? 'ios' : /mac/i.test(navigator.userAgent) ? 'mac' : 'win')
   const [open, setOpen] = useState<number | null>(null)
   const g = GUIDES[os]
   return (
     <>
       <h1 className="title">Подключение</h1>
-      <p className="lead">Две минуты, и VPN работает. Нужно только приложение {g.app}.</p>
       <div className="seg">
         {OS_LIST.map(o => <button key={o.id} className={o.id === os ? 'on' : ''} onClick={() => { setOs(o.id); select() }}>{o.label}</button>)}
       </div>
-      <ol className="steps">
-        {g.steps.map((s, i) => <li key={i}><span className="step-n">{i + 1}</span><span>{s}</span></li>)}
-      </ol>
-      {os === 'win'
-        ? <button className="btn primary wide" onClick={() => copy(SUB_URL)}>Скопировать ключ</button>
-        : <button className="btn primary wide" onClick={() => { tapHeavy(); say(`В рабочей версии откроется ${g.app} с ключом`) }}>Добавить ключ в {g.app}</button>}
-      <button className="btn ghost wide" onClick={() => openSheet(<QrSheet />)}>Показать QR для другого устройства</button>
+      <div className="group">
+        {g.steps.map((s, i) => <div key={i} className="row step"><span className="n">{i + 1}</span><span className="row-t"><b>{s}</b></span></div>)}
+      </div>
+      {locked
+        ? <button className="btn blue wide" onClick={() => go('home')}>Сначала оформить подписку</button>
+        : os === 'win'
+          ? <button className="btn blue wide" onClick={() => copy(SUB_URL)}>Скопировать ключ</button>
+          : <button className="btn blue wide" onClick={() => { tapHeavy(); say(`Здесь откроется ${g.app} с ключом`) }}>Добавить ключ в {g.app}</button>}
+      {!locked && <button className="btn plain wide" onClick={() => openSheet(<QrSheet />)}>QR-код для другого устройства</button>}
 
-      <h2 className="h">Если что-то не так</h2>
-      <div className="card list">
+      <h2 className="h">Не работает</h2>
+      <div className="group">
         {FAQ.map(([q, a], i) => (
           <div key={i} className={`faq ${open === i ? 'open' : ''}`}>
             <button className="row" onClick={() => { setOpen(open === i ? null : i); select() }}>
@@ -330,7 +304,7 @@ function Setup({ copy, say, openSheet }: { copy: (t: string) => void; say: (m: s
             <div className="faq-a"><p>{a}</p></div>
           </div>
         ))}
-        <Row icon={<IChat size={20} />} title="Написать в поддержку" sub={`@${SUPPORT}, отвечаем живым человеком`} onClick={() => openTg(`https://t.me/${SUPPORT}`)} accent />
+        <Row icon={<IChat size={20} />} title="Написать в поддержку" sub={`@${SUPPORT}`} onClick={() => openTg(`https://t.me/${SUPPORT}`)} />
       </div>
     </>
   )
@@ -340,44 +314,43 @@ function Setup({ copy, say, openSheet }: { copy: (t: string) => void; say: (m: s
 function Friends({ copy, say }: { copy: (t: string) => void; say: (m: string) => void }) {
   const link = `https://t.me/${BOT}?start=ref_${USER_ID}`
   const share = () => {
-    const text = `Пользуюсь ${BRAND}, подключается за пару минут`
     tapLight()
+    const text = `Пользуюсь ${BRAND}, подключается за пару минут`
     if (tg) openTg(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`)
     else if (navigator.share) navigator.share({ text, url: link }).catch(() => {})
     else copy(link)
   }
-  const left = REF.minWithdraw - REF.balance
   return (
     <>
-      <h1 className="title">Приглашайте друзей</h1>
-      <p className="lead">Получайте {REF.percent}% с каждой оплаты друга, пока он пользуется {BRAND}.</p>
-      <section className="balance">
-        <span className="bal-l">Баланс</span>
-        <b className="bal-v">{REF.balance} ₽</b>
-        <div className="bal-bar"><i style={{ width: `${(REF.balance / REF.minWithdraw) * 100}%` }} /></div>
-        <span className="bal-hint">До вывода {left} ₽, выводим от {REF.minWithdraw} ₽ на карту</span>
-        <div className="hero-btns">
-          <button className="btn primary" onClick={share}><IShare size={18} />Пригласить</button>
-          <button className="btn glass" onClick={() => say(`Вывод доступен от ${REF.minWithdraw} ₽`)}>Вывести</button>
+      <h1 className="title">Друзья</h1>
+      <p className="lead">{REF.percent}% с каждой оплаты приглашённого друга. Вывод на карту от {rub(REF.minWithdraw)}.</p>
+      <div className="group pad">
+        <div className="bal-row"><span className="muted">Баланс</span><span className="muted">из {rub(REF.minWithdraw)}</span></div>
+        <div className="bal">{rub(REF.balance)}</div>
+        <div className="bar"><i style={{ width: `${(REF.balance / REF.minWithdraw) * 100}%` }} /></div>
+        <div className="sc-btns">
+          <button className="btn blue" onClick={share}><IShare size={18} />Пригласить</button>
+          <button className="btn plain" onClick={() => say(`Вывод от ${rub(REF.minWithdraw)}`)}>Вывести</button>
         </div>
-      </section>
-
-      <h2 className="h">Ваша ссылка</h2>
-      <button className="card key-card link-card" onClick={() => copy(link)}>
-        <code className="key">{link.replace('https://', '')}</code>
-        <span className="icon-btn"><ICopy size={20} /></span>
-      </button>
-
-      <div className="stats">
-        <div><b>{REF.invited}</b><span>перешли по ссылке</span></div>
-        <div><b>{REF.paid}</b><span>оплатили</span></div>
-        <div><b>{REF.balance} ₽</b><span>заработано</span></div>
       </div>
 
-      <h2 className="h">О сервисе</h2>
-      <div className="card list">
-        <Row icon={<IMegaphone size={20} />} title="Канал с новостями" sub={`@${CHANNEL}`} onClick={() => openTg(`https://t.me/${CHANNEL}`)} />
-        <Row icon={<IShield size={20} />} title="Пользовательское соглашение" onClick={() => say('Откроется соглашение')} />
+      <h2 className="h">Ссылка</h2>
+      <div className="group">
+        <div className="keyline"><code>{link.replace('https://', '')}</code></div>
+        <Row icon={<ICopy size={20} />} title="Скопировать" onClick={() => copy(link)} />
+      </div>
+
+      <h2 className="h">Статистика</h2>
+      <div className="group">
+        <div className="row"><span className="row-t"><b>Перешли по ссылке</b></span><span className="val">{REF.invited}</span></div>
+        <div className="row"><span className="row-t"><b>Оплатили</b></span><span className="val">{REF.paid}</span></div>
+        <div className="row"><span className="row-t"><b>Заработано</b></span><span className="val">{rub(REF.balance)}</span></div>
+      </div>
+
+      <h2 className="h">{BRAND}</h2>
+      <div className="group">
+        <Row icon={<IMegaphone size={20} />} title="Канал" sub={`@${CHANNEL}`} onClick={() => openTg(`https://t.me/${CHANNEL}`)} />
+        <Row icon={<IDoc size={20} />} title="Пользовательское соглашение" onClick={() => say('Откроется соглашение')} />
       </div>
     </>
   )
