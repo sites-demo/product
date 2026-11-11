@@ -90,6 +90,18 @@ export type Site = {
   service?: { symptoms: string[] }
   /** Для детейлинга: показывать ли лампу с царапинами (только если студия правда полирует) и цвет капота. */
   detailing?: { polish?: boolean; paint?: string }
+  /** Для магазина своего бренда: модели с цветами и весами, другая экипировка, где купить вживую. */
+  shop?: {
+    brand: string
+    models: { id: string; name: string; short: string; closure: string; weights: string[]; price: string; old?: string; colors: string[]; photos: Photo[]; note?: string }[]
+    gear: { id: string; title: string; text: string; price: string; old?: string; photo?: Photo; options?: string[] }[]
+    /** Как подобрать вес, словами самого бренда. */
+    weights?: { oz: string; text: string }[]
+    weightsNote?: string
+    clubs: { area: string; items: { name: string; place?: string }[] }[]
+    about: { title: string; text: string }[]
+    owner?: string
+  }
   /** Как проходит заказ, словами самой компании. */
   steps?: { title: string; text: string }[]
   /** Цены, которые компания публикует сама: «Кухня Лайт», «от 190 000 ₽». */
