@@ -139,3 +139,6 @@
 .gs-ftr-in { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
 .gs-ftr img { height: 34px; width: auto; }
 .gs-ftr p { color: #8a8a8e; font-size: 14px; }
+
+/* Без переносов по слогам: «ВОПРО-СЫ» в узком капсе выглядит как ошибка. Слова и так помещаются. */
+.site h1, .site h2, .site h3 { hyphens: manual; }
