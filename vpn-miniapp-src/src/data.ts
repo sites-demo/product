@@ -36,3 +36,6 @@ export const GUIDES: Record<Os, { app: string; store: string; steps: string[] }>
 }
 
 export const REF = { percent: 30, minWithdraw: 500, balance: 243, invited: 7, paid: 4 }
+
+// Пробный период: у MY VPN его пока нет, это предложение для запуска
+export const TRIAL = { price: 1, days: 3 }
