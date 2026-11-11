@@ -1,5 +1,5 @@
 
-export type FontName = 'manrope' | 'onest' | 'golos' | 'lora' | 'cormorant'
+export type FontName = 'manrope' | 'onest' | 'golos' | 'lora' | 'cormorant' | 'oswald'
 
 export type Rating = {
   source: '2ГИС' | 'Яндекс Карты'
@@ -100,6 +100,8 @@ export type Site = {
     weightsNote?: string
     clubs: { area: string; items: { name: string; place?: string }[] }[]
     about: { title: string; text: string }[]
+    /** Короткая цитата бренда о себе, дословно с их сайта. */
+    quote?: string
     owner?: string
   }
   /** Как проходит заказ, словами самой компании. */
