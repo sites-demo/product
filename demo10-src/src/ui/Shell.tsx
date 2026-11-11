@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import type { FontName, Site } from '../types'
 
 const FAMILY: Record<FontName, string> = {
-  manrope: "'Manrope'", onest: "'Onest'", golos: "'Golos Text'", lora: "'Lora'", cormorant: "'Cormorant Garamond'",
+  manrope: "'Manrope'", onest: "'Onest'", golos: "'Golos Text'", lora: "'Lora'", cormorant: "'Cormorant Garamond'", oswald: "'Oswald'",
 }
 const fallback = (f: FontName) => (f === 'lora' || f === 'cormorant' ? 'Georgia, serif' : 'system-ui, -apple-system, Roboto, sans-serif')
 
