@@ -25,7 +25,6 @@ export function App() {
   const [newUser, setNewUser] = useState(false)
   const [sheet, setSheet] = useState<ReactNode>(null)
   const [toast, setToast] = useState('')
-  const [pulse, setPulse] = useState(0)
 
   const daysLeft = Math.max(0, Math.round((+until - +TODAY) / DAY))
 
@@ -45,12 +44,12 @@ export function App() {
   const paid = (p: Plan, price: number) => {
     const next = new Date(Math.max(+until, +TODAY))
     if (p.months === 0) next.setTime(+TODAY + TRIAL.days * DAY); else next.setMonth(next.getMonth() + p.months)
-    setUntil(next); setNewUser(false); setPulse(x => x + 1); success()
+    setUntil(next); setNewUser(false); success()
     setSheet(<PaidSheet plan={p} price={price} until={next} onDone={() => { setSheet(null); go('home') }} />)
   }
   const pay = (p: Plan, price: number) => setSheet(<PaySheet plan={p} price={price} onPaid={() => paid(p, price)} />)
 
-  const setMode = (v: boolean) => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); setPulse(x => x + 1); select(); go('home') }
+  const setMode = (v: boolean) => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); select(); go('home') }
 
   return (
     <div className="app">
@@ -60,7 +59,7 @@ export function App() {
       </header>
 
       <main key={tab} className="screen">
-        {tab === 'home' && <Home newUser={newUser} daysLeft={daysLeft} until={until} pulse={pulse}
+        {tab === 'home' && <Home newUser={newUser} daysLeft={daysLeft} until={until}
           tryTrial={() => { tapHeavy(); pay(TRIAL_PLAN, TRIAL.price) }} go={go} copy={copy} openSheet={setSheet} say={say} />}
         {tab === 'plans' && <Plans until={until} onPay={pay} say={say} />}
         {tab === 'setup' && <Setup locked={newUser} copy={copy} say={say} openSheet={setSheet} go={go} />}
@@ -99,23 +98,55 @@ function TabBtn({ on, onClick, icon, label }: { on: boolean; onClick: () => void
   return <button className={`tab ${on ? 'on' : ''}`} onClick={onClick}>{icon}<span>{label}</span></button>
 }
 
-/* Полоска дней. Заполняется при открытии и после оплаты. */
-function DayStrip({ left, total, pulse }: { left: number; total: number; pulse: number }) {
-  const [shown, setShown] = useState(0)
-  useEffect(() => { setShown(0); const t = window.setTimeout(() => setShown(Math.min(left, total)), 60); return () => window.clearTimeout(t) }, [left, total, pulse])
+/* Полоска дней. Анимируется только при первом открытии и когда дни добавились,
+   при возврате на главную просто стоит заполненной. */
+let stripShown = 0
+const STRIP = 30
+function DayStrip({ left }: { left: number }) {
+  const target = Math.min(left, STRIP)
+  const [from] = useState(() => (target < stripShown ? target : stripShown))
+  const [shown, setShown] = useState(from)
+  useEffect(() => {
+    if (target === stripShown && shown === target) return
+    const t = window.setTimeout(() => { setShown(target); stripShown = target }, 120)
+    return () => window.clearTimeout(t)
+  }, [target])
   return (
-    <div className="strip" style={{ gridTemplateColumns: `repeat(${total}, 1fr)` }} aria-label={`Осталось ${days(left)}`}>
-      {Array.from({ length: total }, (_, i) => <i key={i} className={i < shown ? 'f' : ''} style={{ transitionDelay: `${i * 15}ms` }} />)}
+    <div className="strip" aria-label={`Осталось ${days(left)}`}>
+      {Array.from({ length: STRIP }, (_, i) => (
+        <i key={i} className={i < shown ? 'f' : ''} style={{ transitionDelay: i >= from && i < shown ? `${(i - from) * 35}ms` : '0ms' }} />
+      ))}
     </div>
   )
 }
 
+/* Число дней плавно досчитывается, когда меняется (после оплаты) */
+let countShown = -1
+function useCountUp(target: number) {
+  const [n, setN] = useState(() => (countShown < 0 ? target : countShown))
+  useEffect(() => {
+    const start = countShown < 0 ? target : countShown
+    countShown = target
+    if (start === target || matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(target); return }
+    let raf = 0; const t0 = performance.now(), dur = 900
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4)
+      setN(Math.round(start + (target - start) * e))
+      if (k < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [target])
+  return n
+}
+
 /* ---------- Главная ---------- */
-function Home({ newUser, daysLeft, until, pulse, tryTrial, go, copy, openSheet, say }: {
-  newUser: boolean; daysLeft: number; until: Date; pulse: number; tryTrial: () => void
+function Home({ newUser, daysLeft, until, tryTrial, go, copy, openSheet, say }: {
+  newUser: boolean; daysLeft: number; until: Date; tryTrial: () => void
   go: (t: Tab) => void; copy: (t: string) => void; openSheet: (n: ReactNode) => void; say: (m: string) => void
 }) {
   const low = daysLeft <= 5
+  const shownDays = useCountUp(newUser ? 0 : daysLeft)
   return (
     <>
       {newUser ? (
@@ -132,9 +163,9 @@ function Home({ newUser, daysLeft, until, pulse, tryTrial, go, copy, openSheet, 
       ) : (
         <section className="subcard">
           <div className="sc-top"><span>Подписка</span>{low && <em>скоро закончится</em>}</div>
-          <div className="sc-big">{days(daysLeft)}</div>
+          <div className="sc-big">{days(shownDays)}</div>
           <div className="sc-sub">до {fmtDate(until)}, до {DEVICES_MAX} устройств</div>
-          <DayStrip left={daysLeft} total={daysLeft > 31 ? Math.min(daysLeft, 60) : 30} pulse={pulse} />
+          <DayStrip left={daysLeft} />
           <div className="sc-btns">
             <button className="btn white" onClick={() => go('plans')}>Продлить</button>
             <button className="btn outline" onClick={() => go('setup')}>Подключить</button>

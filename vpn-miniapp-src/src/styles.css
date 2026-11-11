@@ -1,5 +1,6 @@
 /* Светлая основа как у Telegram, тёмная тема по теме Telegram или системы */
 :root{
+  --ease:cubic-bezier(.22,1,.36,1); --ease-sheet:cubic-bezier(.32,.72,0,1);
   --bg:#f1f1f5; --card:#ffffff; --fill:#f1f1f5; --line:rgba(60,60,67,.13);
   --text:#111114; --muted:#8a8a93; --brand:#3337d6; --brand-ink:#ffffff; --brand-soft:rgba(51,55,214,.1);
   --ok:#1e9a52; --warn:#c8790a; --r:14px;
@@ -31,8 +32,8 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .logo{width:28px;height:28px;display:block}
 .ava{width:32px;height:32px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:600;font-size:15px;color:var(--muted)}
 
-.screen{animation:in .22s ease both}
-@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.screen{animation:in .16s var(--ease) both}
+@keyframes in{from{opacity:0}}
 
 /* Карточка подписки: одно сплошное фирменное пятно */
 .subcard{position:relative;overflow:hidden;border-radius:20px;background:var(--brand);color:#fff;padding:18px 18px 18px}
@@ -46,12 +47,13 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .sc-mark rect{fill:transparent}
 .sc-mark path{stroke-width:2.2}
 .strip{display:grid;gap:3px;margin:18px 0 0;position:relative;z-index:1}
-.strip i{height:18px;border-radius:3px;background:rgba(255,255,255,.2);transition:background .25s}
-.strip i.f{background:#fff}
+.strip{align-items:end;height:18px;grid-template-columns:repeat(30,minmax(0,1fr))}
+.strip i{height:12px;border-radius:3px;background:rgba(255,255,255,.2);transition:background-color .42s var(--ease),height .42s var(--ease)}
+.strip i.f{background:#fff;height:18px}
 .sc-btns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:18px;position:relative;z-index:1}
 
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 14px;border-radius:12px;font-weight:600;font-size:16px;text-align:center;transition:opacity .15s}
-.btn:active{opacity:.7}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 14px;border-radius:12px;font-weight:600;font-size:16px;text-align:center;transition:transform .12s var(--ease),opacity .12s var(--ease)}
+.btn:active{transform:scale(.97);opacity:.88}
 .btn.white{background:#fff;color:var(--brand)}
 .subcard.trial .btn.white{color:#141416}
 .btn.outline{border:1.5px solid rgba(255,255,255,.4);color:#fff}
@@ -71,7 +73,8 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .group{background:var(--card);border-radius:var(--r);overflow:hidden}
 .group.pad{padding:16px}
 .group.inset{background:var(--fill);margin-bottom:4px}
-.row{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:10px 16px;position:relative;text-align:left}
+.row{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:10px 16px;position:relative;text-align:left;transition:background-color .35s var(--ease)}
+button.row:active{background:var(--fill);transition-duration:0s}
 .group>*+.row::before,.group>*+.faq::before,.group>.faq+*::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:.5px solid var(--line)}
 .group>.row:has(.row-ic)+*::before{left:60px}
 .faq{position:relative}
@@ -95,7 +98,7 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .keyline code{display:block;font-size:13px;color:var(--muted);word-break:break-all}
 
 /* Тарифы */
-.plan .radio{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;transition:.15s}
+.plan .radio{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;transition:background-color .35s var(--ease),border-color .35s var(--ease)}
 .plan.sel .radio{border-color:var(--brand);background:var(--brand)}
 .plan.sel .radio::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
 .plan .row-t b{font-weight:500}
@@ -106,14 +109,14 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 
 /* Подключение */
 .seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:rgba(118,118,128,.12);border-radius:10px;padding:2px;gap:2px;margin-bottom:14px}
-.seg button{padding:7px 2px;border-radius:8px;text-align:center;font-size:14px;font-weight:500;transition:.15s}
+.seg button{padding:7px 2px;border-radius:8px;text-align:center;font-size:14px;font-weight:500;transition:background-color .35s var(--ease),box-shadow .35s var(--ease)}
 .seg button.on{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .step{align-items:flex-start}
 .step .n{font-weight:700;color:var(--brand);width:16px;flex:none;line-height:1.4}
 :root[data-theme=dark] .step .n{color:#9da1ff}
-.faq .chev{transition:transform .2s}
+.faq .chev{transition:transform .35s var(--ease)}
 .faq.open .chev{transform:rotate(90deg)}
-.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
 .faq.open .faq-a{grid-template-rows:1fr}
 .faq-a p{overflow:hidden;color:var(--muted);font-size:15px;padding:0 16px}
 .faq.open .faq-a p{padding-bottom:12px}
@@ -137,10 +140,10 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 @media (min-width:560px){.tabs{max-width:520px;margin:0 auto;border-radius:16px 16px 0 0}}
 
 /* Шторка */
-.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.22s;z-index:20}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s var(--ease);z-index:20}
 .sheet-bg.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-width:520px;margin:0 auto;background:var(--bg);border-radius:16px 16px 0 0;padding:8px 16px calc(18px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto}
-.sheet:not(.open){visibility:hidden;transition:transform .3s,visibility 0s .3s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-width:520px;margin:0 auto;background:var(--bg);border-radius:16px 16px 0 0;padding:8px 16px calc(18px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .42s var(--ease-sheet);max-height:88vh;overflow:auto}
+.sheet:not(.open){visibility:hidden;transition:transform .42s var(--ease-sheet),visibility 0s .42s}
 .sheet.open{transform:none}
 .grip{width:36px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
 .sheet-body h3{font-size:20px;font-weight:600;margin:4px 2px 14px}
@@ -150,7 +153,7 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--brand);animation:spin .8s linear infinite;margin-bottom:14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;pointer-events:none;background:rgba(30,30,32,.92);color:#fff;padding:9px 14px;border-radius:10px;font-size:14px;z-index:30;transition:.2s;max-width:calc(100% - 32px)}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;pointer-events:none;background:rgba(30,30,32,.92);color:#fff;padding:9px 14px;border-radius:10px;font-size:14px;z-index:30;transition:opacity .35s var(--ease),transform .35s var(--ease);max-width:calc(100% - 32px)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:350px){ .sc-big{font-size:38px} }
