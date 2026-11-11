@@ -2,12 +2,13 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import QRCode from 'qrcode'
 import { Tunnel } from './Tunnel'
 import { tg, tapLight, tapHeavy, select, success, userName, openTg } from './tg'
-import { BRAND, BOT, SUPPORT, CHANNEL, USER_ID, SUB_URL, DEVICES_MAX, SERVERS, PLANS, OS_LIST, GUIDES, REF, type Os, type Plan } from './data'
+import { TRIAL, BRAND, BOT, SUPPORT, CHANNEL, USER_ID, SUB_URL, DEVICES_MAX, SERVERS, PLANS, OS_LIST, GUIDES, REF, type Os, type Plan } from './data'
 import { IHome, ICard, IPhone, IGift, ICopy, IQr, ILaptop, IChat, IMegaphone, IShield, IChevron, IShare, IPlus } from './icons'
 
 type Tab = 'home' | 'plans' | 'setup' | 'friends'
 const TODAY = new Date(2026, 10, 11)
 const DAY = 864e5
+const TRIAL_PLAN: Plan = { months: 0, title: `Пробный, ${TRIAL.days} дня`, price: TRIAL.price }
 
 const plural = (n: number, one: string, few: string, many: string) => {
   const a = n % 10, b = n % 100
@@ -20,6 +21,7 @@ const fmtDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', mon
 export function App() {
   const [tab, setTab] = useState<Tab>('home')
   const [until, setUntil] = useState(() => new Date(2026, 10, 14))
+  const [newUser, setNewUser] = useState(false)
   const [energy, setEnergy] = useState(0.35)
   const [sheet, setSheet] = useState<ReactNode>(null)
   const [toast, setToast] = useState('')
@@ -41,8 +43,9 @@ export function App() {
   }, [tab, sheet])
 
   const paid = (p: Plan, price: number) => {
-    const next = new Date(Math.max(+until, +TODAY)); next.setMonth(next.getMonth() + p.months)
-    setUntil(next)
+    const next = new Date(Math.max(+until, +TODAY))
+    if (p.months === 0) next.setTime(+TODAY + TRIAL.days * DAY); else next.setMonth(next.getMonth() + p.months)
+    setUntil(next); setNewUser(false)
     setEnergy(1); success()
     window.setTimeout(() => setEnergy(0.55), 2200)
     setSheet(<PaidSheet plan={p} price={price} until={next} onDone={() => { setSheet(null); go('home') }} />)
@@ -56,7 +59,8 @@ export function App() {
       </header>
 
       <main key={tab} className="screen">
-        {tab === 'home' && <Home daysLeft={daysLeft} until={until} low={low} energy={energy} go={go} copy={copy} openSheet={setSheet} say={say} />}
+        {tab === 'home' && <DemoMode newUser={newUser} set={v => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); select() }} />}
+        {tab === 'home' && <Home newUser={newUser} tryTrial={() => setSheet(<PaySheet plan={TRIAL_PLAN} price={TRIAL.price} onPaid={() => paid(TRIAL_PLAN, TRIAL.price)} />)} daysLeft={daysLeft} until={until} low={low} energy={energy} go={go} copy={copy} openSheet={setSheet} say={say} />}
         {tab === 'plans' && <Plans until={until} onPay={(p, price) => setSheet(<PaySheet plan={p} price={price} onPaid={() => paid(p, price)} />)} say={say} />}
         {tab === 'setup' && <Setup copy={copy} say={say} openSheet={setSheet} />}
         {tab === 'friends' && <Friends copy={copy} say={say} />}
@@ -92,28 +96,66 @@ function TabBtn({ on, onClick, icon, label }: { on: boolean; onClick: () => void
 }
 
 /* ---------- Главная ---------- */
-function Home({ daysLeft, until, low, energy, go, copy, openSheet, say }: {
-  daysLeft: number; until: Date; low: boolean; energy: number
+function DemoMode({ newUser, set }: { newUser: boolean; set: (v: boolean) => void }) {
+  return (
+    <div className="demo-mode">
+      <span>Показать кабинет</span>
+      <div className="seg mini">
+        <button className={!newUser ? 'on' : ''} onClick={() => set(false)}>С подпиской</button>
+        <button className={newUser ? 'on' : ''} onClick={() => set(true)}>Новичка</button>
+      </div>
+    </div>
+  )
+}
+
+const greet = () => { const h = new Date().getHours(); return h < 5 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер' }
+
+function Home({ newUser, tryTrial, daysLeft, until, low, energy, go, copy, openSheet, say }: {
+  newUser: boolean; tryTrial: () => void; daysLeft: number; until: Date; low: boolean; energy: number
   go: (t: Tab) => void; copy: (t: string) => void; openSheet: (n: ReactNode) => void; say: (m: string) => void
 }) {
   const [server, setServer] = useState(0)
   const s = SERVERS[server]
   return (
     <>
-      <section className={`hero ${low ? 'low' : ''}`}>
-        <Tunnel energy={energy} />
-        <div className="hero-in">
-          <div className={`status ${low ? 'warn' : 'ok'}`}><i />{low ? 'Подписка скоро закончится' : 'Подписка активна'}</div>
-          <div className="days"><b>{daysLeft}</b><span>{plural(daysLeft, 'день', 'дня', 'дней')}</span></div>
-          <div className="hero-sub">до {fmtDate(until)} · до {DEVICES_MAX} устройств</div>
-          <div className="hero-btns">
-            <button className="btn primary" onClick={() => go('plans')}>Продлить</button>
-            <button className="btn glass" onClick={() => go('setup')}>Подключить</button>
+      <h1 className="greet">{greet()}, {userName()}</h1>
+      {newUser ? (
+        <section className="hero trial">
+          <Tunnel energy={energy * 0.7} />
+          <div className="hero-in">
+            <div className="status ok"><i />Пробный период</div>
+            <div className="days"><b>{TRIAL.price} ₽</b><span>за {TRIAL.days} дня</span></div>
+            <div className="hero-sub">Полный доступ без ограничений. Понравится, продлите от {PLANS[0].price} ₽ в месяц.</div>
+            <HeroStats />
+            <div className="hero-btns">
+              <button className="btn primary" onClick={() => { tapHeavy(); tryTrial() }}>Попробовать</button>
+              <button className="btn glass" onClick={() => go('plans')}>Тарифы</button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className={`hero ${low ? 'low' : ''}`}>
+          <Tunnel energy={energy} />
+          <div className="hero-in">
+            <div className={`status ${low ? 'warn' : 'ok'}`}><i />{low ? 'Подписка скоро закончится' : 'Подписка активна'}</div>
+            <div className="days"><b>{daysLeft}</b><span>{plural(daysLeft, 'день', 'дня', 'дней')}</span></div>
+            <div className="hero-sub">Действует до {fmtDate(until)}</div>
+            <HeroStats />
+            <div className="hero-btns">
+              <button className="btn primary" onClick={() => go('plans')}>Продлить</button>
+              <button className="btn glass" onClick={() => go('setup')}>Подключить</button>
+            </div>
+          </div>
+        </section>
+      )}
 
       <h2 className="h">Ключ подписки</h2>
+      {newUser ? (
+        <div className="card key-card locked">
+          <code className="key">sub.my-vpn ··· ··· ···</code>
+          <p className="hint">Ключ появится здесь сразу после оплаты, вместе с QR-кодом и инструкцией. Ничего не нужно ждать в чате.</p>
+        </div>
+      ) : (
       <div className="card key-card">
         <code className="key">{SUB_URL}</code>
         <div className="key-actions">
@@ -122,13 +164,16 @@ function Home({ daysLeft, until, low, energy, go, copy, openSheet, say }: {
         </div>
         <p className="hint">При продлении ключ не меняется, ничего переподключать не нужно.</p>
       </div>
+      )}
 
+      {!newUser && <>
       <h2 className="h">Устройства <span className="h-aside">2 из {DEVICES_MAX}</span></h2>
       <div className="card list">
         <Row icon={<IPhone size={20} />} title="iPhone 13" sub="Онлайн сейчас" right={<span className="dot-on" />} />
         <Row icon={<ILaptop size={20} />} title="MacBook Air" sub="Был вчера в 22:14" right={<button className="link-btn" onClick={() => say('Устройство отключено')}>Отключить</button>} />
         <Row icon={<IPlus size={20} />} title="Добавить устройство" sub="Осталось одно место" onClick={() => go('setup')} accent />
       </div>
+      </>}
 
       <h2 className="h">Серверы <span className="h-aside">все входят в подписку</span></h2>
       <div className="card list">
@@ -143,6 +188,16 @@ function Home({ daysLeft, until, low, energy, go, copy, openSheet, say }: {
       </div>
       <p className="hint pad">{s.city}: пинг {s.ping} мс, загрузка {s.load}%. Сервер переключается прямо в приложении Happ.</p>
     </>
+  )
+}
+
+function HeroStats() {
+  return (
+    <div className="hero-stats">
+      <div><b>{DEVICES_MAX}</b><span>устройства</span></div>
+      <div><b>{SERVERS.length}</b><span>локаций</span></div>
+      <div><b>∞</b><span>трафик</span></div>
+    </div>
   )
 }
 

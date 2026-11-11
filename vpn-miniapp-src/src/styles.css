@@ -34,7 +34,7 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .days{margin:auto 0 0;display:flex;align-items:baseline;gap:10px;justify-content:center;padding-top:34px}
 .days b{font-size:88px;line-height:.9;font-weight:700;letter-spacing:-.04em;text-shadow:0 6px 40px rgba(51,55,214,.55)}
 .days span{font-size:22px;font-weight:500;color:#c9c9dc}
-.hero-sub{color:#a9a9c0;font-size:15px;margin:8px 0 20px}
+.hero-sub{color:#a9a9c0;font-size:15px;margin:8px 0 16px}
 .hero-btns{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:8px;width:100%;margin-top:auto}
 
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 14px;border-radius:13px;font-weight:600;font-size:16px;text-align:center;transition:transform .12s,opacity .12s}
@@ -158,3 +158,17 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
   .plans{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr}
 }
+
+.greet{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:2px 2px 12px;overflow-wrap:anywhere}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0 0 16px;background:rgba(10,10,18,.5);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;padding:10px 4px}
+.hero-stats div{display:flex;flex-direction:column;align-items:center;min-width:0}
+.hero-stats div+div{border-left:1px solid var(--line)}
+.hero-stats b{font-size:19px;font-weight:700;line-height:1.2}
+.hero-stats span{font-size:12px;color:var(--muted)}
+.hero.trial{background:radial-gradient(120% 90% at 50% 40%,#132a45 0%,#0f1424 55%,var(--bg) 100%)}
+.hero.trial .days b{font-size:72px}
+.hero-sub{max-width:300px}
+.key-card.locked .key{color:var(--dim);letter-spacing:.08em}
+.demo-mode{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border:1px dashed var(--s3);border-radius:12px;padding:8px 8px 8px 12px;margin-bottom:14px;font-size:13px;color:var(--muted)}
+.seg.mini{padding:3px;gap:3px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.seg.mini button{padding:6px 10px;font-size:13px}
