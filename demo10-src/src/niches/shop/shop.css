@@ -9,7 +9,7 @@
 .mbar .btn-accent { border-radius: 4px; font-weight: 700; }
 .mbar .btn-ghost { border-radius: 4px; }
 
-.gs-h2, .gs-hero h1, .gs-price, .gs-brand blockquote, .gl-name {
+.gs-h2, .gs-hero h1, .gs-price, .gl-name {
   font-family: var(--hf); font-weight: 600; text-transform: uppercase; letter-spacing: .005em; line-height: .98;
 }
 .gs-h2 { font-size: clamp(34px, 5vw, 60px); margin-bottom: 36px; }
@@ -59,9 +59,10 @@
 .gl-card { display: grid; gap: 0; align-content: start; }
 .gl-name { font-size: clamp(30px, 3.4vw, 44px); }
 .gl-sub { color: var(--muted); margin-top: 10px; }
-.gl-row { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.gl-row { display: grid; grid-template-columns: 84px 1fr; align-items: center; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .gl-row:first-of-type { margin-top: 24px; border-top: 1px solid var(--line); }
 .gl-label { font-size: 14px; color: var(--muted); }
+@media (max-width: 480px) { .gl-row { grid-template-columns: 1fr; gap: 10px; } }
 .gl-colors { display: flex; flex-wrap: wrap; gap: 10px; }
 .gl-colors button { width: 34px; height: 34px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; box-shadow: 0 0 0 1px rgba(255,255,255,.2); transition: box-shadow .2s ease; }
 .gl-colors button[aria-pressed='true'] { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--ink); }
@@ -102,11 +103,13 @@
 @media (min-width: 1024px) { .gs-brand { padding: 200px 0 96px; } }
 .gs-brand-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; z-index: -2; filter: grayscale(1) brightness(.6); }
 .gs-brand::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.65) 55%, #000); }
-.gs-brand blockquote { margin: 0; font-size: clamp(36px, 5.6vw, 76px); max-width: 15ch; color: #fff; }
+.gs-brand blockquote { margin: 0; font: 500 clamp(30px, 3.8vw, 52px)/1.12 var(--bf); letter-spacing: -0.025em; max-width: 18ch; color: #fff; text-wrap: balance; }
+.gs-brand blockquote::before { content: '«'; }
+.gs-brand blockquote::after { content: '»'; }
 .gs-about { display: grid; gap: 28px; margin-top: 64px; }
 @media (min-width: 860px) { .gs-about { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
 .gs-about div { border-top: 1px solid rgba(255,255,255,.22); padding-top: 18px; }
-.gs-about h3 { font: 700 17px/1.3 var(--bf); letter-spacing: 0; }
+.gs-about h3 { font: 600 20px/1.1 var(--hf); text-transform: uppercase; letter-spacing: .01em; }
 .gs-about p { color: rgba(255,255,255,.68); margin-top: 8px; font-size: 15px; }
 
 /* Клубы */
