@@ -43,7 +43,7 @@ export function Tunnel({ energy }: { energy: number }) {
         const alpha = Math.min(1, near * near * 1.6) * (0.35 + energyRef.current * 0.5) * hole
         if (alpha < 0.02) continue
         const size = 0.6 + near * 1.9
-        ctx.fillStyle = `rgba(${130 + near * 60 | 0},${134 + near * 50 | 0},255,${alpha})`
+        ctx.fillStyle = `rgba(${110 + near * 60 | 0},${120 + near * 60 | 0},255,${alpha})`
         ctx.beginPath(); ctx.arc(x, y, size, 0, Math.PI * 2); ctx.fill()
       }
       raf = requestAnimationFrame(frame)

@@ -82,7 +82,7 @@ function Logo() {
     <svg className="logo" viewBox="0 0 32 32" aria-hidden>
       <rect width="32" height="32" rx="9" fill="url(#lg)" />
       <path d="M8 21V11l8 6 8-6v10" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-      <defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stopColor="#7b7ffb" /><stop offset="1" stopColor="#3a3ed8" /></linearGradient></defs>
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stopColor="#5157ff" /><stop offset="1" stopColor="#2b2fc4" /></linearGradient></defs>
     </svg>
   )
 }
