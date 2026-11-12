@@ -82,13 +82,12 @@ export function App() {
   )
 }
 
-function Logo({ className = 'logo' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 32 32" aria-hidden>
-      <rect width="32" height="32" rx="8" fill="var(--brand)" />
-      <path d="M8.5 21.5v-11l7.5 6 7.5-6v11" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
+const ASSET = import.meta.env.BASE_URL
+function Logo() {
+  return <img className="logo" src={`${ASSET}logo.png`} alt="" width={28} height={28} />
+}
+function Mark() {
+  return <img className="sc-logo" src={`${ASSET}logo-mark.png`} alt={BRAND} height={36} />
 }
 
 function TabBtn({ on, onClick, icon, label }: { on: boolean; onClick: () => void; icon: ReactNode; label: string }) {
@@ -148,18 +147,17 @@ function Home({ newUser, daysLeft, until, tryTrial, go, copy, openSheet, say }: 
     <>
       {newUser ? (
         <section className="subcard trial">
-          <div className="sc-top"><span>Пробный период</span></div>
+          <div className="sc-top"><Mark /><em>пробный период</em></div>
           <div className="sc-big">{TRIAL.price} ₽</div>
           <div className="sc-sub">{TRIAL.days} дня без ограничений, потом от {rub(PLANS[0].price)} в месяц</div>
           <div className="sc-btns">
             <button className="btn white" onClick={tryTrial}>Попробовать</button>
             <button className="btn outline" onClick={() => go('plans')}>Тарифы</button>
           </div>
-          <Logo className="sc-mark" />
         </section>
       ) : (
         <section className="subcard">
-          <div className="sc-top"><span>Подписка</span>{low && <em>скоро закончится</em>}</div>
+          <div className="sc-top"><Mark />{low && <em>скоро закончится</em>}</div>
           <div className="sc-big">{days(shownDays)}</div>
           <div className="sc-sub">до {fmtDate(until)}, до {DEVICES_MAX} устройств</div>
           <DayStrip left={daysLeft} />
@@ -167,7 +165,6 @@ function Home({ newUser, daysLeft, until, tryTrial, go, copy, openSheet, say }: 
             <button className="btn white" onClick={() => go('plans')}>Продлить</button>
             <button className="btn outline" onClick={() => go('setup')}>Подключить</button>
           </div>
-          <Logo className="sc-mark" />
         </section>
       )}
 
