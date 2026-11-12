@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:clip;background:var(--bg)}
-body{color:var(--text);font:16px/1.4 Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+body{color:var(--text);font:17px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
 button,input{font:inherit;color:inherit;background:none;border:0}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:left}
 code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
@@ -30,7 +30,8 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .top{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 14px}
 .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px}
 .logo{width:28px;height:28px;display:block}
-.ava{width:32px;height:32px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:600;font-size:15px;color:var(--muted)}
+.help{color:var(--brand);font-size:16px;padding:6px 2px}
+:root[data-theme=dark] .help{color:#9da1ff}
 
 .screen{animation:in .16s var(--ease) both}
 @keyframes in{from{opacity:0}}
@@ -76,26 +77,29 @@ code{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .row{display:flex;align-items:center;gap:12px;width:100%;min-height:50px;padding:10px 16px;position:relative;text-align:left;transition:background-color .35s var(--ease)}
 button.row:active{background:var(--fill);transition-duration:0s}
 .group>*+.row::before,.group>*+.faq::before,.group>.faq+*::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:.5px solid var(--line)}
-.group>.row:has(.row-ic)+*::before{left:60px}
+.group>.row:has(.row-ic)+*::before,.group>.row:has(.photo)+*::before{left:58px}
 .faq{position:relative}
-.row-ic{width:30px;height:30px;border-radius:8px;background:var(--fill);display:grid;place-items:center;flex:none;color:var(--text)}
-.row-ic svg{width:18px;height:18px}
-.row-ic.blue{background:var(--brand-soft);color:var(--brand)}
-:root[data-theme=dark] .row-ic.blue{color:#9da1ff}
-.row-ic.sbp{font-size:10px;font-weight:700;color:var(--brand);background:var(--brand-soft)}
+.row-ic{width:30px;height:30px;border-radius:7px;display:grid;place-items:center;flex:none;color:#fff}
+.row-ic svg{width:18px;height:18px;stroke-width:2}
+.ic-blue{background:#3337d6}.ic-indigo{background:#5856d6}.ic-gray{background:#8e8e93}.ic-green{background:#34c759}.ic-orange{background:#ff9500}.ic-teal{background:#30b0c7}
+.row-ic.sbp{font-size:10px;font-weight:700;letter-spacing:.02em}
+.photo{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
 .row-t{flex:1;min-width:0}
 .row-t b{display:block;font-weight:400}
 .row-t b.blue{color:var(--brand)}
 :root[data-theme=dark] .row-t b.blue{color:#9da1ff}
-.row-t small{display:block;color:var(--muted);font-size:14px}
+.row-t small{display:block;color:var(--muted);font-size:15px}
 .chev{color:var(--muted);opacity:.6;display:grid;flex:none}
 .val{color:var(--muted);white-space:nowrap}
 .link{color:var(--brand);font-size:15px;white-space:nowrap}
 :root[data-theme=dark] .link{color:#9da1ff}
 .ping{font-size:15px;color:var(--ok);font-variant-numeric:tabular-nums;white-space:nowrap}
 .ping.far{color:var(--warn)}
-.keyline{padding:12px 16px 10px}
-.keyline code{display:block;font-size:13px;color:var(--muted);word-break:break-all}
+.row-t small{overflow-wrap:anywhere}
+.switch{width:51px;height:31px;border-radius:16px;background:rgba(120,120,128,.24);position:relative;flex:none;transition:background-color .3s var(--ease)}
+.switch i{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.18);transition:transform .3s var(--ease)}
+.switch.on{background:#34c759}
+.switch.on i{transform:translateX(20px)}
 
 /* Тарифы */
 .plan .radio{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;transition:background-color .35s var(--ease),border-color .35s var(--ease)}
@@ -158,3 +162,5 @@ button.row:active{background:var(--fill);transition-duration:0s}
 
 @media (max-width:350px){ .sc-big{font-size:38px} }
 @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+
+.group.profile{margin-bottom:18px}

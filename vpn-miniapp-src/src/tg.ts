@@ -2,7 +2,7 @@
 type Haptic = 'light' | 'medium' | 'heavy' | 'rigid' | 'soft'
 interface TgWebApp {
   initData: string
-  initDataUnsafe: { user?: { first_name?: string; id?: number } }
+  initDataUnsafe: { user?: { first_name?: string; last_name?: string; username?: string; id?: number; photo_url?: string } }
   colorScheme?: 'light' | 'dark'
   ready(): void
   expand(): void
@@ -33,6 +33,8 @@ export const select = () => { try { tg?.HapticFeedback.selectionChanged() } catc
 export const success = () => { try { tg?.HapticFeedback.notificationOccurred('success') } catch { /* */ } }
 
 export const userName = () => tg?.initDataUnsafe.user?.first_name || 'Алексей'
+export const userId = (fallback: number) => tg?.initDataUnsafe.user?.id ?? fallback
+export const userPhoto = () => tg?.initDataUnsafe.user?.photo_url || ''
 
 export function openTg(url: string) {
   if (tg) tg.openTelegramLink(url)
