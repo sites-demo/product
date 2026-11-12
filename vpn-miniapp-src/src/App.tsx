@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import QRCode from 'qrcode'
-import { tg, tapLight, tapHeavy, select, success, userName, openTg } from './tg'
+import { tg, tapLight, tapHeavy, select, success, userName, userId, userPhoto, openTg } from './tg'
 import { TRIAL, BRAND, BOT, SUPPORT, CHANNEL, USER_ID, SUB_URL, DEVICES_MAX, SERVERS, PLANS, OS_LIST, GUIDES, REF, type Os, type Plan } from './data'
 import { IHome, ICard, IPhone, IGift, ICopy, IQr, ILaptop, IChat, IMegaphone, IChevron, IShare, IPlus, IDoc } from './icons'
 
@@ -18,6 +18,7 @@ const plural = (n: number, one: string, few: string, many: string) => {
 const days = (n: number) => `${n} ${plural(n, 'день', 'дня', 'дней')}`
 const fmtDate = (d: Date) => d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
 const rub = (n: number) => n.toLocaleString('ru-RU') + ' ₽'
+const short = (u: string) => { const t = u.replace('https://', ''); return t.length > 30 ? t.slice(0, 20) + '…' + t.slice(-6) : t }
 
 export function App() {
   const [tab, setTab] = useState<Tab>('home')
@@ -55,13 +56,13 @@ export function App() {
     <div className="app">
       <header className="top">
         <div className="brand"><Logo /><span>{BRAND}</span></div>
-        <span className="ava" title={userName()}>{userName()[0]}</span>
+        <button className="help" onClick={() => openTg(`https://t.me/${SUPPORT}`)}>Поддержка</button>
       </header>
 
       <main key={tab} className="screen">
         {tab === 'home' && <Home newUser={newUser} daysLeft={daysLeft} until={until}
           tryTrial={() => { tapHeavy(); pay(TRIAL_PLAN, TRIAL.price) }} go={go} copy={copy} openSheet={setSheet} say={say} />}
-        {tab === 'plans' && <Plans until={until} onPay={pay} say={say} />}
+        {tab === 'plans' && <Plans until={until} history={!newUser} onPay={pay} say={say} />}
         {tab === 'setup' && <Setup locked={newUser} copy={copy} say={say} openSheet={setSheet} go={go} />}
         {tab === 'friends' && <Friends copy={copy} say={say} />}
 
@@ -181,18 +182,23 @@ function Home({ newUser, daysLeft, until, tryTrial, go, copy, openSheet, say }: 
         </div>
       ) : (
         <div className="group">
-          <div className="keyline"><code>{SUB_URL}</code></div>
-          <Row icon={<ICopy size={20} />} title="Скопировать ключ" onClick={() => copy(SUB_URL)} />
-          <Row icon={<IQr size={20} />} title="QR-код" sub="Для телевизора или второго телефона" onClick={() => openSheet(<QrSheet />)} />
+          <Row icon={<ICopy size={18} />} color="blue" title="Скопировать ключ" sub={short(SUB_URL)} onClick={() => copy(SUB_URL)} />
+          <Row icon={<IQr size={18} />} color="indigo" title="QR-код" sub="Для телевизора или второго телефона" onClick={() => openSheet(<QrSheet />)} />
         </div>
       )}
 
       {!newUser && <>
         <h2 className="h">Устройства<span className="aside">2 из {DEVICES_MAX}</span></h2>
         <div className="group">
-          <Row icon={<IPhone size={20} />} title="iPhone 13" sub="сейчас онлайн" />
-          <Row icon={<ILaptop size={20} />} title="MacBook Air" sub="вчера в 22:14" right={<button className="link" onClick={() => say('Устройство отключено')}>Отключить</button>} />
-          <Row icon={<IPlus size={20} />} title="Добавить устройство" onClick={() => go('setup')} blue />
+          <Row icon={<IPhone size={18} />} color="gray" title="iPhone 13" sub="сейчас онлайн" />
+          <Row icon={<ILaptop size={18} />} color="gray" title="MacBook Air" sub="вчера в 22:14" right={<button className="link" onClick={() => say('Устройство отключено')}>Отключить</button>} />
+          <Row icon={<IPlus size={18} />} color="green" title="Добавить устройство" onClick={() => go('setup')} blue />
+        </div>
+
+        <h2 className="h">Уведомления</h2>
+        <div className="group">
+          <Toggle title="Напомнить за 3 дня до конца" sub="Сообщение придёт в бот" initial={true} say={say} />
+          <Toggle title="Автопродление" sub="Через СБП, за день до конца" initial={false} say={say} />
         </div>
       </>}
 
@@ -210,13 +216,25 @@ function Home({ newUser, daysLeft, until, tryTrial, go, copy, openSheet, say }: 
   )
 }
 
-function Row({ icon, title, sub, right, onClick, blue }: { icon?: ReactNode; title: string; sub?: string; right?: ReactNode; onClick?: () => void; blue?: boolean }) {
+type IconColor = 'blue' | 'indigo' | 'gray' | 'green' | 'orange' | 'teal'
+function Row({ icon, color = 'gray', title, sub, right, onClick, blue }: { icon?: ReactNode; color?: IconColor; title: string; sub?: string; right?: ReactNode; onClick?: () => void; blue?: boolean }) {
   const inner = (<>
-    {icon && <span className={`row-ic ${blue ? 'blue' : ''}`}>{icon}</span>}
+    {icon && <span className={`row-ic ic-${color}`}>{icon}</span>}
     <span className="row-t"><b className={blue ? 'blue' : ''}>{title}</b>{sub && <small>{sub}</small>}</span>
     {right ?? (onClick && !blue && <span className="chev"><IChevron size={18} /></span>)}
   </>)
   return onClick ? <button className="row" onClick={onClick}>{inner}</button> : <div className="row">{inner}</div>
+}
+
+/* Переключатель как в настройках Telegram */
+function Toggle({ title, sub, initial, say }: { title: string; sub?: string; initial: boolean; say: (m: string) => void }) {
+  const [on, setOn] = useState(initial)
+  return (
+    <button className="row" role="switch" aria-checked={on} onClick={() => { setOn(!on); select(); say(on ? `${title}: выключено` : `${title}: включено`) }}>
+      <span className="row-t"><b>{title}</b>{sub && <small>{sub}</small>}</span>
+      <span className={`switch ${on ? 'on' : ''}`}><i /></span>
+    </button>
+  )
 }
 
 function QrSheet() {
@@ -232,7 +250,13 @@ function QrSheet() {
 }
 
 /* ---------- Тарифы ---------- */
-function Plans({ until, onPay, say }: { until: Date; onPay: (p: Plan, price: number) => void; say: (m: string) => void }) {
+const HISTORY = [
+  { date: '14 октября', what: '1 месяц', sum: 135 },
+  { date: '14 сентября', what: '1 месяц', sum: 135 },
+  { date: '14 августа', what: '1 месяц', sum: 135 },
+]
+
+function Plans({ until, history, onPay, say }: { until: Date; history: boolean; onPay: (p: Plan, price: number) => void; say: (m: string) => void }) {
   const [sel, setSel] = useState(2)
   const [promo, setPromo] = useState('')
   const [disc, setDisc] = useState(0)
@@ -260,7 +284,7 @@ function Plans({ until, onPay, say }: { until: Date; onPay: (p: Plan, price: num
 
       <h2 className="h">Оплата</h2>
       <div className="group">
-        <div className="row"><span className="row-ic sbp">СБП</span><span className="row-t"><b>Через приложение банка</b></span></div>
+        <div className="row"><span className="row-ic ic-indigo sbp">СБП</span><span className="row-t"><b>Через приложение банка</b></span></div>
         <div className="row promo">
           <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="Промокод" autoComplete="off" />
           <button className="link" onClick={() => { if (!promo.trim()) return say('Введите промокод'); setDisc(0.1); tapLight(); say('Скидка 10%') }}>Применить</button>
@@ -269,6 +293,15 @@ function Plans({ until, onPay, say }: { until: Date; onPay: (p: Plan, price: num
 
       <button className="btn blue wide" onClick={() => { tapHeavy(); onPay(p, price(p)) }}>Оплатить {rub(price(p))}</button>
       <p className="note center">Подписка будет до {fmtDate(newUntil)}. Чек придёт в бот.</p>
+
+      {history && <>
+        <h2 className="h">История оплат</h2>
+        <div className="group">
+          {HISTORY.map(h => (
+            <div key={h.date} className="row"><span className="row-t"><b>{h.what}</b><small>{h.date}, СБП</small></span><span className="val">{rub(h.sum)}</span></div>
+          ))}
+        </div>
+      </>}
     </>
   )
 }
@@ -335,7 +368,7 @@ function Setup({ locked, copy, say, openSheet, go }: { locked: boolean; copy: (t
             <div className="faq-a"><p>{a}</p></div>
           </div>
         ))}
-        <Row icon={<IChat size={20} />} title="Написать в поддержку" sub={`@${SUPPORT}`} onClick={() => openTg(`https://t.me/${SUPPORT}`)} />
+        <Row icon={<IChat size={18} />} color="teal" title="Написать в поддержку" sub={`@${SUPPORT}`} onClick={() => openTg(`https://t.me/${SUPPORT}`)} />
       </div>
     </>
   )
@@ -354,6 +387,7 @@ function Friends({ copy, say }: { copy: (t: string) => void; say: (m: string) =>
   return (
     <>
       <h1 className="title">Друзья</h1>
+      <Profile copy={copy} />
       <p className="lead">{REF.percent}% с каждой оплаты приглашённого друга. Вывод на карту от {rub(REF.minWithdraw)}.</p>
       <div className="group pad">
         <div className="bal-row"><span className="muted">Баланс</span><span className="muted">из {rub(REF.minWithdraw)}</span></div>
@@ -367,8 +401,7 @@ function Friends({ copy, say }: { copy: (t: string) => void; say: (m: string) =>
 
       <h2 className="h">Ссылка</h2>
       <div className="group">
-        <div className="keyline"><code>{link.replace('https://', '')}</code></div>
-        <Row icon={<ICopy size={20} />} title="Скопировать" onClick={() => copy(link)} />
+        <Row icon={<ICopy size={18} />} color="blue" title="Скопировать ссылку" sub={short(link)} onClick={() => copy(link)} />
       </div>
 
       <h2 className="h">Статистика</h2>
@@ -380,9 +413,24 @@ function Friends({ copy, say }: { copy: (t: string) => void; say: (m: string) =>
 
       <h2 className="h">{BRAND}</h2>
       <div className="group">
-        <Row icon={<IMegaphone size={20} />} title="Канал" sub={`@${CHANNEL}`} onClick={() => openTg(`https://t.me/${CHANNEL}`)} />
-        <Row icon={<IDoc size={20} />} title="Пользовательское соглашение" onClick={() => say('Откроется соглашение')} />
+        <Row icon={<IMegaphone size={18} />} color="orange" title="Канал" sub={`@${CHANNEL}`} onClick={() => openTg(`https://t.me/${CHANNEL}`)} />
+        <Row icon={<IDoc size={18} />} color="gray" title="Пользовательское соглашение" onClick={() => say('Откроется соглашение')} />
       </div>
     </>
+  )
+}
+
+/* Профиль: имя и ID из Telegram. Фото только настоящее, заглушек нет. */
+function Profile({ copy }: { copy: (t: string) => void }) {
+  const id = userId(USER_ID)
+  const photo = userPhoto()
+  return (
+    <div className="group profile">
+      <div className="row">
+        {photo && <img className="photo" src={photo} alt="" />}
+        <span className="row-t"><b>{userName()}</b><small>ID {id}</small></span>
+        <button className="link" onClick={() => copy(String(id))}>Скопировать ID</button>
+      </div>
+    </div>
   )
 }
