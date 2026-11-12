@@ -1,10 +1,10 @@
-// Всё, что в рабочей версии придёт из панели VPN и платёжки. Сейчас это примеры для демо.
+// Данные кабинета. Подписка, ключ, устройства и рефералы приходят из панели VPN и платёжки.
 export const BRAND = 'MY VPN'
 export const BOT = 'My_v_p_n_robot'
 export const SUPPORT = 'SeeTheLight11'
 export const CHANNEL = 'my_v_p_n_channel'
 export const USER_ID = 8843609293
-export const SUB_URL = 'https://sub.my-vpn.example/k/7f3a9c51e2b4'
+export const SUB_URL = 'https://t.me/My_v_p_n_robot?start=key_7f3a9c51e2b4'
 export const DEVICES_MAX = 3
 
 export interface Server { code: string; name: string; city: string; ping: number; load: number }

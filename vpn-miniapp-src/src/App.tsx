@@ -22,8 +22,10 @@ const short = (u: string) => { const t = u.replace('https://', ''); return t.len
 
 export function App() {
   const [tab, setTab] = useState<Tab>('home')
-  const [until, setUntil] = useState(() => new Date(2026, 10, 14))
-  const [newUser, setNewUser] = useState(false)
+  // Вид для нового пользователя без подписки: ссылка с ?new
+  const startNew = new URLSearchParams(location.search).has('new')
+  const [until, setUntil] = useState(() => startNew ? new Date(+TODAY) : new Date(2026, 10, 14))
+  const [newUser, setNewUser] = useState(startNew)
   const [sheet, setSheet] = useState<ReactNode>(null)
   const [toast, setToast] = useState('')
 
@@ -50,7 +52,6 @@ export function App() {
   }
   const pay = (p: Plan, price: number) => setSheet(<PaySheet plan={p} price={price} onPaid={() => paid(p, price)} />)
 
-  const setMode = (v: boolean) => { setNewUser(v); setUntil(v ? new Date(+TODAY) : new Date(2026, 10, 14)); select(); go('home') }
 
   return (
     <div className="app">
@@ -65,11 +66,6 @@ export function App() {
         {tab === 'plans' && <Plans until={until} history={!newUser} onPay={pay} say={say} />}
         {tab === 'setup' && <Setup locked={newUser} copy={copy} say={say} openSheet={setSheet} go={go} />}
         {tab === 'friends' && <Friends copy={copy} say={say} />}
-
-        <div className="demo">
-          <span>Демо для @{BOT}, цифры примерные</span>
-          <button onClick={() => setMode(!newUser)}>{newUser ? 'Показать с подпиской' : 'Показать как новичок'}</button>
-        </div>
       </main>
 
       <nav className="tabs">
@@ -312,7 +308,7 @@ function PaySheet({ plan, price, onPaid }: { plan: Plan; price: number; onPaid: 
     <div className="sheet-body center">
       <div className="spinner" />
       <h3>Ждём оплату</h3>
-      <p className="note center">{plan.title}, {rub(price)}. Здесь откроется приложение банка.</p>
+      <p className="note center">{plan.title}, {rub(price)}. Подтвердите оплату в приложении банка.</p>
     </div>
   )
 }
@@ -355,7 +351,7 @@ function Setup({ locked, copy, say, openSheet, go }: { locked: boolean; copy: (t
         ? <button className="btn blue wide" onClick={() => go('home')}>Сначала оформить подписку</button>
         : os === 'win'
           ? <button className="btn blue wide" onClick={() => copy(SUB_URL)}>Скопировать ключ</button>
-          : <button className="btn blue wide" onClick={() => { tapHeavy(); say(`Здесь откроется ${g.app} с ключом`) }}>Добавить ключ в {g.app}</button>}
+          : <button className="btn blue wide" onClick={() => { tapHeavy(); say(`Открываем ${g.app}…`) }}>Добавить ключ в {g.app}</button>}
       {!locked && <button className="btn plain wide" onClick={() => openSheet(<QrSheet />)}>QR-код для другого устройства</button>}
 
       <h2 className="h">Не работает</h2>
@@ -414,7 +410,7 @@ function Friends({ copy, say }: { copy: (t: string) => void; say: (m: string) =>
       <h2 className="h">{BRAND}</h2>
       <div className="group">
         <Row icon={<IMegaphone size={18} />} color="orange" title="Канал" sub={`@${CHANNEL}`} onClick={() => openTg(`https://t.me/${CHANNEL}`)} />
-        <Row icon={<IDoc size={18} />} color="gray" title="Пользовательское соглашение" onClick={() => say('Откроется соглашение')} />
+        <Row icon={<IDoc size={18} />} color="gray" title="Пользовательское соглашение" onClick={() => say('Открываем соглашение…')} />
       </div>
     </>
   )
