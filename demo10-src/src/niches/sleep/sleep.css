@@ -47,7 +47,6 @@ h1, h2 { letter-spacing: -0.015em; }
 .nw-pillow { fill: #fff; stroke: rgba(24,32,46,.15); }
 .nw-dim line { stroke: var(--accent); stroke-width: 1.2; }
 .nw-dim text { fill: var(--accent); font: 600 11px var(--bf); }
-.nw-len { position: absolute; right: 14px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: center; font-weight: 600; font-size: 14px; color: var(--accent); }
 .nw-form { display: grid; gap: 20px; }
 .nw-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
 .nw-presets button { text-align: left; border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 12px 14px; cursor: pointer; display: grid; gap: 2px; transition: border-color .2s, box-shadow .2s; }
@@ -137,5 +136,122 @@ h1, h2 { letter-spacing: -0.015em; }
 .nw-praise .rating-line { margin-top: 18px; }
 .nw-quotes { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .nw-quotes li { background: var(--bg); border-radius: var(--r); padding: 20px 22px; font: 400 19px/1.45 var(--hf); position: relative; }
-.nw-quotes li::before { content: '“'; position: absolute; top: -6px; left: 14px; font: 600 46px/1 var(--hf); color: var(--accent); opacity: .3; }
 .nw-gal .section-head { margin-bottom: 26px; }
+
+/* ===== Доводка после разбора ===== */
+.nw-over { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 650; margin: 0 0 14px; }
+.section-head .nw-over { color: var(--accent); font-size: 13px; margin-top: 0; }
+.nw-inside .nw-over { color: #9db9f2; }
+.section { padding: 64px 0; }
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
+
+/* Первый экран: оценка над кнопками, белым; вторая кнопка контуром */
+.nw-hero-in { padding-bottom: 48px; }
+.nw-hero-shade { background: linear-gradient(180deg, rgba(12,15,22,.25) 0%, rgba(12,15,22,.35) 35%, rgba(12,15,22,.9) 100%); }
+.nw-hero-img { object-position: 50% 60%; }
+.nw-hero-rating { margin-top: 22px; color: rgba(255,255,255,.92); }
+.nw-hero-rating b, .nw-hero-rating .ico { color: #fff; }
+.nw-hero-rating .ico { color: #f5b73b; }
+.nw-hero-rating span { color: rgba(255,255,255,.92); text-decoration-color: rgba(255,255,255,.5); }
+.nw-hero-btns { margin-top: 22px; }
+.nw-btn-light { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.7); color: #fff; }
+.nw-btn-light:hover { background: rgba(255,255,255,.2); border-color: #fff; }
+
+/* Конструктор */
+.nw-presets { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 979px) { .nw-presets { display: flex; overflow-x: auto; scrollbar-width: none; margin: 0 -20px; padding: 2px 20px; } .nw-presets::-webkit-scrollbar { display: none; } .nw-presets button { flex: 0 0 auto; min-width: 128px; } }
+.nw-presets button { min-height: 60px; }
+.nw-num { display: grid; gap: 8px; }
+.nw-num-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); }
+.nw-step { display: flex; align-items: center; gap: 6px; }
+.nw-step button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-size: 22px; line-height: 1; cursor: pointer; color: var(--ink); }
+.nw-step button:active { transform: translateY(1px); }
+.nw-step label { display: flex; align-items: center; gap: 4px; color: var(--ink); font-weight: 600; }
+.nw-step input { width: 64px; height: 44px; border: 1px solid var(--line); border-radius: 10px; text-align: center; font-weight: 650; font-size: 17px; background: #fff; -moz-appearance: textfield; }
+.nw-step input::-webkit-inner-spin-button, .nw-step input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.nw-num input[type=range] { width: 100%; accent-color: var(--accent); height: 32px; }
+.nw-dim-v { fill: var(--accent); font: 600 11px var(--bf); }
+@media (max-width: 979px) { .nw-draw { aspect-ratio: 1 / .82; } .nw-svg { height: 96%; } }
+.nw-seg button { min-height: 44px; padding: 8px 14px; }
+.nw-msg-wrap { display: grid; gap: 6px; }
+.nw-msg-cap { font-size: 13px; color: var(--muted); }
+.nw-call { display: inline-flex; gap: 8px; align-items: center; justify-content: center; min-height: 44px; color: var(--ink); font-weight: 600; text-decoration: none; }
+.nw-call .ico { color: var(--accent); }
+
+/* Как заказать */
+.nw-order { padding-top: 0; }
+.nw-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+@media (min-width: 760px) { .nw-steps { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (min-width: 1100px) { .nw-steps { grid-template-columns: repeat(4, 1fr); } }
+.nw-steps li { background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 8px; align-content: start; }
+.nw-step-n { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; margin-bottom: 6px; }
+.nw-steps b { font: var(--hw) 21px/1.25 var(--hf); }
+.nw-steps p { color: var(--muted); }
+
+/* Разрез: подпись под схемой, слои выше, свой фокус */
+.nw-cut { display: grid; gap: 18px; }
+.nw-layer-card { margin-top: 0; min-height: 0; }
+.nw-l:focus-visible .nw-l-body { stroke: #9db9f2; stroke-width: 3; stroke-dasharray: 5 4; }
+.nw-l.on .nw-l-body { stroke: #fff; stroke-width: 2; stroke-dasharray: none; }
+
+/* Каталог */
+.nw-tabs button { min-height: 44px; }
+.nw-tabs button[aria-pressed='true'] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.nw-cp { background: #fff; }
+.nw-items li { padding: 0; }
+.nw-items a { display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 50px; padding: 10px 0; text-decoration: none; color: var(--ink); }
+.nw-items a:hover span { color: var(--accent); }
+.nw-items em { font-style: normal; color: var(--accent); font-size: 14px; font-weight: 600; white-space: nowrap; }
+
+/* Любое фото открывается крупно */
+.nw-z { position: relative; }
+.nw-z > button { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; }
+.nw-z > button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nw-z img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.nw-z:hover img { transform: scale(1.03); }
+.nw-viewer .viewer-strip figure { cursor: default; }
+.nw-vnav { position: fixed; top: 50%; transform: translateY(-50%); width: 48px; height: 64px; border-radius: 12px; border: 1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.45); color: #fff; font-size: 34px; line-height: 1; cursor: pointer; z-index: 2; }
+.nw-vnav.prev { left: 12px; } .nw-vnav.next { right: 12px; }
+.nw-vnav:disabled { opacity: .3; cursor: default; }
+.nw-vcount { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); font-size: 14px; color: rgba(255,255,255,.8); }
+@media (max-width: 640px) { .nw-vnav { display: none; } }
+
+/* Фабрика: крупно резкое фото, три плитки без дыр */
+.nw-factory-grid { grid-template-columns: 1fr 1fr; }
+.nw-factory-grid .nw-f0 { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+.nw-factory-grid .nw-f1, .nw-factory-grid .nw-f2 { aspect-ratio: 4 / 3; }
+@media (min-width: 900px) { .nw-factory-grid { grid-template-columns: 1.5fr 1fr; grid-template-rows: 250px 250px; } .nw-factory-grid .nw-f0 { grid-column: 1; grid-row: 1 / 3; aspect-ratio: auto; } .nw-factory-grid .nw-f1, .nw-factory-grid .nw-f2 { aspect-ratio: auto; } }
+.nw-factory-grid figcaption { pointer-events: none; }
+
+/* Магазин и зал в одном блоке */
+.nw-shop .btn-ghost { margin-bottom: 22px; }
+.nw-hall { margin-top: 48px; }
+.nw-hall h3 { font: var(--hw) clamp(24px, 3vw, 32px)/1.15 var(--hf); margin-bottom: 18px; }
+.nw-hall-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nw-hall-grid .tile { aspect-ratio: 4 / 3; }
+.nw-hall-grid .nw-h0 { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+@media (min-width: 900px) { .nw-hall-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; } .nw-hall-grid .nw-h0 { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; } }
+
+/* Отзывы без кавычек: это пересказ */
+.nw-quotes li { display: flex; gap: 12px; align-items: flex-start; font: 400 18px/1.45 var(--bf); padding: 18px 20px; }
+.nw-quotes .ico { color: #f2a91e; flex: none; margin-top: 3px; }
+.nw-rev-btn { margin-top: 22px; }
+@media (min-width: 960px) { .nw-praise-in > div:first-child { position: sticky; top: 24px; align-self: start; } }
+
+/* Карта: пока грузится, видно адрес */
+.contacts .map { position: relative; }
+.contacts .map::before { content: 'Карта загружается. Адрес: Курган, проспект Машиностроителей, 1 к2'; position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; color: var(--muted); font-size: 15px; }
+.contacts .map iframe { position: relative; }
+
+.nw-hero .rating-line b, .nw-hero .rating-line span { color: #fff; }
+.nw-items li { display: block; }
+.nw-items a { width: 100%; }
+.nw-items a span { flex: 1; }
+
+.nw-hero .nw-hero-in { padding-top: 120px; padding-bottom: 56px; }
+@media (max-width: 520px) { .nw-hero .nw-hero-in { padding-bottom: 40px; } }
+.nw-hero .btn.nw-btn-light { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.75); color: #fff; }
+.nw-hero .btn.nw-btn-light:hover { background: rgba(255,255,255,.2); border-color: #fff; }
+.site .brand-name { white-space: nowrap; }
+.hdr-nav a { white-space: nowrap; }
+@media (min-width: 980px) { .nw-presets button { padding: 10px 10px; } .nw-presets b { font-size: 14px; } }
