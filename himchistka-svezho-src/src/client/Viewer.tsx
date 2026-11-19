@@ -204,7 +204,7 @@ function placeFaces(g: THREE.Group, faces: Face[]): Face[] {
     const n = hits.reduce((a, h) => a.add(h.n), new THREE.Vector3()).add(f.up ? new THREE.Vector3(0, 0, 2) : new THREE.Vector3(0, 2, 0)).normalize();
     if (f.tilt) n.add(new THREE.Vector3(0, f.tilt, 0)).normalize();
     const p = new THREE.Vector3(f.pos[0], f.up ? f.pos[1] : out, f.up ? out : f.pos[2]).addScaledVector(n, f.size * 0.15);
-    if (f.tilt) p.z += f.size * 1.5 * n.y;
+    if (f.tilt) p.z += f.size * 2 * n.y;
     return { ...f, pos: p.toArray() as [number, number, number], normal: n.toArray() as [number, number, number] };
   });
 }
@@ -222,7 +222,7 @@ function character(type: ItemType, it: Item): Character {
     for (let i = 0; i < n; i++) spots.push([x0 + (i + 0.5) * W + (i % 2 ? 0.1 : -0.12), 0.12 + (i % 3) * 0.06]);
     if (corner) spots.push([x0 + n * W + W / 2, 0.7]);
     return {
-      faces: [backFace(x0 + (n * W) / 2, 0.77, type === 'armchair' ? 0.16 : 0.18)],
+      faces: [backFace(x0 + (n * W) / 2, 0.77, type === 'armchair' ? 0.1 : 0.115)],
       arms: [
         { pos: [x0 - armW + 0.02, 0.05, shoulder], side: -1, size },
         { pos: [x0 + inner + armW - 0.02, corner ? 0.5 : 0.05, shoulder], side: 1, size },
@@ -238,7 +238,7 @@ function character(type: ItemType, it: Item): Character {
     const spots: [number, number][] = [];
     for (let i = 0; i < shown; i++) {
       const x = (i - (shown - 1) / 2) * 0.62;
-      faces.push(backFace(x, 0.83, 0.095));
+      faces.push(backFace(x, 0.83, 0.06));
       arms.push({ pos: [x - 0.21, -0.2, 0.66], side: -1, size: 0.6 }, { pos: [x + 0.21, -0.2, 0.66], side: 1, size: 0.6 });
       spots.push([x + 0.05, 0.06]);
     }
@@ -247,7 +247,7 @@ function character(type: ItemType, it: Item): Character {
   if (type === 'mattress') {
     const hw = 0.8 * (Number(it.size) / 160);
     return {
-      faces: [{ pos: [0, 0.62, 0], size: 0.16, up: true, tilt: 0.55 }],
+      faces: [{ pos: [0, 0.62, 0], size: 0.1, up: true, tilt: 0.55 }],
       arms: [
         { pos: [-hw, 0.55, 0.15], side: -1, size: 1.1 },
         { pos: [hw, 0.55, 0.15], side: 1, size: 1.1 },
@@ -258,7 +258,7 @@ function character(type: ItemType, it: Item): Character {
   }
   const h = it.pile === 'long' ? 0.035 : 0.014;
   return {
-    faces: [{ pos: [0, it.l / 2 - 0.4, 0], size: 0.22, up: true, tilt: 0.7 }],
+    faces: [{ pos: [0, it.l / 2 - 0.4, 0], size: 0.14, up: true, tilt: 0.7 }],
     arms: [
       { pos: [-it.w / 2, it.l / 2 - 0.45, h], side: -1, size: 1.2 },
       { pos: [it.w / 2, it.l / 2 - 0.45, h], side: 1, size: 1.2 },

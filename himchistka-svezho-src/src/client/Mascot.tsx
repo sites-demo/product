@@ -27,6 +27,7 @@ const mouthMat = new THREE.MeshStandardMaterial({ color: '#5a1f22', roughness: 0
 const tongue = new THREE.MeshStandardMaterial({ color: '#ff7a6b', roughness: 0.5 });
 const sponge = new THREE.MeshStandardMaterial({ color: '#ffd23f', roughness: 0.85 });
 const scrub = new THREE.MeshStandardMaterial({ color: '#12a899', roughness: 0.9 });
+const mint = new THREE.MeshStandardMaterial({ color: '#12a899', roughness: 0.3 });
 const cheek = new THREE.MeshBasicMaterial({ color: '#ff8a7a', transparent: true, opacity: 0.55, depthWrite: false });
 
 const sphere = new THREE.SphereGeometry(1, 32, 20);
@@ -34,6 +35,7 @@ const disc = new THREE.CircleGeometry(1, 24);
 const halfDisc = new THREE.CircleGeometry(1, 24, Math.PI, Math.PI);
 const arc = new THREE.TorusGeometry(1, 0.2, 10, 28, Math.PI);
 const brow = new THREE.CapsuleGeometry(0.18, 1, 4, 10);
+const smile = new THREE.TorusGeometry(1, 0.16, 10, 28, Math.PI);
 
 const armCurve = new THREE.CatmullRomCurve3([
   new THREE.Vector3(0, 0, 0),
@@ -46,10 +48,12 @@ const armTube = new THREE.TubeGeometry(armCurve, 24, 0.028, 10, false);
 export function Eyes({ face, signals }: { face: Face; signals: React.MutableRefObject<Signals> }) {
   const camera = useThree((s) => s.camera);
   const group = useRef<THREE.Group>(null!);
-  const beads = useRef<THREE.Group[]>([]);
+  const eyes = useRef<THREE.Group[]>([]);
+  const irises = useRef<THREE.Group[]>([]);
   const arcs = useRef<THREE.Mesh[]>([]);
   const brows = useRef<THREE.Mesh[]>([]);
-  const mouth = useRef<THREE.Group>(null);
+  const smileRef = useRef<THREE.Mesh>(null);
+  const grin = useRef<THREE.Group>(null);
   const blink = useRef({ next: performance.now() + 1500 + Math.random() * 2500, until: 0 });
   const look = useMemo(() => new THREE.Vector3(), []);
   const r = face.size;
@@ -67,57 +71,62 @@ export function Eyes({ face, signals }: { face: Face; signals: React.MutableRefO
     const b = blink.current;
     if (now > b.next) { b.until = now + 130; b.next = now + 2200 + Math.random() * 3500; }
     const s = signals.current;
-    const surprised = s.mood === 'surprised' || now - s.tapAt < 700;
-    const joy = s.mood === 'joy';
-    const sad = s.mood === 'sad';
+    const tickled = now - s.tapAt < 900;
+    const joy = s.mood === 'joy' || tickled;
+    const surprised = s.mood === 'surprised';
+    const sad = s.mood === 'sad' && !tickled;
     group.current.worldToLocal(look.copy(camera.position)).normalize();
 
-    beads.current.forEach((e, i) => {
+    eyes.current.forEach((e, i) => {
       if (!e) return;
       e.visible = !joy;
-      const open = now < b.until ? 0.1 : surprised ? 1.2 : 1;
+      const open = now < b.until ? 0.1 : surprised ? 1.15 : 1;
       e.scale.y += (open - e.scale.y) * 0.45;
-      e.position.x = (i ? 1 : -1) * r * 0.78 + look.x * r * 0.12;
-      e.position.y = look.y * r * 0.1;
+      irises.current[i]?.position.set(look.x * r * 0.25, look.y * r * 0.25, r * 0.36);
     });
     arcs.current.forEach((m) => m && (m.visible = joy));
     brows.current.forEach((m, i) => {
       if (!m) return;
       const side = i ? -1 : 1;
-      m.visible = sad || surprised;
-      const tilt = sad ? 0.5 * side : -0.2 * side;
+      const tilt = sad ? 0.45 * side : surprised ? -0.2 * side : -0.1 * side;
       m.rotation.z += (Math.PI / 2 + tilt - m.rotation.z) * 0.2;
-      m.position.y = r * (surprised ? 0.95 : 0.8);
+      m.visible = !joy;
     });
-    if (mouth.current) {
-      mouth.current.rotation.z += ((sad ? Math.PI : 0) - mouth.current.rotation.z) * 0.2;
-      mouth.current.position.y = -r * (sad ? 0.75 : 0.5) - low;
-      const k = joy ? 1.45 : surprised ? 1.25 : sad ? 0.75 : 1;
-      mouth.current.scale.setScalar(mouth.current.scale.x + (r * 0.42 * k - mouth.current.scale.x) * 0.3);
+    if (smileRef.current) {
+      smileRef.current.visible = !joy;
+      smileRef.current.rotation.z += ((sad ? 0 : Math.PI) - smileRef.current.rotation.z) * 0.2;
+      smileRef.current.position.y = -r * (sad ? 1.55 : 1.15) - low;
     }
+    if (grin.current) grin.current.visible = joy;
   });
 
   return (
     <group ref={group} position={face.pos} quaternion={quat}>
       {[-1, 1].map((side, i) => (
-        <group key={side}>
-          <group ref={(el) => { if (el) beads.current[i] = el; }}>
-            <mesh geometry={sphere} material={ink} scale={[r * 0.4, r * 0.56, r * 0.3]} />
-            <mesh geometry={sphere} material={white} position={[r * 0.13, r * 0.22, r * 0.22]} scale={r * 0.13} />
-            <mesh geometry={sphere} material={white} position={[-r * 0.1, -r * 0.2, r * 0.22]} scale={r * 0.06} />
+        <group key={side} position={[side * r * 0.82, 0, 0]}>
+          <group ref={(el) => { if (el) eyes.current[i] = el; }}>
+            <mesh geometry={sphere} material={white} scale={[r * 0.66, r * 0.86, r * 0.42]} />
+            <group ref={(el) => { if (el) irises.current[i] = el; }}>
+              <mesh geometry={sphere} material={mint} scale={[r * 0.42, r * 0.5, r * 0.08]} />
+              <mesh geometry={sphere} material={ink} position={[0, 0, r * 0.04]} scale={[r * 0.22, r * 0.28, r * 0.06]} />
+              <mesh geometry={sphere} material={white} position={[r * 0.14, r * 0.2, r * 0.08]} scale={r * 0.11} />
+            </group>
           </group>
           <mesh ref={(el) => { if (el) arcs.current[i] = el; }} geometry={arc} material={ink}
-            position={[side * r * 0.78, -r * 0.1, r * 0.06]} scale={[r * 0.34, r * 0.34, r * 0.5]} visible={false} />
+            position={[0, -r * 0.1, r * 0.08]} scale={[r * 0.5, r * 0.5, r * 0.6]} visible={false} />
           <mesh ref={(el) => { if (el) brows.current[i] = el; }} geometry={brow} material={ink}
-            position={[side * r * 0.82, r * 0.8, r * 0.1]} rotation={[0, 0, Math.PI / 2]} scale={[r * 0.4, r * 0.36, r * 0.3]} visible={false} />
-          {face.mouth !== false ? <mesh geometry={disc} material={cheek} position={[side * r * 1.45, -r * 0.55 - low, r * 0.08]} scale={r * 0.38} /> : null}
+            position={[0, r * 1.15, r * 0.15]} rotation={[0, 0, Math.PI / 2]} scale={[r * 0.4, r * 0.42, r * 0.3]} />
+          {face.mouth !== false ? <mesh geometry={disc} material={cheek} position={[side * r * 0.62, -r * 1.05 - low, r * 0.1]} scale={r * 0.36} /> : null}
         </group>
       ))}
       {face.mouth !== false ? (
-        <group ref={mouth} position={[0, -r * 0.5, r * 0.12]} scale={r * 0.42}>
-          <mesh geometry={halfDisc} material={mouthMat} />
-          <mesh geometry={halfDisc} material={tongue} position={[0, -0.45, 0.01]} scale={0.5} />
-        </group>
+        <>
+          <mesh ref={smileRef} geometry={smile} material={ink} position={[0, -r * 1.15 - low, r * 0.12]} rotation={[0, 0, Math.PI]} scale={r * 0.4} />
+          <group ref={grin} position={[0, -r * 0.85 - low, r * 0.12]} scale={r * 0.62} visible={false}>
+            <mesh geometry={halfDisc} material={mouthMat} />
+            <mesh geometry={halfDisc} material={tongue} position={[0, -0.45, 0.01]} scale={0.5} />
+          </group>
+        </>
       ) : null}
     </group>
   );
