@@ -41,6 +41,7 @@
   --brand-ink: #ffffff;
   --brand-soft: #dcf5f1;
   --sun: #ffd23f;
+  --room: radial-gradient(60% 30% at 50% 88%, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(55% 45% at 82% 8%, rgba(255, 214, 120, .28) 0%, rgba(255, 214, 120, 0) 100%), linear-gradient(180deg, #f6e7d0 0%, #faefdf 55%, #fff8ee 100%);
   --sun-2: #ffc21a;
   --coral: #ff6b57;
   --warn: #e0472f;
