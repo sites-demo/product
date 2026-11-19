@@ -30,7 +30,7 @@
   color: var(--ink-2); font-family: var(--display); font-weight: 500; font-size: 13.5px; transition: background .18s, color .18s, box-shadow .18s, transform .18s;
 }
 .types button:active { transform: scale(.96); }
-.types button.on { background: var(--brand); color: #fff; box-shadow: 0 6px 16px -8px rgba(18, 168, 153, .8); }
+.types button.on { background: var(--brand-deep); color: #fff; box-shadow: 0 6px 16px -8px rgba(18, 168, 153, .8); }
 
 .stage {
   position: relative; margin: 0 var(--gutter); height: min(46vh, 400px); min-height: 280px;
