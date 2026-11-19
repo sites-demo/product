@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { calcItem, describe, MASTER, PRICE_SCHEMA, DEFAULT_PRICES, rub, plural } from '../lib/store';
-import { getPrices, isDemo, listRequests, login, savePrices, setStatus } from '../lib/api';
+import { getPrices, getSettings, isDemo, listRequests, login, savePrices, saveSettings, setStatus, type Settings as GameSettings } from '../lib/api';
 import { Icon } from '../ui/icons';
 
 const STATUS: Record<string, string> = { new: 'Новая', work: 'В работе', done: 'Выполнена', cancel: 'Отказ' };
@@ -29,7 +29,7 @@ function Login({ onOk }: { onOk: () => void }) {
   return (
     <div className="login">
       <form onSubmit={submit}>
-        <span className="mark" aria-hidden>с</span>
+        <span className="mark" aria-hidden><i /></span>
         <h1>Кабинет мастера</h1>
         <p>{MASTER.brand}. Здесь все заявки с вашей страницы расчёта.</p>
         <label className={'field' + (bad ? ' invalid' : '')}>
@@ -71,6 +71,7 @@ function RequestSheet({ r, prices, onClose, onStatus }: { r: any; prices: any; o
         <section className="card rows">
           <div className="row"><Icon name="pin" /><span>{r.address}</span><a href={map} target="_blank" rel="noreferrer">Маршрут</a></div>
           <div className="row"><Icon name="clock" /><span>{r.when}</span></div>
+          {r.played ? <div className="row gift"><Icon name="star" /><span>Клиент почистил мебель в игре{r.gift ? <>, обещан подарок: <b>{r.gift}</b></> : null}</span></div> : null}
         </section>
 
         <section className="card">
@@ -101,7 +102,7 @@ function RequestSheet({ r, prices, onClose, onStatus }: { r: any; prices: any; o
 
         <section className="card">
           <h3>Статус</h3>
-          <div className="seg">
+          <div className="seg status-seg">
             {Object.entries(STATUS).map(([k, v]) => (
               <button key={k} className={r.status === k ? 'on' : ''} onClick={() => onStatus(k)}>{v}</button>
             ))}
@@ -156,7 +157,7 @@ function Requests({ prices }: { prices: any }) {
             <li key={r.id}>
               <button className={'req' + (r.status === 'new' ? ' is-new' : '')} onClick={() => setOpen(r.id)}>
                 <div className="req-top">
-                  <b>{r.name}</b>
+                  <b>{r.name}{r.played ? <span className="gift-mark" title="Прошёл игру"><Icon name="star" size={14} /></span> : null}</b>
                   <span className={'status s-' + r.status}>{STATUS[r.status]}</span>
                 </div>
                 <p>{r.items.map(describe).join(' + ')}</p>
@@ -223,6 +224,13 @@ function Settings() {
   const [copied, setCopied] = useState(false);
   const [install, setInstall] = useState<any>(null);
   const [tg, setTg] = useState(() => { try { return localStorage.getItem('svezho.tg') === '1'; } catch { return false; } });
+  const [game, setGame] = useState<GameSettings | null>(null);
+  const [saved, setSaved] = useState(false);
+  useEffect(() => { getSettings().then(setGame); }, []);
+  const store = (next: GameSettings) => {
+    setGame(next);
+    saveSettings(next).then(() => { setSaved(true); setTimeout(() => setSaved(false), 1600); });
+  };
   useEffect(() => {
     const h = (e: any) => { e.preventDefault(); setInstall(e); };
     addEventListener('beforeinstallprompt', h);
@@ -240,6 +248,26 @@ function Settings() {
           </button>
         </div>
       </section>
+      {game ? (
+        <section className="card">
+          <h3>Игра после заявки</h3>
+          <label className="toggle">
+            <span>Предлагать клиенту почистить мебель пальцем</span>
+            <input type="checkbox" checked={game.gameEnabled} onChange={(e) => store({ ...game, gameEnabled: e.target.checked })} />
+            <i aria-hidden />
+          </label>
+          <p className="fine">Пока клиент ждёт звонка, он стирает грязь с дивана на экране. Это занимает минуту и запоминается.</p>
+          {game.gameEnabled ? (
+            <label className="field">
+              <span>Подарок за чистоту <small>можно оставить пустым</small></span>
+              <input value={game.gameReward} maxLength={120} placeholder="Например, бесплатная чистка подушки"
+                onChange={(e) => setGame({ ...game, gameReward: e.target.value })}
+                onBlur={() => store(game)} />
+            </label>
+          ) : null}
+          <p className={'fine saved' + (saved ? ' show' : '')} aria-live="polite">{saved ? 'Сохранено' : ''}</p>
+        </section>
+      ) : null}
       <section className="card">
         <h3>Уведомления</h3>
         <label className="toggle">
@@ -272,7 +300,7 @@ export default function Cabinet() {
     <div className="cab">
       <header className="top">
         <div className="brand">
-          <span className="mark" aria-hidden>с</span>
+          <span className="mark" aria-hidden><i /></span>
           <span><b>{MASTER.brand}</b><small>Кабинет мастера</small></span>
         </div>
         <a className="icon-btn" href="../" aria-label="Страница для клиентов" title="Страница для клиентов"><Icon name="arrow" /></a>

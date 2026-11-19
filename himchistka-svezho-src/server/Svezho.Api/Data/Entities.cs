@@ -9,6 +9,8 @@ public class Master
     public required string PinHash { get; set; }
     public string PricesJson { get; set; } = "{}";
     public long? TelegramChatId { get; set; }
+    public bool GameEnabled { get; set; }
+    public string GameReward { get; set; } = "";
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
     public List<CleaningRequest> Requests { get; set; } = [];
@@ -43,6 +45,8 @@ public class CleaningRequest
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset? PlayedAt { get; set; }
+    public string Gift { get; set; } = "";
 
     public List<RequestPhoto> Photos { get; set; } = [];
 }

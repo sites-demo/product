@@ -90,6 +90,7 @@ var masters = app.MapGroup("/api/masters/{slug}");
 masters.MapAuth();
 masters.MapPrices();
 masters.MapRequests();
+masters.MapSettings();
 
 app.Run();
 return 0;

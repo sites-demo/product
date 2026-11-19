@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { describe, MASTER, rub } from '../lib/store';
-import { sendRequest } from '../lib/api';
+import { getSettings, markPlayed, sendRequest, type Settings } from '../lib/api';
 import { Icon } from '../ui/icons';
+
+const Game = lazy(() => import('./Game'));
+const WHAT: Record<string, string> = { sofa: 'диван', armchair: 'кресло', chair: 'стулья', mattress: 'матрас', carpet: 'ковёр' };
 
 const WHEN = ['Сегодня', 'Завтра', 'На выходных', 'Обсудим'];
 
@@ -26,11 +29,17 @@ export default function Checkout({ items, total, onClose, onDone }: { items: any
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [state, setState] = useState<'form' | 'sending' | 'done'>('form');
   const [num, setNum] = useState<number | null>(null);
+  const [rid, setRid] = useState<string | null>(null);
+  const [settings, setSettings] = useState<Settings | null>(null);
+  const [game, setGame] = useState<'off' | 'on' | 'won'>('off');
+  const played = useRef(false);
+  const sent = useRef(items[0]);
   const file = useRef<HTMLInputElement>(null);
   const previews = useRef<string[]>([]);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    getSettings().then(setSettings).catch(() => {});
     return () => { document.body.style.overflow = ''; previews.current.forEach(URL.revokeObjectURL); };
   }, []);
 
@@ -64,6 +73,8 @@ export default function Checkout({ items, total, onClose, onDone }: { items: any
     try {
       const r = await sendRequest({ ...form, items, total, photos });
       setNum(r?.num ?? null);
+      setRid(r?.id ?? null);
+      sent.current = items[0];
       setState('done');
       onDone();
     } catch {
@@ -72,18 +83,42 @@ export default function Checkout({ items, total, onClose, onDone }: { items: any
     }
   };
 
-  if (state === 'done') return (
-    <div className="sheet done" role="dialog" aria-modal="true">
-      <div className="done-body">
-        <div className="done-icon"><Icon name="check" /></div>
-        <h2>Заявка у мастера</h2>
-        <p>{MASTER.name} посмотрит фото и позвонит вам в течение 15 минут, чтобы договориться о времени.</p>
-        {num ? <p className="done-num">Номер заявки {num}</p> : null}
-        <a className="btn primary wide" href="cabinet/">Как заявку видит мастер</a>
-        <button className="btn ghost wide" onClick={onClose}>Вернуться</button>
+  if (state === 'done') {
+    const play = settings?.gameEnabled && game !== 'won';
+    return (
+      <div className="sheet done" role="dialog" aria-modal="true">
+        <div className="done-body">
+          <div className="done-icon"><Icon name="check" /></div>
+          <h2>Заявка у мастера</h2>
+          <p>{MASTER.name} посмотрит фото и позвонит вам в течение 15 минут, чтобы договориться о времени.</p>
+          {num ? <p className="done-num">Номер заявки {num}</p> : null}
+          {play ? (
+            <div className="game-offer">
+              <span className="game-offer-face" aria-hidden><i /><i /></span>
+              <b>Пока ждёте звонка</b>
+              <p>Почистите {WHAT[sent.current.type]} сами, пальцем.{settings.gameReward ? <> За чистоту подарок: <strong>{settings.gameReward}</strong></> : null}</p>
+              <button className="btn primary wide" onClick={() => setGame('on')}>Почистить</button>
+            </div>
+          ) : null}
+          {game === 'won' && settings?.gameReward ? (
+            <div className="game-offer won"><b>Подарок ваш</b><p>{settings.gameReward}. Мастер видит его в заявке.</p></div>
+          ) : null}
+          <a className={'btn wide ' + (play ? 'ghost' : 'primary')} href="cabinet/">Как заявку видит мастер</a>
+          <button className="btn ghost wide" onClick={onClose}>Вернуться</button>
+        </div>
+        {game === 'on' ? (
+          <Suspense fallback={null}>
+            <Game
+              item={sent.current}
+              reward={settings?.gameReward || ''}
+              onWin={() => { played.current = true; if (rid) markPlayed(rid).catch(() => {}); }}
+              onClose={() => setGame(played.current ? 'won' : 'off')}
+            />
+          </Suspense>
+        ) : null}
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-labelledby="co-title">

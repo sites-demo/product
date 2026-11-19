@@ -37,6 +37,11 @@ dotnet run -- master list
 | GET | `/api/masters/{slug}/requests` | мастер |
 | PATCH | `/api/masters/{slug}/requests/{id}` | мастер |
 | GET | `/api/masters/{slug}/requests/{id}/photos/{photoId}` | мастер |
+| POST | `/api/masters/{slug}/requests/{id}/game` | все, отметка «клиент прошёл игру», 3 часа после заявки |
+| GET | `/api/masters/{slug}/settings` | все |
+| PUT | `/api/masters/{slug}/settings` | мастер: `gameEnabled`, `gameReward` |
+
+Игра после заявки выключена по умолчанию, мастер включает её в кабинете. Подарок копируется в заявку в момент прохождения, чтобы смена текста не меняла старые обещания.
 
 Итог заявки пересчитывается на сервере по прайсу мастера (`Pricing/PriceCalculator.cs`), цена из браузера хранится отдельно как `ClientTotal`.
 

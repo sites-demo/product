@@ -1,4 +1,4 @@
-const CACHE = 'svezho-v1';
+const CACHE = 'svezho-v2';
 const CORE = ['./', './cabinet/', './assets/parts.glb', './assets/manrope-cyr.woff2', './manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {

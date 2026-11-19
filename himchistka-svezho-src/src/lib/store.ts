@@ -62,6 +62,7 @@ export const PRICE_SCHEMA = [
 
 const KP = 'svezho.prices.v1';
 const KR = 'svezho.requests.v1';
+const KS = 'svezho.settings.v1';
 
 function read(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
@@ -75,6 +76,10 @@ function write(key, val) {
 export function getPrices() { return { ...DEFAULT_PRICES, ...read(KP, {}) }; }
 export function savePrices(p) { write(KP, p); }
 export function resetPrices() { try { localStorage.removeItem(KP); } catch {} }
+
+export const DEFAULT_SETTINGS = { gameEnabled: true, gameReward: 'Скидка 300 ₽ на эту чистку' };
+export function getSettings() { return { ...DEFAULT_SETTINGS, ...read(KS, {}) }; }
+export function saveSettings(s) { write(KS, s); }
 
 export const FABRICS = {
   velour: 'Велюр', rogozhka: 'Рогожка', micro: 'Микрофибра', leather: 'Экокожа',

@@ -30,4 +30,8 @@ public record RequestDto(
     decimal Total,
     decimal ClientTotal,
     long Created,
-    List<string> Photos);
+    List<string> Photos,
+    bool Played,
+    string Gift);
+
+public record SettingsDto(bool GameEnabled, string GameReward);

@@ -44,6 +44,11 @@ namespace Svezho.Api.Data.Migrations
                     b.Property<long>("CreatedAt")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Gift")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ItemsJson")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -57,6 +62,9 @@ namespace Svezho.Api.Data.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset?>("PlayedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
@@ -92,6 +100,14 @@ namespace Svezho.Api.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("GameEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("GameReward")
+                        .IsRequired()
+                        .HasMaxLength(120)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

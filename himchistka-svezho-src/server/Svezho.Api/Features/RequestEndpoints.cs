@@ -18,6 +18,10 @@ public static class RequestEndpoints
         group.MapGet("/requests", List).RequireAuthorization();
         group.MapPatch("/requests/{id:guid}", SetStatus).RequireAuthorization();
         group.MapGet("/requests/{id:guid}/photos/{photoId:guid}", Photo).RequireAuthorization();
+
+        group.MapPost("/requests/{id:guid}/game", Played)
+            .DisableAntiforgery()
+            .RequireRateLimiting("requests");
     }
 
     private static async Task<IResult> Create(
@@ -97,6 +101,19 @@ public static class RequestEndpoints
         return Results.Ok(ToDto(slug, request, json));
     }
 
+    private static async Task<IResult> Played(string slug, Guid id, AppDb db, CancellationToken ct)
+    {
+        var request = await db.Requests.Include(r => r.Master).FirstOrDefaultAsync(r => r.Id == id && r.Master.Slug == slug, ct);
+        if (request is null || !request.Master.GameEnabled) return Results.NotFound();
+        if (request.PlayedAt is not null) return Results.NoContent();
+        if (DateTimeOffset.UtcNow - request.CreatedAt > TimeSpan.FromHours(3)) return Results.Conflict();
+
+        request.PlayedAt = DateTimeOffset.UtcNow;
+        request.Gift = request.Master.GameReward;
+        await db.SaveChangesAsync(ct);
+        return Results.NoContent();
+    }
+
     private static async Task<IResult> Photo(string slug, Guid id, Guid photoId, HttpContext http, AppDb db, PhotoStorage storage, CancellationToken ct)
     {
         if (!http.Owns(slug)) return Results.Forbid();
@@ -142,7 +159,9 @@ public static class RequestEndpoints
         r.Total,
         r.ClientTotal,
         r.CreatedAt.ToUnixTimeMilliseconds(),
-        r.Photos.Select(p => $"/api/masters/{slug}/requests/{r.Id}/photos/{p.Id}").ToList());
+        r.Photos.Select(p => $"/api/masters/{slug}/requests/{r.Id}/photos/{p.Id}").ToList(),
+        r.PlayedAt is not null,
+        r.Gift);
 
     private static string TelegramText(CleaningRequest r, List<OrderItem> items)
     {
