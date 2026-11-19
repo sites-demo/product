@@ -71,7 +71,7 @@ function Problems() {
   return (
     <div className="chips">
       {list.map(([k, label]) => (
-        <button key={k} className={'chip' + (it[k] ? ' on' : '')} aria-pressed={!!it[k]} onClick={() => set(k, !it[k])}>
+        <button key={k} className={'chip bad' + (it[k] ? ' on' : '')} aria-pressed={!!it[k]} onClick={() => set(k, !it[k])}>
           {it[k] ? <Icon name="check" /> : null}
           {label}
         </button>
@@ -172,6 +172,15 @@ function Options() {
   );
 }
 
+function Say() {
+  const line = useConfig((s) => s.line);
+  return (
+    <div className="say" key={line.at} role="status" aria-live="polite">
+      {line.text}
+    </div>
+  );
+}
+
 const pickToGroup: Record<string, string> = { arm: 'arm', leg: 'legs', seat: 'seats', pillow: 'pillows', frame: 'fabric' };
 
 export default function App() {
@@ -185,7 +194,7 @@ export default function App() {
   useEffect(() => { getPrices().then(setPrices); }, []);
 
   useEffect(() => {
-    if (!picked.at) return;
+    if (!picked.at || picked.tag === 'face' || picked.tag === 'hand' || picked.tag === 'dirt') return;
     const el = document.getElementById('opt-' + (pickToGroup[picked.tag] || 'fabric'));
     if (!el) return;
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -203,7 +212,7 @@ export default function App() {
     <div className="app">
       <header className="top">
         <a className="brand" href="./" aria-label={MASTER.brand}>
-          <span className="mark" aria-hidden>с</span>
+          <span className="mark" aria-hidden><i /></span>
           <span>
             <b>{MASTER.brand}</b>
             <small>{MASTER.tagline}</small>
@@ -215,8 +224,8 @@ export default function App() {
       <main className="layout">
         <div className="stage-col">
           <div className="intro">
-            <h1>Сколько стоит почистить вашу мебель</h1>
-            <p>Соберите её здесь, как она выглядит у вас дома. Цена считается сразу.</p>
+            <h1>Сколько стоит почистить вашу мебель?</h1>
+            <p>Соберите её такой, как дома. Цену скажем сразу.</p>
           </div>
 
           <nav className="types" aria-label="Что чистим">
@@ -229,8 +238,10 @@ export default function App() {
           </nav>
 
           <div className="stage">
+            <div className="bubbles" aria-hidden><i /><i /><i /><i /><i /></div>
+            <Say />
             <Suspense fallback={<div className="stage-loading">Загружаем модель</div>}>
-              <Viewer onTouch={() => setTouched(true)} />
+              <Viewer onTouch={() => setTouched(true)} paused={checkout} />
             </Suspense>
             <div className={'stage-hint' + (touched ? ' gone' : '')}>
               <Icon name="rotate" /> Крутите пальцем, нажмите на деталь

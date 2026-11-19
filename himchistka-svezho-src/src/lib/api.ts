@@ -26,6 +26,21 @@ export async function savePrices(draft: any) {
   await http('/prices', { method: 'PUT', body: JSON.stringify(p) });
 }
 
+export type Settings = { gameEnabled: boolean; gameReward: string };
+
+export async function getSettings(): Promise<Settings> {
+  if (isDemo) return local.getSettings();
+  return http('/settings');
+}
+export async function saveSettings(s: Settings) {
+  if (isDemo) return local.saveSettings(s);
+  await http('/settings', { method: 'PUT', body: JSON.stringify(s) });
+}
+export async function markPlayed(id: string) {
+  if (isDemo) return local.updateRequest(id, { played: true, gift: local.getSettings().gameReward });
+  await http(`/requests/${id}/game`, { method: 'POST' });
+}
+
 export type NewRequest = { name: string; phone: string; address: string; when: string; comment: string; items: any[]; total: number; photos: File[] };
 
 export async function sendRequest(req: NewRequest) {

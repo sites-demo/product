@@ -1,8 +1,9 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { ContactShadows, Environment, Lightformer, OrbitControls, useGLTF } from '@react-three/drei';
-import { Suspense, useEffect, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { useConfig, type Item } from './config';
+import { useConfig, type Item, type ItemType } from './config';
+import { Eyes, Hand, type Arm, type Face, type Signals } from './Mascot';
 import { COLORS } from '../lib/colors';
 import { fabricMaterial, rugTexture, woodMaterial, metalMaterial, plinthMaterial, mattressMaterials } from './materials';
 
@@ -167,10 +168,210 @@ function Carpet({ it }: { it: Item }) {
   );
 }
 
-function Furniture({ onFit }: { onFit: (box: THREE.Box3) => void }) {
-  const it = useConfig((s) => s.items[s.type]);
-  const type = useConfig((s) => s.type);
-  const pick = useConfig((s) => s.pick);
+
+const ARM_W: Record<string, number> = { round: 0.22, square: 0.15, low: 0.2, none: 0 };
+const ARM_TOP: Record<string, number> = { round: 0.7, square: 0.66, low: 0.5, none: 0.34 };
+
+type Character = { faces: Face[]; arms: Arm[]; spots: [number, number][]; top: number };
+
+function backFace(x: number, z: number, size: number): Face {
+  return { pos: [x, 3, z], size };
+}
+
+function placeFaces(g: THREE.Group, faces: Face[]): Face[] {
+  const targets: THREE.Object3D[] = [];
+  g.traverse((o: any) => { if (o.isMesh && o.userData.tag && o.userData.tag !== 'dirt' && o.userData.tag !== 'pillow') targets.push(o); });
+  const inv = g.matrixWorld.clone().invert();
+  const ray = new THREE.Raycaster();
+  const cast = (from: THREE.Vector3, dir: THREE.Vector3) => {
+    ray.set(from.clone().applyMatrix4(g.matrixWorld), dir.clone().transformDirection(g.matrixWorld));
+    const hit = ray.intersectObjects(targets, false)[0];
+    if (!hit || !hit.face) return null;
+    return {
+      p: hit.point.clone().applyMatrix4(inv),
+      n: hit.face.normal.clone().transformDirection(hit.object.matrixWorld).transformDirection(inv),
+    };
+  };
+  return faces.map((f) => {
+    const spread = f.size * 1.6;
+    const hits = [-spread, 0, spread]
+      .map((dx) => f.up
+        ? cast(new THREE.Vector3(f.pos[0] + dx, f.pos[1], 3), new THREE.Vector3(0, 0, -1))
+        : cast(new THREE.Vector3(f.pos[0] + dx, 3, f.pos[2]), new THREE.Vector3(0, -1, 0)))
+      .filter(Boolean) as { p: THREE.Vector3; n: THREE.Vector3 }[];
+    if (!hits.length) return f;
+    const out = f.up ? Math.max(...hits.map((h) => h.p.z)) : Math.max(...hits.map((h) => h.p.y));
+    const n = hits.reduce((a, h) => a.add(h.n), new THREE.Vector3()).add(f.up ? new THREE.Vector3(0, 0, 2) : new THREE.Vector3(0, 2, 0)).normalize();
+    if (f.tilt) n.add(new THREE.Vector3(0, f.tilt, 0)).normalize();
+    const p = new THREE.Vector3(f.pos[0], f.up ? f.pos[1] : out, f.up ? out : f.pos[2]).addScaledVector(n, f.size * 0.15);
+    if (f.tilt) p.z += f.size * 1.9 * n.y;
+    return { ...f, pos: p.toArray() as [number, number, number], normal: n.toArray() as [number, number, number] };
+  });
+}
+
+function character(type: ItemType, it: Item): Character {
+  if (type === 'sofa' || type === 'armchair') {
+    const n = type === 'armchair' ? 1 : it.seats;
+    const corner = type === 'sofa' && !!it.corner;
+    const inner = n * W + (corner ? W : 0);
+    const x0 = -inner / 2;
+    const armW = ARM_W[it.arm];
+    const shoulder = ARM_TOP[it.arm] - (it.arm === 'none' ? 0.08 : 0.14);
+    const size = type === 'armchair' ? 0.8 : 0.9;
+    const spots: [number, number][] = [];
+    for (let i = 0; i < n; i++) spots.push([x0 + (i + 0.5) * W + (i % 2 ? 0.1 : -0.12), 0.12 + (i % 3) * 0.06]);
+    if (corner) spots.push([x0 + n * W + W / 2, 0.7]);
+    return {
+      faces: [backFace(x0 + (n * W) / 2, 0.77, type === 'armchair' ? 0.085 : 0.095)],
+      arms: [
+        { pos: [x0 - armW + 0.02, 0.05, shoulder], side: -1, size },
+        { pos: [x0 + inner + armW - 0.02, corner ? 0.5 : 0.05, shoulder], side: 1, size },
+      ],
+      spots,
+      top: 0.95,
+    };
+  }
+  if (type === 'chair') {
+    const shown = Math.min(it.count, 4);
+    const faces: Face[] = [];
+    const arms: Arm[] = [];
+    const spots: [number, number][] = [];
+    for (let i = 0; i < shown; i++) {
+      const x = (i - (shown - 1) / 2) * 0.62;
+      faces.push(backFace(x, 0.83, 0.05));
+      arms.push({ pos: [x - 0.21, -0.2, 0.66], side: -1, size: 0.6 }, { pos: [x + 0.21, -0.2, 0.66], side: 1, size: 0.6 });
+      spots.push([x + 0.05, 0.06]);
+    }
+    return { faces, arms, spots, top: 1.0 };
+  }
+  if (type === 'mattress') {
+    const hw = 0.8 * (Number(it.size) / 160);
+    return {
+      faces: [{ pos: [0, 0.62, 0], size: 0.085, up: true, tilt: 0.45 }],
+      arms: [
+        { pos: [-hw, 0.55, 0.15], side: -1, size: 1.1 },
+        { pos: [hw, 0.55, 0.15], side: 1, size: 1.1 },
+      ],
+      spots: [[-hw * 0.4, 0.3], [hw * 0.35, -0.2], [0.05, 0.6], [-hw * 0.2, -0.6]],
+      top: 0.3,
+    };
+  }
+  const h = it.pile === 'long' ? 0.035 : 0.014;
+  return {
+    faces: [{ pos: [0, it.l / 2 - 0.4, 0], size: 0.13, up: true, tilt: 0.55 }],
+    arms: [
+      { pos: [-it.w / 2, it.l / 2 - 0.45, h], side: -1, size: 1.2 },
+      { pos: [it.w / 2, it.l / 2 - 0.45, h], side: 1, size: 1.2 },
+    ],
+    spots: [[-it.w * 0.25, 0], [it.w * 0.2, -it.l * 0.2], [it.w * 0.1, it.l * 0.12], [-it.w * 0.15, -it.l * 0.32]],
+    top: 0.1,
+  };
+}
+
+function stainTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const ctx = c.getContext('2d')!;
+  const blob = (x: number, y: number, r: number, a: number) => {
+    const g = ctx.createRadialGradient(x, y, r * 0.2, x, y, r);
+    g.addColorStop(0, `rgba(96, 62, 30, ${a})`);
+    g.addColorStop(0.7, `rgba(110, 72, 36, ${a * 0.8})`);
+    g.addColorStop(1, 'rgba(110, 72, 36, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+  };
+  blob(64, 64, 46, 0.55);
+  blob(84, 52, 26, 0.45);
+  blob(46, 80, 22, 0.4);
+  blob(96, 88, 10, 0.5);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const stainMat = new THREE.MeshBasicMaterial({ map: stainTexture(), transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4 });
+const stainGeo = new THREE.PlaneGeometry(1, 1);
+const hairMat = new THREE.MeshStandardMaterial({ color: '#d9d2c6', roughness: 0.9 });
+const hair = new THREE.CapsuleGeometry(0.0025, 0.035, 2, 4);
+const stinkGeo = (() => {
+  const pts = Array.from({ length: 12 }, (_, i) => new THREE.Vector3(Math.sin(i * 0.9) * 0.04, 0, i * 0.025));
+  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 40, 0.009, 6, false);
+})();
+
+type Hit = { p: THREE.Vector3; n: THREE.Vector3 };
+
+function Dirt({ host, ch, it, version }: { host: React.RefObject<THREE.Group>; ch: Character; it: Item; version: string }) {
+  const [hits, setHits] = useState<Hit[]>([]);
+  const stink = useRef<THREE.Group>(null);
+  const stinkMats = useMemo(() => [0, 1, 2].map(() => new THREE.MeshBasicMaterial({ color: '#8fcf5a', transparent: true, opacity: 0 })), []);
+
+  useEffect(() => {
+    const g = host.current;
+    if (!g) return;
+    const k = g.scale.x;
+    g.scale.setScalar(1);
+    g.updateWorldMatrix(true, true);
+    const targets: THREE.Object3D[] = [];
+    g.traverse((o: any) => { if (o.isMesh && o.userData.tag && o.userData.tag !== 'face' && o.userData.tag !== 'dirt') targets.push(o); });
+    const ray = new THREE.Raycaster();
+    const inv = g.matrixWorld.clone().invert();
+    const out: Hit[] = [];
+    for (const [x, y] of ch.spots) {
+      const o = new THREE.Vector3(x, y, 3).applyMatrix4(g.matrixWorld);
+      const d = new THREE.Vector3(0, 0, -1).transformDirection(g.matrixWorld);
+      ray.set(o, d);
+      const hit = ray.intersectObjects(targets, false)[0];
+      if (!hit || !hit.face) continue;
+      const n = hit.face.normal.clone().transformDirection(hit.object.matrixWorld).transformDirection(inv);
+      out.push({ p: hit.point.clone().applyMatrix4(inv), n });
+    }
+    g.scale.setScalar(k);
+    setHits(out);
+  }, [version]);
+
+  useFrame(() => {
+    if (!stink.current) return;
+    const now = performance.now() / 1000;
+    stink.current.children.forEach((c, i) => {
+      const t = (now * 0.45 + i / 3) % 1;
+      c.position.z = ch.top + t * 0.35;
+      stinkMats[i].opacity = Math.sin(t * Math.PI) * 0.85;
+    });
+  });
+
+  const q = (n: THREE.Vector3) => new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+
+  return (
+    <group>
+      {it.stains ? hits.map((h, i) => (
+        <mesh key={'s' + i} geometry={stainGeo} material={stainMat} position={h.p.clone().addScaledVector(h.n, 0.004)}
+          quaternion={q(h.n).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), i * 1.7))}
+          scale={0.2 + (i % 3) * 0.04} userData={{ tag: 'dirt' }} />
+      )) : null}
+      {it.fur ? hits.map((h, i) => (
+        <group key={'f' + i} position={h.p.clone().addScaledVector(h.n, 0.006).add(new THREE.Vector3(i % 2 ? -0.13 : 0.13, -0.08, 0))} quaternion={q(h.n)}>
+          {Array.from({ length: 9 }, (_, j) => (
+            <mesh key={j} geometry={hair} material={hairMat}
+              position={[Math.cos(j * 2.4 + i) * 0.09 * ((j % 3) + 1) / 3, Math.sin(j * 2.4 + i) * 0.09 * ((j % 3) + 1) / 3, 0]}
+              rotation={[0, Math.PI / 2, j * 1.3 + i]} />
+          ))}
+        </group>
+      )) : null}
+      {it.odor ? (
+        <group ref={stink}>
+          {[-0.25, 0, 0.25].map((x, i) => <mesh key={i} geometry={stinkGeo} material={stinkMats[i]} position={[x, 0.05, ch.top]} />)}
+        </group>
+      ) : null}
+    </group>
+  );
+}
+
+export function Furniture({ type, it, signals, onFit, onPick }: {
+  type: ItemType;
+  it: Item;
+  signals: React.MutableRefObject<Signals>;
+  onFit?: (box: THREE.Box3) => void;
+  onPick?: (tag: string) => void;
+}) {
   const geos = useParts();
   const group = useRef<THREE.Group>(null!);
   const pop = useRef(0);
@@ -180,7 +381,7 @@ function Furniture({ onFit }: { onFit: (box: THREE.Box3) => void }) {
     const [mattress, band] = mattressMaterials();
     return {
       fabric: fabricMaterial(fabric, COLORS[it.color ?? 0].hex),
-      pillow: fabricMaterial('velour', (it.color ?? 0) === 3 ? '#5b5e5f' : '#e6dccb'),
+      pillow: fabricMaterial('velour', (it.color ?? 0) === 3 ? '#5b5e5f' : '#f3e6cf'),
       wood: woodMaterial, metal: metalMaterial, plinth: plinthMaterial, mattress, band,
     } as Record<string, THREE.Material>;
   }, [it.fabric, it.color]);
@@ -193,38 +394,62 @@ function Furniture({ onFit }: { onFit: (box: THREE.Box3) => void }) {
     return [];
   }, [type, it]);
 
-  useEffect(() => { pop.current = performance.now(); }, [type]);
+  const ch = useMemo(() => character(type, it), [type, it]);
+  const shape = [type, it.seats, it.corner, it.arm, it.legs, it.pillows, it.count, it.size, it.w, it.l, it.pile].join('|');
+  const [faces, setFaces] = useState<Face[]>([]);
+
   useEffect(() => {
     const g = group.current;
     const k = g.scale.x;
     g.scale.setScalar(1);
     g.updateWorldMatrix(true, true);
-    onFit(new THREE.Box3().setFromObject(g));
+    setFaces(placeFaces(g, ch.faces));
     g.scale.setScalar(k);
-  }, [parts, type, it.w, it.l]);
+  }, [shape]);
+
+  useEffect(() => { pop.current = performance.now(); }, [type]);
+  useEffect(() => {
+    if (!onFit) return;
+    const g = group.current;
+    const k = g.scale.x;
+    g.scale.setScalar(1);
+    g.updateWorldMatrix(true, true);
+    const box = new THREE.Box3();
+    g.traverse((o: any) => { if (o.isMesh && o.userData.tag && o.userData.tag !== 'face') box.expandByObject(o); });
+    onFit(box);
+    g.scale.setScalar(k);
+  }, [shape]);
 
   useFrame(() => {
-    const t = Math.min(1, (performance.now() - pop.current) / 520);
+    const now = performance.now();
+    const t = Math.min(1, (now - pop.current) / 520);
     const e = 1 - Math.pow(1 - t, 3);
-    group.current.scale.setScalar(0.86 + 0.14 * e + Math.sin(t * Math.PI) * 0.03);
+    const breathe = 1 + Math.sin(now / 650) * 0.008;
+    const base = 0.86 + 0.14 * e + Math.sin(t * Math.PI) * 0.03;
+    group.current.scale.set(base * (2 - breathe), base * (2 - breathe), base * breathe);
   });
 
   return (
     <group rotation={[0, Math.PI, 0]}>
-    <group rotation={[-Math.PI / 2, 0, 0]}>
-      <group
-        ref={group}
-        onClick={(e) => {
-          if (e.delta > 6) return;
-          e.stopPropagation();
-          pick(e.object.userData.tag);
-        }}
-      >
-        {type === 'carpet'
-          ? <Carpet it={it} />
-          : parts.map((p, i) => <Piece key={type + i + p.geo} p={p} index={i} geo={geos[p.geo]} mat={mats[p.mat]} />)}
+      <group rotation={[-Math.PI / 2, 0, 0]}>
+        <group
+          ref={group}
+          onClick={(e) => {
+            if (!onPick || e.delta > 6) return;
+            e.stopPropagation();
+            let o: THREE.Object3D | null = e.object;
+            while (o && !o.userData.tag) o = o.parent;
+            onPick(o?.userData.tag || 'frame');
+          }}
+        >
+          {type === 'carpet'
+            ? <Carpet it={it} />
+            : parts.map((p, i) => <Piece key={type + i + p.geo} p={p} index={i} geo={geos[p.geo]} mat={mats[p.mat]} />)}
+          <Dirt host={group} ch={ch} it={it} version={shape} />
+          {faces.map((f, i) => <group key={shape + 'face' + i} userData={{ tag: 'face' }}><Eyes face={f} signals={signals} /></group>)}
+          {ch.arms.map((a, i) => <group key={'arm' + i} userData={{ tag: 'hand' }}><Hand arm={a} signals={signals} index={i} /></group>)}
+        </group>
       </group>
-    </group>
     </group>
   );
 }
@@ -242,10 +467,30 @@ function Rig({ fit }: { fit: { target: THREE.Vector3; dist: number } }) {
   return null;
 }
 
+function useSignals() {
+  const type = useConfig((s) => s.type);
+  const it = useConfig((s) => s.items[s.type]);
+  const pulse = useConfig((s) => s.pulse);
+  const picked = useConfig((s) => s.picked);
+  const signals = useRef<Signals>({ mood: 'happy', waveAt: performance.now() + 300, waveSide: 0, tapAt: 0 });
+  const s = signals.current;
+  s.mood = it.stains || it.odor || it.fur ? 'sad' : 'happy';
+
+  useEffect(() => { s.waveAt = performance.now() + 250; s.waveSide = 0; }, [type]);
+  useEffect(() => { if (pulse.at && pulse.tag !== 'all') { s.waveAt = performance.now(); s.waveSide = 0; } }, [pulse.at]);
+  useEffect(() => { if (picked.at) { s.tapAt = performance.now(); s.waveAt = performance.now(); s.waveSide = 0; } }, [picked.at]);
+  useFrame(() => {
+    const now = performance.now();
+    if (now - s.waveAt > 9000) { s.waveAt = now; s.waveSide = Math.random() > 0.5 ? 1 : -1; }
+  });
+  return { signals, type, it };
+}
+
 function Scene({ onTouch }: { onTouch: () => void }) {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const size = useThree((s) => s.size);
-  const type = useConfig((s) => s.type);
+  const { signals, type, it } = useSignals();
+  const pick = useConfig((s) => s.pick);
   const fit = useMemo(() => ({ target: new THREE.Vector3(0, 0.4, 0), dist: 4 }), []);
   const box = useRef<THREE.Box3 | null>(null);
   const idle = useRef<any>(null);
@@ -276,7 +521,7 @@ function Scene({ onTouch }: { onTouch: () => void }) {
       <directionalLight position={[2.5, 4.5, 3]} intensity={1.4} color="#fff4e6" castShadow
         shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005}
         shadow-camera-left={-3} shadow-camera-right={3} shadow-camera-top={3} shadow-camera-bottom={-3} />
-      <Furniture onFit={(b) => { box.current = b; refit(); }} />
+      <Furniture type={type} it={it} signals={signals} onPick={pick} onFit={(b) => { box.current = b; refit(); }} />
       <ContactShadows position={[0, 0.001, 0]} opacity={0.42} scale={7} blur={2.6} far={1.4} resolution={512} color="#3b2f22" />
       <OrbitControls ref={controls} makeDefault enablePan={false} enableDamping dampingFactor={0.08}
         minPolarAngle={0.5} maxPolarAngle={1.45} minDistance={1.2} maxDistance={9}
@@ -288,10 +533,11 @@ function Scene({ onTouch }: { onTouch: () => void }) {
   );
 }
 
-export default function Viewer({ onTouch }: { onTouch: () => void }) {
+export default function Viewer({ onTouch, paused }: { onTouch: () => void; paused?: boolean }) {
   return (
     <Canvas
       shadows
+      frameloop={paused ? 'never' : 'always'}
       dpr={[1, 2]}
       camera={{ fov: 30, position: [2.6, 1.6, 3.8], near: 0.05, far: 50 }}
       gl={{ antialias: true, alpha: true, toneMapping: THREE.AgXToneMapping, toneMappingExposure: 1.1 }}

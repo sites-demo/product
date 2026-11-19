@@ -16,6 +16,7 @@ public class AppDb(DbContextOptions<AppDb> options) : DbContext(options)
             e.Property(x => x.Slug).HasMaxLength(64);
             e.Property(x => x.Name).HasMaxLength(120);
             e.Property(x => x.Phone).HasMaxLength(32);
+            e.Property(x => x.GameReward).HasMaxLength(120);
         });
 
         b.Entity<CleaningRequest>(e =>
@@ -28,6 +29,7 @@ public class AppDb(DbContextOptions<AppDb> options) : DbContext(options)
             e.Property(x => x.Address).HasMaxLength(300);
             e.Property(x => x.When).HasMaxLength(80);
             e.Property(x => x.Comment).HasMaxLength(2000);
+            e.Property(x => x.Gift).HasMaxLength(120);
             e.Property(x => x.Total).HasConversion<double>();
             e.Property(x => x.ClientTotal).HasConversion<double>();
             e.Property(x => x.CreatedAt).HasConversion(v => v.ToUnixTimeMilliseconds(), v => DateTimeOffset.FromUnixTimeMilliseconds(v));
