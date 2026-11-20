@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 
 export default defineConfig({
-  base: '/himchistka-svezho/',
+  base: `/${process.env.SLUG || 'himchistka-svezho'}/`,
   plugins: [react()],
   build: {
     target: 'es2020',

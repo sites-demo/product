@@ -5,6 +5,7 @@ import { getPrices } from '../lib/api';
 import { COLORS } from '../lib/colors';
 import { Icon, TypeIcon } from '../ui/icons';
 import Checkout from './Checkout';
+import { CUTE } from '../lib/variant';
 
 const Viewer = lazy(() => import('./Viewer'));
 
@@ -212,7 +213,7 @@ export default function App() {
     <div className="app">
       <header className="top">
         <a className="brand" href="./" aria-label={MASTER.brand}>
-          <span className="mark" aria-hidden><i /></span>
+          <span className="mark" data-l="С" aria-hidden />
           <span>
             <b>{MASTER.brand}</b>
             <small>{MASTER.tagline}</small>
@@ -238,7 +239,7 @@ export default function App() {
           </nav>
 
           <div className="stage">
-            <div className="bubbles" aria-hidden><i /><i /><i /><i /><i /></div>
+            {CUTE ? <div className="bubbles" aria-hidden><i /><i /><i /><i /><i /></div> : null}
             <Say />
             <Suspense fallback={<div className="stage-loading">Загружаем модель</div>}>
               <Viewer onTouch={() => setTouched(true)} paused={checkout} />
@@ -287,6 +288,23 @@ export default function App() {
             </details>
           ) : null}
 
+          {!CUTE ? (
+            <section className="master" aria-label="Кто приедет">
+              <div className="master-head">
+                <span className="avatar" aria-hidden>{MASTER.name[0]}</span>
+                <div>
+                  <b>{MASTER.name}</b>
+                  <small>Приеду на чистку сам</small>
+                </div>
+              </div>
+              <ul>
+                <li>Привожу своё оборудование: экстрактор, парогенератор и щётки под каждую ткань.</li>
+                <li>Сначала пробую средство на незаметном месте, потом чищу всё.</li>
+                <li>Если пятно может не уйти до конца, скажу об этом до начала работы.</li>
+              </ul>
+            </section>
+          ) : null}
+
           <footer className="foot">
             <span>Работаю сам, без посредников. {MASTER.name}, <span className="nowrap">{MASTER.phone}</span></span>
             <a href="cabinet/">Вход для мастера</a>
@@ -300,7 +318,7 @@ export default function App() {
           <b key={order?.total} className="bump">{order ? rub(order.total) : '—'}</b>
         </div>
         <button className="btn primary" onClick={() => setCheckout(true)} disabled={!order}>
-          Продолжить <Icon name="arrow" />
+          Продолжить
         </button>
       </div>
 

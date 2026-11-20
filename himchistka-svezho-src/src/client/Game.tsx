@@ -273,7 +273,7 @@ export default function Game({ item, reward, onWin, onClose }: { item: Item; rew
   const confetti = useMemo(() => Array.from({ length: 40 }, (_, i) => ({
     left: (i * 37) % 100,
     delay: (i % 8) * 0.08,
-    color: ['#ffd23f', '#12a899', '#ff6b57', '#7cc8ff', '#ffffff'][i % 5],
+    color: ['#22705c', '#e9dcc2', '#ffffff', '#c8a46a', '#8fb3a3'][i % 5],
     rot: (i * 47) % 360,
   })), []);
 

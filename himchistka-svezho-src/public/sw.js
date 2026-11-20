@@ -1,5 +1,5 @@
-const CACHE = 'svezho-v2';
-const CORE = ['./', './cabinet/', './assets/parts.glb', './assets/manrope-cyr.woff2', './manifest.webmanifest'];
+const CACHE = 'svezho-v3';
+const CORE = ['./', './cabinet/', './assets/manrope-cyr.woff2', './manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
