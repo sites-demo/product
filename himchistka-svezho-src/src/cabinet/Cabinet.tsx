@@ -29,7 +29,7 @@ function Login({ onOk }: { onOk: () => void }) {
   return (
     <div className="login">
       <form onSubmit={submit}>
-        <span className="mark" aria-hidden><i /></span>
+        <span className="mark" data-l="С" aria-hidden />
         <h1>Кабинет мастера</h1>
         <p>{MASTER.brand}. Здесь все заявки с вашей страницы расчёта.</p>
         <label className={'field' + (bad ? ' invalid' : '')}>
@@ -300,10 +300,10 @@ export default function Cabinet() {
     <div className="cab">
       <header className="top">
         <div className="brand">
-          <span className="mark" aria-hidden><i /></span>
+          <span className="mark" data-l="С" aria-hidden />
           <span><b>{MASTER.brand}</b><small>Кабинет мастера</small></span>
         </div>
-        <a className="icon-btn" href="../" aria-label="Страница для клиентов" title="Страница для клиентов"><Icon name="arrow" /></a>
+        <a className="top-link" href="../">Страница клиента</a>
       </header>
       <main className="cab-main">
         {tab === 'req' ? <Requests prices={prices} /> : tab === 'price' ? <Prices prices={prices} onSaved={setPrices} /> : <Settings />}

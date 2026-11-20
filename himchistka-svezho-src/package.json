@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "place": "node scripts/place.mjs",
-    "models": "python3 scripts/parts.py && npx @gltf-transform/cli@4.1.1 meshopt public/assets/parts.glb public/assets/parts.glb"
+    "models": "python3 scripts/parts.py && npx @gltf-transform/cli@4.1.1 meshopt public/assets/parts.glb public/assets/parts.glb",
+    "models:hd": "python3 scripts/parts_hd.py && npx @gltf-transform/cli@4.1.1 draco public/assets/parts_hd.glb public/assets/parts_hd.glb"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",

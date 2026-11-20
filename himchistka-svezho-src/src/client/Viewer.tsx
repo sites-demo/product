@@ -5,10 +5,13 @@ import * as THREE from 'three';
 import { useConfig, type Item, type ItemType } from './config';
 import { Eyes, Hand, type Arm, type Face, type Signals } from './Mascot';
 import { COLORS } from '../lib/colors';
-import { fabricMaterial, rugTexture, woodMaterial, metalMaterial, plinthMaterial, mattressMaterials } from './materials';
+import { bump, fabricMaterial, rugTexture, woodMaterial, metalMaterial, plinthMaterial, brassMaterial, mattressMaterials } from './materials';
+import { CUTE, HD } from '../lib/variant';
 
 const W = 0.64;
-const GLB = import.meta.env.BASE_URL + 'assets/parts.glb';
+const BASE = import.meta.env.BASE_URL;
+const GLB = BASE + (HD ? 'assets/parts_hd.glb' : 'assets/parts.glb');
+const DRACO = HD ? BASE + 'draco/' : false;
 
 type Part = {
   geo: string;
@@ -45,7 +48,7 @@ function sofaParts(it: Item, n: number): Part[] {
     out.push({
       geo: 'arm_' + it.arm, mat: 'fabric', tag: 'arm',
       pos: [x0 + inner + armW / 2, corner ? 0.35 : 0, 0],
-      scale: [1, corner ? 1.6 / 0.9 : 1, 1],
+      scale: [HD ? -1 : 1, corner ? 1.6 / 0.9 : 1, 1],
     });
   }
 
@@ -61,6 +64,7 @@ function sofaParts(it: Item, n: number): Part[] {
     if (corner) pts.push([x0 + n * W - 0.05, 1.08]);
     if (n >= 3 && !corner) pts.push([0, 0.37], [0, -0.37]);
     pts.forEach(([x, y]) => out.push({ geo, mat, pos: [x, y, 0], tag: 'leg' }));
+    if (HD && it.legs === 'wood') pts.forEach(([x, y]) => out.push({ geo: 'leg_cap', mat: 'brass', pos: [x, y, 0], tag: 'leg' }));
   }
 
   if (it.pillows) {
@@ -110,7 +114,7 @@ function unpacked(src: THREE.BufferGeometry) {
 }
 
 function useParts() {
-  const { scene } = useGLTF(GLB, false, true);
+  const { scene } = useGLTF(GLB, DRACO, !HD);
   return useMemo(() => {
     scene.updateMatrixWorld(true);
     const toZUp = new THREE.Matrix4().makeRotationX(Math.PI / 2);
@@ -156,18 +160,50 @@ function Carpet({ it }: { it: Item }) {
   const h = it.pile === 'long' ? 0.035 : 0.014;
   const color = COLORS[it.color].hex;
   const mats = useMemo(() => {
-    const top = new THREE.MeshStandardMaterial({ map: rugTexture(color, it.pile), roughness: 1 });
+    const top = new THREE.MeshStandardMaterial({ map: rugTexture(color, it.pile), roughness: 1, ...(HD ? { bumpMap: bump('velour'), bumpScale: it.pile === 'long' ? 3 : 1.2 } : {}) });
     const side = new THREE.MeshStandardMaterial({ color, roughness: 1 });
     return [side, side, side, side, top, side];
   }, [color, it.pile]);
   useEffect(() => () => mats.forEach((m) => m.dispose()), [mats]);
   return (
-    <mesh position={[0, 0, h / 2]} material={mats} castShadow receiveShadow userData={{ tag: 'seat' }}>
-      <boxGeometry args={[it.w, it.l, h]} />
-    </mesh>
+    <>
+      <mesh position={[0, 0, h / 2]} material={mats} castShadow receiveShadow userData={{ tag: 'seat' }}>
+        <boxGeometry args={[it.w, it.l, h]} />
+      </mesh>
+      {HD ? <Fringe w={it.w} l={it.l} color={color} /> : null}
+    </>
   );
 }
 
+
+const fringeGeo = new THREE.CylinderGeometry(0.0022, 0.0028, 1, 5, 1).rotateX(Math.PI / 2).translate(0, 0, 0);
+// бахрома по коротким краям ковра: нитки с лёгким разбросом
+function Fringe({ w, l, color }: { w: number; l: number; color: string }) {
+  const ref = useRef<THREE.InstancedMesh>(null!);
+  const per = Math.round(w / 0.011);
+  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color: new THREE.Color(color).lerp(new THREE.Color('#f3ede2'), 0.55), roughness: 1 }), [color]);
+  useEffect(() => () => mat.dispose(), [mat]);
+  useEffect(() => {
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
+    let k = 0;
+    for (const side of [-1, 1]) {
+      for (let i = 0; i < per; i++) {
+        const x = -w / 2 + 0.008 + (i / (per - 1)) * (w - 0.016);
+        const len = 0.05 + ((i * 7919) % 13) / 13 * 0.018;
+        const sway = (((i * 104729) % 17) / 17 - 0.5) * 0.35;
+        e.set(0, 0, sway);
+        q.setFromEuler(e);
+        const dir = new THREE.Vector3(Math.sin(-sway) * 0.4, side, 0).normalize();
+        const pos = new THREE.Vector3(x, side * l / 2, 0.003).addScaledVector(dir, len / 2);
+        m.compose(pos, new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir), new THREE.Vector3(1, 1, len));
+        ref.current.setMatrixAt(k++, m);
+      }
+    }
+    ref.current.instanceMatrix.needsUpdate = true;
+    ref.current.computeBoundingSphere();
+  }, [w, l, per]);
+  return <instancedMesh ref={ref} args={[fringeGeo, mat, per * 2]} receiveShadow userData={{ tag: 'seat' }} />;
+}
 
 const ARM_W: Record<string, number> = { round: 0.22, square: 0.15, low: 0.2, none: 0 };
 const ARM_TOP: Record<string, number> = { round: 0.7, square: 0.66, low: 0.5, none: 0.34 };
@@ -382,7 +418,7 @@ export function Furniture({ type, it, signals, onFit, onPick }: {
     return {
       fabric: fabricMaterial(fabric, COLORS[it.color ?? 0].hex),
       pillow: fabricMaterial('velour', (it.color ?? 0) === 3 ? '#5b5e5f' : '#f3e6cf'),
-      wood: woodMaterial, metal: metalMaterial, plinth: plinthMaterial, mattress, band,
+      wood: woodMaterial, metal: metalMaterial, plinth: plinthMaterial, brass: brassMaterial, mattress, band,
     } as Record<string, THREE.Material>;
   }, [it.fabric, it.color]);
 
@@ -446,8 +482,8 @@ export function Furniture({ type, it, signals, onFit, onPick }: {
             ? <Carpet it={it} />
             : parts.map((p, i) => <Piece key={type + i + p.geo} p={p} index={i} geo={geos[p.geo]} mat={mats[p.mat]} />)}
           <Dirt host={group} ch={ch} it={it} version={shape} />
-          {faces.map((f, i) => <group key={shape + 'face' + i} userData={{ tag: 'face' }}><Eyes face={f} signals={signals} /></group>)}
-          {ch.arms.map((a, i) => <group key={'arm' + i} userData={{ tag: 'hand' }}><Hand arm={a} signals={signals} index={i} /></group>)}
+          {faces.map((f, i) => <group key={shape + 'face' + i} userData={{ tag: 'face' }}><Eyes face={HD ? { ...f, mouth: false } : f} signals={signals} /></group>)}
+          {CUTE ? ch.arms.map((a, i) => <group key={'arm' + i} userData={{ tag: 'hand' }}><Hand arm={a} signals={signals} index={i} /></group>) : null}
         </group>
       </group>
     </group>
@@ -523,6 +559,12 @@ function Scene({ onTouch }: { onTouch: () => void }) {
         shadow-camera-left={-3} shadow-camera-right={3} shadow-camera-top={3} shadow-camera-bottom={-3} />
       <Furniture type={type} it={it} signals={signals} onPick={pick} onFit={(b) => { box.current = b; refit(); }} />
       <ContactShadows position={[0, 0.001, 0]} opacity={0.42} scale={7} blur={2.6} far={1.4} resolution={512} color="#3b2f22" />
+      {HD ? (
+        <mesh rotation-x={-Math.PI / 2} position={[0, 0.0005, 0]} receiveShadow>
+          <planeGeometry args={[14, 14]} />
+          <shadowMaterial transparent opacity={0.16} color="#3b2f22" />
+        </mesh>
+      ) : null}
       <OrbitControls ref={controls} makeDefault enablePan={false} enableDamping dampingFactor={0.08}
         minPolarAngle={0.5} maxPolarAngle={1.45} minDistance={1.2} maxDistance={9}
         autoRotate autoRotateSpeed={0.55} rotateSpeed={0.8}
@@ -549,4 +591,4 @@ export default function Viewer({ onTouch, paused }: { onTouch: () => void; pause
   );
 }
 
-useGLTF.preload(GLB, false, true);
+useGLTF.preload(GLB, DRACO, !HD);

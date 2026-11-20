@@ -1,6 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { CUTE } from '../lib/variant';
 
 export type Mood = 'happy' | 'sad' | 'surprised' | 'joy';
 
@@ -26,8 +27,8 @@ const ink = new THREE.MeshStandardMaterial({ color: '#1d1f24', roughness: 0.2 })
 const mouthMat = new THREE.MeshStandardMaterial({ color: '#5a1f22', roughness: 0.5 });
 const tongue = new THREE.MeshStandardMaterial({ color: '#ff7a6b', roughness: 0.5 });
 const sponge = new THREE.MeshStandardMaterial({ color: '#ffd23f', roughness: 0.85 });
-const scrub = new THREE.MeshStandardMaterial({ color: '#12a899', roughness: 0.9 });
-const mint = new THREE.MeshStandardMaterial({ color: '#12a899', roughness: 0.3 });
+const scrub = new THREE.MeshStandardMaterial({ color: '#22705c', roughness: 0.9 });
+const mint = new THREE.MeshStandardMaterial({ color: '#3d7a68', roughness: 0.3 });
 const cheek = new THREE.MeshBasicMaterial({ color: '#ff8a7a', transparent: true, opacity: 0.55, depthWrite: false });
 
 const sphere = new THREE.SphereGeometry(1, 32, 20);
@@ -116,7 +117,7 @@ export function Eyes({ face, signals }: { face: Face; signals: React.MutableRefO
             position={[0, -r * 0.1, r * 0.08]} scale={[r * 0.5, r * 0.5, r * 0.6]} visible={false} />
           <mesh ref={(el) => { if (el) brows.current[i] = el; }} geometry={brow} material={ink}
             position={[0, r * 1.15, r * 0.15]} rotation={[0, 0, Math.PI / 2]} scale={[r * 0.4, r * 0.42, r * 0.3]} />
-          {face.mouth !== false ? <mesh geometry={disc} material={cheek} position={[side * r * 0.62, -r * 1.05 - low, r * 0.1]} scale={r * 0.36} /> : null}
+          {CUTE && face.mouth !== false ? <mesh geometry={disc} material={cheek} position={[side * r * 0.62, -r * 1.05 - low, r * 0.1]} scale={r * 0.36} /> : null}
         </group>
       ))}
       {face.mouth !== false ? (
