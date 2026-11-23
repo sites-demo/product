@@ -1,5 +1,5 @@
-const CACHE = 'klimova-v1';
-const CORE = ['./', './cabinet/', './assets/cormorant-cyr.woff2', './assets/golos-cyr.woff2', './manifest.webmanifest'];
+const CACHE = 'klimova-v2';
+const CORE = ['./', './cabinet/', './assets/nsd-cyr.woff2', './assets/golos-cyr.woff2', './manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));

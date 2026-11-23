@@ -101,13 +101,15 @@ export function makePlan(exam: ExamKey, now: number, goal: number, dur: number, 
   return { exam, now, goal, dur, format, weeks, perWeek, lessons, price, monthly: monthLessons * price, monthLessons, reach, tight, keep, start: from, end };
 }
 
+export const MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+
 export function trajectory(plan: Plan) {
   const months: { t: number; label: string }[] = [];
   const s = plan.start, e = plan.end;
   const span = +e - +s;
   const d = new Date(s.getFullYear(), s.getMonth() + 1, 1);
   while (+d < +e) {
-    months.push({ t: (+d - +s) / span, label: d.toLocaleDateString('ru-RU', { month: 'short' }).replace('.', '') });
+    months.push({ t: (+d - +s) / span, label: MONTHS_SHORT[d.getMonth()] });
     d.setMonth(d.getMonth() + 1);
   }
   const top = plan.keep ? plan.now : plan.reach;

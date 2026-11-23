@@ -1,7 +1,8 @@
-@font-face { font-family: 'Cormorant'; src: url('/assets/cormorant-cyr.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-@font-face { font-family: 'Cormorant'; src: url('/assets/cormorant-lat.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+2215; }
-@font-face { font-family: 'Cormorant'; font-style: italic; src: url('/assets/cormorant-cyr-i.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-@font-face { font-family: 'Cormorant'; font-style: italic; src: url('/assets/cormorant-lat-i.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+2215; }
+@font-face { font-family: 'Display'; src: url('/assets/nsd-cyr.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Display'; src: url('/assets/nsd-lat.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: 'Display'; src: url('/assets/nsd-rub.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+20BD; }
+@font-face { font-family: 'Display'; font-style: italic; src: url('/assets/nsd-cyr-i.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Display'; font-style: italic; src: url('/assets/nsd-lat-i.woff2') format('woff2'); font-weight: 300 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
 @font-face { font-family: 'Golos'; src: url('/assets/golos-cyr.woff2') format('woff2'); font-weight: 400 900; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
 @font-face { font-family: 'Golos'; src: url('/assets/golos-lat.woff2') format('woff2'); font-weight: 400 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+2215; }
 
@@ -25,7 +26,7 @@
   --warn: #a3271f;
   --r: 6px;
   --r-l: 10px;
-  --serif: 'Cormorant', 'Times New Roman', serif;
+  --serif: 'Display', 'Times New Roman', serif;
   --sans: 'Golos', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --gutter: 20px;
   --max: 1180px;
@@ -49,8 +50,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; padding: 0; }
 button:disabled { cursor: default; }
 a { color: inherit; }
-h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; overflow-wrap: break-word; }
-p { margin: 0; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 400; letter-spacing: -0.015em; overflow-wrap: break-word; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
 .i { flex: none; display: block; }
 :focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
 

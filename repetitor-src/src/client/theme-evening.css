@@ -89,7 +89,6 @@ html[data-theme='evening'] .out-rows .em dd, html[data-theme='evening'] .menu li
 html[data-theme='evening'] .range-top b {
   background: var(--metal-text); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-html[data-theme='evening'] .chart .lbl, html[data-theme='evening'] .chart .goal-t { stroke: #0e221c; }
 html[data-theme='evening'] .chart .dot { stroke: #0e221c; }
 html[data-theme='evening'] .seg { background: rgba(0, 0, 0, .18); border-color: rgba(214, 182, 122, .26); }
 html[data-theme='evening'] .seg button { color: var(--ink-2); border-left-color: rgba(214, 182, 122, .2); }
