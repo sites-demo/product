@@ -1,3 +1,4 @@
+.atmos { display: none; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 
 /* шапка */
@@ -98,7 +99,7 @@
 .chart .dot.start { fill: var(--on-green); }
 .chart .dot.end { fill: var(--brass-2); opacity: 0; animation: fadein .3s 1s forwards; }
 .chart .lbl { fill: var(--on-green); font: 500 13.5px var(--sans); }
-.chart .lbl.strong { fill: var(--brass-2); font: 600 22px var(--serif); }
+.chart .lbl.strong { fill: var(--brass-2); font: 600 22px var(--serif); font-variant-numeric: lining-nums; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @keyframes fadein { to { opacity: 1; } }
 
