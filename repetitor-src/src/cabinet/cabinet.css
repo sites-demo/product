@@ -1,7 +1,7 @@
 .cab { min-height: 100dvh; padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
 .cab-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px var(--gutter); background: var(--green); color: var(--on-green); }
 .cab-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.cab-brand b { display: block; font-family: var(--serif); font-size: 21px; font-weight: 600; line-height: 1.05; white-space: nowrap; }
+.cab-brand b { display: block; font-family: var(--serif); font-size: 18px; font-weight: 500; line-height: 1.05; white-space: nowrap; }
 .cab-brand small { display: block; font-size: 12.5px; color: var(--on-green-2); }
 .top-link { color: var(--brass-2); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; padding: 10px 0; }
 .cab-main { max-width: 720px; margin: 0 auto; padding: 8px var(--gutter) 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
@@ -20,7 +20,7 @@
 .row-card:hover { border-color: var(--line-2); }
 .row-card.is-new { border-left: 3px solid var(--brass); }
 .rc-top, .rc-bottom { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.rc-top b { min-width: 0; overflow-wrap: anywhere; font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 1.1; }
+.rc-top b { min-width: 0; overflow-wrap: anywhere; font-family: var(--serif); font-size: 19px; font-weight: 500; line-height: 1.1; }
 .row-card p { font-size: 14.5px; color: var(--ink-2); }
 .rc-bottom span { font-size: 13px; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rc-bottom b { font-size: 14.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -35,13 +35,13 @@
 .stats { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 8px; margin-top: 8px; }
 .stats div { background: var(--green); color: var(--on-green); border-radius: var(--r-l); padding: 12px 14px; }
 .stats div { min-width: 0; }
-.stats b { display: block; font-family: var(--serif); font-size: clamp(22px, 6.4vw, 28px); font-weight: 600; line-height: 1.1; color: var(--brass-2); white-space: nowrap; }
+.stats b { display: block; font-family: var(--serif); font-size: clamp(19px, 5.6vw, 25px); font-weight: 500; line-height: 1.1; color: var(--brass-2); white-space: nowrap; }
 .stats span { font-size: 12.5px; color: var(--on-green-2); }
 
 .today { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); border-top: 2px solid var(--green); }
 .today li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); transition: opacity .3s; }
 .today li.done { opacity: .6; }
-.today .t { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--green); }
+.today .t { font-family: var(--serif); font-size: 21px; font-weight: 500; color: var(--green); }
 .today b { display: block; font-weight: 600; }
 .today small { color: var(--muted); font-size: 13px; }
 .today .btn { min-height: 42px; padding: 0 14px; font-size: 14px; }
@@ -54,11 +54,11 @@
 .panel-body { max-width: 720px; margin: 0 auto; padding: 16px var(--gutter) calc(32px + env(safe-area-inset-bottom)); display: grid; gap: 12px; }
 .x { width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line-2); flex: none; background: var(--sheet); }
 
-.who b { display: block; font-family: var(--serif); font-size: 30px; font-weight: 600; line-height: 1.1; }
+.who b { display: block; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.1; }
 .who span { color: var(--muted); font-size: 14.5px; }
 .actions { display: grid; gap: 8px; }
 .actions .btn { min-height: 50px; }
-.plan .plan-line { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--green); margin-bottom: 8px; }
+.plan .plan-line { font-family: var(--serif); font-size: 21px; font-weight: 500; color: var(--green); margin-bottom: 8px; }
 .plan dl, .balance dl { margin: 0; display: grid; }
 .plan dl div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 15px; }
 .plan dt { color: var(--muted); }
@@ -74,7 +74,7 @@
 .lightbox img { max-width: 100%; max-height: 100%; border-radius: var(--r); }
 
 .balance { text-align: left; }
-.balance .big { font-family: var(--serif); font-size: 48px; font-weight: 600; line-height: 1; color: var(--green); }
+.balance .big { font-family: var(--serif); font-size: 42px; font-weight: 500; line-height: 1; color: var(--green); }
 .balance.debt .big { color: var(--warn); }
 .pay { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 8px; margin-top: 14px; }
 .pay .btn { padding: 0 10px; min-height: 48px; font-size: 14.5px; }

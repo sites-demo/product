@@ -60,7 +60,7 @@ export default function App() {
       <section className="hero" id="top">
         <div className="hero-in">
           <div className="hero-text">
-            <p className="hero-kicker">Математика · ОГЭ и ЕГЭ · {TUTOR.city} и онлайн</p>
+            <p className="hero-kicker"><span>Математика, ОГЭ и ЕГЭ</span><span>{TUTOR.city} и онлайн</span></p>
             <h1>{TUTOR.first} Андреевна<br />{TUTOR.last}</h1>
             <p className="hero-lead">
               Готовлю к ОГЭ и ЕГЭ по математике с {TUTOR.since} года. Учитель физико-математического лицея, эксперт предметной комиссии ЕГЭ.

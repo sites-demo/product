@@ -17,7 +17,7 @@ export function Seal({ size = 56, dark = false, ring = true }: { size?: number; 
             <circle cx="50" cy="50" r="27" fill="none" stroke={c} strokeWidth="0.6" />
           </>
         ) : null}
-        <text x="50" y={ring ? 59 : 62} textAnchor="middle" fill={c} style={{ font: `500 ${ring ? 26 : 38}px var(--serif)`, letterSpacing: '-0.5px' }}>{TUTOR.initials}</text>
+        <text x="50" y={ring ? 58.5 : 61} textAnchor="middle" fill={c} style={{ font: `400 ${ring ? 23 : 33}px var(--serif)`, letterSpacing: '0' }}>{TUTOR.initials}</text>
       </svg>
     </span>
   );

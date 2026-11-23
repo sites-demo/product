@@ -81,7 +81,7 @@ html[data-theme='ivory'] .calc-out {
   background: radial-gradient(120% 70% at 85% 0%, rgba(236, 196, 120, .2), transparent 60%), var(--deep);
 }
 html[data-theme='ivory'] .out-rows .em dd { background: linear-gradient(180deg, #f6e6bf, #cfa865); -webkit-background-clip: text; background-clip: text; color: transparent; }
-html[data-theme='ivory'] .chart .lbl, html[data-theme='ivory'] .chart .goal-t, html[data-theme='ivory'] .chart .dot { stroke: #173b32; }
+html[data-theme='ivory'] .chart .dot { stroke: #173b32; }
 html[data-theme='ivory'] .seg { background: rgba(255, 253, 248, .6); border-color: var(--line-2); }
 html[data-theme='ivory'] .seg button { border-left-color: var(--line-2); }
 html[data-theme='ivory'] .exam-seg button { border-top-color: var(--line-2); }
