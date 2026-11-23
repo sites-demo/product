@@ -1,0 +1,113 @@
+/* «Слоновая кость»: один светлый лист, мягкий свет, зелёный только как чернила и кожа */
+html[data-theme='ivory'] {
+  --paper: #f6f1e7;
+  --ivory: var(--paper);
+  --ivory-2: var(--paper);
+  --sheet: rgba(255, 253, 248, .66);
+  --ink: #1a1f1b;
+  --ink-2: #434a42;
+  --line: rgba(120, 100, 60, .16);
+  --line-2: rgba(120, 100, 60, .28);
+  --brass: #8c6a35;
+  --deep: linear-gradient(160deg, #24544a 0%, #163a31 45%, #0f2a24 100%);
+  --metal: linear-gradient(115deg, #f1dcaa 0%, #d4ae6e 32%, #a77e40 64%, #e2c48b 100%);
+  --ink-grad: linear-gradient(180deg, #24574a 0%, #10302a 70%);
+  --shadow: 0 1px 1px rgba(80, 60, 20, .05), 0 24px 48px -28px rgba(60, 45, 15, .35);
+  background: var(--paper);
+}
+html[data-theme='ivory'] body { background: var(--paper); position: relative; }
+
+html[data-theme='ivory'] .atmos {
+  display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(900px 700px at 92% 2%, rgba(226, 192, 130, .32), transparent 70%),
+    radial-gradient(800px 900px at -5% 18%, rgba(140, 178, 152, .22), transparent 70%),
+    radial-gradient(900px 700px at 105% 42%, rgba(232, 200, 160, .26), transparent 70%),
+    radial-gradient(900px 900px at 0% 66%, rgba(150, 184, 160, .18), transparent 70%),
+    radial-gradient(1000px 700px at 80% 92%, rgba(226, 192, 130, .24), transparent 70%),
+    linear-gradient(180deg, #f8f3e9 0%, #f4eee2 50%, #f6f0e5 100%);
+}
+html[data-theme='ivory'] .atmos::after {
+  content: ''; position: absolute; inset: 0; opacity: .05; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+html[data-theme='ivory'] .top, html[data-theme='ivory'] .hero, html[data-theme='ivory'] .sec,
+html[data-theme='ivory'] .final, html[data-theme='ivory'] .foot { position: relative; z-index: 1; background: transparent; color: var(--ink); }
+html[data-theme='ivory'] .hero::before { display: none; }
+html[data-theme='ivory'] .top { border-bottom: 0; color: var(--ink); }
+html[data-theme='ivory'] .brand small, html[data-theme='ivory'] .nav a { color: var(--ink-2); }
+html[data-theme='ivory'] .brand .seal svg circle { stroke: var(--brass); }
+html[data-theme='ivory'] .brand .seal svg text { fill: var(--brass); }
+html[data-theme='ivory'] .sec::before, html[data-theme='ivory'] .final::before {
+  content: ''; position: absolute; top: 0; left: 50%; width: min(var(--max), 100% - 2 * var(--gutter)); height: 1px; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(140, 106, 53, .45) 50%, transparent);
+}
+html[data-theme='ivory'] .calc-sec::before { display: none; }
+html[data-theme='ivory'] .approach { border: 0; }
+
+/* типографика: зелёные чернила с лёгким переливом */
+html[data-theme='ivory'] .hero h1, html[data-theme='ivory'] .sec h2, html[data-theme='ivory'] .final h2, html[data-theme='ivory'] .quote p,
+html[data-theme='ivory'] .facts dt, html[data-theme='ivory'] .reg-to, html[data-theme='ivory'] .menu li b, html[data-theme='ivory'] .range-top b {
+  background: var(--ink-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+html[data-theme='ivory'] .hero-kicker, html[data-theme='ivory'] .step-when { color: var(--brass); }
+html[data-theme='ivory'] .hero-lead, html[data-theme='ivory'] .facts dd, html[data-theme='ivory'] .final p { color: var(--ink-2); }
+html[data-theme='ivory'] .facts div { border-top-color: var(--line-2); }
+
+/* кнопки */
+html[data-theme='ivory'] .btn.brass {
+  background: var(--metal); background-size: 160% 100%; color: #14302a;
+  box-shadow: inset 0 1px 0 rgba(255, 250, 230, .6), inset 0 -1px 0 rgba(90, 60, 20, .3), 0 10px 22px -12px rgba(160, 120, 50, .55);
+  transition: background-position .5s ease, transform .15s;
+}
+html[data-theme='ivory'] .btn.brass:hover { background: var(--metal); background-size: 160% 100%; background-position: 100% 0; }
+html[data-theme='ivory'] .btn.primary {
+  background: var(--deep); color: #f3ead6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 12px 24px -14px rgba(15, 42, 36, .8);
+}
+html[data-theme='ivory'] .btn.primary:hover:not(:disabled) { background: var(--deep); filter: brightness(1.08); }
+html[data-theme='ivory'] .btn.line-light { color: var(--ink); box-shadow: inset 0 0 0 1px rgba(26, 31, 27, .45); }
+html[data-theme='ivory'] .btn.line-light:hover { background: rgba(26, 31, 27, .04); }
+
+/* первый экран: рендер как картина в паспарту */
+html[data-theme='ivory'] .hero-pic { margin: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px rgba(140, 106, 53, .35), 0 0 0 7px rgba(255, 253, 248, .7), 0 0 0 8px rgba(140, 106, 53, .25), var(--shadow); }
+html[data-theme='ivory'] .hero-pic::after { display: none; }
+html[data-theme='ivory'] .hero-in { padding-bottom: 12px; }
+html[data-theme='ivory'] .facts { padding-top: 32px; }
+
+/* калькулятор: светлое стекло слева, тёмная кожа справа как единственный тёмный предмет */
+html[data-theme='ivory'] .calc { background: var(--sheet); border-color: rgba(140, 106, 53, .22); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+html[data-theme='ivory'] .calc-out {
+  background: radial-gradient(120% 70% at 85% 0%, rgba(236, 196, 120, .2), transparent 60%), var(--deep);
+}
+html[data-theme='ivory'] .out-rows .em dd { background: linear-gradient(180deg, #f6e6bf, #cfa865); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-theme='ivory'] .chart .lbl, html[data-theme='ivory'] .chart .goal-t, html[data-theme='ivory'] .chart .dot { stroke: #173b32; }
+html[data-theme='ivory'] .seg { background: rgba(255, 253, 248, .6); border-color: var(--line-2); }
+html[data-theme='ivory'] .seg button { border-left-color: var(--line-2); }
+html[data-theme='ivory'] .exam-seg button { border-top-color: var(--line-2); }
+html[data-theme='ivory'] .seg button.on, html[data-theme='ivory'] .chip.on { background: var(--deep); color: #f3ead6; }
+html[data-theme='ivory'] .range input::-webkit-slider-runnable-track { background: linear-gradient(90deg, #1d4a3e var(--p), rgba(140, 106, 53, .25) var(--p)); }
+html[data-theme='ivory'] .field input, html[data-theme='ivory'] .field textarea { background: rgba(255, 253, 248, .8); border-color: var(--line-2); }
+
+/* подход, о себе, результаты, цены */
+html[data-theme='ivory'] .steps li, html[data-theme='ivory'] .creds div, html[data-theme='ivory'] .faq-list,
+html[data-theme='ivory'] .faq details, html[data-theme='ivory'] .reg-row, html[data-theme='ivory'] .menu li { border-color: var(--line-2); }
+html[data-theme='ivory'] .register { border-top: 1px solid rgba(26, 31, 27, .55); }
+html[data-theme='ivory'] .oval { box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px rgba(140, 106, 53, .6), var(--shadow); }
+
+/* финал без зелёной плашки: та же страница, печать и большой заголовок */
+html[data-theme='ivory'] .final { color: var(--ink); padding-top: 96px; }
+html[data-theme='ivory'] .final .seal svg circle { stroke: var(--brass); }
+html[data-theme='ivory'] .final .seal svg text { fill: var(--brass); }
+html[data-theme='ivory'] .final-phone { color: var(--ink) !important; }
+html[data-theme='ivory'] .final-phone span { color: var(--muted); }
+html[data-theme='ivory'] .foot { color: var(--muted); border-top: 1px solid var(--line); }
+html[data-theme='ivory'] .foot a { color: var(--ink); }
+
+/* запись */
+html[data-theme='ivory'] .sheet, html[data-theme='ivory'] .sheet-head { background: #f8f3ea; }
+html[data-theme='ivory'] .book-plan { background: var(--deep); }
+
+@media (max-width: 899px) {
+  html[data-theme='ivory'] .hero-pic img { aspect-ratio: 4 / 4.4; }
+}

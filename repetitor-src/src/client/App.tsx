@@ -41,6 +41,7 @@ export default function App() {
 
   return (
     <>
+      <div className="atmos" aria-hidden />
       <header className="top">
         <a className="brand" href="#top" aria-label={TUTOR.full}>
           <Seal size={44} ring={false} dark />

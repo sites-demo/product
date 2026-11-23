@@ -1,0 +1,138 @@
+/* «Вечерний кабинет»: одна тёмная комната, свет лампы, латунь с переливом */
+html[data-theme='evening'] {
+  --night: #0b1a16;
+  --night-2: #0f231d;
+  --leather: #142c24;
+  --ivory: var(--night);
+  --ivory-2: var(--night-2);
+  --sheet: #132a22;
+  --ink: #ece4d2;
+  --ink-2: #c8c1ac;
+  --muted: #9a9682;
+  --line: rgba(214, 182, 122, .14);
+  --line-2: rgba(214, 182, 122, .26);
+  --brass: #cfab6c;
+  --brass-2: #dcbc84;
+  --metal: linear-gradient(115deg, #f4e2b5 0%, #d9b677 30%, #a98042 62%, #e7cb92 100%);
+  --metal-text: linear-gradient(180deg, #f6e6bf 0%, #d8b472 55%, #b38a4c 100%);
+  --glass: linear-gradient(165deg, rgba(31, 66, 54, .72) 0%, rgba(16, 36, 30, .78) 100%);
+  --shadow: 0 1px 0 rgba(255, 240, 210, .05) inset, 0 30px 60px -30px rgba(0, 0, 0, .7);
+  background: var(--night);
+}
+html[data-theme='evening'] body { background: var(--night); color: var(--ink); position: relative; }
+
+/* свет в комнате: тёплые пятна лампы вдоль всей страницы */
+html[data-theme='evening'] .atmos {
+  display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(900px 700px at 78% 4%, rgba(236, 186, 112, .16), transparent 70%),
+    radial-gradient(700px 900px at 0% 22%, rgba(52, 110, 88, .28), transparent 70%),
+    radial-gradient(800px 700px at 100% 40%, rgba(236, 186, 112, .09), transparent 70%),
+    radial-gradient(900px 800px at 10% 62%, rgba(52, 110, 88, .22), transparent 70%),
+    radial-gradient(900px 600px at 70% 84%, rgba(236, 186, 112, .12), transparent 70%),
+    linear-gradient(180deg, #0f251e 0%, #0b1a16 30%, #0d201a 60%, #0a1814 100%);
+}
+html[data-theme='evening'] .atmos::after {
+  content: ''; position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+html[data-theme='evening'] .top, html[data-theme='evening'] .hero, html[data-theme='evening'] .sec,
+html[data-theme='evening'] .final, html[data-theme='evening'] .foot { position: relative; z-index: 1; background: transparent; }
+html[data-theme='evening'] .hero::before { display: none; }
+html[data-theme='evening'] .top { border-bottom-color: transparent; }
+
+/* переходы между залами: не заливка, а тонкая латунная линия, гаснущая к краям */
+html[data-theme='evening'] .sec::before, html[data-theme='evening'] .final::before {
+  content: ''; position: absolute; top: 0; left: 50%; width: min(var(--max), 100% - 2 * var(--gutter)); height: 1px; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(214, 182, 122, .45) 50%, transparent);
+}
+html[data-theme='evening'] .calc-sec::before { display: none; }
+html[data-theme='evening'] .approach { border: 0; }
+
+/* типографика */
+html[data-theme='evening'] .sec h2, html[data-theme='evening'] .final h2, html[data-theme='evening'] .hero h1,
+html[data-theme='evening'] .quote p {
+  color: #f1e8d4;
+}
+html[data-theme='evening'] .hero h1 {
+  background: linear-gradient(180deg, #fbf3e0 0%, #e9dcc0 60%, #cdb98f 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+html[data-theme='evening'] .quote p { background: linear-gradient(100deg, #f1e8d4 0%, #dcc08a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-theme='evening'] .hero-kicker, html[data-theme='evening'] .step-when, html[data-theme='evening'] .out-k { color: var(--brass-2); }
+html[data-theme='evening'] .hero-lead, html[data-theme='evening'] .sec-head p, html[data-theme='evening'] .about-text > p { color: var(--ink-2); }
+
+/* кнопки: латунь как металл, с бликом */
+html[data-theme='evening'] .btn.brass, html[data-theme='evening'] .btn.primary {
+  background: var(--metal); background-size: 160% 100%; background-position: 0% 0; color: #10241d;
+  box-shadow: inset 0 1px 0 rgba(255, 250, 230, .55), inset 0 -1px 0 rgba(90, 60, 20, .35), 0 10px 24px -12px rgba(214, 170, 90, .6);
+  transition: background-position .5s ease, box-shadow .3s, transform .15s;
+}
+html[data-theme='evening'] .btn.brass:hover, html[data-theme='evening'] .btn.primary:hover:not(:disabled) { background: var(--metal); background-size: 160% 100%; background-position: 100% 0; }
+html[data-theme='evening'] .btn.line, html[data-theme='evening'] .btn.line-light { color: var(--ink); box-shadow: inset 0 0 0 1px rgba(236, 228, 210, .32); background: rgba(255, 255, 255, .02); }
+
+/* первый экран: рендер растворяется в комнате, без рамки */
+html[data-theme='evening'] .hero-pic::after {
+  background: linear-gradient(180deg, var(--night-2) 0%, rgba(11, 26, 22, 0) 24%, rgba(11, 26, 22, 0) 70%, rgba(13, 32, 26, 1) 100%);
+}
+html[data-theme='evening'] .facts div { border-top-color: rgba(214, 182, 122, .22); }
+html[data-theme='evening'] .facts dt { background: var(--metal-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-theme='evening'] .facts dd { color: var(--ink-2); }
+
+/* калькулятор: панель из тёмной кожи, правая часть подсвечена лампой */
+html[data-theme='evening'] .calc { background: var(--glass); border-color: rgba(214, 182, 122, .22); box-shadow: var(--shadow); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+html[data-theme='evening'] .calc-out {
+  background: radial-gradient(120% 70% at 80% 0%, rgba(236, 186, 112, .16), transparent 60%), linear-gradient(180deg, rgba(8, 20, 16, .55), rgba(8, 20, 16, .75));
+  border-top: 1px solid rgba(214, 182, 122, .18);
+}
+html[data-theme='evening'] .out-big { color: #f3ead6; }
+html[data-theme='evening'] .out-rows .em dd, html[data-theme='evening'] .menu li b, html[data-theme='evening'] .reg-to,
+html[data-theme='evening'] .range-top b {
+  background: var(--metal-text); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+html[data-theme='evening'] .chart .lbl, html[data-theme='evening'] .chart .goal-t { stroke: #0e221c; }
+html[data-theme='evening'] .chart .dot { stroke: #0e221c; }
+html[data-theme='evening'] .seg { background: rgba(0, 0, 0, .18); border-color: rgba(214, 182, 122, .26); }
+html[data-theme='evening'] .seg button { color: var(--ink-2); border-left-color: rgba(214, 182, 122, .2); }
+html[data-theme='evening'] .exam-seg button { border-top-color: rgba(214, 182, 122, .2); }
+html[data-theme='evening'] .seg button.on, html[data-theme='evening'] .chip.on {
+  background: linear-gradient(180deg, #e7cc95 0%, #c49d5c 100%); color: #10241d; box-shadow: inset 0 1px 0 rgba(255, 250, 230, .5);
+}
+html[data-theme='evening'] .chip { background: rgba(0, 0, 0, .18); box-shadow: inset 0 0 0 1px rgba(214, 182, 122, .26); }
+html[data-theme='evening'] .range input::-webkit-slider-runnable-track { background: linear-gradient(90deg, #d9b677 var(--p), rgba(214, 182, 122, .22) var(--p)); }
+html[data-theme='evening'] .range input::-moz-range-progress { background: #d9b677; }
+html[data-theme='evening'] .range input::-webkit-slider-thumb { background: radial-gradient(circle at 35% 30%, #fbefd0, #d6b070 55%, #9c7538); border: 0; box-shadow: 0 0 0 4px rgba(214, 182, 122, .14), 0 3px 10px rgba(0, 0, 0, .5); }
+html[data-theme='evening'] .range input::-moz-range-thumb { background: radial-gradient(circle at 35% 30%, #fbefd0, #d6b070 55%, #9c7538); border: 0; }
+html[data-theme='evening'] .calc-note { border-top-color: rgba(214, 182, 122, .16); }
+html[data-theme='evening'] .field input, html[data-theme='evening'] .field textarea { background: rgba(0, 0, 0, .2); border-color: rgba(214, 182, 122, .26); color: var(--ink); }
+html[data-theme='evening'] .field input:focus, html[data-theme='evening'] .field textarea:focus { border-color: var(--brass-2); box-shadow: 0 0 0 3px rgba(214, 182, 122, .15); }
+
+/* подход, о себе, результаты, цены */
+html[data-theme='evening'] .steps li, html[data-theme='evening'] .creds div, html[data-theme='evening'] .faq-list,
+html[data-theme='evening'] .faq details, html[data-theme='evening'] .reg-row, html[data-theme='evening'] .menu li { border-color: rgba(214, 182, 122, .16); }
+html[data-theme='evening'] .register { border-top: 1px solid rgba(214, 182, 122, .45); }
+html[data-theme='evening'] .steps h3, html[data-theme='evening'] .faq summary, html[data-theme='evening'] .reg-name b { color: var(--ink); }
+html[data-theme='evening'] .oval { box-shadow: 0 0 0 8px var(--night), 0 0 0 9px rgba(214, 182, 122, .7), 0 40px 80px -30px rgba(0, 0, 0, .8); }
+html[data-theme='evening'] .reg-from { color: var(--muted); text-decoration-color: rgba(214, 120, 100, .6); }
+html[data-theme='evening'] .menu li i { border-bottom-color: rgba(214, 182, 122, .3); }
+
+/* финал и подвал */
+html[data-theme='evening'] .final { padding-top: 96px; }
+html[data-theme='evening'] .final p { color: var(--ink-2); }
+html[data-theme='evening'] .foot { background: transparent; border-top: 1px solid rgba(214, 182, 122, .12); }
+
+/* запись */
+html[data-theme='evening'] .sheet { background: linear-gradient(180deg, #132b23 0%, #0e211b 100%); color: var(--ink); }
+html[data-theme='evening'] .sheet-head { background: #132b23; border-bottom-color: rgba(214, 182, 122, .18); }
+html[data-theme='evening'] .sheet-head h2, html[data-theme='evening'] .done-lead { color: #f1e8d4; }
+html[data-theme='evening'] .book-plan { background: rgba(0, 0, 0, .25); border: 1px solid rgba(214, 182, 122, .22); }
+html[data-theme='evening'] .x { box-shadow: inset 0 0 0 1px rgba(214, 182, 122, .3); color: var(--ink); background: transparent; }
+html[data-theme='evening'] .shot-add, html[data-theme='evening'] .done-plan { background: rgba(0, 0, 0, .2); }
+
+@media (min-width: 900px) {
+  html[data-theme='evening'] .hero-pic {
+    border-radius: 0; box-shadow: none;
+    -webkit-mask-image: radial-gradient(75% 80% at 55% 50%, #000 52%, transparent 100%);
+    mask-image: radial-gradient(75% 80% at 55% 50%, #000 52%, transparent 100%);
+  }
+  html[data-theme='evening'] .calc-out { border-top: 0; border-left: 1px solid rgba(214, 182, 122, .18); }
+}
