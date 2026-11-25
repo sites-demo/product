@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FBF3E4">
+<title>Анна Сергеевна, английский для детей и взрослых</title>
+<style>
+@font-face { font-family: 'MA'; src: url('f/montserrat-alternates-cyrillic-800-normal.woff2') format('woff2'); font-weight: 800; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'MA'; src: url('f/montserrat-alternates-latin-800-normal.woff2') format('woff2'); font-weight: 800; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+@font-face { font-family: 'MA'; src: url('f/montserrat-alternates-cyrillic-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'MA'; src: url('f/montserrat-alternates-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+@font-face { font-family: 'Nunito'; src: url('f/nunito-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 200 1000; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'Nunito'; src: url('f/nunito-latin-wght-normal.woff2') format('woff2'); font-weight: 200 1000; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+:root {
+  --cream: #FBF3E4; --paper: #FFF9EE; --teal: #123F44; --teal-2: #1D5359; --ink-2: #4E6466;
+  --coral: #EF6F57; --coral-d: #D35640; --mustard: #F2B134; --blue: #3E86B8; --pine: #2F7D5B; --sky: #CFE7EC;
+  --display: 'MA', 'Nunito', sans-serif; --sans: 'Nunito', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; overflow-x: clip; background: var(--cream); color: var(--teal); font: 500 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: inherit; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+.top { display: flex; align-items: center; gap: 12px; padding: 14px 20px; max-width: 1160px; margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand svg { flex: none; }
+.brand b { display: block; font: 700 17px/1.1 var(--display); }
+.brand small { display: block; font-size: 13.5px; color: var(--ink-2); }
+.top .btn { margin-left: auto; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 24px; border-radius: 14px; font: 800 16.5px/1.15 var(--sans); text-decoration: none; text-align: center; cursor: pointer; border: 0; transition: transform .12s, box-shadow .12s; }
+.btn.main { background: var(--coral); color: #fff; box-shadow: 0 3px 0 var(--coral-d), 0 14px 24px -14px rgba(211, 86, 64, .7); }
+.btn.main:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--coral-d); }
+.btn.line { color: var(--teal); box-shadow: inset 0 0 0 2px var(--teal); }
+.top .btn { min-height: 42px; padding: 0 16px; font-size: 15px; }
+
+.hero-in { display: grid; gap: 0; padding-top: 4px; padding-bottom: 48px; }
+.scene { margin: 0 -8px; border-radius: 26px; overflow: hidden; box-shadow: 0 2px 0 rgba(18, 63, 68, .06), 0 26px 50px -30px rgba(18, 63, 68, .55); }
+.scene svg { display: block; width: 100%; height: auto; }
+.txt { padding-top: 26px; }
+.kick { font-weight: 800; font-size: 15px; color: var(--coral-d); }
+h1 { margin-top: 8px; font: 800 clamp(29px, 9.2vw, 62px)/1.08 var(--display); letter-spacing: -0.02em; }
+h1 span { color: var(--blue); }
+.lead { margin-top: 16px; font-size: 18px; color: var(--ink-2); max-width: 30em; }
+.cta { margin-top: 24px; display: grid; gap: 12px; }
+.facts { margin: 26px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.facts li { position: relative; padding: 14px 12px 12px; border-radius: 14px; background: var(--paper); box-shadow: 0 2px 0 rgba(18, 63, 68, .06), 0 12px 22px -16px rgba(18, 63, 68, .5); }
+.facts li::before { content: ''; position: absolute; top: 0; left: 12px; right: 12px; height: 4px; border-radius: 0 0 4px 4px; background: var(--coral); }
+.facts li:nth-child(2)::before { background: var(--blue); }
+.facts li:nth-child(3)::before { background: var(--mustard); }
+.facts b { display: block; font: 900 clamp(17px, 4.6vw, 21px)/1.1 var(--sans); }
+.facts span { display: block; margin-top: 5px; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+
+@media (min-width: 900px) {
+  .top { padding: 22px 40px; }
+  .wrap { padding: 0 40px; }
+  .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); grid-template-areas: 'txt scene' 'facts scene'; column-gap: 48px; align-items: center; padding-top: 24px; padding-bottom: 60px; }
+  .scene { grid-area: scene; margin: 0; transform: rotate(1.2deg); }
+  .txt { grid-area: txt; padding-top: 0; align-self: end; }
+  .facts { grid-area: facts; align-self: start; }
+  .cta { grid-auto-flow: column; justify-content: start; }
+}
+
+/* блоки после первого экрана */
+.sec { padding: 56px 0; }
+.sec h2 { font: var(--s-h2); letter-spacing: -0.015em; }
+.sec .sub { margin-top: 10px; color: var(--s-muted); max-width: 34em; }
+.card { background: var(--s-card); border-radius: var(--s-r); box-shadow: var(--s-shadow); }
+.ph { display: grid; place-items: center; text-align: center; padding: 12px; background: var(--s-ph); color: var(--s-ph-ink); font-size: 14px; line-height: 1.3; font-weight: 600; }
+.about-in { display: grid; gap: 28px; }
+.me { margin: 0; }
+.me .ph { aspect-ratio: 4 / 5; border-radius: var(--s-r); max-width: 380px; }
+.about-txt p { margin-top: 14px; }
+.about-txt h2 + p { margin-top: 18px; }
+.edu { margin-top: 24px; display: flex; gap: 16px; align-items: center; padding: 14px; }
+.edu .doc { flex: none; width: 88px; aspect-ratio: 3 / 4; border-radius: 8px; font-size: 12px; padding: 6px; }
+.edu b { display: block; font-weight: 800; line-height: 1.3; hyphens: auto; }
+@media (max-width: 899px) { .hero-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
+.edu span { display: block; font-size: 15px; color: var(--s-muted); }
+.edu .hl { margin-top: 2px; color: var(--s-a1); font-weight: 800; }
+.steps { margin-top: 28px; display: grid; gap: 14px; }
+.steps article { padding: 22px 20px; }
+.steps article::before { content: ''; display: block; width: 36px; height: 6px; border-radius: 3px; background: var(--s-a1); margin-bottom: 16px; }
+.steps article:nth-child(2)::before { background: var(--s-a2); }
+.steps article:nth-child(3)::before { background: var(--s-a3); }
+.steps h3 { font: var(--s-h3); }
+.steps p { margin-top: 6px; color: var(--s-muted); }
+.price-card { padding: 26px 22px; display: grid; gap: 18px; }
+.sum { margin-top: 14px; color: var(--s-muted); }
+.sum b { display: block; font: var(--s-big); color: var(--s-ink); margin-bottom: 4px; white-space: nowrap; }
+.seats { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-weight: 800; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--s-a2); }
+.dots i.free { background: transparent; box-shadow: inset 0 0 0 2.5px var(--s-a2); }
+.price-card .btn { margin-top: 18px; width: 100%; }
+.rev-grid { margin-top: 26px; display: grid; gap: 12px; }
+.rev { padding: 20px; display: grid; gap: 10px; }
+.rev .ln { display: block; height: 10px; border-radius: 5px; background: var(--s-skel); }
+.rev .ln.s { width: 40%; height: 12px; background: var(--s-skel-2); margin-bottom: 4px; }
+.rev .ln.m { width: 66%; }
+.rev span { margin-top: 6px; font-size: 13.5px; color: var(--s-muted); }
+.photos { margin-top: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.photos .ph { aspect-ratio: 1; border-radius: calc(var(--s-r) - 4px); font-size: 13px; padding: 8px; }
+.tabs { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { min-height: 46px; padding: 0 16px; border-radius: 12px; border: 2px solid var(--s-line); background: transparent; font: 700 15px/1 var(--sans); color: var(--s-ink); cursor: pointer; }
+.tabs button.on { background: var(--s-ink); border-color: var(--s-ink); color: var(--s-on-ink); }
+.player { margin-top: 14px; aspect-ratio: 16 / 9; max-width: 860px; border-radius: var(--s-r); position: relative; display: grid; place-items: center; background: var(--s-player); color: var(--s-on-dark); overflow: hidden; }
+.play { width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; background: var(--s-on-dark); color: var(--s-dark); padding-left: 4px; }
+.player p { position: absolute; left: 16px; right: 16px; bottom: 12px; font-size: 14px; opacity: .85; }
+.contact-card { padding: 30px 22px; border-radius: var(--s-r); background: var(--s-dark); color: var(--s-on-dark); position: relative; overflow: hidden; }
+.contact-card > * { position: relative; z-index: 1; }
+.contact-card p { margin-top: 10px; opacity: .8; }
+.msgs { margin-top: 22px; display: grid; gap: 10px; }
+.msgs a { min-height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 14px; font-weight: 800; font-size: 16.5px; text-decoration: none; color: #fff; }
+.msgs .tg { background: #2AABEE; }
+.msgs .wa { background: #1FAF5A; }
+.msgs .vk { background: #0077FF; }
+.foot { padding: 8px 20px 44px; text-align: center; color: var(--s-muted); font-size: 14px; }
+@media (min-width: 900px) {
+  .sec { padding: 84px 0; }
+  .cta .btn { white-space: nowrap; }
+  .about-in { grid-template-columns: 380px minmax(0, 1fr); gap: 64px; align-items: center; }
+  .about-txt { max-width: 560px; }
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .price-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; padding: 44px 48px; align-items: end; }
+  .rev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .photos { gap: 18px; margin-top: 18px; }
+  .contact-card { padding: 48px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 48px; align-items: center; }
+  .msgs { margin-top: 0; }
+}
+
+:root { --s-card: var(--paper); --s-r: 20px; --s-shadow: 0 2px 0 rgba(18, 63, 68, .06), 0 18px 36px -24px rgba(18, 63, 68, .5);
+  --s-h2: 800 clamp(28px, 7.6vw, 44px)/1.1 var(--display); --s-h3: 800 20px/1.25 var(--sans); --s-big: 800 46px/1 var(--display);
+  --s-a1: var(--coral); --s-a2: var(--blue); --s-a3: var(--mustard); --s-muted: var(--ink-2); --s-ink: var(--teal); --s-on-ink: #F6EEDC; --s-line: rgba(18, 63, 68, .22);
+  --s-dark: var(--teal); --s-on-dark: #F6EEDC; --s-player: radial-gradient(120% 100% at 25% 15%, #2A6168, #123F44);
+  --s-ph: repeating-linear-gradient(135deg, #F1E6D0 0 10px, #ECDFC6 10px 20px); --s-ph-ink: var(--ink-2); --s-skel: #F2E9D8; --s-skel-2: #E6D9C0; }
+.edu .hl { color: var(--coral-d); }
+.steps article { position: relative; }
+.steps article::before { position: absolute; top: 0; left: 20px; width: 56px; height: 6px; border-radius: 0 0 4px 4px; margin: 0; }
+.steps h3 { margin-top: 6px; }
+.contact-card::after { content: ''; position: absolute; right: -70px; top: -70px; width: 240px; height: 240px; border-radius: 50%; background: var(--teal-2); z-index: 0; }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">
+    <svg width="42" height="42" viewBox="0 0 42 42" aria-hidden="true"><rect x="2" y="2" width="38" height="38" rx="12" fill="#123F44" /><path d="M8 28 C 14 25, 18 25, 21 28 C 24 25, 28 25, 34 28 V 31 C 28 28.5, 24 28.5, 21 31 C 18 28.5, 14 28.5, 8 31 Z" fill="#FBF3E4" /><path d="M15 23 L21 9 L27 23 M17.4 18 H24.6" fill="none" stroke="#F2B134" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <span><b>Анна Сергеевна</b><small>английский для детей и взрослых</small></span>
+  </a>
+  <a class="btn line" href="#contact">Записаться</a>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="scene">
+      <svg viewBox="0 0 640 500" role="img" aria-label="Открытая книжка, из которой, как воздушные шарики, поднимаются буквы A, B и C">
+        <defs>
+          <filter id="paper" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#3B2A10" flood-opacity=".22" /></filter>
+          <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="5" /><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .5 0" /></filter>
+        </defs>
+        <rect width="640" height="500" fill="#CFE7EC" />
+        <g filter="url(#paper)">
+          <circle cx="548" cy="92" r="46" fill="#F7D57A" />
+          <path d="M70 92 c0 -18 22 -26 34 -16 c6 -18 38 -18 44 2 c18 -4 30 12 22 24 h-94 c-10 0 -10 -10 -6 -10 z" fill="#FFF9EE" />
+          <path d="M404 148 c2 -14 18 -20 28 -12 c6 -14 30 -12 34 2 c14 -2 22 10 16 20 h-72 c-8 0 -8 -8 -6 -10 z" fill="#FFF9EE" />
+          <path d="M0 360 C 90 300, 200 300, 300 340 S 520 300, 640 330 V500 H0 Z" fill="#A9D3B3" />
+          <path d="M0 410 C 120 360, 240 380, 330 400 S 540 360, 640 390 V500 H0 Z" fill="#5FAF83" />
+          <!-- деревце -->
+          <rect x="548" y="322" width="9" height="44" rx="3" fill="#8A5A3A" />
+          <circle cx="552" cy="312" r="28" fill="#2F7D5B" />
+          <circle cx="536" cy="326" r="18" fill="#2F7D5B" />
+          <circle cx="570" cy="328" r="16" fill="#2F7D5B" />
+          <path d="M0 450 C 160 420, 300 440, 400 452 S 560 430, 640 440 V500 H0 Z" fill="#2F7D5B" />
+        </g>
+        <!-- ниточки от букв к книжке -->
+        <g stroke="#123F44" stroke-width="2" fill="none" opacity=".7">
+          <path d="M196 236 C 220 320, 290 380, 318 440" />
+          <path d="M322 196 C 330 300, 320 380, 320 440" />
+          <path d="M452 250 C 430 330, 360 390, 324 440" />
+        </g>
+        <g filter="url(#paper)" font-family="MA, sans-serif" font-weight="800" text-anchor="middle" stroke="#FFF9EE" stroke-width="7" paint-order="stroke" stroke-linejoin="round">
+          <text x="196" y="236" font-size="150" fill="#EF6F57" transform="rotate(-9 196 180)">A</text>
+          <text x="322" y="196" font-size="150" fill="#3E86B8" transform="rotate(4 322 140)">B</text>
+          <text x="452" y="250" font-size="150" fill="#F2B134" transform="rotate(10 452 196)">C</text>
+        </g>
+        <!-- книжка -->
+        <g filter="url(#paper)">
+          <path d="M132 446 C 200 430, 270 432, 320 452 C 370 432, 440 430, 508 446 L 508 490 C 440 480, 370 482, 320 498 C 270 482, 200 480, 132 490 Z" fill="#123F44" />
+          <path d="M146 440 C 205 424, 270 426, 318 446 L 318 488 C 270 470, 205 470, 146 482 Z" fill="#FFF9EE" />
+          <path d="M494 440 C 435 424, 370 426, 322 446 L 322 488 C 370 470, 435 470, 494 482 Z" fill="#FFF9EE" />
+        </g>
+        <g stroke="#123F44" stroke-width="2.5" stroke-linecap="round" opacity=".28">
+          <path d="M170 448 C 210 440, 260 440, 296 452 M170 460 C 210 452, 260 452, 296 464 M170 472 C 200 466, 230 466, 260 470" fill="none" />
+          <path d="M470 448 C 430 440, 380 440, 344 452 M470 460 C 430 452, 380 452, 344 464 M470 472 C 440 466, 410 466, 380 470" fill="none" />
+        </g>
+        <rect width="640" height="500" filter="url(#grain)" opacity=".35" style="mix-blend-mode: multiply" />
+      </svg>
+    </div>
+    <div class="txt">
+      <p class="kick">Для дошкольников и младших школьников</p>
+      <h1>Догоним класс по <span>английскому</span></h1>
+      <p class="lead">Учу малышей с нуля и подтягиваю школьников, у которых появились пробелы. Играем, но по плану, чтобы на уроках в школе ребёнку было легко.</p>
+      <div class="cta">
+        <a class="btn main" href="#contact">Записаться на пробное занятие</a>
+        <a class="btn line" href="#about">Обо мне</a>
+      </div>
+    </div>
+    <ul class="facts">
+      <li><b>45 минут</b><span>урок, ребёнок не устаёт</span></li>
+      <li><b>онлайн</b><span>или очно у меня</span></li>
+      <li><b>до 6</b><span>учеников, каждому внимание</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="wrap about-in">
+    <figure class="me"><div class="ph">тут будет ваше фото</div></figure>
+    <div class="about-txt">
+      <h2>Обо мне</h2>
+      <p>Меня зовут Анна Сергеевна. Учу английскому с&nbsp;нуля дошкольников и&nbsp;младших школьников, подтягиваю тех, кто отстал от&nbsp;класса. Занимаюсь и&nbsp;со&nbsp;взрослыми.</p>
+      <p>Беру не&nbsp;больше шести учеников, поэтому каждого знаю и&nbsp;веду по&nbsp;своему плану.</p>
+      <div class="edu card">
+        <div class="doc ph">фото диплома</div>
+        <div><b>Высшее экономическое образование</b><span class="hl">диплом с&nbsp;отличием</span><span>вуз и&nbsp;год окончания</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec how">
+  <div class="wrap">
+    <h2>Как мы занимаемся</h2>
+    <div class="steps">
+      <article class="card"><h3>Пробное занятие</h3><p>Знакомимся, смотрю, что ребёнок уже знает и&nbsp;как ему легче учиться.</p></article>
+      <article class="card"><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></article>
+      <article class="card"><h3>Расписание на&nbsp;год</h3><p>Закрепляем постоянные дни и&nbsp;время. Онлайн в&nbsp;Зуме или очно.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec price" id="price">
+  <div class="wrap">
+    <div class="price-card card">
+      <div>
+        <h2>Стоимость</h2>
+        <p class="sum"><b>1&nbsp;200&nbsp;₽</b>за занятие 45&nbsp;минут</p>
+      </div>
+      <div>
+        <p>Цена одна для всех: дошкольники, школьники и&nbsp;взрослые.</p>
+        <p class="seats"><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="free"></i><i class="free"></i></span>Свободно 2&nbsp;места из&nbsp;6</p>
+        <a class="btn main" href="#contact">Записаться на&nbsp;пробное занятие</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec reviews">
+  <div class="wrap">
+    <h2>Отзывы</h2>
+    <p class="sub">Перенесём сюда отзывы и&nbsp;фото с&nbsp;занятий из&nbsp;2ГИС.</p>
+    <div class="rev-grid">
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+    </div>
+    <div class="photos">
+      <div class="ph">фото с&nbsp;занятия</div><div class="ph">фото с&nbsp;занятия</div><div class="ph">фото с&nbsp;занятия</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec video">
+  <div class="wrap">
+    <h2>Как проходит урок</h2>
+    <p class="sub">Короткие отрывки с&nbsp;настоящих занятий. Выберите уровень.</p>
+    <div class="tabs" data-tabs>
+      <button class="on" data-v="дошкольники">Дошкольники</button><button data-v="школьники">Школьники</button><button data-v="взрослые">Взрослые</button>
+    </div>
+    <div class="player">
+      <span class="play"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span>
+      <p>тут будет отрывок урока: <span data-tab-out>дошкольники</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <div>
+        <h2>Запишитесь на&nbsp;пробное занятие</h2>
+        <p>Напишите, сколько лет ребёнку и&nbsp;что сейчас получается с&nbsp;английским.</p>
+      </div>
+      <div class="msgs">
+        <a class="tg" href="#">Telegram</a><a class="wa" href="#">WhatsApp</a><a class="vk" href="#">ВКонтакте</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">Анна Сергеевна, английский для детей и&nbsp;взрослых</footer>
+<script>
+document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  document.querySelector('[data-tab-out]').textContent = b.getAttribute('data-v');
+});
+</script>
+</body>
+</html>

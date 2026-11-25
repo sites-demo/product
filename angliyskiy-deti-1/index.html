@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFF9EF">
+<title>Анна Сергеевна, английский для детей и взрослых</title>
+<style>
+@font-face { font-family: 'Nunito'; src: url('f/nunito-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 200 1000; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'Nunito'; src: url('f/nunito-latin-wght-normal.woff2') format('woff2'); font-weight: 200 1000; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+@font-face { font-family: 'Caveat'; src: url('f/caveat-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 400 700; font-display: swap; unicode-range: U+0400-045F; }
+@font-face { font-family: 'Caveat'; src: url('f/caveat-latin-wght-normal.woff2') format('woff2'); font-weight: 400 700; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F; }
+:root {
+  --paper: #FFF9EF; --sheet: #FFFFFF; --ink: #2B2A33; --ink-2: #5A5866; --line: #EADFCB;
+  --tomato: #EF5A3C; --tomato-d: #C9432A; --sun: #F7B32B; --sky: #3B8BEB; --leaf: #3FA066;
+  --grid: rgba(59, 139, 235, .09);
+  --hand: 'Caveat', cursive; --sans: 'Nunito', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; overflow-x: clip; background: var(--paper); color: var(--ink); font: 500 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: inherit; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+.top { display: flex; align-items: center; gap: 12px; padding: 16px 20px; max-width: 1160px; margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand svg { flex: none; }
+.brand b { display: block; font-weight: 800; font-size: 18px; line-height: 1.1; }
+.brand small { display: block; font-size: 13.5px; color: var(--ink-2); }
+.top .btn { margin-left: auto; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; border-radius: 14px; font: 800 16.5px/1.1 var(--sans); text-decoration: none; text-align: center; cursor: pointer; border: 0; transition: transform .12s, box-shadow .12s; }
+.btn.main { background: var(--tomato); color: #fff; box-shadow: 0 4px 0 var(--tomato-d); }
+.btn.main:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--tomato-d); }
+.btn.line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.top .btn { min-height: 42px; padding: 0 16px; font-size: 15px; }
+
+.hero { position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 26px 26px; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); pointer-events: none; }
+.hero-in { position: relative; display: grid; gap: 8px; padding-top: 18px; padding-bottom: 40px; }
+.note { font: 600 25px/1.1 var(--hand); color: var(--sky); transform: rotate(-2deg); transform-origin: left; }
+h1 { margin-top: 10px; font-weight: 900; font-size: clamp(38px, 10.6vw, 70px); line-height: 1.02; letter-spacing: -0.02em; }
+h1 .u { position: relative; white-space: nowrap; }
+h1 .u svg { position: absolute; left: -2%; bottom: -0.16em; width: 104%; height: .34em; overflow: visible; }
+.lead { margin-top: 18px; font-size: 18px; color: var(--ink-2); max-width: 30em; }
+.cta { margin-top: 24px; display: grid; gap: 12px; }
+.facts { margin: 30px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.facts li { padding: 12px 12px 10px; background: var(--sheet); border-radius: 14px; box-shadow: 0 1px 0 var(--line), 0 10px 24px -18px rgba(120, 90, 40, .45); }
+.facts b { display: block; font: 700 clamp(21px, 5.6vw, 26px)/1 var(--hand); color: var(--tomato); white-space: nowrap; }
+.facts li:nth-child(2) b { color: var(--sky); }
+.facts li:nth-child(3) b { color: var(--leaf); }
+.facts span { display: block; margin-top: 4px; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+
+.art { position: relative; margin: 18px -6px 0; }
+.art > svg { display: block; width: 100%; height: auto; }
+.polaroid { position: absolute; left: 0; bottom: -10px; width: 32%; max-width: 190px; background: #fff; padding: 8px 8px 30px; border-radius: 4px; transform: rotate(-6deg); box-shadow: 0 2px 2px rgba(80, 60, 20, .08), 0 18px 30px -16px rgba(80, 60, 20, .45); }
+.polaroid::before { content: ''; position: absolute; top: -12px; left: 50%; width: 70px; height: 24px; transform: translateX(-50%) rotate(3deg); background: rgba(247, 179, 43, .55); }
+.polaroid .ph { aspect-ratio: 4 / 5; border-radius: 2px; background: repeating-linear-gradient(135deg, #F3ECDF 0 10px, #EFE6D6 10px 20px); display: grid; place-items: center; text-align: center; font: 600 21px/1.05 var(--hand); color: var(--ink-2); padding: 10px; }
+.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; font: 600 20px/1 var(--hand); }
+
+@media (min-width: 900px) {
+  .top { padding: 22px 40px; }
+  .wrap { padding: 0 40px; }
+  .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: 'txt art' 'facts art'; align-items: center; column-gap: 48px; row-gap: 0; padding-top: 40px; padding-bottom: 64px; }
+  .txt { grid-area: txt; align-self: end; }
+  .art { grid-area: art; }
+  .facts { grid-area: facts; align-self: start; }
+  .cta { grid-auto-flow: column; justify-content: start; }
+  .art { margin: 0; }
+  .polaroid { left: -3%; bottom: 0; }
+}
+
+/* блоки после первого экрана */
+.sec { padding: 56px 0; }
+.sec h2 { font: var(--s-h2); letter-spacing: -0.015em; }
+.sec .sub { margin-top: 10px; color: var(--s-muted); max-width: 34em; }
+.card { background: var(--s-card); border-radius: var(--s-r); box-shadow: var(--s-shadow); }
+.ph { display: grid; place-items: center; text-align: center; padding: 12px; background: var(--s-ph); color: var(--s-ph-ink); font-size: 14px; line-height: 1.3; font-weight: 600; }
+.about-in { display: grid; gap: 28px; }
+.me { margin: 0; }
+.me .ph { aspect-ratio: 4 / 5; border-radius: var(--s-r); max-width: 380px; }
+.about-txt p { margin-top: 14px; }
+.about-txt h2 + p { margin-top: 18px; }
+.edu { margin-top: 24px; display: flex; gap: 16px; align-items: center; padding: 14px; }
+.edu .doc { flex: none; width: 88px; aspect-ratio: 3 / 4; border-radius: 8px; font-size: 12px; padding: 6px; }
+.edu b { display: block; font-weight: 800; line-height: 1.3; hyphens: auto; }
+@media (max-width: 899px) { .hero-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
+.edu span { display: block; font-size: 15px; color: var(--s-muted); }
+.edu .hl { margin-top: 2px; color: var(--s-a1); font-weight: 800; }
+.steps { margin-top: 28px; display: grid; gap: 14px; }
+.steps article { padding: 22px 20px; }
+.steps article::before { content: ''; display: block; width: 36px; height: 6px; border-radius: 3px; background: var(--s-a1); margin-bottom: 16px; }
+.steps article:nth-child(2)::before { background: var(--s-a2); }
+.steps article:nth-child(3)::before { background: var(--s-a3); }
+.steps h3 { font: var(--s-h3); }
+.steps p { margin-top: 6px; color: var(--s-muted); }
+.price-card { padding: 26px 22px; display: grid; gap: 18px; }
+.sum { margin-top: 14px; color: var(--s-muted); }
+.sum b { display: block; font: var(--s-big); color: var(--s-ink); margin-bottom: 4px; white-space: nowrap; }
+.seats { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-weight: 800; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 14px; height: 14px; border-radius: 50%; background: var(--s-a2); }
+.dots i.free { background: transparent; box-shadow: inset 0 0 0 2.5px var(--s-a2); }
+.price-card .btn { margin-top: 18px; width: 100%; }
+.rev-grid { margin-top: 26px; display: grid; gap: 12px; }
+.rev { padding: 20px; display: grid; gap: 10px; }
+.rev .ln { display: block; height: 10px; border-radius: 5px; background: var(--s-skel); }
+.rev .ln.s { width: 40%; height: 12px; background: var(--s-skel-2); margin-bottom: 4px; }
+.rev .ln.m { width: 66%; }
+.rev span { margin-top: 6px; font-size: 13.5px; color: var(--s-muted); }
+.photos { margin-top: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.photos .ph { aspect-ratio: 1; border-radius: calc(var(--s-r) - 4px); font-size: 13px; padding: 8px; }
+.tabs { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { min-height: 46px; padding: 0 16px; border-radius: 12px; border: 2px solid var(--s-line); background: transparent; font: 700 15px/1 var(--sans); color: var(--s-ink); cursor: pointer; }
+.tabs button.on { background: var(--s-ink); border-color: var(--s-ink); color: var(--s-on-ink); }
+.player { margin-top: 14px; aspect-ratio: 16 / 9; max-width: 860px; border-radius: var(--s-r); position: relative; display: grid; place-items: center; background: var(--s-player); color: var(--s-on-dark); overflow: hidden; }
+.play { width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; background: var(--s-on-dark); color: var(--s-dark); padding-left: 4px; }
+.player p { position: absolute; left: 16px; right: 16px; bottom: 12px; font-size: 14px; opacity: .85; }
+.contact-card { padding: 30px 22px; border-radius: var(--s-r); background: var(--s-dark); color: var(--s-on-dark); position: relative; overflow: hidden; }
+.contact-card > * { position: relative; z-index: 1; }
+.contact-card p { margin-top: 10px; opacity: .8; }
+.msgs { margin-top: 22px; display: grid; gap: 10px; }
+.msgs a { min-height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 14px; font-weight: 800; font-size: 16.5px; text-decoration: none; color: #fff; }
+.msgs .tg { background: #2AABEE; }
+.msgs .wa { background: #1FAF5A; }
+.msgs .vk { background: #0077FF; }
+.foot { padding: 8px 20px 44px; text-align: center; color: var(--s-muted); font-size: 14px; }
+@media (min-width: 900px) {
+  .sec { padding: 84px 0; }
+  .cta .btn { white-space: nowrap; }
+  .about-in { grid-template-columns: 380px minmax(0, 1fr); gap: 64px; align-items: center; }
+  .about-txt { max-width: 560px; }
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .price-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; padding: 44px 48px; align-items: end; }
+  .rev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .photos { gap: 18px; margin-top: 18px; }
+  .contact-card { padding: 48px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 48px; align-items: center; }
+  .msgs { margin-top: 0; }
+}
+
+:root { --s-card: #fff; --s-r: 16px; --s-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgba(120, 90, 40, .5);
+  --s-h2: 900 clamp(30px, 8vw, 46px)/1.06 var(--sans); --s-h3: 800 20px/1.25 var(--sans); --s-big: 900 48px/1 var(--sans);
+  --s-a1: var(--tomato); --s-a2: var(--sky); --s-a3: var(--leaf); --s-muted: var(--ink-2); --s-ink: var(--ink); --s-on-ink: #fff; --s-line: var(--line);
+  --s-dark: var(--ink); --s-on-dark: #FFF9EF; --s-player: radial-gradient(120% 90% at 30% 20%, #45434F, #24232B);
+  --s-ph: repeating-linear-gradient(135deg, #F3ECDF 0 10px, #EFE6D6 10px 20px); --s-ph-ink: var(--ink-2); --s-skel: #F1EADC; --s-skel-2: #E6DCC8; }
+.sec h2 { position: relative; display: inline-block; }
+.sec h2::after { content: ''; display: block; height: 6px; width: 64px; margin-top: 10px; border-radius: 3px; background: var(--sun); }
+.price-card { background-image: linear-gradient(90deg, transparent 22px, rgba(239, 90, 60, .25) 22px, rgba(239, 90, 60, .25) 23.5px, transparent 23.5px); padding-left: 40px; }
+.rev { position: relative; }
+.rev::before { content: ''; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px; transform: translateX(-50%) rotate(-3deg); background: rgba(247, 179, 43, .5); }
+.photos .ph { background: #fff; border-radius: 4px; padding: 8px 8px 26px; box-shadow: 0 14px 26px -16px rgba(80, 60, 20, .45); background-image: linear-gradient(#F3ECDF, #F3ECDF); background-size: calc(100% - 16px) calc(100% - 34px); background-position: 8px 8px; background-repeat: no-repeat; }
+.photos .ph:nth-child(1) { transform: rotate(-3deg); }
+.photos .ph:nth-child(3) { transform: rotate(2.5deg); }
+.contact-card { background-image: linear-gradient(var(--grid-d) 1px, transparent 1px), linear-gradient(90deg, var(--grid-d) 1px, transparent 1px); background-size: 26px 26px; }
+:root { --grid-d: rgba(255, 255, 255, .05); }
+@media (min-width: 900px) { .price-card { background-image: linear-gradient(90deg, transparent 30px, rgba(239, 90, 60, .25) 30px, rgba(239, 90, 60, .25) 31.5px, transparent 31.5px); padding-left: 64px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">
+    <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19" fill="#F7B32B" /><path d="M14 30 L22 11 L30 30 M17.5 23 H26.5" fill="none" stroke="#2B2A33" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <span><b>Анна Сергеевна</b><small>английский для детей и взрослых</small></span>
+  </a>
+  <a class="btn line" href="#contact">Записаться</a>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="txt">
+      <p class="note">для малышей и младших школьников</p>
+      <h1>Английский для детей <span class="u">с нуля<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 13 C 40 4, 80 18, 120 9 S 180 6, 197 11" fill="none" stroke="#F7B32B" stroke-width="7" stroke-linecap="round" filter="url(#crayon)" /></svg></span></h1>
+      <p class="lead">Учу малышей с нуля и подтягиваю школьников, у которых появились пробелы. Играем, но по плану, чтобы на уроках в школе ребёнку было легко.</p>
+      <div class="cta">
+        <a class="btn main" href="#contact">Записаться на пробное занятие</a>
+        <a class="btn line" href="#about">Обо мне</a>
+      </div>
+    </div>
+    <div class="art">
+      <svg viewBox="0 0 600 540" role="img" aria-label="Страница тетради: буквы A, B, C, яблоко, мяч и кот">
+        <defs>
+          <filter id="crayon" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" result="d" />
+            <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="8" result="g" />
+            <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.25" result="ga" />
+            <feComposite in="d" in2="ga" operator="in" />
+          </filter>
+        </defs>
+        <g filter="url(#crayon)" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <!-- солнце -->
+          <circle cx="528" cy="66" r="34" fill="#F7B32B" stroke="#F7B32B" stroke-width="4" />
+          <path d="M528 12 V22 M528 110 V120 M474 66 H484 M572 66 H582 M490 28 L497 35 M559 97 L566 104 M566 28 L559 35 M497 97 L490 104" stroke="#F7B32B" stroke-width="6" />
+          <!-- A и яблоко -->
+          <path d="M70 230 L128 64 L186 230 M92 172 H166" stroke="#EF5A3C" stroke-width="15" />
+          <path d="M268 126 c-20 -16 -58 -8 -60 26 c-3 34 20 64 44 60 c9 -2 12 -6 16 -6 s8 4 16 6 c24 4 47 -26 44 -60 c-2 -34 -40 -42 -60 -26 z" fill="#EF5A3C" stroke="#C9432A" stroke-width="4" />
+          <path d="M268 126 q2 -20 12 -30" stroke="#7A4A2A" stroke-width="5" />
+          <path d="M276 106 q20 -18 36 -6 q-16 16 -36 6 z" fill="#3FA066" stroke="#2F8452" stroke-width="3" />
+          <path d="M232 150 q6 -14 18 -16" stroke="#fff" stroke-width="5" opacity=".7" />
+          <!-- B и мяч -->
+          <path d="M262 330 V478 M262 330 q78 -8 78 36 q0 36 -78 36 q88 -6 88 38 q0 40 -88 34" stroke="#3B8BEB" stroke-width="15" />
+          <circle cx="362" cy="238" r="42" fill="#CFE3FB" stroke="#3B8BEB" stroke-width="5" />
+          <path d="M321 232 q41 -24 82 0 M362 196 q-24 42 0 84" stroke="#3B8BEB" stroke-width="5" />
+          <!-- C и кот -->
+          <path d="M520 214 q-32 -46 -80 -22 q-48 28 -24 84 q26 46 92 14" stroke="#3FA066" stroke-width="15" />
+          <path d="M402 478 q-16 -74 14 -108 l-6 -54 l46 34 q32 -8 64 0 l46 -34 l-6 54 q30 34 14 108 q-86 30 -172 0 z" fill="#FFE1B3" stroke="#2B2A33" stroke-width="4.5" />
+          <path d="M420 330 l4 26 M572 330 l-4 26" stroke="#F4A9A0" stroke-width="7" />
+          <circle cx="456" cy="410" r="6" fill="#2B2A33" stroke="none" />
+          <circle cx="532" cy="410" r="6" fill="#2B2A33" stroke="none" />
+          <path d="M486 428 h16 l-8 9 z" fill="#EF8A7A" stroke="#EF8A7A" stroke-width="3" />
+          <path d="M494 437 q-8 12 -18 6 M494 437 q8 12 18 6" stroke="#2B2A33" stroke-width="3.5" />
+          <path d="M440 432 l-34 -6 M440 442 l-32 6 M548 432 l34 -6 M548 442 l32 6" stroke="#2B2A33" stroke-width="3" />
+          <!-- звёздочки -->
+          <path d="M370 70 l6 13 l14 2 l-10 10 l2 14 l-12 -7 l-12 7 l2 -14 l-10 -10 l14 -2 z" fill="#F7B32B" stroke="#F7B32B" stroke-width="2" />
+          <path d="M214 286 l4 9 l10 1 l-7 7 l1 10 l-8 -5 l-8 5 l1 -10 l-7 -7 l10 -1 z" fill="#3FA066" stroke="#3FA066" stroke-width="2" />
+        </g>
+        <g font-family="Caveat, cursive" font-weight="600" font-size="30" fill="#5A5866">
+          <text x="322" y="166">apple</text>
+          <text x="326" y="314">ball</text>
+          <text x="402" y="300" transform="rotate(-6 402 300)">cat</text>
+        </g>
+      </svg>
+      <figure class="polaroid"><div class="ph">тут будет фото Анны</div><figcaption>это я</figcaption></figure>
+    </div>
+    <ul class="facts">
+      <li><b>45 минут</b><span>урок, ребёнок не устаёт</span></li>
+      <li><b>онлайн</b><span>или очно у меня</span></li>
+      <li><b>до 6</b><span>учеников, каждому внимание</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="wrap about-in">
+    <figure class="me"><div class="ph">тут будет ваше фото</div></figure>
+    <div class="about-txt">
+      <h2>Обо мне</h2>
+      <p>Меня зовут Анна Сергеевна. Учу английскому с&nbsp;нуля дошкольников и&nbsp;младших школьников, подтягиваю тех, кто отстал от&nbsp;класса. Занимаюсь и&nbsp;со&nbsp;взрослыми.</p>
+      <p>Беру не&nbsp;больше шести учеников, поэтому каждого знаю и&nbsp;веду по&nbsp;своему плану.</p>
+      <div class="edu card">
+        <div class="doc ph">фото диплома</div>
+        <div><b>Высшее экономическое образование</b><span class="hl">диплом с&nbsp;отличием</span><span>вуз и&nbsp;год окончания</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec how">
+  <div class="wrap">
+    <h2>Как мы занимаемся</h2>
+    <div class="steps">
+      <article class="card"><h3>Пробное занятие</h3><p>Знакомимся, смотрю, что ребёнок уже знает и&nbsp;как ему легче учиться.</p></article>
+      <article class="card"><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></article>
+      <article class="card"><h3>Расписание на&nbsp;год</h3><p>Закрепляем постоянные дни и&nbsp;время. Онлайн в&nbsp;Зуме или очно.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec price" id="price">
+  <div class="wrap">
+    <div class="price-card card">
+      <div>
+        <h2>Стоимость</h2>
+        <p class="sum"><b>1&nbsp;200&nbsp;₽</b>за занятие 45&nbsp;минут</p>
+      </div>
+      <div>
+        <p>Цена одна для всех: дошкольники, школьники и&nbsp;взрослые.</p>
+        <p class="seats"><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="free"></i><i class="free"></i></span>Свободно 2&nbsp;места из&nbsp;6</p>
+        <a class="btn main" href="#contact">Записаться на&nbsp;пробное занятие</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec reviews">
+  <div class="wrap">
+    <h2>Отзывы</h2>
+    <p class="sub">Перенесём сюда отзывы и&nbsp;фото с&nbsp;занятий из&nbsp;2ГИС.</p>
+    <div class="rev-grid">
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+      <div class="rev card"><i class="ln s"></i><i class="ln"></i><i class="ln"></i><i class="ln m"></i><span>отзыв из 2ГИС</span></div>
+    </div>
+    <div class="photos">
+      <div class="ph">фото с&nbsp;занятия</div><div class="ph">фото с&nbsp;занятия</div><div class="ph">фото с&nbsp;занятия</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec video">
+  <div class="wrap">
+    <h2>Как проходит урок</h2>
+    <p class="sub">Короткие отрывки с&nbsp;настоящих занятий. Выберите уровень.</p>
+    <div class="tabs" data-tabs>
+      <button class="on" data-v="дошкольники">Дошкольники</button><button data-v="школьники">Школьники</button><button data-v="взрослые">Взрослые</button>
+    </div>
+    <div class="player">
+      <span class="play"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg></span>
+      <p>тут будет отрывок урока: <span data-tab-out>дошкольники</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <div>
+        <h2>Запишитесь на&nbsp;пробное занятие</h2>
+        <p>Напишите, сколько лет ребёнку и&nbsp;что сейчас получается с&nbsp;английским.</p>
+      </div>
+      <div class="msgs">
+        <a class="tg" href="#">Telegram</a><a class="wa" href="#">WhatsApp</a><a class="vk" href="#">ВКонтакте</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">Анна Сергеевна, английский для детей и&nbsp;взрослых</footer>
+<script>
+document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  document.querySelector('[data-tab-out]').textContent = b.getAttribute('data-v');
+});
+</script>
+</body>
+</html>
