@@ -1,19 +1,122 @@
 // Живая азбука: буквы падают на первый экран, их можно кидать, по нажатию буква подпрыгивает и говорит слово.
 (function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- звук: свой голос из voice/, если файла нет, говорит браузер ----------
+  var TEXT = {
+    A: 'A is for apple', B: 'B is for ball', C: 'C is for cat', D: 'D is for dog', E: 'E is for egg', F: 'F is for fish',
+    G: 'G is for giraffe', H: 'H is for house', I: 'I is for ice cream', J: 'J is for juice', K: 'K is for kite', L: 'L is for lion',
+    M: 'M is for moon', N: 'N is for nose', O: 'O is for orange', P: 'P is for pig', Q: 'Q is for queen', R: 'R is for rabbit',
+    S: 'S is for sun', T: 'T is for tree', U: 'U is for umbrella', V: 'V is for violin', W: 'W is for whale', X: 'X is for fox',
+    Y: 'Y is for yo-yo', Z: 'Z is for zebra', apple: 'Apple', ball: 'Ball', star: 'Star',
+    hello: 'Hello! Давай играть! Нажми на букву!', five: 'Ура! Уже пять слов!', all: 'Вау! Все буквы собраны! Ты молодец!'
+  };
+  var RU = {
+    A: 'яблоко', B: 'мяч', C: 'кот', D: 'собака', E: 'яйцо', F: 'рыба', G: 'жираф', H: 'дом', I: 'мороженое', J: 'сок',
+    K: 'воздушный змей', L: 'лев', M: 'луна', N: 'нос', O: 'апельсин', P: 'поросёнок', Q: 'королева', R: 'кролик', S: 'солнце',
+    T: 'дерево', U: 'зонтик', V: 'скрипка', W: 'кит', X: 'лиса', Y: 'йо-йо', Z: 'зебра', apple: 'яблоко', ball: 'мяч', star: 'звезда'
+  };
+
+  var soundOn = true;
+  try { soundOn = localStorage.getItem('azbuka-sound') !== 'off'; } catch (e) {}
+  var sndBtn = document.querySelector('.snd');
+  function paintSnd() { if (sndBtn) sndBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); }
+  paintSnd();
+
+  var au = null, voiceOk = true, queue = [], cur = '';
+  var enVoice = null, ruVoice = null;
+  function pickVoices() {
+    if (!('speechSynthesis' in window)) return;
+    var all = speechSynthesis.getVoices();
+    var en = all.filter(function (x) { return /^en[-_]/i.test(x.lang); });
+    enVoice = en.filter(function (x) { return /GB/i.test(x.lang); })[0] || en.filter(function (x) { return /US/i.test(x.lang); })[0] || en[0] || null;
+    ruVoice = all.filter(function (x) { return /^ru/i.test(x.lang); })[0] || null;
+  }
+  if ('speechSynthesis' in window) { pickVoices(); speechSynthesis.onvoiceschanged = pickVoices; }
+  function speak(kind) {
+    try {
+      if (!('speechSynthesis' in window) || !TEXT[kind]) return;
+      speechSynthesis.cancel();
+      var ru = /[а-яё]/i.test(TEXT[kind]);
+      var u = new SpeechSynthesisUtterance(TEXT[kind]);
+      var v = ru ? ruVoice : enVoice;
+      u.lang = v ? v.lang : (ru ? 'ru-RU' : 'en-GB'); if (v) u.voice = v;
+      u.rate = ru ? 1 : 0.85; u.pitch = 1.15;
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function playNow(kind) {
+    cur = kind;
+    if (!voiceOk) { speak(kind); return; }
+    try {
+      if (!au) {
+        au = new Audio();
+        au.preload = 'auto';
+        au.addEventListener('error', function () { voiceOk = false; speak(cur); });
+        au.addEventListener('ended', function () { if (queue.length) playNow(queue.shift()); });
+      }
+      au.src = 'voice/' + kind + '.mp3';
+      var p = au.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) { voiceOk = false; speak(kind); }
+  }
+  // play: сразу, перебивая; after: дождаться конца текущей фразы
+  function play(kind, after) {
+    if (!soundOn) return;
+    if (after && au && !au.paused && !au.ended && voiceOk) { queue.push(kind); return; }
+    if (after && !voiceOk && 'speechSynthesis' in window && speechSynthesis.speaking) { setTimeout(function () { play(kind); }, 1300); return; }
+    queue = [];
+    playNow(kind);
+  }
+  function hush() {
+    queue = [];
+    try { if (au) au.pause(); } catch (e) {}
+    try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+  }
+  if (sndBtn) sndBtn.addEventListener('click', function () {
+    soundOn = !soundOn;
+    try { localStorage.setItem('azbuka-sound', soundOn ? 'on' : 'off'); } catch (e) {}
+    paintSnd();
+    if (soundOn) play('hello'); else hush();
+  });
+
+  // ---------- наклейки прилипают при прокрутке ----------
+  var rv = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    rv.forEach(function (el) { io.observe(el); });
+  } else rv.forEach(function (el) { el.classList.add('in'); });
+
+  // ---------- HELLO из магнитиков в конце ----------
+  var hl = document.querySelector('.hl');
+  if (hl) {
+    if ('IntersectionObserver' in window && !reduce) {
+      var ho = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { hl.classList.add('in'); ho.disconnect(); } }, { threshold: 0.6 });
+      ho.observe(hl);
+    } else hl.classList.add('in');
+    hl.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        hl.querySelectorAll('button').forEach(function (x, i) {
+          x.classList.remove('hop');
+          setTimeout(function () { void x.offsetWidth; x.classList.add('hop'); }, i * 70);
+        });
+        play('hello');
+      });
+    });
+  }
+
+  // ---------- физика первого экрана ----------
   var M = window.Matter;
   var hero = document.getElementById('hero');
   if (!M || !hero) return;
   var box = hero.querySelector('.toys');
   var hint = hero.querySelector('.hint');
-  var Engine = M.Engine, Bodies = M.Bodies, Composite = M.Composite, Body = M.Body, Constraint = M.Constraint, Sleeping = M.Sleeping;
+  var score = hero.querySelector('.score');
+  var tip = hero.querySelector('.tip');
+  var Engine = M.Engine, Bodies = M.Bodies, Composite = M.Composite, Body = M.Body, Constraint = M.Constraint, Sleeping = M.Sleeping, Events = M.Events;
 
-  var WORDS = {
-    A: ['A is for apple', 'яблоко'], B: ['B is for ball', 'мяч'], C: ['C is for cat', 'кот'], D: ['D is for dog', 'собака'],
-    E: ['E is for egg', 'яйцо'], F: ['F is for fish', 'рыба'], H: ['H is for house', 'дом'], K: ['K is for kite', 'воздушный змей'],
-    L: ['L is for lion', 'лев'], M: ['M is for moon', 'луна'], O: ['O is for orange', 'апельсин'], S: ['S is for sun', 'солнце'],
-    T: ['T is for tree', 'дерево'], Z: ['Z is for zebra', 'зебра'],
-    apple: ['Apple', 'яблоко'], ball: ['Ball', 'мяч'], star: ['Star', 'звезда']
-  };
   var COLORS = [['#FF5A36', '#C93A1B'], ['#3366FF', '#1D44C2'], ['#FFC12E', '#D99400'], ['#1DB972', '#0F8A51'], ['#FF78AE', '#D24F86'], ['#8D63FF', '#6338D9']];
   var SVG = {
     apple: '<svg viewBox="0 0 100 100"><path d="M50 30 C 30 16, 8 30, 12 56 C 16 82, 36 96, 50 88 C 64 96, 84 82, 88 56 C 92 30, 70 16, 50 30 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="4" stroke-linejoin="round"/><path d="M28 46 C 30 38, 36 34, 42 34" fill="none" stroke="#FFB199" stroke-width="5" stroke-linecap="round"/><path d="M50 30 C 50 22, 52 14, 56 8" fill="none" stroke="#221D3D" stroke-width="4" stroke-linecap="round"/><path d="M55 18 C 64 8, 78 10, 82 14 C 76 22, 64 24, 55 18 Z" fill="#1DB972" stroke="#221D3D" stroke-width="3.5" stroke-linejoin="round"/></svg>',
@@ -21,11 +124,11 @@
     star: '<svg viewBox="0 0 100 100"><path d="M50 6 L62 36 L94 38 L69 58 L78 90 L50 72 L22 90 L31 58 L6 38 L38 36 Z" fill="#FFC12E" stroke="#221D3D" stroke-width="4" stroke-linejoin="round"/></svg>'
   };
 
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var engine = Engine.create({ enableSleeping: true });
   engine.gravity.y = 1.15;
   var world = engine.world;
-  var items = [], solids = [], W = 0, H = 0, running = false, last = 0;
+  var items = [], byBody = {}, solids = [], W = 0, H = 0, running = false, last = 0;
+  var kinds = [], seen = {}, seenN = 0, touched = false;
 
   function makeToy(kind, i) {
     var d = document.createElement('div');
@@ -37,9 +140,7 @@
     return d;
   }
 
-  function size() {
-    W = hero.clientWidth; H = hero.clientHeight;
-  }
+  function size() { W = hero.clientWidth; H = hero.clientHeight; }
 
   function rectOf(el) {
     var r = el.getBoundingClientRect(), h = hero.getBoundingClientRect();
@@ -49,7 +150,8 @@
   // тела для текста: каждая строка заголовка и абзаца отдельно, чтобы буквы ложились прямо на слова
   function lineRects(el) {
     var out = [], h = hero.getBoundingClientRect();
-    if (el.tagName === 'A') { var r = rectOf(el); out.push(r); return out; }
+    if (el.hidden) return out;
+    if (el.tagName === 'A' || el.tagName === 'BUTTON') { out.push(rectOf(el)); return out; }
     var range = document.createRange(); range.selectNodeContents(el);
     var rows = {};
     Array.prototype.forEach.call(range.getClientRects(), function (r) {
@@ -94,6 +196,7 @@
     list.splice(3, 0, 'apple'); list.splice(7, 0, 'ball'); list.push('star');
     if (!small) list.push('O');
     list.forEach(function (kind, i) {
+      if (kinds.indexOf(kind) < 0) kinds.push(kind);
       var el = makeToy(kind, i);
       var isPic = !!SVG[kind];
       var w, h, b;
@@ -122,12 +225,32 @@
       else if (isPic) b = Bodies.polygon(x, y, 5, w / 2 * 0.82, opts);
       else b = Bodies.rectangle(x, y, w * 0.9, h * 0.88, Object.assign({ chamfer: { radius: Math.min(w, h) * 0.16 } }, opts));
       if (small && !reduce) Body.setVelocity(b, { x: (Math.random() - 0.5) * 3, y: -5 - Math.random() * 5 });
-      var it = { el: el, b: b, w: w, h: h, kind: kind, i: i };
+      var it = { el: el, b: b, w: w, h: h, kind: kind, i: i, sq: 0 };
       el._it = it;
+      byBody[b.id] = it;
       items.push(it);
     });
     Composite.add(world, items.map(function (it) { return it.b; }));
+    if (score) score.querySelector('i').textContent = kinds.length;
   }
+
+  // буква чуть сплющивается, когда шлёпается о пол или о другую букву
+  function squash(it) {
+    if (reduce || !it) return;
+    var now = Date.now();
+    if (now - it.sq < 260) return;
+    it.sq = now;
+    it.el.classList.add('sq');
+    setTimeout(function () { it.el.classList.remove('sq'); }, 140);
+  }
+  Events.on(engine, 'collisionStart', function (ev) {
+    ev.pairs.forEach(function (p) {
+      var a = p.bodyA, b = p.bodyB;
+      var hit = Math.abs(a.velocity.y - b.velocity.y) + Math.abs(a.velocity.x - b.velocity.x) * 0.5;
+      if (hit < 6) return;
+      squash(byBody[a.id]); squash(byBody[b.id]);
+    });
+  });
 
   function render() {
     for (var k = 0; k < items.length; k++) {
@@ -157,43 +280,57 @@
   function start() { if (running) return; running = true; last = 0; requestAnimationFrame(loop); }
   function stop() { running = false; }
 
-  // голос
-  var voice = null;
-  function pickVoice() {
-    if (!('speechSynthesis' in window)) return;
-    var v = speechSynthesis.getVoices().filter(function (x) { return /^en[-_]/i.test(x.lang); });
-    voice = v.filter(function (x) { return /GB/i.test(x.lang); })[0] || v.filter(function (x) { return /US/i.test(x.lang); })[0] || v[0] || null;
-  }
-  if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
-  function say(text) {
-    try {
-      if (!('speechSynthesis' in window)) return;
-      speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = voice ? voice.lang : 'en-GB'; if (voice) u.voice = voice;
-      u.rate = 0.85; u.pitch = 1.15;
-      speechSynthesis.speak(u);
-    } catch (e) {}
-  }
-
   var bubble = document.createElement('div');
   bubble.className = 'bubble';
   hero.appendChild(bubble);
   var bt = 0;
   function showWord(it) {
-    var w = WORDS[it.kind]; if (!w) return;
-    bubble.innerHTML = w[0] + '<small>' + w[1] + '</small>';
+    var t = TEXT[it.kind]; if (!t) return;
+    bubble.innerHTML = t + '<small>' + RU[it.kind] + '</small>';
     var x = Math.max(90, Math.min(W - 90, it.b.position.x)), y = Math.max(70, it.b.position.y - it.h / 2 - 16);
     bubble.style.left = x + 'px'; bubble.style.top = y + 'px';
     bubble.classList.add('on');
     clearTimeout(bt); bt = setTimeout(function () { bubble.classList.remove('on'); }, 1900);
-    say(w[0]);
+    play(it.kind);
+    count(it.kind);
   }
+
+  // счётчик собранных слов появляется только после первого нажатия
+  function count(kind) {
+    if (!score || seen[kind]) return;
+    seen[kind] = 1; seenN++;
+    if (score.hidden) { score.hidden = false; if (tip) tip.hidden = true; buildSolids(); wake(); }
+    score.querySelector('b').textContent = seenN;
+    score.classList.remove('pop'); void score.offsetWidth; score.classList.add('pop');
+    if (seenN === 5 && kinds.length > 5) play('five', true);
+    if (seenN === kinds.length) {
+      play('all', true);
+      items.forEach(function (x, i) { setTimeout(function () { jump(x); }, i * 60); });
+    }
+  }
+
+  function wake() { items.forEach(function (x) { Sleeping.set(x.b, false); }); }
 
   function jump(it) {
     Sleeping.set(it.b, false);
     Body.setVelocity(it.b, { x: (Math.random() - 0.5) * 6, y: -13 - Math.random() * 3 });
     Body.setAngularVelocity(it.b, (Math.random() - 0.5) * 0.35);
+  }
+
+  // пока никто не трогал, буквы по очереди подмигивают
+  var wt = 0;
+  function invite() {
+    clearTimeout(wt);
+    if (touched || reduce) return;
+    wt = setTimeout(function () {
+      if (touched) return;
+      if (running && items.length) {
+        var it = items[Math.floor(Math.random() * items.length)];
+        it.el.classList.remove('wig'); void it.el.offsetWidth; it.el.classList.add('wig');
+        setTimeout(function () { it.el.classList.remove('wig'); }, 750);
+      }
+      invite();
+    }, 2600);
   }
 
   // перетаскивание и нажатие
@@ -202,11 +339,13 @@
   box.addEventListener('pointerdown', function (e) {
     var el = e.target.closest('.toy'); if (!el) return;
     e.preventDefault();
+    touched = true; clearTimeout(wt);
     var it = el._it, p = pt(e);
     Sleeping.set(it.b, false);
     var c = Constraint.create({ pointA: p, bodyB: it.b, pointB: { x: p.x - it.b.position.x, y: p.y - it.b.position.y }, stiffness: 0.12, damping: 0.08, length: 0 });
     Composite.add(world, c);
     drag = { it: it, c: c, x: e.clientX, y: e.clientY, moved: false, t: Date.now() };
+    el.classList.add('drag');
     try { el.setPointerCapture(e.pointerId); } catch (er) {}
     if (hint) hint.classList.remove('on');
   });
@@ -218,6 +357,7 @@
   function release() {
     if (!drag) return;
     Composite.remove(world, drag.c);
+    drag.it.el.classList.remove('drag');
     if (!drag.moved && Date.now() - drag.t < 600) { jump(drag.it); showWord(drag.it); }
     drag = null;
   }
@@ -232,7 +372,8 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) { en[0].isIntersecting ? start() : stop(); }).observe(hero);
     } else start();
-    setTimeout(function () { if (hint) hint.classList.add('on'); }, reduce ? 0 : 2200);
+    setTimeout(function () { if (hint && !touched) hint.classList.add('on'); }, reduce ? 0 : 2200);
+    invite();
   }
 
   var rt = 0, lastW = 0;
