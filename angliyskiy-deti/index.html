@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFF3DF">
+<title>Анна Сергеевна, английский для детей и взрослых</title>
+<link rel="preload" href="f/shantell-sans-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="f/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Shantell'; src: url('f/shantell-sans-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 300 800; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'Shantell'; src: url('f/shantell-sans-latin-wght-normal.woff2') format('woff2'); font-weight: 300 800; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+@font-face { font-family: 'Onest'; src: url('f/onest-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'Onest'; src: url('f/onest-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
+@font-face { font-family: 'Toy'; src: url('f/fredoka-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: block; }
+:root {
+  --cream: #FFF3DF; --paper: #FFFBF3; --ink: #221D3D; --ink-2: #5B5674;
+  --tomato: #FF5A36; --tomato-d: #C93A1B; --blue: #3366FF; --blue-d: #1D44C2; --sun: #FFC12E; --sun-d: #D99400;
+  --green: #1DB972; --green-d: #0F8A51; --pink: #FF78AE; --violet: #8D63FF;
+  --hand: 'Shantell', 'Onest', sans-serif; --sans: 'Onest', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; overflow-x: clip; background: var(--cream); color: var(--ink); font: 400 17.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, figure { margin: 0; }
+h1, h2 { text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: inherit; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+/* кнопки как игрушки: контур и твёрдая тень */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 24px; border-radius: 14px; border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); font: 700 17px/1.1 var(--sans); text-decoration: none; text-align: center; cursor: pointer; transition: transform .1s, box-shadow .1s; background: var(--paper); color: var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.btn.main { background: var(--tomato); color: #fff; }
+.btn.sm { min-height: 44px; padding: 0 16px; font-size: 15.5px; box-shadow: 3px 3px 0 var(--ink); }
+
+.top { display: flex; align-items: center; gap: 12px; margin-top: 16px; margin-bottom: 4px; }
+.brand { text-decoration: none; min-width: 0; }
+.brand b { display: block; font: 800 21px/1.05 var(--hand); }
+.brand small { display: block; margin-top: 2px; font-size: 13.5px; color: var(--ink-2); }
+.top .btn { margin-left: auto; flex: none; }
+
+/* первый экран: буквы падают и лежат на тексте */
+.hero { position: relative; overflow: clip; min-height: calc(100vh - 72px); min-height: calc(100svh - 72px); padding-bottom: 240px; }
+.hero-txt { position: relative; padding-top: 30px; }
+.hi { font: 600 22px/1.2 var(--hand); color: var(--blue); }
+h1 { margin-top: 10px; font: 800 clamp(40px, 11.6vw, 96px)/.98 var(--hand); letter-spacing: -0.02em; }
+h1 .l2 { display: block; color: var(--tomato); }
+.lead { margin-top: 18px; font-size: 18.5px; color: var(--ink-2); max-width: 27em; }
+.cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
+.hint { position: absolute; z-index: 1; right: 18px; max-width: calc(100% - 36px); bottom: 178px; font: 600 19px/1.15 var(--hand); color: var(--ink-2); text-align: right; transform: rotate(-4deg); pointer-events: none; opacity: 0; transition: opacity .6s; }
+.hint.on { opacity: 1; }
+.hint svg { display: block; margin: 4px 0 0 auto; }
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: repeating-linear-gradient(90deg, #F6E3C3 0 34px, #F2DCB7 34px 68px); border-top: 2.5px solid var(--ink); }
+.toys { position: absolute; inset: 0; pointer-events: none; }
+.toy { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; will-change: transform; --sx: 0; --sy: 1; }
+.toy:active { cursor: grabbing; }
+.toy span { display: block; font: 600 var(--fs, 96px)/.8 'Toy', sans-serif; padding: .06em .03em .02em; color: var(--c);
+  text-shadow: calc(var(--sx) * .012em) calc(var(--sy) * .012em) 0 var(--d), calc(var(--sx) * .024em) calc(var(--sy) * .024em) 0 var(--d), calc(var(--sx) * .036em) calc(var(--sy) * .036em) 0 var(--d), calc(var(--sx) * .048em) calc(var(--sy) * .048em) 0 var(--d), calc(var(--sx) * .06em) calc(var(--sy) * .06em) 0 var(--d), calc(var(--sx) * .1em) calc(var(--sy) * .13em) .12em rgba(34, 29, 61, .25); }
+.toy svg { display: block; filter: drop-shadow(0 6px 6px rgba(34, 29, 61, .22)); }
+.bubble { position: absolute; z-index: 3; left: 0; top: 0; padding: 10px 14px 9px; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--ink); font: 700 20px/1.1 var(--hand); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-50%, -100%) scale(.8); transition: opacity .18s, transform .18s; }
+.bubble small { display: block; margin-top: 3px; font: 500 14px/1.2 var(--sans); color: var(--ink-2); }
+.bubble.on { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+.bubble::after { content: ''; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; background: var(--paper); border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: translateX(-50%) rotate(45deg); }
+
+/* общие заголовки блоков */
+.sec { position: relative; padding: 88px 0 0; }
+.sec h2 { font: 800 clamp(34px, 9vw, 64px)/1 var(--hand); letter-spacing: -0.015em; }
+.sec .sub { margin-top: 12px; color: var(--ink-2); max-width: 32em; font-size: 18px; }
+.scrib { display: block; width: 150px; height: 14px; margin-top: 8px; }
+
+/* обо мне */
+.about-in { display: grid; gap: 34px; }
+.polaroid { position: relative; justify-self: center; width: min(78%, 340px); background: #fff; padding: 12px 12px 54px; border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); }
+.polaroid::before { content: ''; position: absolute; top: -16px; left: 50%; width: 96px; height: 30px; transform: translateX(-50%) rotate(4deg); background: rgba(255, 193, 46, .75); border: 1.5px solid rgba(34, 29, 61, .25); }
+.polaroid .ph { aspect-ratio: 4 / 5; border-radius: 3px; background: repeating-linear-gradient(135deg, #F7EBD6 0 12px, #F2E3C9 12px 24px); display: grid; place-items: center; font: 600 22px/1.15 var(--hand); color: var(--ink-2); text-align: center; padding: 16px; }
+.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 700 22px/1 var(--hand); }
+.about-txt p { margin-top: 16px; font-size: 18.5px; }
+.about-txt h2 + p { margin-top: 22px; }
+.diploma { margin-top: 30px; display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 18px; align-items: center; }
+.doc { position: relative; aspect-ratio: 3 / 4; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 4px 4px 0 var(--ink); transform: rotate(3deg); padding: 14px 12px; }
+.doc i { display: block; height: 5px; border-radius: 3px; background: #E9DDC8; margin-top: 7px; }
+.doc i:first-child { margin: 4px auto 10px; width: 60%; height: 7px; background: #D8C8AC; }
+.doc svg { position: absolute; right: -14px; bottom: -14px; }
+.diploma b { display: block; font: 800 22px/1.15 var(--hand); }
+.diploma span { display: block; margin-top: 4px; color: var(--ink-2); font-size: 16px; }
+.diploma em { font-style: normal; color: var(--tomato-d); font-weight: 700; }
+
+/* путь занятий как настольная игра */
+.path { position: relative; margin-top: 40px; display: grid; gap: 54px; }
+.path::before { content: ''; position: absolute; left: 50px; top: 40px; bottom: 40px; border-left: 4px dashed var(--ink); opacity: .35; }
+.stop { position: relative; display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 18px; align-items: center; }
+.tile { position: relative; z-index: 1; width: 100px; height: 100px; border-radius: 22px; border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); display: grid; place-items: center; }
+.stop:nth-child(1) .tile { background: var(--sun); transform: rotate(-5deg); }
+.stop:nth-child(2) .tile { background: var(--green); transform: rotate(4deg); }
+.stop:nth-child(3) .tile { background: var(--blue); transform: rotate(-3deg); }
+.stop h3 { font: 800 24px/1.15 var(--hand); }
+.stop p { margin-top: 6px; color: var(--ink-2); }
+.pawn { position: absolute; z-index: 2; left: 64px; top: -34px; }
+
+/* цена: бирка и шесть парт */
+.price-in { display: grid; gap: 36px; margin-top: 8px; }
+.tag { position: relative; justify-self: start; margin-top: 30px; padding: 30px 34px 28px 64px; background: var(--sun); border: 2.5px solid var(--ink); border-radius: 18px 26px 26px 18px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-4deg); clip-path: none; }
+.tag::before { content: ''; position: absolute; left: 22px; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%; background: var(--cream); border: 2.5px solid var(--ink); }
+.tag svg { position: absolute; left: -66px; top: 50%; margin-top: -60px; }
+.tag b { display: block; font: 800 clamp(52px, 15vw, 88px)/1 var(--hand); white-space: nowrap; }
+.tag span { display: block; margin-top: 6px; font-weight: 600; }
+.price-txt p { font-size: 18.5px; }
+.desks { margin-top: 22px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-width: 460px; }
+.desks figure { text-align: center; }
+.desks svg { display: block; width: 100%; height: auto; }
+.seats { margin-top: 12px; font: 700 21px/1.2 var(--hand); }
+.price-txt .btn { margin-top: 26px; }
+
+/* видео */
+.tabs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+.tabs button { min-height: 46px; padding: 0 16px; border: 2.5px solid var(--ink); border-radius: 12px; background: var(--paper); font: 700 16px/1 var(--sans); color: var(--ink); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+.tabs button.on { background: var(--ink); color: #fff; }
+.laptop { margin-top: 26px; max-width: 760px; }
+.screen { position: relative; aspect-ratio: 16 / 10; border: 2.5px solid var(--ink); border-radius: 18px 18px 6px 6px; background: var(--ink); padding: 12px; }
+.call { height: 100%; display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; }
+.call > div { position: relative; border-radius: 10px; display: grid; place-items: center; text-align: center; padding: 10px; font: 600 clamp(14px, 3.6vw, 19px)/1.2 var(--hand); color: rgba(255, 255, 255, .85); }
+.call .t { background: #3B3561; }
+.call .k { display: grid; grid-template-rows: 1fr 1fr; gap: 8px; padding: 0; background: none; place-items: stretch; }
+.call .k > div { position: relative; border-radius: 10px; background: #4A4470; display: grid; place-items: center; }
+.call .k > div:last-child { background: #FFC12E; color: var(--ink); }
+.call span.nm { position: absolute; left: 8px; bottom: 6px; font: 500 11px/1 var(--sans); color: rgba(255, 255, 255, .7); }
+.play { width: 64px; height: 64px; margin: 0 auto 10px; border-radius: 50%; background: var(--tomato); border: 2.5px solid #000; box-shadow: 3px 3px 0 #000; display: grid; place-items: center; color: #fff; padding-left: 3px; }
+.base { height: 18px; margin: 0 -5%; border: 2.5px solid var(--ink); border-top: 0; border-radius: 0 0 22px 22px; background: #D9D3EA; }
+.vnote { margin-top: 14px; font: 600 18px/1.3 var(--hand); color: var(--ink-2); }
+
+/* отзывы на холодильнике */
+.fridge { position: relative; margin-top: 30px; padding: 44px 18px 30px; background: #DDF2EA; border: 2.5px solid var(--ink); border-radius: 30px; box-shadow: 6px 6px 0 var(--ink); }
+.fridge::before { content: ''; position: absolute; right: 26px; top: 26px; width: 12px; height: 90px; border-radius: 8px; background: #fff; border: 2.5px solid var(--ink); }
+.notes { display: grid; gap: 30px; }
+.note { position: relative; background: #fff; border: 2px solid rgba(34, 29, 61, .5); padding: 30px 20px 18px; border-radius: 4px; box-shadow: 0 10px 18px -12px rgba(34, 29, 61, .5); }
+.note:nth-child(1) { transform: rotate(-2deg); margin-right: 30px; }
+.note:nth-child(2) { transform: rotate(1.5deg); margin-left: 24px; background: #FFF6D6; }
+.note:nth-child(3) { transform: rotate(-1deg); margin-right: 18px; background: #FFE6EF; }
+.note .mag { position: absolute; top: -26px; left: 50%; transform: translateX(-50%) rotate(-8deg); font: 600 52px/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 6px 8px rgba(34, 29, 61, .3); }
+.note p { font: 500 19px/1.35 var(--hand); }
+.note i { display: block; height: 6px; border-radius: 3px; background: rgba(34, 29, 61, .1); margin-top: 10px; }
+.note i.s { width: 60%; }
+.snaps { margin-top: 30px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.snaps div { aspect-ratio: 1; background: #fff; border: 2px solid rgba(34, 29, 61, .5); border-radius: 4px; padding: 6px 6px 22px; }
+.snaps div span { display: grid; place-items: center; height: 100%; background: repeating-linear-gradient(135deg, #F7EBD6 0 10px, #F2E3C9 10px 20px); font: 600 14px/1.1 var(--hand); color: var(--ink-2); text-align: center; padding: 4px; }
+.snaps div:nth-child(1) { transform: rotate(3deg); }
+.snaps div:nth-child(3) { transform: rotate(-3deg); }
+
+/* запись */
+.hello { margin-top: 0; padding: 56px 22px 40px; background: var(--blue); color: #fff; border: 2.5px solid var(--ink); border-radius: 30px; box-shadow: 6px 6px 0 var(--ink); position: relative; overflow: hidden; }
+.hello h2 { position: relative; }
+.hello p { position: relative; margin-top: 12px; font-size: 18.5px; color: rgba(255, 255, 255, .88); max-width: 26em; }
+.msgs { position: relative; margin-top: 26px; display: grid; gap: 14px; }
+.msgs a { min-height: 60px; font-size: 18px; }
+.msgs .tg { background: #2AABEE; color: #fff; }
+.msgs .wa { background: #1FAF5A; color: #fff; }
+.msgs .vk { background: #fff; color: #0077FF; }
+.hello .big { position: absolute; right: -10px; bottom: -36px; font: 600 170px/.8 'Toy', sans-serif; color: rgba(255, 255, 255, .12); pointer-events: none; }
+.foot { padding: 34px 20px 46px; text-align: center; color: var(--ink-2); font-size: 14.5px; }
+.contact { padding-bottom: 0; }
+
+@media (min-width: 900px) {
+  .top { margin-top: 26px; }
+  .wrap { padding: 0 40px; }
+  .hero { min-height: max(680px, min(calc(100vh - 72px), 900px)); padding-bottom: 110px; }
+  .hero-txt { padding-top: 48px; }
+  .hero-txt > * { max-width: 640px; }
+  .lead { font-size: 20px; }
+  .hint { right: 9%; bottom: 340px; transform: rotate(-5deg); font-size: 22px; }
+  .sec { padding-top: 130px; }
+  .about-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; align-items: center; }
+  .polaroid { width: 100%; justify-self: start; }
+  .about-txt { max-width: 580px; }
+  .path { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 64px; }
+  .path::before { left: 60px; right: 18%; top: 50px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
+  .stop { grid-template-columns: 1fr; align-items: start; }
+  .stop:nth-child(2) { margin-top: 46px; }
+  .stop:nth-child(3) { margin-top: 12px; }
+  .stop p { max-width: 20em; }
+  .price-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 80px; align-items: center; }
+  .tag { justify-self: center; }
+  .video-in { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; align-items: center; }
+  .video-in .laptop { margin-top: 0; }
+  .fridge { padding: 64px 70px 50px 48px; }
+  .notes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .note:nth-child(n) { margin: 0; }
+  .note:nth-child(2) { margin-top: 26px; }
+  .snaps { grid-template-columns: repeat(3, 200px); gap: 26px; margin-top: 44px; }
+  .hello { padding: 70px 64px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 56px; align-items: center; }
+  .msgs { margin-top: 0; }
+  .hello .big { font-size: 300px; right: 20px; bottom: -60px; }
+}
+@media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 50px; max-width: calc(100% - 54px); padding: 22px 20px 20px 52px; } .tag b { font-size: clamp(34px, 12vw, 60px); } .tag::before { left: 18px; } }
+@media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .bubble, .hint { transition: none; } }
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="#"><b>Анна Сергеевна</b><small>английский для детей и&nbsp;взрослых</small></a>
+  <a class="btn sm" href="#contact">Написать</a>
+</header>
+
+<section class="hero" id="hero">
+  <div class="wrap hero-txt">
+    <p class="hi" data-solid>Hello! Я&nbsp;Анна Сергеевна</p>
+    <h1 data-solid>Английский с&nbsp;нуля <span class="l2">весело, но&nbsp;всерьёз</span></h1>
+    <p class="lead" data-solid>Учу дошкольников и&nbsp;младших школьников с&nbsp;нуля, подтягиваю тех, кто отстал от&nbsp;класса. Взрослых тоже беру.</p>
+    <div class="cta"><a class="btn main" href="#contact" data-solid>Записаться на&nbsp;пробное</a><a class="btn" href="#about" data-solid>Обо мне</a></div>
+  </div>
+  <p class="hint">Нажми на&nbsp;букву, она заговорит
+    <svg width="60" height="46" viewBox="0 0 60 46" aria-hidden="true"><path d="M6 4 C 10 22, 24 34, 46 38 M38 30 L47 38 L37 44" fill="none" stroke="#5B5674" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </p>
+  <div class="floor"></div>
+  <div class="toys" aria-hidden="true"></div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="wrap about-in">
+    <figure class="polaroid"><div class="ph">Тут будет ваше фото</div><figcaption>Это я</figcaption></figure>
+    <div class="about-txt">
+      <h2>Знакомьтесь</h2>
+      <svg class="scrib" viewBox="0 0 150 14" aria-hidden="true"><path d="M3 9 C 30 3, 60 13, 90 6 S 135 4, 147 8" fill="none" stroke="#FFC12E" stroke-width="6" stroke-linecap="round" /></svg>
+      <p>Меня зовут Анна Сергеевна. Учу английскому с&nbsp;нуля малышей и&nbsp;младших школьников, подтягиваю тех, кто отстал от&nbsp;класса, занимаюсь со&nbsp;взрослыми.</p>
+      <p>Беру не&nbsp;больше шести учеников, поэтому каждого знаю и&nbsp;веду по&nbsp;своему плану.</p>
+      <div class="diploma">
+        <div class="doc" aria-hidden="true"><i></i><i></i><i></i><i></i><i style="width:70%"></i>
+          <svg width="54" height="64" viewBox="0 0 54 64"><path d="M15 34 L9 62 L19 55 L25 63 L27 38 Z M39 34 L45 62 L35 55 L29 63 L27 38 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><circle cx="27" cy="25" r="20" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><circle cx="27" cy="25" r="12" fill="none" stroke="#FFFBF3" stroke-width="2.5" stroke-dasharray="3 3" /></svg>
+        </div>
+        <div><b>Высшее экономическое образование</b><span><em>Диплом с&nbsp;отличием.</em> Здесь будет фото диплома, вуз и&nbsp;год.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec how">
+  <div class="wrap">
+    <h2>Как всё устроено</h2>
+    <div class="path">
+      <div class="stop">
+        <svg class="pawn" width="40" height="56" viewBox="0 0 40 56" aria-hidden="true"><circle cx="20" cy="13" r="10" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><path d="M12 24 H28 L33 50 H7 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><rect x="3" y="48" width="34" height="7" rx="3" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /></svg>
+        <div class="tile"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M14 50 V6" stroke="#221D3D" stroke-width="3.5" stroke-linecap="round" /><path d="M15 8 C 24 4, 30 12, 42 8 V 28 C 30 32, 24 24, 15 28 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /></svg></div>
+        <div><h3>Пробное занятие</h3><p>Знакомимся, смотрю, что ребёнок уже знает и&nbsp;как ему легче учиться.</p></div>
+      </div>
+      <div class="stop">
+        <div class="tile"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 50 V22" stroke="#221D3D" stroke-width="3.5" stroke-linecap="round" /><path d="M27 30 C 14 32, 8 22, 10 12 C 22 12, 28 20, 27 30 Z M27 24 C 32 14, 40 10, 46 12 C 46 22, 38 28, 27 26 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /></svg></div>
+        <div><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></div>
+      </div>
+      <div class="stop">
+        <div class="tile"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><rect x="7" y="11" width="40" height="36" rx="6" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" /><path d="M7 21 H47 M17 6 V15 M37 6 V15" stroke="#221D3D" stroke-width="3" stroke-linecap="round" /><path d="M27 42 C 18 36, 18 28, 23 28 C 25 28, 27 30, 27 32 C 27 30, 29 28, 31 28 C 36 28, 36 36, 27 42 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2" stroke-linejoin="round" /></svg></div>
+        <div><h3>Своё время на&nbsp;год</h3><p>Закрепляем постоянные дни и&nbsp;время. Онлайн в&nbsp;Зуме или очно.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec price" id="price">
+  <div class="wrap price-in">
+    <div class="tag">
+      <svg width="80" height="120" viewBox="0 0 80 120" aria-hidden="true"><path d="M78 60 C 50 58, 40 20, 14 12 C 4 9, 2 26, 12 30" fill="none" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg>
+      <b>1 200 ₽</b><span>за занятие 45 минут</span>
+    </div>
+    <div class="price-txt">
+      <h2>Одна цена для&nbsp;всех</h2>
+      <p class="sub">Малыши, школьники и&nbsp;взрослые занимаются по&nbsp;одной цене. Сил на&nbsp;каждого уходит одинаково.</p>
+      <div class="desks" aria-hidden="true">
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#FFD9B8" stroke="#221D3D" stroke-width="2.5" /><path d="M18 18 C 18 6, 42 6, 42 18 C 36 12, 24 12, 18 18 Z" fill="#8A5A3A" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#F2C7A0" stroke="#221D3D" stroke-width="2.5" /><path d="M17 20 C 14 4, 46 4, 43 20 C 40 10, 20 10, 17 20 Z M17 20 C 14 26, 14 30, 18 32 M43 20 C 46 26, 46 30, 42 32" fill="#F2B134" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#C98E62" stroke="#221D3D" stroke-width="2.5" /><path d="M18 16 C 20 6, 40 6, 42 16 C 36 11, 24 11, 18 16 Z" fill="#221D3D" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#FFD9B8" stroke="#221D3D" stroke-width="2.5" /><path d="M18 18 C 18 6, 42 6, 42 18 C 36 12, 24 12, 18 18 Z" fill="#D9541E" stroke="#221D3D" stroke-width="2" /><circle cx="44" cy="12" r="4" fill="#FF78AE" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="none" stroke="#1DB972" stroke-width="2.5" stroke-dasharray="4 4" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFFBF3" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="none" stroke="#1DB972" stroke-width="2.5" stroke-dasharray="4 4" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFFBF3" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+      </div>
+      <p class="seats">Беру до&nbsp;6 учеников, сейчас свободно 2&nbsp;места</p>
+      <a class="btn main" href="#contact">Занять место</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec video" id="video">
+  <div class="wrap">
+    <div class="video-in"><div>
+    <h2>Загляните на&nbsp;урок</h2>
+    <p class="sub">Короткие отрывки с&nbsp;настоящих занятий в&nbsp;Зуме. Выберите, кто учится.</p>
+    <div class="tabs" data-tabs><button class="on" data-v="малышами">Дошкольники</button><button data-v="школьником">Школьники</button><button data-v="взрослым">Взрослые</button></div>
+    </div>
+    <div class="laptop">
+      <div class="screen">
+        <div class="call">
+          <div class="t"><div><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30"><path d="M8.5 5.5v13l10.5-6.5z" fill="currentColor" /></svg></span><p>Тут будет отрывок урока с&nbsp;<span data-tab-out>малышами</span></p></div><span class="nm">Анна Сергеевна</span></div>
+          <div class="k"><div><span class="nm">ученик</span></div><div><p>Hello!</p></div></div>
+        </div>
+      </div>
+      <div class="base"></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec reviews">
+  <div class="wrap">
+    <h2>Что говорят родители</h2>
+    <p class="sub">Отзывы и&nbsp;фото с&nbsp;занятий переедут сюда из&nbsp;2ГИС.</p>
+    <div class="fridge">
+      <div class="notes">
+        <div class="note" style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">A</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
+        <div class="note" style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">B</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i class="s"></i></div>
+        <div class="note" style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">C</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
+      </div>
+      <div class="snaps"><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="hello">
+      <span class="big" aria-hidden="true">Hi!</span>
+      <div>
+        <h2>Say hello!</h2>
+        <p>Напишите, сколько лет ребёнку и&nbsp;что сейчас получается с&nbsp;английским. Договоримся о&nbsp;пробном занятии.</p>
+      </div>
+      <div class="msgs"><a class="btn tg" href="#">Telegram</a><a class="btn wa" href="#">WhatsApp</a><a class="btn vk" href="#">ВКонтакте</a></div>
+    </div>
+  </div>
+</section>
+<footer class="foot">Анна Сергеевна, английский для&nbsp;детей и&nbsp;взрослых</footer>
+
+<script src="matter.min.js"></script>
+<script src="toys.js"></script>
+<script>
+document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  document.querySelector('[data-tab-out]').textContent = b.getAttribute('data-v');
+});
+</script>
+</body>
+</html>
