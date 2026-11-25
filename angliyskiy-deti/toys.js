@@ -360,9 +360,62 @@
     drag.it.el.classList.remove('drag');
     if (!drag.moved && Date.now() - drag.t < 600) { jump(drag.it); showWord(drag.it); }
     drag = null;
+    askMotion();
   }
   window.addEventListener('pointerup', release);
   window.addEventListener('pointercancel', release);
+
+  // ---------- тряска телефона: буквы разлетаются и перемешиваются ----------
+  var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  var canMotion = 'DeviceMotionEvent' in window && coarse && !reduce;
+  var needAsk = canMotion && typeof DeviceMotionEvent.requestPermission === 'function';
+  var motionOn = false, asked = false, lastKick = 0, lastG = null;
+  function listenMotion() { if (motionOn) return; motionOn = true; window.addEventListener('devicemotion', onMotion); }
+  // на айфоне доступ к датчику спрашивается после нажатия на букву
+  function askMotion() {
+    if (!needAsk || asked) return;
+    asked = true;
+    try { DeviceMotionEvent.requestPermission().then(function (st) { if (st === 'granted') listenMotion(); }).catch(function () {}); } catch (e) {}
+  }
+  function onMotion(e) {
+    if (!running || !items.length) return;
+    var a = e.acceleration, ax, ay;
+    if (a && a.x != null) { ax = a.x; ay = a.y; }
+    else {
+      // нет гироскопа: считаем рывок как разницу между замерами
+      var g = e.accelerationIncludingGravity;
+      if (!g || g.x == null) return;
+      if (!lastG) { lastG = { x: g.x, y: g.y }; return; }
+      ax = g.x - lastG.x; ay = g.y - lastG.y; lastG = { x: g.x, y: g.y };
+    }
+    // учитываем поворот экрана
+    var ang = ((screen.orientation && screen.orientation.angle) || window.orientation || 0) * Math.PI / 180;
+    var sx = ax * Math.cos(ang) + ay * Math.sin(ang), sy = -ax * Math.sin(ang) + ay * Math.cos(ang);
+    var m = Math.sqrt(sx * sx + sy * sy), now = Date.now();
+    if (m < 4.5 || now - lastKick < 70) return;
+    lastKick = now;
+    touched = true; clearTimeout(wt);
+    if (hint) hint.classList.remove('on');
+    var k = Math.min(m, 30);
+    items.forEach(function (it) {
+      var b = it.b;
+      Sleeping.set(b, false);
+      // буквы отстают от телефона, как настоящие, плюс немного случайности, чтобы перемешались
+      var vx = b.velocity.x - sx * 0.55 + (Math.random() - 0.5) * k * 0.5;
+      var vy = b.velocity.y + sy * 0.55 - Math.random() * k * 0.45;
+      var sp = Math.sqrt(vx * vx + vy * vy);
+      if (sp > 24) { vx *= 24 / sp; vy *= 24 / sp; }
+      Body.setVelocity(b, { x: vx, y: Math.max(vy, -18) });
+      Body.setAngularVelocity(b, b.angularVelocity + (Math.random() - 0.5) * 0.25);
+      if (Math.random() < 0.3) squash(it);
+    });
+  }
+  // слушаем сразу: где разрешение не нужно, тряска работает с первой секунды
+  if (canMotion) listenMotion();
+  if (canMotion && tip) {
+    tip.firstChild.nodeValue = 'Нажми на букву или потряси телефон';
+    tip.addEventListener('click', askMotion);
+  }
 
   function init() {
     size();
