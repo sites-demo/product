@@ -2,70 +2,76 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#FFF3DF">
 <script>document.documentElement.classList.add('js')</script>
-<title>Ольга Теплова, английский для детей и взрослых</title>
-<meta name="description" content="Английский с нуля для детей и взрослых. Ольга Теплова, преподаватель английского и немецкого языков, Новосибирск и онлайн.">
-<link rel="preload" href="f/onest-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<title>Ольга, английский для детей и взрослых</title>
+<link rel="preload" href="f/shantell-sans-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="f/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face { font-family: 'Shantell'; src: url('f/shantell-sans-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 300 800; font-display: swap; unicode-range: U+0400-045F, U+2116; }
+@font-face { font-family: 'Shantell'; src: url('f/shantell-sans-latin-wght-normal.woff2') format('woff2'); font-weight: 300 800; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
 @font-face { font-family: 'Onest'; src: url('f/onest-cyrillic-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; unicode-range: U+0400-045F, U+2116; }
 @font-face { font-family: 'Onest'; src: url('f/onest-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
 @font-face { font-family: 'Toy'; src: url('f/fredoka-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: block; }
 :root {
-  --bg: #FFFFFF; --ink: #1F1A1E; --ink-2: #645B61; --line: #EAE3E7; --tint: #F7F2F4;
-  --plum: #6E2448; --plum-d: #561A37; --rose: #F6D4E1; --leaf: #2C6A4C;
-  --sans: 'Onest', system-ui, -apple-system, sans-serif;
+  --cream: #FFF3DF; --paper: #FFFBF3; --ink: #221D3D; --ink-2: #5B5674;
+  --tomato: #FF5A36; --tomato-d: #C93A1B; --blue: #3366FF; --blue-d: #1D44C2; --sun: #FFC12E; --sun-d: #D99400;
+  --green: #1DB972; --green-d: #0F8A51; --pink: #FF78AE; --violet: #8D63FF;
+  --hand: 'Shantell', 'Onest', sans-serif; --sans: 'Onest', system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
-body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--ink); font: 400 17.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
-h1, h2, h3, p, figure, dl, dd { margin: 0; }
+body { margin: 0; overflow-x: clip; background: var(--cream); color: var(--ink); font: 400 17.5px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, figure { margin: 0; }
 h1, h2 { text-wrap: balance; }
 p { text-wrap: pretty; }
 a { color: inherit; }
-.wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 24px; border: 0; border-radius: 12px; background: var(--plum); color: #fff; font: 600 17px/1.1 var(--sans); text-decoration: none; text-align: center; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
-.btn:hover { background: var(--plum-d); }
-.btn:active { transform: scale(.98); }
-.btn.sm { min-height: 44px; padding: 0 18px; font-size: 15.5px; border-radius: 10px; }
-.btn.soft { background: var(--tint); color: var(--ink); }
-.btn.soft:hover { background: #EFE7EB; }
-.btn:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #E59BB9; outline-offset: 2px; }
+/* кнопки как игрушки: контур и твёрдая тень */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 24px; border-radius: 14px; border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); font: 700 17px/1.1 var(--sans); text-decoration: none; text-align: center; cursor: pointer; transition: transform .1s, box-shadow .1s; background: var(--paper); color: var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.btn.main { background: var(--tomato); color: #fff; }
+.btn.sm { min-height: 44px; padding: 0 16px; font-size: 15.5px; box-shadow: 3px 3px 0 var(--ink); }
 
-.top { display: flex; align-items: center; gap: 12px; padding-top: 14px; }
+.top { display: flex; align-items: center; gap: 12px; margin-top: 16px; margin-bottom: 4px; }
 .brand { text-decoration: none; min-width: 0; }
-.brand b { display: block; font: 700 18px/1.15 var(--sans); letter-spacing: -0.01em; }
-.brand small { display: block; margin-top: 1px; font-size: 13.5px; line-height: 1.3; color: var(--ink-2); }
+.brand b { display: block; font: 800 clamp(18px, 5.6vw, 21px)/1.05 var(--hand); }
+.brand small { display: block; margin-top: 2px; font-size: 13.5px; color: var(--ink-2); }
 .top .btn { margin-left: auto; flex: none; }
 
 /* первый экран: буквы падают и лежат на тексте */
-.hero { position: relative; overflow: clip; min-height: calc(100vh - 70px); min-height: calc(100svh - 70px); padding-bottom: 214px; }
-.hero-txt { position: relative; padding-top: 34px; }
-h1 { font: 750 clamp(34px, calc((100vw - 40px) / 8.6), 78px)/1.02 var(--sans); letter-spacing: -0.035em; }
-h1 .l2 { display: block; color: var(--plum); }
-.lead { margin-top: 18px; font-size: 18.5px; color: var(--ink-2); max-width: 28em; }
-.cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+.hero { position: relative; overflow: clip; min-height: calc(100vh - 72px); min-height: calc(100svh - 72px); padding-bottom: 214px; }
+.hero-txt { position: relative; padding-top: 30px; }
+.hi { font: 600 22px/1.2 var(--hand); color: var(--blue); }
+h1 { margin-top: 10px; font: 800 clamp(28px, calc((100vw - 40px) / 8.2), 96px)/.98 var(--hand); letter-spacing: -0.02em; }
+h1 .l2 { display: block; color: var(--tomato); }
+.lead { margin-top: 18px; font-size: 18.5px; color: var(--ink-2); max-width: 27em; }
+.cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
 .meta { margin-top: 14px; font-size: 15.5px; color: var(--ink-2); }
-.meta b { color: var(--ink); font-weight: 600; }
-.meta a { color: var(--ink); text-decoration-color: rgba(31, 26, 30, .3); text-underline-offset: 3px; }
-.game { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
-.snd { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 11px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; font: 600 15px/1 var(--sans); color: var(--ink); cursor: pointer; }
+.meta b { color: var(--ink); font-weight: 700; }
+.game { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.snd { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px 0 10px; border: 2.5px solid var(--ink); border-radius: 12px; background: var(--paper); box-shadow: 3px 3px 0 var(--ink); font: 700 15px/1 var(--sans); color: var(--ink); cursor: pointer; }
+.snd:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
 .snd .off { display: none; }
 .snd[aria-pressed='false'] .on { display: none; }
 .snd[aria-pressed='false'] .off { display: inline; }
-.score { font: 600 15.5px/1.2 var(--sans); color: var(--leaf); }
-.score b { font-size: 18px; }
-.score.pop { animation: pop .45s ease-out; }
-@keyframes pop { 0% { scale: 1; } 40% { scale: 1.15; } 100% { scale: 1; } }
-.tip { flex: 1 1 140px; max-width: 220px; font: 500 15px/1.3 var(--sans); color: var(--ink-2); }
+.score { font: 700 17px/1.2 var(--hand); color: var(--green-d); }
+.tip { position: relative; flex: 1 1 140px; max-width: 200px; padding-right: 30px; font: 600 16px/1.15 var(--hand); color: var(--ink-2); transform: rotate(-3deg); }
+.tip svg { position: absolute; right: 0; bottom: -22px; }
 .tip[hidden] { display: none; }
-.hint { display: none; position: absolute; z-index: 1; right: 6%; bottom: 330px; max-width: 260px; font: 500 16px/1.35 var(--sans); color: var(--ink-2); text-align: right; pointer-events: none; opacity: 0; transition: opacity .6s; }
+.hint { display: none; }
+.score b { font-size: 21px; }
+.score.pop { animation: pop .5s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes pop { 0% { scale: 1; } 40% { scale: 1.25; } 100% { scale: 1; } }
+.hint { position: absolute; z-index: 1; right: 18px; max-width: calc(100% - 36px); bottom: 178px; font: 600 19px/1.15 var(--hand); color: var(--ink-2); text-align: right; transform: rotate(-4deg); pointer-events: none; opacity: 0; transition: opacity .6s; }
 .hint.on { opacity: 1; }
-.floor { position: absolute; left: 12px; right: 12px; bottom: 6px; height: 16px; border-radius: 8px; background: #EFE8EC; }
+.hint svg { display: block; margin: 4px 0 0 auto; }
+.floor { position: absolute; left: 10px; right: 10px; bottom: 2px; height: 24px; border: 2.5px solid var(--ink); border-radius: 12px; background: repeating-linear-gradient(90deg, #FFD27A 0 22px, #FFB59E 22px 44px, #9EDCC2 44px 66px, #B9C8FF 66px 88px); box-shadow: 0 3px 0 var(--ink); }
+.floor::before, .floor::after { content: ''; position: absolute; top: 3px; bottom: 3px; width: 12px; background: repeating-linear-gradient(180deg, var(--ink) 0 2px, transparent 2px 5px); }
+.floor::before { left: -14px; } .floor::after { right: -14px; }
 .toys { position: absolute; inset: 0; pointer-events: none; }
 .toy { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; will-change: transform; --sx: 0; --sy: 1; }
 .toy:active { cursor: grabbing; }
@@ -77,99 +83,122 @@ h1 .l2 { display: block; color: var(--plum); }
 @keyframes quake { 10%, 90% { translate: -2px 0; } 20%, 80% { translate: 4px 1px; } 30%, 50%, 70% { translate: -8px -1px; } 40%, 60% { translate: 8px 1px; } }
 @keyframes wig { 0%, 100% { rotate: 0deg; } 20% { rotate: -12deg; } 45% { rotate: 10deg; } 70% { rotate: -6deg; } }
 .toy span { display: block; font: 600 var(--fs, 96px)/.8 'Toy', sans-serif; padding: .06em .03em .02em; color: var(--c);
-  text-shadow: calc(var(--sx) * .012em) calc(var(--sy) * .012em) 0 var(--d), calc(var(--sx) * .024em) calc(var(--sy) * .024em) 0 var(--d), calc(var(--sx) * .036em) calc(var(--sy) * .036em) 0 var(--d), calc(var(--sx) * .048em) calc(var(--sy) * .048em) 0 var(--d), calc(var(--sx) * .06em) calc(var(--sy) * .06em) 0 var(--d), calc(var(--sx) * .1em) calc(var(--sy) * .13em) .12em rgba(31, 26, 30, .22); }
-.toy svg { display: block; filter: drop-shadow(0 6px 6px rgba(31, 26, 30, .2)); }
-.bubble { position: absolute; z-index: 3; left: 0; top: 0; padding: 10px 15px 9px; background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(31, 26, 30, .18), 0 1px 3px rgba(31, 26, 30, .12); font: 700 20px/1.1 var(--sans); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-50%, -100%) scale(.85); transition: opacity .18s, transform .18s; }
+  text-shadow: calc(var(--sx) * .012em) calc(var(--sy) * .012em) 0 var(--d), calc(var(--sx) * .024em) calc(var(--sy) * .024em) 0 var(--d), calc(var(--sx) * .036em) calc(var(--sy) * .036em) 0 var(--d), calc(var(--sx) * .048em) calc(var(--sy) * .048em) 0 var(--d), calc(var(--sx) * .06em) calc(var(--sy) * .06em) 0 var(--d), calc(var(--sx) * .1em) calc(var(--sy) * .13em) .12em rgba(34, 29, 61, .25); }
+.toy svg { display: block; filter: drop-shadow(0 6px 6px rgba(34, 29, 61, .22)); }
+.bubble { position: absolute; z-index: 3; left: 0; top: 0; padding: 10px 14px 9px; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--ink); font: 700 20px/1.1 var(--hand); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-50%, -100%) scale(.8); transition: opacity .18s, transform .18s; }
 .bubble small { display: block; margin-top: 3px; font: 500 14px/1.2 var(--sans); color: var(--ink-2); }
 .bubble.on { opacity: 1; transform: translate(-50%, -100%) scale(1); }
-.bubble::after { content: ''; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 12px; background: #fff; transform: translateX(-50%) rotate(45deg); }
+.bubble::after { content: ''; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; background: var(--paper); border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: translateX(-50%) rotate(45deg); }
 
-/* блоки */
-.sec { position: relative; padding-top: 96px; }
-.sec h2 { font: 700 clamp(28px, calc((100vw - 40px) / 10.5), 46px)/1.08 var(--sans); letter-spacing: -0.03em; }
-.sec .sub { margin-top: 12px; color: var(--ink-2); max-width: 34em; font-size: 18px; }
-.js .rv { opacity: 0; translate: 0 18px; transition: opacity .6s ease-out, translate .6s ease-out; }
-.js .rv.in { opacity: 1; translate: 0 0; }
+/* общие заголовки блоков */
+.sec { position: relative; padding: 88px 0 0; }
+.sec h2 { font: 800 clamp(28px, min(9vw, calc((100vw - 40px) / 8.9)), 64px)/1 var(--hand); letter-spacing: -0.015em; }
+.sec .sub { margin-top: 12px; color: var(--ink-2); max-width: 32em; font-size: 18px; }
+.scrib { display: block; width: 150px; height: 14px; margin-top: 8px; }
 
 /* обо мне */
-.about-in { display: grid; gap: 30px; }
-.portrait { width: min(100%, 420px); }
-.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 18px; background: var(--tint); }
-.about-txt p { margin-top: 16px; font-size: 18px; }
-.about-txt h2 + p { margin-top: 20px; }
-.facts { margin-top: 28px; border-top: 1px solid var(--line); }
-.facts div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.facts dt { font-size: 14.5px; color: var(--ink-2); }
-.facts dd { font-weight: 600; }
+.about-in { display: grid; gap: 34px; }
+.polaroid { position: relative; justify-self: center; width: min(78%, 340px); background: #fff; padding: 12px 12px 54px; border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); }
+.mag { position: absolute; z-index: 2; font: 600 56px/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 7px 9px rgba(34, 29, 61, .3); pointer-events: none; }
+.polaroid .mag { top: -30px; left: 50%; transform: translateX(-50%) rotate(6deg); font-size: 64px; }
+.polaroid .ph { aspect-ratio: 4 / 5; border-radius: 3px; background: repeating-linear-gradient(135deg, #F7EBD6 0 12px, #F2E3C9 12px 24px); display: grid; place-items: center; font: 600 22px/1.15 var(--hand); color: var(--ink-2); text-align: center; padding: 16px; }
+.polaroid .ph:has(img) { padding: 0; overflow: hidden; }
+.polaroid .ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 700 22px/1 var(--hand); }
+.about-txt p { margin-top: 16px; font-size: 18.5px; }
+.about-txt h2 + p { margin-top: 22px; }
+.diploma { margin-top: 30px; display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 18px; align-items: center; }
+.doc { position: relative; aspect-ratio: 3 / 4; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 4px 4px 0 var(--ink); transform: rotate(3deg); padding: 14px 12px; }
+.doc i { display: block; height: 5px; border-radius: 3px; background: #E9DDC8; margin-top: 7px; }
+.doc i:first-child { margin: 4px auto 10px; width: 60%; height: 7px; background: #D8C8AC; }
+.doc svg { position: absolute; right: -14px; bottom: -14px; }
+.diploma b { display: block; font: 800 22px/1.15 var(--hand); }
+.diploma span { display: block; margin-top: 4px; color: var(--ink-2); font-size: 16px; }
+.diploma em { font-style: normal; color: var(--tomato-d); font-weight: 700; }
 
-/* методика */
-.method-in { display: grid; gap: 22px; align-items: center; }
-.eight { display: flex; align-items: center; gap: 8px; }
-.eight span { font: 600 clamp(104px, 30vw, 160px)/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 5px 0 var(--d), 0 6px 0 var(--d), 0 12px 14px rgba(31, 26, 30, .2); }
+/* путь занятий как настольная игра */
+.path { position: relative; margin-top: 40px; display: grid; gap: 54px; }
+.path::before { content: ''; position: absolute; left: 50px; top: 40px; bottom: 40px; border-left: 4px dashed var(--ink); opacity: .35; }
+.stop { position: relative; display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 18px; align-items: center; }
+.tile { position: relative; z-index: 1; width: 100px; height: 100px; border-radius: 22px; border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); display: grid; place-items: center; }
+.stop:nth-child(1) .tile { background: var(--sun); transform: rotate(-5deg); }
+.stop:nth-child(2) .tile { background: var(--green); transform: rotate(4deg); }
+.stop:nth-child(3) .tile { background: var(--blue); transform: rotate(-3deg); }
+.stop h3 { font: 800 24px/1.15 var(--hand); }
+.stop p { margin-top: 6px; color: var(--ink-2); }
+.pawn { position: absolute; z-index: 2; left: 64px; top: -34px; }
+
+/* цена: бирка и шесть парт */
+.price-in { display: grid; gap: 36px; margin-top: 8px; }
+.tag { position: relative; justify-self: start; margin-top: 30px; padding: 30px 34px 28px 64px; background: var(--sun); border: 2.5px solid var(--ink); border-radius: 18px 26px 26px 18px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-4deg); clip-path: none; }
+.tag::before { content: ''; position: absolute; left: 22px; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%; background: var(--cream); border: 2.5px solid var(--ink); }
+.tag svg { position: absolute; left: -66px; top: 50%; margin-top: -60px; }
+.tag b { display: block; font: 800 clamp(52px, 15vw, 88px)/1 var(--hand); white-space: nowrap; }
+.tag span { display: block; margin-top: 6px; font-weight: 600; }
+.tag .t2 { margin-top: 12px; padding-top: 10px; border-top: 2px dashed rgba(34, 29, 61, .4); font-weight: 700; }
+.legal { margin-top: 18px; max-width: 30em; font-size: 15px; color: var(--ink-2); }
+.msgs .max { flex-basis: 100%; margin-top: 4px; font-size: 16px; color: rgba(255, 255, 255, .88); }
+.msgs .max a { color: #fff; font-weight: 700; }
+.method-in { display: grid; gap: 26px; align-items: center; }
+.eight { display: flex; align-items: center; gap: 6px; }
+.eight span { font: 600 clamp(110px, 32vw, 170px)/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 5px 0 var(--d), 0 6px 0 var(--d), 0 12px 14px rgba(34, 29, 61, .25); }
 .eight span:first-child { rotate: -6deg; } .eight span:last-child { rotate: 7deg; }
-.eight i { font: 600 48px/1 var(--sans); font-style: normal; color: var(--ink-2); }
-.mname { margin-top: 10px; font: 650 clamp(20px, 5.4vw, 26px)/1.25 var(--sans); color: var(--plum); letter-spacing: -0.01em; }
+.eight i { font: 800 56px/1 var(--hand); font-style: normal; color: var(--ink); }
+.mname { margin-top: 12px; font: 700 clamp(22px, 6vw, 30px)/1.15 var(--hand); color: var(--tomato-d); }
+.price-txt p { font-size: 18.5px; }
+.desks { margin-top: 22px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-width: 460px; }
+.desks figure { text-align: center; }
+.desks svg { display: block; width: 100%; height: auto; }
+.seats { margin-top: 12px; font: 700 21px/1.2 var(--hand); }
+.price-txt .btn { margin-top: 26px; }
 
-/* как проходят занятия */
-.steps { margin-top: 34px; display: grid; gap: 0; border-top: 1px solid var(--line); }
-.step { padding: 20px 0 22px; border-bottom: 1px solid var(--line); }
-.step h3 { font: 650 20px/1.25 var(--sans); letter-spacing: -0.01em; }
-.step p { margin-top: 6px; color: var(--ink-2); }
+/* видео */
+.tabs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+.tabs button { min-height: 46px; padding: 0 16px; border: 2.5px solid var(--ink); border-radius: 12px; background: var(--paper); font: 700 16px/1 var(--sans); color: var(--ink); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+.tabs button.on { background: var(--ink); color: #fff; }
+.laptop { margin-top: 26px; max-width: 760px; }
+.screen { position: relative; aspect-ratio: 16 / 10; border: 2.5px solid var(--ink); border-radius: 18px 18px 6px 6px; background: var(--ink); padding: 12px; }
+.call { height: 100%; display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; }
+.call > div { position: relative; border-radius: 10px; display: grid; place-items: center; text-align: center; padding: 10px; font: 600 clamp(14px, 3.6vw, 19px)/1.2 var(--hand); color: rgba(255, 255, 255, .85); }
+.call .t { background: #3B3561; }
+.call .k { display: grid; grid-template-rows: 1fr 1fr; gap: 8px; padding: 0; background: none; place-items: stretch; }
+.call .k > div { position: relative; border-radius: 10px; background: #4A4470; display: grid; place-items: center; }
+.call .k > div:last-child { background: #FFC12E; color: var(--ink); }
+.call span.nm { position: absolute; left: 8px; bottom: 6px; font: 500 11px/1 var(--sans); color: rgba(255, 255, 255, .7); }
+.play { width: 64px; height: 64px; margin: 0 auto 10px; border-radius: 50%; background: var(--tomato); border: 2.5px solid #000; box-shadow: 3px 3px 0 #000; display: grid; place-items: center; color: #fff; padding-left: 3px; }
+.base { height: 18px; margin: 0 -5%; border: 2.5px solid var(--ink); border-top: 0; border-radius: 0 0 22px 22px; background: #D9D3EA; }
+.vnote { margin-top: 14px; font: 600 18px/1.3 var(--hand); color: var(--ink-2); }
 
-/* цена */
-.price-in { display: grid; gap: 30px; }
-.rates { border-top: 1px solid var(--line); }
-.rate { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.rate span { font-size: 18px; color: var(--ink-2); }
-.rate b { font: 700 clamp(30px, 9vw, 42px)/1 var(--sans); letter-spacing: -0.03em; white-space: nowrap; }
-.price-txt p { margin-top: 14px; }
-.price-txt .sub { margin-top: 14px; }
-.legal { font-size: 15px; color: var(--ink-2); }
-.price-in .btn { margin-top: 24px; }
-
-/* фото */
-.gal { margin: 28px -20px 0; padding: 0 20px 6px; display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
-.gal::-webkit-scrollbar { display: none; }
-.gal a { position: relative; flex: 0 0 auto; scroll-snap-align: start; display: block; height: min(300px, 76vw); border-radius: 14px; overflow: hidden; background: var(--tint); -webkit-tap-highlight-color: transparent; }
-.gal img { display: block; height: 100%; width: auto; object-fit: cover; transition: transform .4s ease-out; }
-.gal-n { display: none; position: absolute; inset: 0; place-items: center; background: rgba(31, 26, 30, .52); color: #fff; font: 650 24px/1 var(--sans); letter-spacing: -0.01em; }
-.gal-note { margin-top: 12px; font-size: 15px; color: var(--ink-2); }
-
-/* отзывы */
-.rating { margin-top: 12px; font-size: 18px; color: var(--ink-2); }
-.rating b { color: var(--ink); font-weight: 700; }
-.rating a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: rgba(31, 26, 30, .3); }
-.stars { color: #E8A33D; letter-spacing: 1px; }
-.revs { margin-top: 26px; display: grid; gap: 14px; }
-.rev { padding: 20px 20px 18px; border-radius: 16px; background: var(--tint); }
-.rev[hidden] { display: none; }
-.rev .txt { font-size: 17px; line-height: 1.55; }
-.rev .txt.clip { display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
-.rev .more { margin-top: 6px; padding: 6px 0; border: 0; background: none; font: 600 15.5px/1.2 var(--sans); color: var(--plum); cursor: pointer; }
-.rev .who { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; font-size: 15px; color: var(--ink-2); }
-.rev .who b { color: var(--ink); font-weight: 600; }
-.rev .reply { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #fff; font-size: 15.5px; color: var(--ink-2); }
-.rev .reply b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
-.rev .pics { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-.rev .pics a { display: block; width: 72px; height: 72px; border-radius: 10px; overflow: hidden; background: #fff; }
-.rev .pics img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.revs-more { margin-top: 18px; }
+/* отзывы на холодильнике */
+.fridge { position: relative; margin-top: 30px; padding: 44px 18px 30px; background: #DDF2EA; border: 2.5px solid var(--ink); border-radius: 30px; box-shadow: 6px 6px 0 var(--ink); }
+.fridge::before { content: ''; position: absolute; right: 26px; top: 26px; width: 12px; height: 90px; border-radius: 8px; background: #fff; border: 2.5px solid var(--ink); }
+.notes { display: grid; gap: 30px; }
+.note { position: relative; background: #fff; border: 2px solid rgba(34, 29, 61, .5); padding: 30px 20px 18px; border-radius: 4px; box-shadow: 0 10px 18px -12px rgba(34, 29, 61, .5); }
+.note:nth-child(1) { transform: rotate(-2deg); margin-right: 30px; }
+.note:nth-child(2) { transform: rotate(1.5deg); margin-left: 24px; background: #FFF6D6; }
+.note:nth-child(3) { transform: rotate(-1deg); margin-right: 18px; background: #FFE6EF; }
+.note .mag { top: -26px; left: 50%; transform: translateX(-50%) rotate(-8deg); font-size: 52px; }
+.note p { font: 500 19px/1.35 var(--hand); }
+.note i { display: block; height: 6px; border-radius: 3px; background: rgba(34, 29, 61, .1); margin-top: 10px; }
+.note i.s { width: 60%; }
+.snaps { margin-top: 30px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.snaps div { aspect-ratio: 1; background: #fff; border: 2px solid rgba(34, 29, 61, .5); border-radius: 4px; padding: 6px 6px 22px; }
+.snaps div span { display: grid; place-items: center; height: 100%; overflow-wrap: anywhere; background: repeating-linear-gradient(135deg, #F7EBD6 0 10px, #F2E3C9 10px 20px); font: 600 14px/1.1 var(--hand); color: var(--ink-2); text-align: center; padding: 4px; }
+.snaps div:nth-child(1) { transform: rotate(3deg); }
+.snaps div:nth-child(3) { transform: rotate(-3deg); }
 
 /* запись */
-.hello { position: relative; overflow: hidden; padding: 44px 22px 128px; border-radius: 24px; background: var(--plum); color: #fff; }
-.hello h2 { color: #fff; }
-.hello p { margin-top: 12px; font-size: 18px; color: rgba(255, 255, 255, .86); max-width: 27em; }
-.msgs { margin-top: 26px; display: grid; gap: 10px; }
-.msgs .btn { background: #fff; color: var(--ink); min-height: 58px; font-size: 17.5px; justify-content: flex-start; padding: 0 20px; }
-.msgs .btn:hover { background: #F7EEF2; }
-.msgs .btn svg { flex: none; }
-.msgs .tel { margin-top: 6px; font-size: 16px; color: rgba(255, 255, 255, .86); }
-.msgs .tel a { color: #fff; font-weight: 600; }
-.where { margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .2); font-size: 16px; color: rgba(255, 255, 255, .86); }
-.where b { color: #fff; font-weight: 600; }
-.where a { color: #fff; }
+.hello { margin-top: 0; padding: 56px 22px 40px; background: var(--blue); color: #fff; border: 2.5px solid var(--ink); border-radius: 30px; box-shadow: 6px 6px 0 var(--ink); position: relative; overflow: hidden; }
+.hello h2 { position: relative; }
+.hello p { position: relative; margin-top: 12px; font-size: 18.5px; color: rgba(255, 255, 255, .88); max-width: 26em; }
+.msgs { position: relative; margin-top: 26px; display: grid; gap: 14px; }
+.msgs a { min-height: 60px; font-size: 18px; }
+.msgs .tg { background: #2AABEE; color: #fff; }
+.msgs .wa { background: #1FAF5A; color: #fff; }
+.msgs .vk { background: #fff; color: #0077FF; }
+.hello { padding-bottom: 130px; }
 .hl { position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; gap: 2px; }
-.hl button { border: 0; background: none; padding: 0 2px; cursor: pointer; font: 600 clamp(64px, 19vw, 92px)/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 5px 0 var(--d), 0 9px 12px rgba(0, 0, 0, .3); -webkit-tap-highlight-color: transparent; }
+.hl button { border: 0; background: none; padding: 0 2px; cursor: pointer; font: 600 clamp(64px, 19vw, 96px)/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 5px 0 var(--d), 0 9px 12px rgba(0, 0, 0, .3); -webkit-tap-highlight-color: transparent; }
 .hl button:nth-child(odd) { rotate: -6deg; } .hl button:nth-child(even) { rotate: 5deg; }
 .js .hl button { opacity: 0; }
 .hl.in button { animation: drop .8s cubic-bezier(.3, 1.5, .6, 1) both; }
@@ -177,101 +206,98 @@ h1 .l2 { display: block; color: var(--plum); }
 .hl button.hop { animation: hop .5s cubic-bezier(.3, 1.5, .6, 1); opacity: 1; }
 @keyframes drop { 0% { opacity: 0; translate: 0 -260px; } 60% { opacity: 1; } 100% { opacity: 1; translate: 0 0; } }
 @keyframes hop { 0% { translate: 0 0; } 40% { translate: 0 -34px; } 100% { translate: 0 0; } }
-.foot { padding: 30px 20px 44px; text-align: center; color: var(--ink-2); font-size: 14px; line-height: 1.6; }
-
-/* просмотр фото */
-html.lb-open, html.lb-open body { overflow: hidden; }
-.lb { position: fixed; inset: 0; z-index: 1000; touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: contain; }
-.lb[hidden] { display: none; }
-.lb-bg { position: absolute; inset: 0; background: #0E0B0D; opacity: 0; transition: opacity .25s; }
-.lb.on .lb-bg { opacity: 1; }
-.lb-track { position: absolute; inset: 0; will-change: transform; }
-.lb-slide { position: absolute; top: 0; bottom: 0; width: 100%; display: grid; place-items: center; overflow: hidden; }
-.lb-slide img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; transform-origin: 0 0; will-change: transform; -webkit-user-drag: none; }
-.lb-ui { transition: opacity .2s; }
-.lb.calm .lb-ui { opacity: 0; pointer-events: none; }
-.lb-bar { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 6px) 6px 0 18px; color: #fff; font: 500 15px/1 var(--sans); text-shadow: 0 1px 3px rgba(0, 0, 0, .5); pointer-events: none; }
-.lb-bar button { pointer-events: auto; }
-.lb button.lb-btn { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: rgba(20, 16, 18, .42); color: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.lb button.lb-btn:hover { background: rgba(20, 16, 18, .7); }
-.lb-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 20px calc(env(safe-area-inset-bottom) + 18px); background: linear-gradient(transparent, rgba(0, 0, 0, .55)); color: #fff; font-size: 15.5px; line-height: 1.4; text-align: center; pointer-events: none; }
-.lb-cap:empty { display: none; }
-.lb-p, .lb-n { position: absolute; top: 50%; margin-top: -24px; display: none !important; }
-.lb-p { left: 18px; } .lb-n { right: 18px; }
-@media (hover: hover) and (pointer: fine) { .lb-p, .lb-n { display: grid !important; } .lb-p[disabled], .lb-n[disabled] { visibility: hidden; } .gal a:hover img { transform: scale(1.03); } }
+/* наклейки прилипают при прокрутке */
+.js .rv { opacity: 0; translate: 0 26px; scale: .94; }
+.js .rv.in { animation: stick .6s cubic-bezier(.34, 1.56, .64, 1) forwards; }
+@keyframes stick { to { opacity: 1; translate: 0 0; scale: 1; } }
+.foot { padding: 34px 20px 46px; text-align: center; color: var(--ink-2); font-size: 14.5px; }
+.contact { padding-bottom: 0; }
 
 @media (min-width: 900px) {
-  .top { padding-top: 24px; }
+  .top { margin-top: 26px; }
   .wrap { padding: 0 40px; }
-  .hero { min-height: max(680px, min(calc(100vh - 70px), 880px)); padding-bottom: 110px; }
-  .hero-txt { padding-top: 56px; }
+  .hero { min-height: max(680px, min(calc(100vh - 72px), 900px)); padding-bottom: 110px; }
+  .hero-txt { padding-top: 48px; }
   .hero-txt > * { max-width: 640px; }
   .lead { font-size: 20px; }
-  .hint { display: block; }
+  .hint { display: block; right: 9%; bottom: 340px; transform: rotate(-5deg); font-size: 22px; }
   .tip { display: none; }
-  .sec { padding-top: 140px; }
-  .about-in { grid-template-columns: 420px minmax(0, 1fr); gap: 80px; align-items: center; }
+  .sec { padding-top: 130px; }
+  .about-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; align-items: center; }
+  .polaroid { width: 100%; justify-self: start; }
   .about-txt { max-width: 580px; }
-  .facts div { grid-template-columns: 170px minmax(0, 1fr); gap: 20px; }
-  .method-in { grid-template-columns: 420px minmax(0, 1fr); gap: 80px; }
-  .eight { justify-content: center; }
-  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; border-top: 0; }
-  .step { border-bottom: 0; border-top: 1px solid var(--ink); padding-top: 18px; }
-  .price-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
-  .gal { margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; overflow: visible; }
-  .gal a { height: auto; aspect-ratio: 3 / 4; }
-  .gal a:nth-child(n+9) { display: none; }
-  .gal img { width: 100%; height: 100%; }
-  .gal a:nth-child(8) .gal-n { display: grid; }
-  .revs { display: block; columns: 3; column-gap: 16px; }
-  .rev { break-inside: avoid; margin-bottom: 16px; }
-  .hello { padding: 64px 64px 150px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 64px; align-items: start; }
+  .path { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 64px; }
+  .path::before { left: 60px; right: 18%; top: 50px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
+  .stop { grid-template-columns: 1fr; align-items: start; }
+  .stop:nth-child(2) { margin-top: 46px; }
+  .stop:nth-child(3) { margin-top: 12px; }
+  .stop p { max-width: 20em; }
+  .price-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 80px; align-items: center; }
+  .tag { justify-self: center; }
+  .video-in { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; align-items: center; }
+  .video-in .laptop { margin-top: 0; }
+  .fridge { padding: 64px 70px 50px 48px; }
+  .notes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .note:nth-child(n) { margin: 0; }
+  .note:nth-child(2) { margin-top: 26px; }
+  .snaps { grid-template-columns: repeat(3, 200px); gap: 26px; margin-top: 44px; }
+  .hello { padding: 70px 64px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 56px; align-items: center; }
   .msgs { margin-top: 0; }
+  .method-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; }
+  .eight { justify-content: center; }
+  .hello { padding-bottom: 150px; }
   .hl { justify-content: flex-start; left: 64px; bottom: 26px; }
 }
-@media (max-width: 520px) { .cta .btn { flex: 1; } }
-@media (prefers-reduced-motion: reduce) { .bubble, .hint, .lb-bg { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; transition: none; } .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
+@media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 34px; max-width: calc(100% - 38px); padding: 22px 16px 20px 46px; } .tag b { font-size: clamp(30px, 10.6vw, 60px); } .tag::before { left: 16px; } .tag svg { left: -50px; width: 60px; height: 90px; margin-top: -45px; } }
+@media (max-width: 420px) { .diploma { grid-template-columns: minmax(0, 1fr); } .diploma .doc { width: 96px; } }
+@media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .bubble, .hint { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
 </style>
 </head>
 <body>
 <header class="wrap top">
-  <a class="brand" href="#"><b>Ольга Теплова</b><small>Английский и&nbsp;немецкий, Новосибирск</small></a>
-  <a class="btn sm" href="#contact">Записаться</a>
+  <a class="brand" href="#"><b>Ольга</b><small>английский для детей и&nbsp;взрослых</small></a>
+  <a class="btn sm" href="#contact">Написать</a>
 </header>
 
 <section class="hero" id="hero">
   <div class="wrap hero-txt">
-    <h1 data-solid>Английский с&nbsp;нуля <span class="l2">для детей и&nbsp;взрослых</span></h1>
-    <p class="lead" data-solid>Учу говорить по‑английски с&nbsp;первых занятий. Довожу до&nbsp;уровня Intermediate и&nbsp;помогаю ребёнку уверенно чувствовать себя на&nbsp;уроках в&nbsp;школе.</p>
-    <div class="cta"><a class="btn" href="#contact" data-solid>Записаться на&nbsp;пробное</a></div>
-    <p class="meta" data-solid>Урок <b>60 или 90&nbsp;минут</b>, в&nbsp;кабинете или онлайн, от&nbsp;<b>1&nbsp;500&nbsp;₽</b>. <a href="#reviews">5,0 в&nbsp;2ГИС, 24&nbsp;отзыва</a></p>
-    <div class="game"><button class="snd" type="button" aria-pressed="true" data-solid><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="on" d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="on">Звук</span><span class="off">Без звука</span></button><span class="score" hidden data-solid>Собрано слов: <b>0</b> из <i>0</i></span><span class="tip">Нажми на&nbsp;букву, она&nbsp;скажет слово</span></div>
+    <p class="hi" data-solid>Hello! Я&nbsp;Ольга</p>
+    <h1 data-solid>Английский с&nbsp;нуля <span class="l2">весело, но&nbsp;всерьёз</span></h1>
+    <p class="lead" data-solid>Учу говорить по‑английски с&nbsp;нуля детей и&nbsp;взрослых. Довожу до&nbsp;уровня Intermediate и&nbsp;готовлю ребёнка к&nbsp;урокам в&nbsp;школе.</p>
+    <div class="cta"><a class="btn main" href="#contact" data-solid>Записаться на&nbsp;пробное</a><a class="btn" href="#about" data-solid>Обо мне</a></div>
+    <p class="meta" data-solid>Урок <b>60 или 90&nbsp;минут</b>, онлайн, от&nbsp;<b>1&nbsp;500&nbsp;₽</b></p>
+    <div class="game"><button class="snd" type="button" aria-pressed="true" data-solid><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="#FFC12E" stroke="#221D3D" stroke-width="2" stroke-linejoin="round"/><path class="on" d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/></svg><span class="on">Звук</span><span class="off">Без звука</span></button><span class="score" hidden data-solid>Собрано слов: <b>0</b> из <i>0</i></span><span class="tip">Нажми на&nbsp;букву, она&nbsp;заговорит<svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><path d="M4 3 C 6 16, 12 24, 22 29 M14 29 L23 30 L20 21" fill="none" stroke="#5B5674" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span></div>
   </div>
-  <p class="hint">Нажми на&nbsp;букву, она скажет слово по‑английски</p>
+  <p class="hint">Нажми на&nbsp;букву, она заговорит
+    <svg width="60" height="46" viewBox="0 0 60 46" aria-hidden="true"><path d="M6 4 C 10 22, 24 34, 46 38 M38 30 L47 38 L37 44" fill="none" stroke="#5B5674" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+  </p>
   <div class="floor"></div>
   <div class="toys" aria-hidden="true"></div>
 </section>
 
 <section class="sec about" id="about">
   <div class="wrap about-in">
-    <figure class="portrait rv"><img src="img/olga.webp" alt="Ольга Теплова" width="600" height="750" loading="lazy"></figure>
+    <figure class="polaroid rv"><span class="mag" style="--c:#FF5A36;--d:#C93A1B" aria-hidden="true">A</span><div class="ph"><img src="img/olga.webp" alt="Ольга" width="600" height="750" loading="lazy"></div><figcaption>Это я</figcaption></figure>
     <div class="about-txt">
-      <h2>Обо мне</h2>
-      <p>Меня зовут Ольга, я&nbsp;преподаватель английского и&nbsp;немецкого языков. Учу больше 8&nbsp;лет, занимаюсь с&nbsp;детьми разных возрастов и&nbsp;со&nbsp;взрослыми.</p>
-      <p>Моя специальность: английский с&nbsp;нуля до&nbsp;уровня Intermediate за&nbsp;короткий срок. Помогаю детям освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;учу заниматься дальше самостоятельно.</p>
+      <h2>Знакомьтесь</h2>
+      <svg class="scrib" viewBox="0 0 150 14" aria-hidden="true"><path d="M3 9 C 30 3, 60 13, 90 6 S 135 4, 147 8" fill="none" stroke="#FFC12E" stroke-width="6" stroke-linecap="round" /></svg>
+      <p>Меня зовут Ольга. Я&nbsp;преподаватель английского и&nbsp;немецкого языков, учу больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми разных возрастов и&nbsp;со&nbsp;взрослыми.</p>
+      <p>Моя специальность: английский с&nbsp;нуля до&nbsp;уровня Intermediate за&nbsp;короткий срок. Помогаю детям освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;учу заниматься дальше самостоятельно, без преподавателя.</p>
       <p>К&nbsp;каждому ученику подхожу индивидуально и&nbsp;подстраиваю программу под&nbsp;него.</p>
-      <dl class="facts">
-        <div><dt>Образование</dt><dd>Профильное педагогическое, преподаватель английского и&nbsp;немецкого языков</dd></div>
-        <div><dt>Опыт</dt><dd>Больше 8&nbsp;лет</dd></div>
-        <div><dt>Ученики</dt><dd>Дети с&nbsp;дошкольного возраста и&nbsp;взрослые</dd></div>
-      </dl>
+      <div class="diploma">
+        <div class="doc rv" aria-hidden="true"><i></i><i></i><i></i><i></i><i style="width:70%"></i>
+          <svg width="54" height="64" viewBox="0 0 54 64"><path d="M15 34 L9 62 L19 55 L25 63 L27 38 Z M39 34 L45 62 L35 55 L29 63 L27 38 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><circle cx="27" cy="25" r="20" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><circle cx="27" cy="25" r="12" fill="none" stroke="#FFFBF3" stroke-width="2.5" stroke-dasharray="3 3" /></svg>
+        </div>
+        <div><b>Профильное педагогическое образование</b><span><em>Преподаватель английского и&nbsp;немецкого языков.</em> Здесь будет фото диплома.</span></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="sec method">
   <div class="wrap method-in">
-    <div class="eight rv" aria-hidden="true"><span style="--c:#E5483B;--d:#B3301F">8</span><i>+</i><span style="--c:#2F6FE0;--d:#1E4FB0">1</span></div>
+    <div class="eight rv" aria-hidden="true"><span style="--c:#FF5A36;--d:#C93A1B">8</span><i>+</i><span style="--c:#3366FF;--d:#1D44C2">1</span></div>
     <div>
       <h2>Своя методика</h2>
       <p class="mname">«Восемь базовых моделей и&nbsp;один глагол»</p>
@@ -282,92 +308,81 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 
 <section class="sec how">
   <div class="wrap">
-    <h2>Как проходят занятия</h2>
-    <div class="steps">
-      <div class="step"><h3>Пробное занятие</h3><p>Знакомимся, смотрю, что ученик уже знает и&nbsp;как ему легче учиться.</p></div>
-      <div class="step"><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></div>
-      <div class="step"><h3>Постоянное расписание</h3><p>2 или 3 раза в&nbsp;неделю по&nbsp;60 или 90&nbsp;минут, в&nbsp;кабинете или онлайн. Дни и&nbsp;время закрепляем за&nbsp;учеником.</p></div>
+    <h2>Как всё устроено</h2>
+    <div class="path">
+      <div class="stop">
+        <svg class="pawn" width="40" height="56" viewBox="0 0 40 56" aria-hidden="true"><circle cx="20" cy="13" r="10" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><path d="M12 24 H28 L33 50 H7 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><rect x="3" y="48" width="34" height="7" rx="3" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /></svg>
+        <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M14 50 V6" stroke="#221D3D" stroke-width="3.5" stroke-linecap="round" /><path d="M15 8 C 24 4, 30 12, 42 8 V 28 C 30 32, 24 24, 15 28 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /></svg></div>
+        <div><h3>Пробное занятие</h3><p>Знакомимся, смотрю, что ученик уже знает и&nbsp;как ему легче учиться.</p></div>
+      </div>
+      <div class="stop">
+        <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 50 V22" stroke="#221D3D" stroke-width="3.5" stroke-linecap="round" /><path d="M27 30 C 14 32, 8 22, 10 12 C 22 12, 28 20, 27 30 Z M27 24 C 32 14, 40 10, 46 12 C 46 22, 38 28, 27 26 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /></svg></div>
+        <div><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></div>
+      </div>
+      <div class="stop">
+        <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><rect x="7" y="11" width="40" height="36" rx="6" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" /><path d="M7 21 H47 M17 6 V15 M37 6 V15" stroke="#221D3D" stroke-width="3" stroke-linecap="round" /><path d="M27 42 C 18 36, 18 28, 23 28 C 25 28, 27 30, 27 32 C 27 30, 29 28, 31 28 C 36 28, 36 36, 27 42 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2" stroke-linejoin="round" /></svg></div>
+        <div><h3>2 или 3 раза в&nbsp;неделю</h3><p>Закрепляем постоянные дни и&nbsp;время. Занятия по&nbsp;60 или 90&nbsp;минут, онлайн.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="sec price" id="price">
   <div class="wrap price-in">
+    <div class="tag rv">
+      <svg width="80" height="120" viewBox="0 0 80 120" aria-hidden="true"><path d="M78 60 C 50 58, 40 26, 20 20" fill="none" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /><path d="M18 2 L23 13 L35 14 L26 22 L29 34 L18 27 L7 34 L10 22 L1 14 L13 13 Z" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /></svg>
+      <b>1&nbsp;500&nbsp;₽</b><span>за занятие 60 минут</span><span class="t2">90 минут: 2&nbsp;250&nbsp;₽</span>
+    </div>
     <div class="price-txt">
-      <h2>Стоимость</h2>
-      <p class="sub">Одна цена для детей и&nbsp;взрослых. Лучше всего заниматься 2 или 3 раза в&nbsp;неделю.</p>
+      <h2>Одна цена для&nbsp;всех</h2>
+      <p class="sub">Дети и&nbsp;взрослые занимаются по&nbsp;одной цене. Лучше всего заниматься 2 или 3 раза в&nbsp;неделю.</p>
+      <div class="desks rv" aria-hidden="true">
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#FFD9B8" stroke="#221D3D" stroke-width="2.5" /><path d="M18 18 C 18 6, 42 6, 42 18 C 36 12, 24 12, 18 18 Z" fill="#8A5A3A" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#F2C7A0" stroke="#221D3D" stroke-width="2.5" /><path d="M17 20 C 14 4, 46 4, 43 20 C 40 10, 20 10, 17 20 Z M17 20 C 14 26, 14 30, 18 32 M43 20 C 46 26, 46 30, 42 32" fill="#F2B134" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#C98E62" stroke="#221D3D" stroke-width="2.5" /><path d="M18 16 C 20 6, 40 6, 42 16 C 36 11, 24 11, 18 16 Z" fill="#221D3D" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#FFD9B8" stroke="#221D3D" stroke-width="2.5" /><path d="M18 18 C 18 6, 42 6, 42 18 C 36 12, 24 12, 18 18 Z" fill="#D9541E" stroke="#221D3D" stroke-width="2" /><circle cx="44" cy="12" r="4" fill="#FF78AE" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="none" stroke="#1DB972" stroke-width="2.5" stroke-dasharray="4 4" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFFBF3" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+        <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="none" stroke="#1DB972" stroke-width="2.5" stroke-dasharray="4 4" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFFBF3" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
+      </div>
+      <p class="seats">Беру до&nbsp;6 учеников, сейчас свободно 2&nbsp;места</p>
+      <a class="btn main" href="#contact">Занять место</a>
       <p class="legal">Работаю как ИП: можно оплатить от&nbsp;юрлица, заключаю договор и&nbsp;даю акты выполненных работ.</p>
     </div>
-    <div>
-      <div class="rates">
-        <div class="rate"><span>Занятие 60&nbsp;минут</span><b>1&nbsp;500&nbsp;₽</b></div>
-        <div class="rate"><span>Занятие 90&nbsp;минут</span><b>2&nbsp;250&nbsp;₽</b></div>
+  </div>
+</section>
+
+<section class="sec video" id="video">
+  <div class="wrap">
+    <div class="video-in"><div>
+    <h2>Загляните на&nbsp;урок</h2>
+    <p class="sub">Короткие отрывки с&nbsp;настоящих занятий в&nbsp;Зуме. Выберите, кто учится.</p>
+    <div class="tabs" data-tabs><button class="on" data-v="малышами">Дошкольники</button><button data-v="школьником">Школьники</button><button data-v="взрослым">Взрослые</button></div>
+    </div>
+    <div class="laptop rv">
+      <div class="screen">
+        <div class="call">
+          <div class="t"><div><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30"><path d="M8.5 5.5v13l10.5-6.5z" fill="currentColor" /></svg></span><p>Тут будет отрывок урока с&nbsp;<span data-tab-out>малышами</span></p></div><span class="nm">Ольга</span></div>
+          <div class="k"><div><span class="nm">ученик</span></div><div><p>Hello!</p></div></div>
+        </div>
       </div>
-      <a class="btn" href="#contact">Записаться на&nbsp;пробное</a>
+      <div class="base"></div>
+    </div>
     </div>
   </div>
 </section>
 
-<section class="sec photos" id="photos">
+<section class="sec reviews">
   <div class="wrap">
-    <h2>Кабинет и занятия</h2>
-    <!-- gallery -->
-    <div class="gal">
-      <a href="img/g/01.webp" data-g="photos" data-w="1277" data-h="1600" data-cap="Кабинет на Немировича‑Данченко"><img src="img/g/01-s.webp" width="575" height="720" alt="Кабинет: доска, стол и ноутбук для онлайн‑уроков" loading="lazy" decoding="async"></a>
-      <a href="img/g/02.webp" data-g="photos" data-w="954" data-h="1381"><img src="img/g/02-s.webp" width="497" height="720" alt="Ольга с ученицей в кабинете" loading="lazy" decoding="async"></a>
-      <a href="img/g/03.webp" data-g="photos" data-w="1440" data-h="1015"><img src="img/g/03-s.webp" width="1021" height="720" alt="Ольга с ученицей" loading="lazy" decoding="async"></a>
-      <a href="img/g/04.webp" data-g="photos" data-w="1080" data-h="1369"><img src="img/g/04-s.webp" width="568" height="720" alt="Ольга с ученицей готовят пиццу" loading="lazy" decoding="async"></a>
-      <a href="img/g/05.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/05-s.webp" width="575" height="720" alt="Занятие со взрослым учеником" loading="lazy" decoding="async"></a>
-      <a href="img/g/06.webp" data-g="photos" data-w="960" data-h="1203"><img src="img/g/06-s.webp" width="575" height="720" alt="Занятие с ученицей у доски" loading="lazy" decoding="async"></a>
-      <a href="img/g/07.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/07-s.webp" width="575" height="720" alt="Ольга с учеником" loading="lazy" decoding="async"></a>
-      <a href="img/g/08.webp" data-g="photos" data-w="720" data-h="1203" data-cap="Онлайн‑урок"><img src="img/g/08-s.webp" width="431" height="720" alt="Ольга ведёт онлайн‑урок" loading="lazy" decoding="async"><span class="gal-n" aria-hidden="true">+9 фото</span></a>
-      <a href="img/g/09.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/09-s.webp" width="575" height="720" alt="Ученица раскладывает карточки" loading="lazy" decoding="async"></a>
-      <a href="img/g/10.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/10-s.webp" width="575" height="720" alt="Занятие в кабинете" loading="lazy" decoding="async"></a>
-      <a href="img/g/11.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/11-s.webp" width="575" height="720" alt="Ученица на уроке в кабинете" loading="lazy" decoding="async"></a>
-      <a href="img/g/12.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/12-s.webp" width="575" height="720" alt="Ученица на уроке в кабинете" loading="lazy" decoding="async"></a>
-      <a href="img/g/13.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/13-s.webp" width="575" height="720" alt="Ученица в кабинете" loading="lazy" decoding="async"></a>
-      <a href="img/g/14.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/14-s.webp" width="575" height="720" alt="Ученица выполняет задание" loading="lazy" decoding="async"></a>
-      <a href="img/g/15.webp" data-g="photos" data-w="959" data-h="1203"><img src="img/g/15-s.webp" width="574" height="720" alt="Ученица с тетрадью" loading="lazy" decoding="async"></a>
-      <a href="img/g/16.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/16-s.webp" width="575" height="720" alt="Ольга" loading="lazy" decoding="async"></a>
-      <a href="img/g/17.webp" data-g="photos" data-w="960" data-h="1203"><img src="img/g/17-s.webp" width="575" height="720" alt="Ученица с котом" loading="lazy" decoding="async"></a>
+    <h2>Что говорят родители</h2>
+    <p class="sub">Отзывы и&nbsp;фото с&nbsp;занятий переедут сюда из&nbsp;2ГИС.</p>
+    <div class="fridge rv">
+      <div class="notes">
+        <div class="note rv" style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">A</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
+        <div class="note rv" style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">B</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i class="s"></i></div>
+        <div class="note rv" style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">C</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
+      </div>
+      <div class="snaps"><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div></div>
     </div>
-    <!-- /gallery -->
-  </div>
-</section>
-
-<section class="sec reviews" id="reviews">
-  <div class="wrap">
-    <h2>Отзывы</h2>
-    <!-- reviews -->
-    <p class="rating"><span class="stars" aria-hidden="true">★★★★★</span> <b>5,0</b> в&nbsp;2ГИС, 24&nbsp;отзыва. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732/tab/reviews" target="_blank" rel="noopener">Открыть в&nbsp;2ГИС</a></p>
-    <div class="revs">
-      <article class="rev"><p class="txt">Ольга занималась с&nbsp;нашей дочерью английским. Умеет заинтересовать ребёнка, использует разные техники запоминания, имеет много интересных карточек и&nbsp;другие интерактивные материалы для детей. Дочка легко запомнила новые слова. Мы довольны. Рекомендую.</p><p class="who"><b>Александр З.</b><span>март 2026</span></p></article>
-      <article class="rev"><p class="txt clip">Ребёнок в&nbsp;школе перешёл в&nbsp;продвинутую группу английского и&nbsp;сразу же стал отставать. Решили попробовать дополнительные занятия, Ольгу выбрали по&nbsp;отзывам и&nbsp;локации. Почти год занятий, и&nbsp;школьная программа теперь по&nbsp;зубам. В какой-то момент Ольга говорит, цель достигнута, можно заниматься дальше, но следует поставить новую цель. Действительно, в&nbsp;школе оценки сплошные 4 и&nbsp;5. Это уважительное отношение и&nbsp;к ученикам, и&nbsp;к себе как профессионалу. Итого: пять звёзд, но поставил бы все семь.</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Yuri K.</b><span>февраль 2022</span></p></article>
-      <article class="rev"><p class="txt">Ольга Теплова прекрасный специалист, занималась онлайн английским с&nbsp;моей дочкой. Теперь рекомендую Ольгу всем знакомым. Понятно объясняет столько раз, сколько нужно ребенку для усвоения материала. Успехов и&nbsp;процветания, Ольга, в&nbsp;Вашем благородном деле!🌷</p><p class="who"><b>Евгения К.</b><span>февраль 2023</span></p></article>
-      <article class="rev"><p class="txt">Все уроки проходили на&nbsp;высшем уровне и&nbsp;позитивной обстановке. После пары занятий чувствуется результат. Дети с&nbsp;большим интересом изучают язык! Олечка очень терпелива, доброжелательна, готово помочь своему ученику всеми возможными способами. Мы планируем в&nbsp;этом году продолжить занятия. Успехов Вам!!!</p><p class="who"><b>Альбина С.</b><span>июль 2022</span></p></article>
-      <article class="rev"><p class="txt clip">Английский понадобился на&nbsp;работе, и&nbsp;тогда я понял что мои школьные знания не&nbsp;позволяют мне даже поддержать элементарный диалог. Также не&nbsp;понимал как строить предложения, хотя знал много английских слов. Долго не&nbsp;решался начать изучать, думал что это будет сложно и&nbsp;не интересно. Первое занятие у&nbsp;Ольги прошёл 3 марта, занимаюсь 3 раза в&nbsp;неделю по&nbsp;настоящее время. За этот период освоил логику построения предложений в&nbsp;английском языке, научится правильно задавить и&nbsp;отвечать на&nbsp;вопросы. Могу понять англоязычного и&nbsp;поддержать разговор. Также у&nbsp;Ольги замечательный учебный материал, по&nbsp;которому интересно учиться. Выражаю благодарность Ольге, продолжу занятия у&nbsp;неё.</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Артем К.</b><span>июль 2022</span></p></article>
-      <article class="rev"><p class="txt">Занималась с&nbsp;Ольгой английским около года с&nbsp;нуля. Сдала экзамен на&nbsp;уровень Intermediate. Очень рада. Использовала английский, когда ездила в&nbsp;Китай и&nbsp;Тайланд по&nbsp;работе и&nbsp;в отпуск. Преподаватель отличный, все рекомендую!</p><p class="who"><b>Татьяна Ш.</b><span>февраль 2021</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Начала учить английский с&nbsp;нуля полгода назад и&nbsp;уже разговариваю свободно в&nbsp;настоящем времени!! Очень счастлива! Спокойно общаюсь с&nbsp;родственниками за&nbsp;границей. Хочу учить язык дальше! Ольга очень грамотный преподаватель, разговаривает 90% на&nbsp;английском, остальное дает понять с&nbsp;помощью наглядного материала, мимики, жестов, движений и&nbsp;рисунков. 100% результат адаптации к&nbsp;английскому через 2-5 занятий. Разговаривать начали уже с&nbsp;первого урока, используя международные слова. Мне все нравится! Рекомендую!</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Ангелина М.</b><span>декабрь 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">У Ольги подход к&nbsp;преподаванию серьезный.<br>Ещё, что важно, человек она неравнодушный.<br>Рекомендую</p><p class="who"><b>Ирина Г.</b><span>июнь 2023</span></p></article>
-      <article class="rev" hidden><p class="txt">Занимаюсь уже больше года с&nbsp;Ольгой по&nbsp;скайпу из&nbsp;Германии. Учу английский для работы. Занятия мне нравятся, и&nbsp;главное эффект есть! Сдала intermediate в&nbsp;июле👌Ольга, спасибо Вам за&nbsp;мой прорыв! Стартовали мы в&nbsp;прошлом году с&nbsp;elementary 🤗</p><p class="who"><b>Anna K.</b><span>август 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Изучаю бизнес английский для работы. За год уровень с&nbsp;beginner поднялся до&nbsp;уверенного intermediate. Безумно рада результату! Термины в&nbsp;области экономики и&nbsp;управления использую ежедневно!</p><p class="who"><b>Софья К.</b><span>июль 2021</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Учила английский в&nbsp;школе, но сейчас для работы необходим английский в&nbsp;области экономики. Начали учить с&nbsp;Ольгой термины и&nbsp;параллельно работать над ошибками в&nbsp;произношении и&nbsp;грамматике. Сейчас спустя 6 месяцев чувствую себя уверенно при общении с&nbsp;поставщиками из&nbsp;Америки. Занятия максимально эффективные, рекомендую всем!</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Марина Ф.</b><span>январь 2021</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Здравствуйте! Мне очень нравятся занятия с&nbsp;Ольгой, рекомендую всем! Английским я учу уже много лет, но заговорить всегда была большая проблема. После занятий по&nbsp;разговорной речи я перестала бояться говорить , пытаюсь говорить как могу, а&nbsp;не думать как же надо грамматически правильно сказать. Спасибо 😀</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Olga T.</b><span>июнь 2021</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Ольга, спасибо Вам за&nbsp;занятия! Тяжело было найти своего преподавателя, чтобы все четко, структурированно и&nbsp;при этом разнообразно! Все вопросы разложила по&nbsp;полочкам и&nbsp;наконец все сдвинулось с&nbsp;мёртвой точки, все что путалось распуталось. Очень удобно, что есть удаленный формат через Zoom, боялась его, но в&nbsp;итоге в&nbsp;полном восторге! Рекомменд!</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Елизавета П.</b><span>ноябрь 2020</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Учу английский для себя, хочу более уверенно разговаривать. С Ольгой начал заниматься около 3 недель назад. Я знал достаточно много слов, но разговаривать особо не&nbsp;получалось, ошибок было много. После уже 2-х занятий с&nbsp;Ольгой, почувствовал уверенность в&nbsp;себе и&nbsp;начал говорить. В общей сложности мы уже за&nbsp;3 недели скорректировали ошибки в&nbsp;произношении, подтянули грамматику в&nbsp;прошедшем и&nbsp;перфектном временах. Язык для меня стал более понятным. Занятия продолжаем. Преподаватель отличный!</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Вольдемар Г.</b><span>ноябрь 2020</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Я работаю Product Manager-ом. Основная информация, как и&nbsp;во всем ИТ, доступна на&nbsp;зарубежных сайтах. Ранее мне хватало уровня английского для чтения. Но сейчас переодически приходиться переписываться и&nbsp;участвовать в&nbsp;звонках. Пришлось экстренно подтягивать (что и&nbsp;делаю до&nbsp;сих пор).<br>Удобно что можно заниматься дистанционно и&nbsp;в удобное для меня время.<br>Не давно даже получилось сменить работу (в том числе потому что уровень английского поднялся)<br>Рекомендую.</p><button class="more" type="button">Читать полностью</button><p class="who"><b>D G.</b><span>ноябрь 2021</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Ольга - это просто лучшее решение в&nbsp;моей жизни, не&nbsp;побоюсь этих слов. Дело в&nbsp;том, что Ольга привила мне большую любовь к&nbsp;английскому языку! У неё всегда были инновационные способы обучения.(например, для малышей - это игровые формы обучения; для взрослых построенное на&nbsp;ассоциациях) Она прекрасно понимает, что когда мы начинаем учить язык, то очень многое не&nbsp;понятно и&nbsp;не получается, но она поддержит, разберёт и&nbsp;объяснит все абсолютно доходчиво!</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Axinya U.</b><span>декабрь 2020</span></p></article>
-      <article class="rev" hidden><p class="txt clip">Очень давно хотели начать учить английский и&nbsp;вот в&nbsp;марте мы с&nbsp;сестрой пришли к&nbsp;Ольге ! 😍 Очень интересно и&nbsp;современно выстроены занятия , изучение даётся легко , домашки немного , в&nbsp;общем все как мы и&nbsp;хотели 😍 Ольга - очень приятная , добрая и&nbsp;милая девушка, с&nbsp;которой сразу нашли общий язык , а&nbsp;это очень важно и&nbsp;для преподавателя и&nbsp;для ученика ❤️</p><button class="more" type="button">Читать полностью</button><p class="who"><b>Катя Т.</b><span>июнь 2021</span></p></article>
-      <article class="rev" hidden><p class="txt">Ольга, спасибо огромное! На уроках всегда тёплая и&nbsp;дружелюбная обстановка, изучение языка происходит легко и&nbsp;радостно! Уже вижу результаты после месяца занятий! Всем рекомендую! Ольга прекрасный преподаватель!</p><p class="who"><b>Екатерина Д.</b><span>август 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Ольга , спасибо Вам за&nbsp;уроки!!! Мне всегда сложно давались языки, а&nbsp;с Вами было всё как то легко и&nbsp;интересно ! И всё получалось ! Теперь могу даже разговаривать на&nbsp;английском !!! Ещё раз Спасибо 🙏 ❤️</p><p class="who"><b>Елена Б.</b><span>август 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Доступно, с&nbsp;пользой, не&nbsp;дорого!!! Планирую продолжить занятия с&nbsp;Ольгой. За последние два месяца стала говорить и&nbsp;не бояться. Раньше могла только писать. Прогресс на&nbsp;лицо!))</p><p class="who"><b>Валерия Л.</b><span>август 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Очень компетентный педагог со&nbsp;знанием своего дела, интересный подход, и&nbsp;просто приятный человек.</p><p class="who"><b>Александра М.</b><span>август 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Хороший опытный преподаватель! Рядом с&nbsp;домом. Рекомендую.</p><p class="who"><b>V М.</b><span>декабрь 2020</span></p></article>
-      <article class="rev" hidden><p class="txt">Репетитор очень хороший добрый позитивный, всегда объяснит что и&nbsp;когда! Я советую с&nbsp;ним позаниматься 👍✨😉</p><p class="who"><b>Илья С.</b><span>апрель 2022</span></p></article>
-      <article class="rev" hidden><p class="txt">Очень легко и&nbsp;интересно заниматься. Желание изучать язык растёт после каждого занятия. Прогресс просто удивляет, недавно я говорил &quot;лангуаге&quot; сейчас понимаю некоторые фразы в&nbsp;песнях или видео на&nbsp;английском, причём не&nbsp;напрягая память, а&nbsp;с ходу, сам того не&nbsp;замечая. В общем рекомендую!</p><p class="who"><b>mr.BIGGIE L.</b><span>ноябрь 2020</span></p></article>
-    </div>
-    <button class="btn soft revs-more" type="button">Показать все 24 отзыва</button>
-    <!-- /reviews -->
   </div>
 </section>
 
@@ -375,31 +390,23 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   <div class="wrap">
     <div class="hello">
       <div>
-        <h2>Записаться на&nbsp;пробное занятие</h2>
-        <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Отвечу и&nbsp;предложу время.</p>
-        <p class="where"><b>Кабинет:</b> Новосибирск, ул.&nbsp;Немировича‑Данченко, 148/1, офис 318. Ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732" target="_blank" rel="noopener">Как пройти</a><br>Или онлайн по&nbsp;Зуму из&nbsp;любого города.</p>
+        <h2>Say hello!</h2>
+        <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Договоримся о&nbsp;пробном занятии.</p>
       </div>
-      <div class="msgs">
-        <a class="btn" href="https://t.me/world_on" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#29A9EB"/><path d="M5.4 11.7l11.2-4.3c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-3 5.4-4.9c.2-.2 0-.3-.3-.1l-6.7 4.2-2.9-.9c-.6-.2-.6-.6.1-.9z" fill="#fff"/></svg>Telegram</a>
-        <a class="btn" href="https://wa.me/79237888824" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M12 5.6a6.3 6.3 0 0 0-5.4 9.6l-.8 3 3.1-.8A6.3 6.3 0 1 0 12 5.6zm3.6 8.9c-.2.4-.9.8-1.3.9-.3 0-.7.1-2.2-.5-1.9-.8-3.1-2.7-3.2-2.8-.1-.1-.8-1-.8-1.9s.5-1.4.7-1.6c.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .4.3l.6 1.4c0 .1.1.2 0 .4l-.2.3-.3.3c-.1.1-.2.2-.1.4.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.6-.8c.1-.2.3-.2.5-.1l1.4.7c.2.1.3.1.4.2 0 .1 0 .5-.2.9z" fill="#fff"/></svg>WhatsApp</a>
-        <a class="btn" href="https://vk.com/id21353018" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#0077FF"/><path d="M12.8 17c-5 0-7.9-3.4-8-9.1h2.5c.1 4.2 1.9 5.9 3.4 6.3V7.9h2.4v3.6c1.4-.2 2.9-1.8 3.4-3.6h2.3c-.4 2.2-2 3.8-3.2 4.5 1.2.6 3 2 3.7 4.6h-2.6c-.5-1.7-1.9-3-3.6-3.2V17h-.3z" fill="#fff"/></svg>ВКонтакте</a>
-        <p class="tel">Или позвоните: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a>, этот номер есть и&nbsp;в&nbsp;MAX</p>
-      </div>
-      <div class="hl" aria-label="Hello"><button type="button" style="--c:#E5483B;--d:#B3301F">H</button><button type="button" style="--c:#F5B820;--d:#C98F00">E</button><button type="button" style="--c:#1FA463;--d:#147A48">L</button><button type="button" style="--c:#F48FB8;--d:#C9628D">L</button><button type="button" style="--c:#FFFFFF;--d:#C9B5C0">O</button></div>
+      <div class="msgs"><a class="btn tg" href="https://t.me/+79237888824" target="_blank" rel="noopener">Telegram</a><a class="btn wa" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn vk" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
+      <div class="hl" aria-label="Hello"><button type="button" style="--c:#FF5A36;--d:#C93A1B">H</button><button type="button" style="--c:#FFC12E;--d:#D99400">E</button><button type="button" style="--c:#1DB972;--d:#0F8A51">L</button><button type="button" style="--c:#FF78AE;--d:#D24F86">L</button><button type="button" style="--c:#FFFBF3;--d:#B9B2D6">O</button></div>
     </div>
   </div>
 </section>
-<footer class="foot">Ольга Теплова, преподаватель английского и&nbsp;немецкого языков<br>ИП Теплова О.&nbsp;Н., ОГРНИП 321547600176748</footer>
+<footer class="foot">Ольга, английский для&nbsp;детей и&nbsp;взрослых<br>ИП, ОГРНИП 321547600176748</footer>
 
 <script src="matter.min.js"></script>
 <script src="toys.js"></script>
-<script src="gallery.js"></script>
 <script>
-document.querySelectorAll('.rev .more').forEach(function (b) {
-  b.addEventListener('click', function () { b.previousElementSibling.classList.remove('clip'); b.remove(); });
-});
-document.querySelectorAll('.revs-more').forEach(function (b) {
-  b.addEventListener('click', function () { document.querySelectorAll('.rev[hidden]').forEach(function (r) { r.hidden = false; }); b.remove(); });
+document.querySelector('[data-tabs]').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  document.querySelector('[data-tab-out]').textContent = b.getAttribute('data-v');
 });
 </script>
 </body>
