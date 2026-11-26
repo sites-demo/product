@@ -79,6 +79,8 @@ h1 .l2 { display: block; color: var(--tomato); }
 .toy.sq > * { transform: scale(1.12, .86); transition-duration: .06s; }
 .toy.drag > * { transform: scale(1.1); }
 .toy.wig > * { animation: wig .7s ease-in-out; }
+.hero.quake .hero-txt, .hero.quake .floor { animation: quake .55s cubic-bezier(.36, .07, .19, .97); }
+@keyframes quake { 10%, 90% { translate: -2px 0; } 20%, 80% { translate: 4px 1px; } 30%, 50%, 70% { translate: -8px -1px; } 40%, 60% { translate: 8px 1px; } }
 @keyframes wig { 0%, 100% { rotate: 0deg; } 20% { rotate: -12deg; } 45% { rotate: 10deg; } 70% { rotate: -6deg; } }
 .toy span { display: block; font: 600 var(--fs, 96px)/.8 'Toy', sans-serif; padding: .06em .03em .02em; color: var(--c);
   text-shadow: calc(var(--sx) * .012em) calc(var(--sy) * .012em) 0 var(--d), calc(var(--sx) * .024em) calc(var(--sy) * .024em) 0 var(--d), calc(var(--sx) * .036em) calc(var(--sy) * .036em) 0 var(--d), calc(var(--sx) * .048em) calc(var(--sy) * .048em) 0 var(--d), calc(var(--sx) * .06em) calc(var(--sy) * .06em) 0 var(--d), calc(var(--sx) * .1em) calc(var(--sy) * .13em) .12em rgba(34, 29, 61, .25); }
@@ -235,7 +237,7 @@ h1 .l2 { display: block; color: var(--tomato); }
 @media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 34px; max-width: calc(100% - 38px); padding: 22px 16px 20px 46px; } .tag b { font-size: clamp(30px, 10.6vw, 60px); } .tag::before { left: 16px; } .tag svg { left: -50px; width: 60px; height: 90px; margin-top: -45px; } }
 @media (max-width: 420px) { .diploma { grid-template-columns: minmax(0, 1fr); } .diploma .doc { width: 96px; } }
 @media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .bubble, .hint { transition: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .bubble, .hint { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
 </style>
 </head>
 <body>
