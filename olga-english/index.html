@@ -4,10 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#FAF7F2">
 <script>document.documentElement.classList.add('js')</script>
-<script>try{var f=new URLSearchParams(location.search).get('fon');if(/^[abc]$/.test(f))document.documentElement.setAttribute('data-fon',f)}catch(e){}</script>
-<title>Ольга, английский для детей и взрослых</title>
+<title>Ольга Теплова, английский для детей и взрослых</title>
 <link rel="preload" href="f/shantell-sans-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="f/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -17,7 +16,7 @@
 @font-face { font-family: 'Onest'; src: url('f/onest-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; unicode-range: U+0000-00FF, U+2000-206F, U+20BD; }
 @font-face { font-family: 'Toy'; src: url('f/fredoka-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: block; }
 :root {
-  --cream: #FFFFFF; --paper: #FFFFFF; --ink: #221D3D; --ink-2: #5B5674;
+  --cream: #FAF7F2; --paper: #FFFFFF; --ink: #221D3D; --ink-2: #5B5674;
   --tomato: #FF5A36; --tomato-d: #C93A1B; --blue: #3366FF; --blue-d: #1D44C2; --sun: #FFC12E; --sun-d: #D99400;
   --green: #1DB972; --green-d: #0F8A51; --pink: #FF78AE; --violet: #8D63FF;
   --hand: 'Shantell', 'Onest', sans-serif; --sans: 'Onest', system-ui, sans-serif;
@@ -289,14 +288,11 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 @media (max-width: 420px) { .diploma { grid-template-columns: minmax(0, 1fr); } .diploma .doc { width: 96px; } }
 @media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .bubble, .hint, .lb-bg, .snaps a { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
-/* фон: тетрадь в клетку, на компьютере красное поле слева */
-body { background-image: linear-gradient(rgba(70, 120, 190, .16) 1px, transparent 1px), linear-gradient(90deg, rgba(70, 120, 190, .16) 1px, transparent 1px); background-size: 22px 22px; }
-@media (min-width: 900px) { body { background-image: linear-gradient(90deg, transparent calc(50% - 641px), rgba(232, 80, 80, .45) calc(50% - 641px), rgba(232, 80, 80, .45) calc(50% - 639px), transparent calc(50% - 639px)), linear-gradient(rgba(70, 120, 190, .16) 1px, transparent 1px), linear-gradient(90deg, rgba(70, 120, 190, .16) 1px, transparent 1px); background-size: auto, 22px 22px, 22px 22px; } }
-/* варианты фона для показа: ?fon=a тёплая бумага, ?fon=b бумага в бледную клетку, ?fon=c голубой */
-html[data-fon] body { background-image: none; }
-html[data-fon="a"] body { background-color: #F6F2EC; }
-html[data-fon="b"] body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60, 40, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(80, 60, 40, .07) 1px, transparent 1px); background-size: 26px 26px; }
-html[data-fon="c"] body { background-color: #EDF3FB; }
+/* фон: тёплая бумага в бледную клетку */
+body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60, 40, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(80, 60, 40, .07) 1px, transparent 1px); background-size: 26px 26px; }
+/* обводка и сдвинутая тень только у кнопок и предметов, у блоков мягкая тень */
+.polaroid, .doc, .tile, .fridge, .hello { border-color: transparent; box-shadow: 0 16px 36px -20px rgba(34, 29, 61, .45); }
+.hello { box-shadow: none; }
 </style>
 </head>
 <body>
@@ -307,9 +303,8 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
 
 <section class="hero" id="hero">
   <div class="wrap hero-txt">
-    <p class="hi" data-solid>Hello! Я&nbsp;Ольга</p>
-    <h1 data-solid>Английский с&nbsp;нуля <span class="l2">весело, но&nbsp;всерьёз</span></h1>
-    <p class="lead" data-solid>Учу говорить по‑английски с&nbsp;нуля детей и&nbsp;взрослых. Довожу до&nbsp;уровня Intermediate и&nbsp;готовлю ребёнка к&nbsp;урокам в&nbsp;школе.</p>
+    <h1 data-solid>Английский с&nbsp;нуля <span class="l2">для детей и&nbsp;взрослых</span></h1>
+    <p class="lead" data-solid>Учу говорить по‑английски с&nbsp;первых занятий. Довожу до&nbsp;уровня Intermediate и&nbsp;готовлю ребёнка к&nbsp;урокам в&nbsp;школе.</p>
     <div class="cta"><a class="btn main" href="#contact" data-solid>Записаться на&nbsp;пробное</a><a class="btn" href="#about" data-solid>Обо мне</a></div>
     <p class="meta" data-solid>Урок <b>60 или 90&nbsp;минут</b>, онлайн, от&nbsp;<b>1&nbsp;500&nbsp;₽</b></p>
     <div class="game"><button class="snd" type="button" aria-pressed="true" data-solid><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="#FFC12E" stroke="#221D3D" stroke-width="2" stroke-linejoin="round"/><path class="on" d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/></svg><span class="on">Звук</span><span class="off">Без звука</span></button><span class="score" hidden data-solid>Собрано слов: <b>0</b> из <i>0</i></span><span class="tip">Нажми на&nbsp;букву, она&nbsp;заговорит<svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><path d="M4 3 C 6 16, 12 24, 22 29 M14 29 L23 30 L20 21" fill="none" stroke="#5B5674" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span></div>
@@ -325,7 +320,7 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
   <div class="wrap about-in">
     <figure class="polaroid rv"><span class="mag" style="--c:#FF5A36;--d:#C93A1B" aria-hidden="true">A</span><div class="ph"><img src="img/olga.webp" alt="Ольга" width="600" height="750" loading="lazy"></div><figcaption>Это я</figcaption></figure>
     <div class="about-txt">
-      <h2>Знакомьтесь</h2>
+      <h2>Обо мне</h2>
       <svg class="scrib" viewBox="0 0 150 14" aria-hidden="true"><path d="M3 9 C 30 3, 60 13, 90 6 S 135 4, 147 8" fill="none" stroke="#FFC12E" stroke-width="6" stroke-linecap="round" /></svg>
       <p>Меня зовут Ольга. Я&nbsp;преподаватель английского и&nbsp;немецкого языков, учу больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми разных возрастов и&nbsp;со&nbsp;взрослыми.</p>
       <p>Моя специальность: английский с&nbsp;нуля до&nbsp;уровня Intermediate за&nbsp;короткий срок. Помогаю детям освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;учу заниматься дальше самостоятельно, без преподавателя.</p>
@@ -353,7 +348,7 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
 
 <section class="sec how">
   <div class="wrap">
-    <h2>Как всё устроено</h2>
+    <h2>Как проходят занятия</h2>
     <div class="path">
       <div class="stop">
         <svg class="pawn" width="40" height="56" viewBox="0 0 40 56" aria-hidden="true"><circle cx="20" cy="13" r="10" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><path d="M12 24 H28 L33 50 H7 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><rect x="3" y="48" width="34" height="7" rx="3" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /></svg>
@@ -399,7 +394,7 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
 <section class="sec video" id="video">
   <div class="wrap">
     <div class="video-in"><div>
-    <h2>Загляните на&nbsp;урок</h2>
+    <h2>Видео с&nbsp;уроков</h2>
     <p class="sub">Короткие отрывки с&nbsp;настоящих занятий в&nbsp;Зуме. Выберите, кто учится.</p>
     <div class="tabs" data-tabs><button class="on" data-v="малышами">Дошкольники</button><button data-v="школьником">Школьники</button><button data-v="взрослым">Взрослые</button></div>
     </div>
@@ -418,7 +413,7 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
 
 <section class="sec reviews" id="reviews">
   <div class="wrap">
-    <h2>Что говорят ученики и&nbsp;родители</h2>
+    <h2>Отзывы</h2>
     <p class="sub rating"><span class="stars" aria-hidden="true">★★★★★</span> <b>5,0</b> в&nbsp;2ГИС, 24&nbsp;отзыва. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732/tab/reviews" target="_blank" rel="noopener">Открыть в&nbsp;2ГИС</a></p>
     <div class="fridge rv">
       <div class="notes">
@@ -476,7 +471,7 @@ html[data-fon="c"] body { background-color: #EDF3FB; }
   <div class="wrap">
     <div class="hello">
       <div>
-        <h2>Say hello!</h2>
+        <h2>Записаться на&nbsp;пробное занятие</h2>
         <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Договоримся о&nbsp;пробном занятии.</p>
         <p class="where"><b>Кабинет:</b> Новосибирск, ул.&nbsp;Немировича‑Данченко, 148/1, офис 318. Ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732" target="_blank" rel="noopener">Как пройти</a>. Или онлайн по&nbsp;Зуму из&nbsp;любого города.</p>
       </div>
