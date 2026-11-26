@@ -128,6 +128,8 @@
   engine.gravity.y = 1.15;
   var world = engine.world;
   var items = [], byBody = {}, solids = [], W = 0, H = 0, running = false, last = 0;
+  // буквы, рамка экрана и строки текста сталкиваются по своим правилам: во время тряски буквы пролетают сквозь текст
+  var C_LETTER = 1, C_TEXT = 2, C_FRAME = 4, ceil = false, textBottom = 0, flying = 0;
   var kinds = [], seen = {}, seenN = 0, touched = false;
 
   function makeToy(kind, i) {
@@ -171,14 +173,18 @@
   function buildSolids() {
     if (solids.length) Composite.remove(world, solids);
     solids = [];
-    var floorH = 26, t = 200;
-    solids.push(Bodies.rectangle(W / 2, H - floorH + t / 2, W * 3, t, { isStatic: true, friction: 0.9 }));
-    solids.push(Bodies.rectangle(-t / 2, H / 2 - 400, t, H * 3, { isStatic: true }));
-    solids.push(Bodies.rectangle(W + t / 2, H / 2 - 400, t, H * 3, { isStatic: true }));
+    var floorH = 26, t = 200, frame = { category: C_FRAME };
+    solids.push(Bodies.rectangle(W / 2, H - floorH + t / 2, W * 3, t, { isStatic: true, friction: 0.9, collisionFilter: frame }));
+    solids.push(Bodies.rectangle(-t / 2, H / 2 - 400, t, H * 3, { isStatic: true, collisionFilter: frame }));
+    solids.push(Bodies.rectangle(W + t / 2, H / 2 - 400, t, H * 3, { isStatic: true, collisionFilter: frame }));
+    // потолок появляется после первой тряски, чтобы буквы отскакивали и не улетали за экран
+    if (ceil) solids.push(Bodies.rectangle(W / 2, -t / 2, W * 3, t, { isStatic: true, collisionFilter: frame }));
+    textBottom = 0;
     hero.querySelectorAll('[data-solid]').forEach(function (el) {
       lineRects(el).forEach(function (r) {
         if (r.w < 4 || r.h < 4) return;
-        solids.push(Bodies.rectangle(r.x + r.w / 2, r.y + r.h / 2, r.w, r.h, { isStatic: true, chamfer: { radius: Math.min(8, r.h / 3) }, friction: 0.8 }));
+        textBottom = Math.max(textBottom, r.y + r.h);
+        solids.push(Bodies.rectangle(r.x + r.w / 2, r.y + r.h / 2, r.w, r.h, { isStatic: true, chamfer: { radius: Math.min(8, r.h / 3) }, friction: 0.8, collisionFilter: { category: C_TEXT } }));
       });
     });
     Composite.add(world, solids);
@@ -220,7 +226,7 @@
         y = -140 - i * 75 - Math.random() * 60;
       }
       if (reduce) y = H - 120 - Math.random() * 60;
-      var opts = { restitution: isPic ? 0.55 : 0.32, friction: 0.6, frictionAir: 0.012, density: 0.002, angle: (Math.random() - 0.5) * 0.9 };
+      var opts = { restitution: isPic ? 0.55 : 0.32, friction: 0.6, frictionAir: 0.012, density: 0.002, angle: (Math.random() - 0.5) * 0.9, collisionFilter: { category: C_LETTER, mask: C_LETTER | C_TEXT | C_FRAME } };
       if (isPic && kind !== 'star') b = Bodies.circle(x, y, w / 2 * 0.94, opts);
       else if (isPic) b = Bodies.polygon(x, y, 5, w / 2 * 0.82, opts);
       else b = Bodies.rectangle(x, y, w * 0.9, h * 0.88, Object.assign({ chamfer: { radius: Math.min(w, h) * 0.16 } }, opts));
@@ -268,6 +274,7 @@
     var dt = Math.min(1000 / 60, t - (last || t)) || 1000 / 60;
     last = t;
     Engine.update(engine, dt);
+    if (flying) land();
     // если кто-то улетел за край, возвращаем на пол
     items.forEach(function (it) {
       var p = it.b.position;
@@ -360,61 +367,130 @@
     drag.it.el.classList.remove('drag');
     if (!drag.moved && Date.now() - drag.t < 600) { jump(drag.it); showWord(drag.it); }
     drag = null;
-    askMotion();
   }
   window.addEventListener('pointerup', release);
   window.addEventListener('pointercancel', release);
 
-  // ---------- тряска телефона: буквы разлетаются и перемешиваются ----------
+  // ---------- тряска телефона: буквы разлетаются по всему экрану и перемешиваются ----------
   var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
-  var canMotion = 'DeviceMotionEvent' in window && coarse && !reduce;
+  var canMotion = 'DeviceMotionEvent' in window && coarse;
   var needAsk = canMotion && typeof DeviceMotionEvent.requestPermission === 'function';
-  var motionOn = false, asked = false, lastKick = 0, lastG = null;
-  function listenMotion() { if (motionOn) return; motionOn = true; window.addEventListener('devicemotion', onMotion); }
-  // на айфоне доступ к датчику спрашивается после нажатия на букву
-  function askMotion() {
-    if (!needAsk || asked) return;
-    asked = true;
-    try { DeviceMotionEvent.requestPermission().then(function (st) { if (st === 'granted') listenMotion(); }).catch(function () {}); } catch (e) {}
+  var settled = !needAsk, asking = false, lastKick = 0, lastG = null, peaks = [], boomT = 0, gT = 0;
+  function listenMotion() {
+    window.removeEventListener('devicemotion', onMotion);
+    window.addEventListener('devicemotion', onMotion);
   }
+  // на айфоне Safari даёт датчик только после разрешения, спросить можно только по нажатию
+  function askMotion() {
+    if (settled || asking || !needAsk) return;
+    asking = true;
+    try {
+      DeviceMotionEvent.requestPermission().then(function (st) {
+        asking = false;
+        settled = true;
+        if (st !== 'granted') return;
+        listenMotion();
+        shakeHint();
+      }).catch(function () { asking = false; });
+    } catch (e) { asking = false; }
+  }
+  function shakeHint() {
+    if (!items.length) return;
+    clearTimeout(bt);
+    bubble.innerHTML = 'Shake it!<small>потряси телефон</small>';
+    bubble.style.left = W / 2 + 'px'; bubble.style.top = Math.max(70, H - 230) + 'px';
+    bubble.classList.add('on');
+    bt = setTimeout(function () { bubble.classList.remove('on'); }, 2200);
+  }
+
+  // буквы взрываются от центра кучи, на секунду становятся почти невесомыми и пролетают сквозь текст
+  function boom() {
+    var now = Date.now();
+    if (now - boomT < 1300) return;
+    boomT = now;
+    touched = true; clearTimeout(wt);
+    if (hint) hint.classList.remove('on');
+    if (!ceil) { ceil = true; buildSolids(); }
+    hero.classList.remove('quake'); void hero.offsetWidth; hero.classList.add('quake');
+    try { if (navigator.vibrate) navigator.vibrate([40, 30, 60]); } catch (e) {}
+    var cx = 0, cy = 0;
+    items.forEach(function (it) { cx += it.b.position.x; cy += it.b.position.y; });
+    cx /= items.length; cy /= items.length;
+    engine.gravity.y = 0.06;
+    clearTimeout(gT);
+    gT = setTimeout(function () { engine.gravity.y = 0.6; gT = setTimeout(function () { engine.gravity.y = 1.15; }, 350); }, 1100);
+    flying = 1;
+    items.forEach(function (it) {
+      var b = it.b;
+      if (drag && drag.it === it) return;
+      Sleeping.set(b, false);
+      b.collisionFilter.mask = C_LETTER | C_FRAME;
+      var dx = b.position.x - cx + (Math.random() - 0.5) * 60, dy = b.position.y - cy - 40;
+      var d = Math.sqrt(dx * dx + dy * dy) || 1, sp = 15 + Math.random() * 11;
+      Body.setVelocity(b, { x: dx / d * sp + (Math.random() - 0.5) * 8, y: Math.min(dy / d * sp, 0) - 9 - Math.random() * 12 });
+      Body.setAngularVelocity(b, (Math.random() - 0.5) * 0.7);
+      squash(it);
+    });
+  }
+  // упавшие ниже текста буквы снова на нём лежат
+  function land() {
+    if (engine.gravity.y < 1) return;
+    var left = 0;
+    items.forEach(function (it) {
+      var b = it.b;
+      if (b.collisionFilter.mask & C_TEXT) return;
+      if (b.position.y - it.h / 2 > textBottom + 4) b.collisionFilter.mask = C_LETTER | C_TEXT | C_FRAME;
+      else left++;
+    });
+    if (!left || Date.now() - boomT > 9000) flying = 0;
+  }
+
   function onMotion(e) {
     if (!running || !items.length) return;
-    var a = e.acceleration, ax, ay;
-    if (a && a.x != null) { ax = a.x; ay = a.y; }
+    var a = e.acceleration, ax, ay, az;
+    if (a && a.x != null) { ax = a.x; ay = a.y; az = a.z || 0; }
     else {
       // нет гироскопа: считаем рывок как разницу между замерами
       var g = e.accelerationIncludingGravity;
       if (!g || g.x == null) return;
-      if (!lastG) { lastG = { x: g.x, y: g.y }; return; }
-      ax = g.x - lastG.x; ay = g.y - lastG.y; lastG = { x: g.x, y: g.y };
+      if (!lastG) { lastG = { x: g.x, y: g.y, z: g.z || 0 }; return; }
+      ax = g.x - lastG.x; ay = g.y - lastG.y; az = (g.z || 0) - lastG.z; lastG = { x: g.x, y: g.y, z: g.z || 0 };
     }
-    // учитываем поворот экрана
+    var now = Date.now();
+    var m3 = Math.sqrt(ax * ax + ay * ay + az * az);
+    // сильная тряска: три резких рывка меньше чем за секунду
+    if (m3 > 11 && (!peaks.length || now - peaks[peaks.length - 1] > 90)) {
+      peaks.push(now);
+      peaks = peaks.filter(function (t) { return now - t < 900; });
+      if (peaks.length >= 3) { peaks = []; boom(); return; }
+    }
+    // лёгкая тряска: буквы дрожат и отстают от телефона
     var ang = ((screen.orientation && screen.orientation.angle) || window.orientation || 0) * Math.PI / 180;
     var sx = ax * Math.cos(ang) + ay * Math.sin(ang), sy = -ax * Math.sin(ang) + ay * Math.cos(ang);
-    var m = Math.sqrt(sx * sx + sy * sy), now = Date.now();
-    if (m < 4.5 || now - lastKick < 70) return;
+    var m = Math.sqrt(sx * sx + sy * sy);
+    if (m < 3 || now - lastKick < 60) return;
     lastKick = now;
     touched = true; clearTimeout(wt);
-    if (hint) hint.classList.remove('on');
-    var k = Math.min(m, 30);
+    var k = Math.min(m, 20);
     items.forEach(function (it) {
       var b = it.b;
+      if (drag && drag.it === it) return;
       Sleeping.set(b, false);
-      // буквы отстают от телефона, как настоящие, плюс немного случайности, чтобы перемешались
-      var vx = b.velocity.x - sx * 0.55 + (Math.random() - 0.5) * k * 0.5;
-      var vy = b.velocity.y + sy * 0.55 - Math.random() * k * 0.45;
+      var vx = b.velocity.x - sx * 0.45 + (Math.random() - 0.5) * k * 0.35;
+      var vy = b.velocity.y + sy * 0.45 - Math.random() * k * 0.3;
       var sp = Math.sqrt(vx * vx + vy * vy);
-      if (sp > 24) { vx *= 24 / sp; vy *= 24 / sp; }
-      Body.setVelocity(b, { x: vx, y: Math.max(vy, -18) });
-      Body.setAngularVelocity(b, b.angularVelocity + (Math.random() - 0.5) * 0.25);
-      if (Math.random() < 0.3) squash(it);
+      if (sp > 18) { vx *= 18 / sp; vy *= 18 / sp; }
+      Body.setVelocity(b, { x: vx, y: vy });
+      Body.setAngularVelocity(b, b.angularVelocity + (Math.random() - 0.5) * 0.2);
     });
   }
-  // слушаем сразу: где разрешение не нужно, тряска работает с первой секунды
-  if (canMotion) listenMotion();
-  if (canMotion && tip) {
-    tip.firstChild.nodeValue = 'Нажми на букву или потряси телефон';
-    tip.addEventListener('click', askMotion);
+  if (canMotion) {
+    listenMotion();
+    if (tip) tip.firstChild.nodeValue = 'Нажми на букву или потряси телефон';
+    // touchend и click Safari считает настоящим нажатием, по ним можно спросить доступ
+    box.addEventListener('touchend', askMotion, { passive: true });
+    if (tip) tip.addEventListener('click', askMotion);
+    if (sndBtn) sndBtn.addEventListener('click', askMotion);
   }
 
   function init() {
