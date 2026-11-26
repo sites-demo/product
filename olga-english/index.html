@@ -127,7 +127,7 @@ h1 .l2 { display: block; color: var(--tomato); }
 .diploma em { font-style: normal; color: var(--tomato-d); font-weight: 700; }
 
 /* путь занятий как настольная игра */
-.path { position: relative; margin-top: 40px; display: grid; gap: 54px; }
+.path { position: relative; margin-top: 54px; display: grid; gap: 54px; }
 .path::before { content: ''; position: absolute; left: 50px; top: 40px; bottom: 40px; border-left: 4px dashed var(--ink); opacity: .35; }
 .stop { position: relative; display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 18px; align-items: center; }
 .tile { position: relative; z-index: 1; width: 100px; height: 100px; border-radius: 22px; border: 2.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); display: grid; place-items: center; }
@@ -277,10 +277,8 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .polaroid { width: 100%; justify-self: start; }
   .about-txt { max-width: 580px; }
   .path { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 64px; }
-  .path::before { left: 60px; right: 18%; top: 50px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
-  .stop { grid-template-columns: 1fr; align-items: start; }
-  .stop:nth-child(2) { margin-top: 46px; }
-  .stop:nth-child(3) { margin-top: 12px; }
+  .path::before { left: 50px; right: calc((100% - 80px) / 3 - 50px); top: 48px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
+  .stop { grid-template-columns: 1fr; align-items: start; align-content: start; }
   .stop p { max-width: 20em; }
   .price-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 80px; align-items: center; }
   .tag { justify-self: center; }
