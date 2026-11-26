@@ -117,7 +117,7 @@
   var tip = hero.querySelector('.tip');
   var Engine = M.Engine, Bodies = M.Bodies, Composite = M.Composite, Body = M.Body, Constraint = M.Constraint, Sleeping = M.Sleeping, Events = M.Events;
 
-  var COLORS = [['#FF5A36', '#C93A1B'], ['#3366FF', '#1D44C2'], ['#FFC12E', '#D99400'], ['#1DB972', '#0F8A51'], ['#FF78AE', '#D24F86'], ['#8D63FF', '#6338D9']];
+  var COLORS = [['#E5483B', '#B3301F'], ['#2F6FE0', '#1E4FB0'], ['#F5B820', '#C98F00'], ['#1FA463', '#147A48'], ['#F48FB8', '#C9628D'], ['#8A5BE8', '#6338D9']];
   var SVG = {
     apple: '<svg viewBox="0 0 100 100"><path d="M50 30 C 30 16, 8 30, 12 56 C 16 82, 36 96, 50 88 C 64 96, 84 82, 88 56 C 92 30, 70 16, 50 30 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="4" stroke-linejoin="round"/><path d="M28 46 C 30 38, 36 34, 42 34" fill="none" stroke="#FFB199" stroke-width="5" stroke-linecap="round"/><path d="M50 30 C 50 22, 52 14, 56 8" fill="none" stroke="#221D3D" stroke-width="4" stroke-linecap="round"/><path d="M55 18 C 64 8, 78 10, 82 14 C 76 22, 64 24, 55 18 Z" fill="#1DB972" stroke="#221D3D" stroke-width="3.5" stroke-linejoin="round"/></svg>',
     ball: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#FFFBF3" stroke="#221D3D" stroke-width="4"/><path d="M50 6 C 30 26, 30 74, 50 94 C 34 90, 10 74, 8 46 C 18 26, 34 12, 50 6 Z" fill="#3366FF" stroke="#221D3D" stroke-width="3.5" stroke-linejoin="round"/><path d="M50 6 C 70 26, 70 74, 50 94 C 66 90, 90 74, 92 46 C 82 26, 66 12, 50 6 Z" fill="#FFC12E" stroke="#221D3D" stroke-width="3.5" stroke-linejoin="round"/></svg>',
