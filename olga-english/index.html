@@ -6,7 +6,17 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FAF7F2">
 <script>document.documentElement.classList.add('js')</script>
-<title>Ольга Теплова, английский для детей и взрослых</title>
+<title>Репетитор английского в Новосибирске и онлайн, Ольга Теплова</title>
+<meta name="description" content="Английский с нуля для детей и взрослых. Кабинет на Немировича‑Данченко или онлайн в Зуме. Урок от 1 500 ₽, рейтинг 5,0 в 2ГИС.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://www.studio-sait.ru/olga-english/">
+<meta property="og:title" content="Ольга Теплова, английский для детей и взрослых">
+<meta property="og:description" content="Английский с нуля в кабинете в Новосибирске или онлайн. Урок от 1 500 ₽, рейтинг 5,0 в 2ГИС.">
+<meta property="og:image" content="https://www.studio-sait.ru/olga-english/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="f/shantell-sans-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="f/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -139,12 +149,18 @@ h1 .l2 { display: block; color: var(--tomato); }
 .legal { margin-top: 18px; max-width: 30em; font-size: 15px; color: var(--ink-2); }
 .msgs .max { flex-basis: 100%; margin-top: 4px; font-size: 16px; color: rgba(255, 255, 255, .88); }
 .msgs .max a { color: #fff; font-weight: 700; }
-.method-in { display: grid; gap: 26px; align-items: center; }
-.eight { display: flex; align-items: center; gap: 6px; }
-.eight span { font: 600 clamp(110px, 32vw, 170px)/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 5px 0 var(--d), 0 6px 0 var(--d), 0 12px 14px rgba(34, 29, 61, .25); }
-.eight span:first-child { rotate: -6deg; } .eight span:last-child { rotate: 7deg; }
-.eight i { font: 800 56px/1 var(--hand); font-style: normal; color: var(--ink); }
-.mname { margin-top: 12px; font: 700 clamp(22px, 6vw, 30px)/1.15 var(--hand); color: var(--tomato-d); }
+.method-in { display: grid; gap: 48px; align-items: center; }
+.method-txt .sub { max-width: 34em; }
+.ways { list-style: none; margin: 28px 0 0; padding: 0; counter-reset: w; max-width: 36em; }
+.ways li { counter-increment: w; position: relative; padding: 18px 0 18px 46px; border-top: 1.5px solid rgba(34, 29, 61, .12); color: var(--ink-2); }
+.ways li:last-child { border-bottom: 1.5px solid rgba(34, 29, 61, .12); }
+.ways li::before { content: counter(w); position: absolute; left: 4px; top: 15px; font: 800 30px/1 var(--hand); color: var(--tomato); }
+.ways li:nth-child(2)::before { color: var(--blue); } .ways li:nth-child(3)::before { color: var(--green-d); }
+.ways b { display: block; margin-bottom: 4px; font: 800 21px/1.2 var(--hand); color: var(--ink); }
+.board { transform: rotate(3deg); }
+.polaroid a.ph { display: block; cursor: zoom-in; }
+.board .ph img { object-position: 50% 30%; }
+.stars { color: var(--sun-d); letter-spacing: 1px; }
 .price-txt p { font-size: 18.5px; }
 .desks { margin-top: 22px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-width: 460px; }
 .desks figure { text-align: center; }
@@ -279,15 +295,15 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .snaps-t { margin-top: 56px; }
   .hello { padding: 70px 64px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 56px; align-items: center; }
   .msgs { margin-top: 0; }
-  .method-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; }
-  .eight { justify-content: center; }
+  .method-in { grid-template-columns: minmax(0, 1fr) 380px; gap: 80px; }
   .hello { padding-bottom: 150px; }
   .hl { justify-content: flex-start; left: 64px; bottom: 26px; }
 }
 @media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 34px; max-width: calc(100% - 38px); padding: 22px 16px 20px 46px; } .tag b { font-size: clamp(30px, 10.6vw, 60px); } .tag::before { left: 16px; } .tag svg { left: -50px; width: 60px; height: 90px; margin-top: -45px; } }
 @media (max-width: 420px) { .diploma { grid-template-columns: minmax(0, 1fr); } .diploma .doc { width: 96px; } }
-@media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 899px) { .price-in, .about-in, .method-in { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .bubble, .hint, .lb-bg, .snaps a { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
+@media (max-width: 520px) { .ways li { padding-left: 38px; } .ways li::before { left: 0; } }
 /* фон: тёплая бумага в бледную клетку */
 body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60, 40, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(80, 60, 40, .07) 1px, transparent 1px); background-size: 26px 26px; }
 /* обводка и сдвинутая тень только у кнопок и предметов, у блоков мягкая тень */
@@ -297,16 +313,16 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
 </head>
 <body>
 <header class="wrap top">
-  <a class="brand" href="#"><b>Ольга</b><small>английский для детей и&nbsp;взрослых</small></a>
+  <a class="brand" href="#"><b>Ольга Теплова</b><small>преподаватель английского</small></a>
   <a class="btn sm" href="#contact">Написать</a>
 </header>
 
 <section class="hero" id="hero">
   <div class="wrap hero-txt">
     <h1 data-solid>Английский с&nbsp;нуля <span class="l2">для детей и&nbsp;взрослых</span></h1>
-    <p class="lead" data-solid>Учу говорить по‑английски с&nbsp;первых занятий. Довожу до&nbsp;уровня Intermediate и&nbsp;готовлю ребёнка к&nbsp;урокам в&nbsp;школе.</p>
+    <p class="lead" data-solid>Начинаем говорить с&nbsp;первого урока. Взрослых довожу до&nbsp;уровня Intermediate, детям помогаю справляться с&nbsp;английским в&nbsp;школе.</p>
     <div class="cta"><a class="btn main" href="#contact" data-solid>Записаться на&nbsp;пробное</a><a class="btn" href="#about" data-solid>Обо мне</a></div>
-    <p class="meta" data-solid>Урок <b>60 или 90&nbsp;минут</b>, онлайн, от&nbsp;<b>1&nbsp;500&nbsp;₽</b></p>
+    <p class="meta" data-solid><span class="stars" aria-hidden="true">★★★★★</span> <b>5,0</b> в&nbsp;2ГИС, 24&nbsp;отзыва<br>Урок от&nbsp;<b>1&nbsp;500&nbsp;₽</b>, в&nbsp;кабинете в&nbsp;Новосибирске или онлайн</p>
     <div class="game"><button class="snd" type="button" aria-pressed="true" data-solid><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="#FFC12E" stroke="#221D3D" stroke-width="2" stroke-linejoin="round"/><path class="on" d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/><path class="off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/></svg><span class="on">Звук</span><span class="off">Без звука</span></button><span class="score" hidden data-solid>Собрано слов: <b>0</b> из <i>0</i></span><span class="tip">Нажми на&nbsp;букву, она&nbsp;заговорит<svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><path d="M4 3 C 6 16, 12 24, 22 29 M14 29 L23 30 L20 21" fill="none" stroke="#5B5674" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span></div>
   </div>
   <p class="hint">Нажми на&nbsp;букву, она заговорит
@@ -322,27 +338,31 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
     <div class="about-txt">
       <h2>Обо мне</h2>
       <svg class="scrib" viewBox="0 0 150 14" aria-hidden="true"><path d="M3 9 C 30 3, 60 13, 90 6 S 135 4, 147 8" fill="none" stroke="#FFC12E" stroke-width="6" stroke-linecap="round" /></svg>
-      <p>Меня зовут Ольга. Я&nbsp;преподаватель английского и&nbsp;немецкого языков, учу больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми разных возрастов и&nbsp;со&nbsp;взрослыми.</p>
-      <p>Моя специальность: английский с&nbsp;нуля до&nbsp;уровня Intermediate за&nbsp;короткий срок. Помогаю детям освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;учу заниматься дальше самостоятельно, без преподавателя.</p>
-      <p>К&nbsp;каждому ученику подхожу индивидуально и&nbsp;подстраиваю программу под&nbsp;него.</p>
+      <p>Меня зовут Ольга Теплова. Я&nbsp;преподаватель английского и&nbsp;немецкого языков, учу больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми разных возрастов и&nbsp;со&nbsp;взрослыми.</p>
+      <p>Беру учеников с&nbsp;нуля и&nbsp;довожу до&nbsp;уровня Intermediate. Взрослые ученики в&nbsp;отзывах пишут, что на&nbsp;это у&nbsp;них ушёл примерно год. Детям помогаю освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;приучаю заниматься самостоятельно.</p>
+      <p>Программу собираю под задачу ученика: школьный учебник, переписка и&nbsp;звонки по&nbsp;работе, поездки, разговор с&nbsp;родственниками за&nbsp;границей.</p>
       <div class="diploma">
         <div class="doc rv" aria-hidden="true"><i></i><i></i><i></i><i></i><i style="width:70%"></i>
           <svg width="54" height="64" viewBox="0 0 54 64"><path d="M15 34 L9 62 L19 55 L25 63 L27 38 Z M39 34 L45 62 L35 55 L29 63 L27 38 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" stroke-linejoin="round" /><circle cx="27" cy="25" r="20" fill="#FF5A36" stroke="#221D3D" stroke-width="2.5" /><circle cx="27" cy="25" r="12" fill="none" stroke="#FFFBF3" stroke-width="2.5" stroke-dasharray="3 3" /></svg>
         </div>
-        <div><b>Профильное педагогическое образование</b><span><em>Преподаватель английского и&nbsp;немецкого языков.</em> Здесь будет фото диплома.</span></div>
+        <div><b>Профильное педагогическое образование</b><span><em>Преподаватель английского и&nbsp;немецкого языков</em></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec method">
+<section class="sec method" id="method">
   <div class="wrap method-in">
-    <div class="eight rv" aria-hidden="true"><span style="--c:#FF5A36;--d:#C93A1B">8</span><i>+</i><span style="--c:#3366FF;--d:#1D44C2">1</span></div>
-    <div>
-      <h2>Своя методика</h2>
-      <p class="mname">«Восемь базовых моделей и&nbsp;один глагол»</p>
-      <p class="sub">По&nbsp;ней ученик начинает говорить по‑английски с&nbsp;нуля. Учу через общение, поэтому говорим с&nbsp;первых занятий, а&nbsp;не&nbsp;только слушаем и&nbsp;пишем. Методику я&nbsp;проверила на&nbsp;24&nbsp;учениках.</p>
+    <div class="method-txt">
+      <h2>Как я учу</h2>
+      <p class="sub">Учу по&nbsp;коммуникативному методу, то&nbsp;есть через разговор. У&nbsp;меня есть своя методика «Восемь базовых моделей и&nbsp;один глагол», я&nbsp;проверила её на&nbsp;24&nbsp;учениках.</p>
+      <ol class="ways">
+        <li><b>Говорим с&nbsp;первого урока</b>Почти всё занятие идёт на&nbsp;английском. Новые слова объясняю картинками, жестами и&nbsp;на&nbsp;примерах.</li>
+        <li><b>Грамматика по&nbsp;схеме</b>По&nbsp;восьми базовым моделям ученик понимает, как строится английская фраза, и&nbsp;быстро начинает сам задавать вопросы и&nbsp;отвечать на&nbsp;них.</li>
+        <li><b>Детям игра, взрослым ассоциации</b>С&nbsp;детьми учим слова по&nbsp;карточкам и&nbsp;в&nbsp;игре. Взрослым объясняю через ассоциации и&nbsp;беру лексику из&nbsp;их работы.</li>
+      </ol>
     </div>
+    <figure class="polaroid board rv"><span class="mag" style="--c:#3366FF;--d:#1D44C2" aria-hidden="true">B</span><a class="ph" href="img/g/02.webp" data-g="board" data-w="954" data-h="1381" data-cap="Урок в кабинете"><img src="img/g/02-s.webp" alt="Ольга с ученицей в кабинете, на доске схема вопросов" width="497" height="720" loading="lazy" decoding="async"></a><figcaption>Урок в&nbsp;кабинете</figcaption></figure>
   </div>
 </section>
 
@@ -357,11 +377,11 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
       </div>
       <div class="stop">
         <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 50 V22" stroke="#221D3D" stroke-width="3.5" stroke-linecap="round" /><path d="M27 30 C 14 32, 8 22, 10 12 C 22 12, 28 20, 27 30 Z M27 24 C 32 14, 40 10, 46 12 C 46 22, 38 28, 27 26 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /></svg></div>
-        <div><h3>Первый месяц</h3><p>За&nbsp;месяц видна динамика. После него говорю, что подтягиваем и&nbsp;сколько это займёт.</p></div>
+        <div><h3>Первый месяц</h3><p>Через месяц уже видно, где пробелы. Говорю, что подтягиваем и&nbsp;сколько примерно это займёт.</p></div>
       </div>
       <div class="stop">
         <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><rect x="7" y="11" width="40" height="36" rx="6" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" /><path d="M7 21 H47 M17 6 V15 M37 6 V15" stroke="#221D3D" stroke-width="3" stroke-linecap="round" /><path d="M27 42 C 18 36, 18 28, 23 28 C 25 28, 27 30, 27 32 C 27 30, 29 28, 31 28 C 36 28, 36 36, 27 42 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2" stroke-linejoin="round" /></svg></div>
-        <div><h3>2 или 3 раза в&nbsp;неделю</h3><p>Закрепляем постоянные дни и&nbsp;время. Занятия по&nbsp;60 или 90&nbsp;минут, онлайн.</p></div>
+        <div><h3>Постоянное расписание</h3><p>2 или 3 раза в&nbsp;неделю в&nbsp;одни и&nbsp;те&nbsp;же дни. Занятие 60 или 90&nbsp;минут, в&nbsp;кабинете или в&nbsp;Зуме.</p></div>
       </div>
     </div>
   </div>
@@ -374,8 +394,8 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
       <b>1&nbsp;500&nbsp;₽</b><span>за занятие 60 минут</span><span class="t2">90 минут: 2&nbsp;250&nbsp;₽</span>
     </div>
     <div class="price-txt">
-      <h2>Одна цена для&nbsp;всех</h2>
-      <p class="sub">Дети и&nbsp;взрослые занимаются по&nbsp;одной цене. Лучше всего заниматься 2 или 3 раза в&nbsp;неделю.</p>
+      <h2>Стоимость</h2>
+      <p class="sub">Цена одна для детей и&nbsp;взрослых.</p>
       <div class="desks rv" aria-hidden="true">
         <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#FFD9B8" stroke="#221D3D" stroke-width="2.5" /><path d="M18 18 C 18 6, 42 6, 42 18 C 36 12, 24 12, 18 18 Z" fill="#8A5A3A" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
         <figure><svg viewBox="0 0 60 70"><circle cx="30" cy="20" r="12" fill="#F2C7A0" stroke="#221D3D" stroke-width="2.5" /><path d="M17 20 C 14 4, 46 4, 43 20 C 40 10, 20 10, 17 20 Z M17 20 C 14 26, 14 30, 18 32 M43 20 C 46 26, 46 30, 42 32" fill="#F2B134" stroke="#221D3D" stroke-width="2" /><rect x="6" y="38" width="48" height="10" rx="3" fill="#FFC12E" stroke="#221D3D" stroke-width="2.5" /><path d="M12 48 V66 M48 48 V66" stroke="#221D3D" stroke-width="2.5" stroke-linecap="round" /></svg></figure>
@@ -386,12 +406,12 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
       </div>
       <p class="seats">Беру до&nbsp;6 учеников, сейчас свободно 2&nbsp;места</p>
       <a class="btn main" href="#contact">Занять место</a>
-      <p class="legal">Работаю как ИП: можно оплатить от&nbsp;юрлица, заключаю договор и&nbsp;даю акты выполненных работ.</p>
+      <p class="legal">Работаю как ИП, поэтому можно оплатить от&nbsp;юрлица по&nbsp;договору с&nbsp;актами.</p>
     </div>
   </div>
 </section>
 
-<section class="sec video" id="video">
+<section class="sec video" id="video" hidden>
   <div class="wrap">
     <div class="video-in"><div>
     <h2>Видео с&nbsp;уроков</h2>
@@ -472,7 +492,7 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
     <div class="hello">
       <div>
         <h2>Записаться на&nbsp;пробное занятие</h2>
-        <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Договоримся о&nbsp;пробном занятии.</p>
+        <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Подберём удобное время.</p>
         <p class="where"><b>Кабинет:</b> Новосибирск, ул.&nbsp;Немировича‑Данченко, 148/1, офис 318. Ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732" target="_blank" rel="noopener">Как пройти</a>. Или онлайн по&nbsp;Зуму из&nbsp;любого города.</p>
       </div>
       <div class="msgs"><a class="btn tg" href="https://t.me/world_on" target="_blank" rel="noopener">Telegram</a><a class="btn wa" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn vk" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
@@ -480,7 +500,7 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
     </div>
   </div>
 </section>
-<footer class="foot">Ольга, английский для&nbsp;детей и&nbsp;взрослых<br>ИП, ОГРНИП 321547600176748</footer>
+<footer class="foot">Ольга Теплова, английский для&nbsp;детей и&nbsp;взрослых<br>ИП Теплова О.&nbsp;Н., ОГРНИП 321547600176748</footer>
 
 <script src="matter.min.js"></script>
 <script src="toys.js"></script>
