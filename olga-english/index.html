@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FFFFFF">
 <script>document.documentElement.classList.add('js')</script>
+<script>try{var f=new URLSearchParams(location.search).get('fon');if(/^[abc]$/.test(f))document.documentElement.setAttribute('data-fon',f)}catch(e){}</script>
 <title>Ольга, английский для детей и взрослых</title>
 <link rel="preload" href="f/shantell-sans-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="f/fredoka-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -291,6 +292,11 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 /* фон: тетрадь в клетку, на компьютере красное поле слева */
 body { background-image: linear-gradient(rgba(70, 120, 190, .16) 1px, transparent 1px), linear-gradient(90deg, rgba(70, 120, 190, .16) 1px, transparent 1px); background-size: 22px 22px; }
 @media (min-width: 900px) { body { background-image: linear-gradient(90deg, transparent calc(50% - 641px), rgba(232, 80, 80, .45) calc(50% - 641px), rgba(232, 80, 80, .45) calc(50% - 639px), transparent calc(50% - 639px)), linear-gradient(rgba(70, 120, 190, .16) 1px, transparent 1px), linear-gradient(90deg, rgba(70, 120, 190, .16) 1px, transparent 1px); background-size: auto, 22px 22px, 22px 22px; } }
+/* варианты фона для показа: ?fon=a тёплая бумага, ?fon=b бумага в бледную клетку, ?fon=c голубой */
+html[data-fon] body { background-image: none; }
+html[data-fon="a"] body { background-color: #F6F2EC; }
+html[data-fon="b"] body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60, 40, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(80, 60, 40, .07) 1px, transparent 1px); background-size: 26px 26px; }
+html[data-fon="c"] body { background-color: #EDF3FB; }
 </style>
 </head>
 <body>
