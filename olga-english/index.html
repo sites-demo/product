@@ -174,18 +174,32 @@ h1 .l2 { display: block; color: var(--tomato); }
 .fridge::before { content: ''; position: absolute; right: 26px; top: 26px; width: 12px; height: 90px; border-radius: 8px; background: #fff; border: 2.5px solid var(--ink); }
 .notes { display: grid; gap: 30px; }
 .note { position: relative; background: #fff; border: 2px solid rgba(34, 29, 61, .5); padding: 30px 20px 18px; border-radius: 4px; box-shadow: 0 10px 18px -12px rgba(34, 29, 61, .5); }
-.note:nth-child(1) { transform: rotate(-2deg); margin-right: 30px; }
-.note:nth-child(2) { transform: rotate(1.5deg); margin-left: 24px; background: #FFF6D6; }
-.note:nth-child(3) { transform: rotate(-1deg); margin-right: 18px; background: #FFE6EF; }
+.note:nth-child(3n+1) { transform: rotate(-2deg); margin-right: 30px; }
+.note:nth-child(3n+2) { transform: rotate(1.5deg); margin-left: 24px; background: #FFF6D6; }
+.note:nth-child(3n+3) { transform: rotate(-1deg); margin-right: 18px; background: #FFE6EF; }
+.note[hidden] { display: none; }
 .note .mag { top: -26px; left: 50%; transform: translateX(-50%) rotate(-8deg); font-size: 52px; }
-.note p { font: 500 19px/1.35 var(--hand); }
-.note i { display: block; height: 6px; border-radius: 3px; background: rgba(34, 29, 61, .1); margin-top: 10px; }
-.note i.s { width: 60%; }
-.snaps { margin-top: 30px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.snaps div { aspect-ratio: 1; background: #fff; border: 2px solid rgba(34, 29, 61, .5); border-radius: 4px; padding: 6px 6px 22px; }
-.snaps div span { display: grid; place-items: center; height: 100%; overflow-wrap: anywhere; background: repeating-linear-gradient(135deg, #F7EBD6 0 10px, #F2E3C9 10px 20px); font: 600 14px/1.1 var(--hand); color: var(--ink-2); text-align: center; padding: 4px; }
-.snaps div:nth-child(1) { transform: rotate(3deg); }
-.snaps div:nth-child(3) { transform: rotate(-3deg); }
+.note .txt { font: 400 16.5px/1.5 var(--sans); }
+.note .txt.clip { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 7; overflow: hidden; }
+.note .more { margin-top: 6px; padding: 6px 0; border: 0; background: none; font: 700 15.5px/1.2 var(--sans); color: var(--tomato-d); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.note .who { margin-top: 12px; font: 700 19px/1.2 var(--hand); }
+.note .who span { margin-left: 8px; font: 500 14.5px/1.2 var(--sans); color: var(--ink-2); }
+.rating .stars { color: var(--sun-d); letter-spacing: 1px; }
+.rating a { white-space: nowrap; }
+.notes-more { margin-top: 34px; text-align: center; }
+.notes-more[hidden] { display: none; }
+.btn.soft { background: #fff; color: var(--ink); }
+.snaps-t { margin-top: 44px; font: 700 22px/1.2 var(--hand); }
+.snaps { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 18px; }
+.snaps a { position: relative; display: block; background: #fff; border: 2px solid rgba(34, 29, 61, .5); border-radius: 4px; padding: 6px 6px 24px; box-shadow: 0 10px 18px -12px rgba(34, 29, 61, .5); -webkit-tap-highlight-color: transparent; transition: translate .2s; }
+.snaps a::before { content: ''; position: absolute; z-index: 1; top: -10px; left: 50%; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: var(--tomato); border: 2px solid var(--ink); box-shadow: 0 2px 0 var(--ink); }
+.snaps a:nth-child(4n+2)::before { background: var(--blue); } .snaps a:nth-child(4n+3)::before { background: var(--green); } .snaps a:nth-child(4n+4)::before { background: var(--sun); }
+.snaps a:nth-child(4n+1) { transform: rotate(3deg); } .snaps a:nth-child(4n+2) { transform: rotate(-2deg); } .snaps a:nth-child(4n+3) { transform: rotate(2deg); } .snaps a:nth-child(4n+4) { transform: rotate(-3deg); }
+.snaps a:nth-child(n+5) { display: none; }
+.snaps img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 2px; background: #F2E3C9; }
+.snap-n { position: absolute; inset: 6px 6px 24px; display: grid; place-items: center; border-radius: 2px; background: rgba(34, 29, 61, .55); color: #fff; font: 700 26px/1 var(--hand); }
+.where { font-size: 16.5px !important; }
+.where a { color: #fff; }
 
 /* запись */
 .hello { margin-top: 0; padding: 56px 22px 40px; background: var(--blue); color: #fff; border: 2.5px solid var(--ink); border-radius: 30px; box-shadow: 6px 6px 0 var(--ink); position: relative; overflow: hidden; }
@@ -212,6 +226,26 @@ h1 .l2 { display: block; color: var(--tomato); }
 @keyframes stick { to { opacity: 1; translate: 0 0; scale: 1; } }
 .foot { padding: 34px 20px 46px; text-align: center; color: var(--ink-2); font-size: 14.5px; }
 .contact { padding-bottom: 0; }
+/* просмотр фото */
+html.lb-open, html.lb-open body { overflow: hidden; }
+.lb { position: fixed; inset: 0; z-index: 1000; touch-action: none; user-select: none; -webkit-user-select: none; overscroll-behavior: contain; }
+.lb[hidden] { display: none; }
+.lb-bg { position: absolute; inset: 0; background: #0E0B0D; opacity: 0; transition: opacity .25s; }
+.lb.on .lb-bg { opacity: 1; }
+.lb-track { position: absolute; inset: 0; will-change: transform; }
+.lb-slide { position: absolute; top: 0; bottom: 0; width: 100%; display: grid; place-items: center; overflow: hidden; }
+.lb-slide img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; transform-origin: 0 0; will-change: transform; -webkit-user-drag: none; }
+.lb-ui { transition: opacity .2s; }
+.lb.calm .lb-ui { opacity: 0; pointer-events: none; }
+.lb-bar { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 6px) 6px 0 18px; color: #fff; font: 500 15px/1 var(--sans); text-shadow: 0 1px 3px rgba(0, 0, 0, .5); pointer-events: none; }
+.lb-bar button { pointer-events: auto; }
+.lb button.lb-btn { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: rgba(20, 16, 18, .42); color: #fff; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.lb button.lb-btn:hover { background: rgba(20, 16, 18, .7); }
+.lb-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 20px calc(env(safe-area-inset-bottom) + 18px); background: linear-gradient(transparent, rgba(0, 0, 0, .55)); color: #fff; font-size: 15.5px; line-height: 1.4; text-align: center; pointer-events: none; }
+.lb-cap:empty { display: none; }
+.lb-p, .lb-n { position: absolute; top: 50%; margin-top: -24px; display: none !important; }
+.lb-p { left: 18px; } .lb-n { right: 18px; }
+@media (hover: hover) and (pointer: fine) { .lb-p, .lb-n { display: grid !important; } .lb-p[disabled], .lb-n[disabled] { visibility: hidden; } .snaps a:hover { translate: 0 -4px; } }
 
 @media (min-width: 900px) {
   .top { margin-top: 26px; }
@@ -238,9 +272,11 @@ h1 .l2 { display: block; color: var(--tomato); }
   .video-in .laptop { margin-top: 0; }
   .fridge { padding: 64px 70px 50px 48px; }
   .notes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .notes { align-items: start; }
   .note:nth-child(n) { margin: 0; }
-  .note:nth-child(2) { margin-top: 26px; }
-  .snaps { grid-template-columns: repeat(3, 200px); gap: 26px; margin-top: 44px; }
+  .note:nth-child(3n+2) { margin-top: 26px; }
+  .snaps { grid-template-columns: repeat(4, 200px); gap: 30px; }
+  .snaps-t { margin-top: 56px; }
   .hello { padding: 70px 64px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 56px; align-items: center; }
   .msgs { margin-top: 0; }
   .method-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; }
@@ -251,7 +287,7 @@ h1 .l2 { display: block; color: var(--tomato); }
 @media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 34px; max-width: calc(100% - 38px); padding: 22px 16px 20px 46px; } .tag b { font-size: clamp(30px, 10.6vw, 60px); } .tag::before { left: 16px; } .tag svg { left: -50px; width: 60px; height: 90px; margin-top: -45px; } }
 @media (max-width: 420px) { .diploma { grid-template-columns: minmax(0, 1fr); } .diploma .doc { width: 96px; } }
 @media (max-width: 899px) { .price-in, .about-in { grid-template-columns: minmax(0, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .bubble, .hint { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .bubble, .hint, .lb-bg, .snaps a { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
 </style>
 </head>
 <body>
@@ -371,17 +407,58 @@ h1 .l2 { display: block; color: var(--tomato); }
   </div>
 </section>
 
-<section class="sec reviews">
+<section class="sec reviews" id="reviews">
   <div class="wrap">
-    <h2>Что говорят родители</h2>
-    <p class="sub">Отзывы и&nbsp;фото с&nbsp;занятий переедут сюда из&nbsp;2ГИС.</p>
+    <h2>Что говорят ученики и&nbsp;родители</h2>
+    <p class="sub rating"><span class="stars" aria-hidden="true">★★★★★</span> <b>5,0</b> в&nbsp;2ГИС, 24&nbsp;отзыва. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732/tab/reviews" target="_blank" rel="noopener">Открыть в&nbsp;2ГИС</a></p>
     <div class="fridge rv">
       <div class="notes">
-        <div class="note rv" style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">A</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
-        <div class="note rv" style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">B</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i class="s"></i></div>
-        <div class="note rv" style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">C</span><p>Здесь будет отзыв из&nbsp;2ГИС</p><i></i><i></i><i class="s"></i></div>
+        <div class="note rv" style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">A</span><p class="txt">Ольга занималась с&nbsp;нашей дочерью английским. Умеет заинтересовать ребёнка, использует разные техники запоминания, имеет много интересных карточек и&nbsp;другие интерактивные материалы для детей. Дочка легко запомнила новые слова. Мы довольны. Рекомендую.</p><p class="who">Александр З.<span>март 2026</span></p></div>
+        <div class="note rv" style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">B</span><p class="txt clip">Ребёнок в&nbsp;школе перешёл в&nbsp;продвинутую группу английского и&nbsp;сразу же стал отставать. Решили попробовать дополнительные занятия, Ольгу выбрали по&nbsp;отзывам и&nbsp;локации. Почти год занятий, и&nbsp;школьная программа теперь по&nbsp;зубам. В какой-то момент Ольга говорит, цель достигнута, можно заниматься дальше, но следует поставить новую цель. Действительно, в&nbsp;школе оценки сплошные 4 и&nbsp;5. Это уважительное отношение и&nbsp;к ученикам, и&nbsp;к себе как профессионалу. Итого: пять звёзд, но поставил бы все семь.</p><button class="more" type="button">Читать полностью</button><p class="who">Yuri K.<span>февраль 2022</span></p></div>
+        <div class="note rv" style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">C</span><p class="txt">Занималась с&nbsp;Ольгой английским около года с&nbsp;нуля. Сдала экзамен на&nbsp;уровень Intermediate. Очень рада. Использовала английский, когда ездила в&nbsp;Китай и&nbsp;Тайланд по&nbsp;работе и&nbsp;в отпуск. Преподаватель отличный, все рекомендую!</p><p class="who">Татьяна Ш.<span>февраль 2021</span></p></div>
+        <div class="note" hidden style="--c:#FFC12E;--d:#D99400"><span class="mag" aria-hidden="true">D</span><p class="txt">Ольга Теплова прекрасный специалист, занималась онлайн английским с&nbsp;моей дочкой. Теперь рекомендую Ольгу всем знакомым. Понятно объясняет столько раз, сколько нужно ребенку для усвоения материала. Успехов и&nbsp;процветания, Ольга, в&nbsp;Вашем благородном деле!🌷</p><p class="who">Евгения К.<span>февраль 2023</span></p></div>
+        <div class="note" hidden style="--c:#FF78AE;--d:#D24F86"><span class="mag" aria-hidden="true">E</span><p class="txt clip">Английский понадобился на&nbsp;работе, и&nbsp;тогда я понял что мои школьные знания не&nbsp;позволяют мне даже поддержать элементарный диалог. Также не&nbsp;понимал как строить предложения, хотя знал много английских слов. Долго не&nbsp;решался начать изучать, думал что это будет сложно и&nbsp;не интересно. Первое занятие у&nbsp;Ольги прошёл 3 марта, занимаюсь 3 раза в&nbsp;неделю по&nbsp;настоящее время. За этот период освоил логику построения предложений в&nbsp;английском языке, научится правильно задавить и&nbsp;отвечать на&nbsp;вопросы. Могу понять англоязычного и&nbsp;поддержать разговор. Также у&nbsp;Ольги замечательный учебный материал, по&nbsp;которому интересно учиться. Выражаю благодарность Ольге, продолжу занятия у&nbsp;неё.</p><button class="more" type="button">Читать полностью</button><p class="who">Артем К.<span>июль 2022</span></p></div>
+        <div class="note" hidden style="--c:#8D63FF;--d:#6338D9"><span class="mag" aria-hidden="true">F</span><p class="txt clip">Все уроки проходили на&nbsp;высшем уровне и&nbsp;позитивной обстановке. После пары занятий чувствуется результат. Дети с&nbsp;большим интересом изучают язык! Олечка очень терпелива, доброжелательна, готово помочь своему ученику всеми возможными способами. Мы планируем в&nbsp;этом году продолжить занятия. Успехов Вам!!!</p><button class="more" type="button">Читать полностью</button><p class="who">Альбина С.<span>июль 2022</span></p></div>
+        <div class="note" hidden style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">G</span><p class="txt clip">Начала учить английский с&nbsp;нуля полгода назад и&nbsp;уже разговариваю свободно в&nbsp;настоящем времени!! Очень счастлива! Спокойно общаюсь с&nbsp;родственниками за&nbsp;границей. Хочу учить язык дальше! Ольга очень грамотный преподаватель, разговаривает 90% на&nbsp;английском, остальное дает понять с&nbsp;помощью наглядного материала, мимики, жестов, движений и&nbsp;рисунков. 100% результат адаптации к&nbsp;английскому через 2-5 занятий. Разговаривать начали уже с&nbsp;первого урока, используя международные слова. Мне все нравится! Рекомендую!</p><button class="more" type="button">Читать полностью</button><p class="who">Ангелина М.<span>декабрь 2020</span></p></div>
+        <div class="note" hidden style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">H</span><p class="txt">У Ольги подход к&nbsp;преподаванию серьезный.<br>Ещё, что важно, человек она неравнодушный.<br>Рекомендую</p><p class="who">Ирина Г.<span>июнь 2023</span></p></div>
+        <div class="note" hidden style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">I</span><p class="txt">Занимаюсь уже больше года с&nbsp;Ольгой по&nbsp;скайпу из&nbsp;Германии. Учу английский для работы. Занятия мне нравятся, и&nbsp;главное эффект есть! Сдала intermediate в&nbsp;июле👌Ольга, спасибо Вам за&nbsp;мой прорыв! Стартовали мы в&nbsp;прошлом году с&nbsp;elementary 🤗</p><p class="who">Anna K.<span>август 2020</span></p></div>
+        <div class="note" hidden style="--c:#FFC12E;--d:#D99400"><span class="mag" aria-hidden="true">J</span><p class="txt">Изучаю бизнес английский для работы. За год уровень с&nbsp;beginner поднялся до&nbsp;уверенного intermediate. Безумно рада результату! Термины в&nbsp;области экономики и&nbsp;управления использую ежедневно!</p><p class="who">Софья К.<span>июль 2021</span></p></div>
+        <div class="note" hidden style="--c:#FF78AE;--d:#D24F86"><span class="mag" aria-hidden="true">K</span><p class="txt clip">Учила английский в&nbsp;школе, но сейчас для работы необходим английский в&nbsp;области экономики. Начали учить с&nbsp;Ольгой термины и&nbsp;параллельно работать над ошибками в&nbsp;произношении и&nbsp;грамматике. Сейчас спустя 6 месяцев чувствую себя уверенно при общении с&nbsp;поставщиками из&nbsp;Америки. Занятия максимально эффективные, рекомендую всем!</p><button class="more" type="button">Читать полностью</button><p class="who">Марина Ф.<span>январь 2021</span></p></div>
+        <div class="note" hidden style="--c:#8D63FF;--d:#6338D9"><span class="mag" aria-hidden="true">L</span><p class="txt clip">Здравствуйте! Мне очень нравятся занятия с&nbsp;Ольгой, рекомендую всем! Английским я учу уже много лет, но заговорить всегда была большая проблема. После занятий по&nbsp;разговорной речи я перестала бояться говорить , пытаюсь говорить как могу, а&nbsp;не думать как же надо грамматически правильно сказать. Спасибо 😀</p><button class="more" type="button">Читать полностью</button><p class="who">Olga T.<span>июнь 2021</span></p></div>
+        <div class="note" hidden style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">M</span><p class="txt clip">Ольга, спасибо Вам за&nbsp;занятия! Тяжело было найти своего преподавателя, чтобы все четко, структурированно и&nbsp;при этом разнообразно! Все вопросы разложила по&nbsp;полочкам и&nbsp;наконец все сдвинулось с&nbsp;мёртвой точки, все что путалось распуталось. Очень удобно, что есть удаленный формат через Zoom, боялась его, но в&nbsp;итоге в&nbsp;полном восторге! Рекомменд!</p><button class="more" type="button">Читать полностью</button><p class="who">Елизавета П.<span>ноябрь 2020</span></p></div>
+        <div class="note" hidden style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">N</span><p class="txt clip">Учу английский для себя, хочу более уверенно разговаривать. С Ольгой начал заниматься около 3 недель назад. Я знал достаточно много слов, но разговаривать особо не&nbsp;получалось, ошибок было много. После уже 2-х занятий с&nbsp;Ольгой, почувствовал уверенность в&nbsp;себе и&nbsp;начал говорить. В общей сложности мы уже за&nbsp;3 недели скорректировали ошибки в&nbsp;произношении, подтянули грамматику в&nbsp;прошедшем и&nbsp;перфектном временах. Язык для меня стал более понятным. Занятия продолжаем. Преподаватель отличный!</p><button class="more" type="button">Читать полностью</button><p class="who">Вольдемар Г.<span>ноябрь 2020</span></p></div>
+        <div class="note" hidden style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">O</span><p class="txt clip">Я работаю Product Manager-ом. Основная информация, как и&nbsp;во всем ИТ, доступна на&nbsp;зарубежных сайтах. Ранее мне хватало уровня английского для чтения. Но сейчас переодически приходиться переписываться и&nbsp;участвовать в&nbsp;звонках. Пришлось экстренно подтягивать (что и&nbsp;делаю до&nbsp;сих пор).<br>Удобно что можно заниматься дистанционно и&nbsp;в удобное для меня время.<br>Не давно даже получилось сменить работу (в том числе потому что уровень английского поднялся)<br>Рекомендую.</p><button class="more" type="button">Читать полностью</button><p class="who">D G.<span>ноябрь 2021</span></p></div>
+        <div class="note" hidden style="--c:#FFC12E;--d:#D99400"><span class="mag" aria-hidden="true">P</span><p class="txt clip">Ольга - это просто лучшее решение в&nbsp;моей жизни, не&nbsp;побоюсь этих слов. Дело в&nbsp;том, что Ольга привила мне большую любовь к&nbsp;английскому языку! У неё всегда были инновационные способы обучения.(например, для малышей - это игровые формы обучения; для взрослых построенное на&nbsp;ассоциациях) Она прекрасно понимает, что когда мы начинаем учить язык, то очень многое не&nbsp;понятно и&nbsp;не получается, но она поддержит, разберёт и&nbsp;объяснит все абсолютно доходчиво!</p><button class="more" type="button">Читать полностью</button><p class="who">Axinya U.<span>декабрь 2020</span></p></div>
+        <div class="note" hidden style="--c:#FF78AE;--d:#D24F86"><span class="mag" aria-hidden="true">Q</span><p class="txt clip">Очень давно хотели начать учить английский и&nbsp;вот в&nbsp;марте мы с&nbsp;сестрой пришли к&nbsp;Ольге ! 😍 Очень интересно и&nbsp;современно выстроены занятия , изучение даётся легко , домашки немного , в&nbsp;общем все как мы и&nbsp;хотели 😍 Ольга - очень приятная , добрая и&nbsp;милая девушка, с&nbsp;которой сразу нашли общий язык , а&nbsp;это очень важно и&nbsp;для преподавателя и&nbsp;для ученика ❤️</p><button class="more" type="button">Читать полностью</button><p class="who">Катя Т.<span>июнь 2021</span></p></div>
+        <div class="note" hidden style="--c:#8D63FF;--d:#6338D9"><span class="mag" aria-hidden="true">R</span><p class="txt">Ольга, спасибо огромное! На уроках всегда тёплая и&nbsp;дружелюбная обстановка, изучение языка происходит легко и&nbsp;радостно! Уже вижу результаты после месяца занятий! Всем рекомендую! Ольга прекрасный преподаватель!</p><p class="who">Екатерина Д.<span>август 2020</span></p></div>
+        <div class="note" hidden style="--c:#FF5A36;--d:#C93A1B"><span class="mag" aria-hidden="true">S</span><p class="txt">Ольга , спасибо Вам за&nbsp;уроки!!! Мне всегда сложно давались языки, а&nbsp;с Вами было всё как то легко и&nbsp;интересно ! И всё получалось ! Теперь могу даже разговаривать на&nbsp;английском !!! Ещё раз Спасибо 🙏 ❤️</p><p class="who">Елена Б.<span>август 2020</span></p></div>
+        <div class="note" hidden style="--c:#3366FF;--d:#1D44C2"><span class="mag" aria-hidden="true">T</span><p class="txt">Доступно, с&nbsp;пользой, не&nbsp;дорого!!! Планирую продолжить занятия с&nbsp;Ольгой. За последние два месяца стала говорить и&nbsp;не бояться. Раньше могла только писать. Прогресс на&nbsp;лицо!))</p><p class="who">Валерия Л.<span>август 2020</span></p></div>
+        <div class="note" hidden style="--c:#1DB972;--d:#0F8A51"><span class="mag" aria-hidden="true">U</span><p class="txt">Очень компетентный педагог со&nbsp;знанием своего дела, интересный подход, и&nbsp;просто приятный человек.</p><p class="who">Александра М.<span>август 2020</span></p></div>
+        <div class="note" hidden style="--c:#FFC12E;--d:#D99400"><span class="mag" aria-hidden="true">V</span><p class="txt">Хороший опытный преподаватель! Рядом с&nbsp;домом. Рекомендую.</p><p class="who">V М.<span>декабрь 2020</span></p></div>
+        <div class="note" hidden style="--c:#FF78AE;--d:#D24F86"><span class="mag" aria-hidden="true">W</span><p class="txt">Репетитор очень хороший добрый позитивный, всегда объяснит что и&nbsp;когда! Я советую с&nbsp;ним позаниматься 👍✨😉</p><p class="who">Илья С.<span>апрель 2022</span></p></div>
+        <div class="note" hidden style="--c:#8D63FF;--d:#6338D9"><span class="mag" aria-hidden="true">X</span><p class="txt clip">Очень легко и&nbsp;интересно заниматься. Желание изучать язык растёт после каждого занятия. Прогресс просто удивляет, недавно я говорил &quot;лангуаге&quot; сейчас понимаю некоторые фразы в&nbsp;песнях или видео на&nbsp;английском, причём не&nbsp;напрягая память, а&nbsp;с ходу, сам того не&nbsp;замечая. В общем рекомендую!</p><button class="more" type="button">Читать полностью</button><p class="who">mr.BIGGIE L.<span>ноябрь 2020</span></p></div>
       </div>
-      <div class="snaps"><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div><div><span>Фото с&nbsp;занятия</span></div></div>
+      <div class="notes-more"><button class="btn sm soft" type="button">Показать все 24 отзыва</button></div>
+      <p class="snaps-t">Фото с&nbsp;занятий и&nbsp;из&nbsp;кабинета</p>
+      <div class="snaps">
+        <a href="img/g/01.webp" data-g="photos" data-w="1277" data-h="1600" data-cap="Кабинет на Немировича‑Данченко"><img src="img/g/01-s.webp" width="575" height="720" alt="Кабинет: доска, стол и ноутбук для онлайн‑уроков" loading="lazy" decoding="async"></a>
+        <a href="img/g/02.webp" data-g="photos" data-w="954" data-h="1381"><img src="img/g/02-s.webp" width="497" height="720" alt="Ольга с ученицей в кабинете" loading="lazy" decoding="async"></a>
+        <a href="img/g/03.webp" data-g="photos" data-w="1440" data-h="1015"><img src="img/g/03-s.webp" width="1021" height="720" alt="Ольга с ученицей" loading="lazy" decoding="async"></a>
+        <a href="img/g/04.webp" data-g="photos" data-w="1080" data-h="1369"><img src="img/g/04-s.webp" width="568" height="720" alt="Ольга с ученицей готовят пиццу" loading="lazy" decoding="async"><span class="snap-n" aria-hidden="true">+13 фото</span></a>
+        <a href="img/g/05.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/05-s.webp" width="575" height="720" alt="Занятие со взрослым учеником" loading="lazy" decoding="async"></a>
+        <a href="img/g/06.webp" data-g="photos" data-w="960" data-h="1203"><img src="img/g/06-s.webp" width="575" height="720" alt="Занятие с ученицей у доски" loading="lazy" decoding="async"></a>
+        <a href="img/g/07.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/07-s.webp" width="575" height="720" alt="Ольга с учеником" loading="lazy" decoding="async"></a>
+        <a href="img/g/08.webp" data-g="photos" data-w="720" data-h="1203" data-cap="Онлайн‑урок"><img src="img/g/08-s.webp" width="431" height="720" alt="Ольга ведёт онлайн‑урок" loading="lazy" decoding="async"></a>
+        <a href="img/g/09.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/09-s.webp" width="575" height="720" alt="Ученица раскладывает карточки" loading="lazy" decoding="async"></a>
+        <a href="img/g/10.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/10-s.webp" width="575" height="720" alt="Занятие в кабинете" loading="lazy" decoding="async"></a>
+        <a href="img/g/11.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/11-s.webp" width="575" height="720" alt="Ученица на уроке в кабинете" loading="lazy" decoding="async"></a>
+        <a href="img/g/12.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/12-s.webp" width="575" height="720" alt="Ученица на уроке в кабинете" loading="lazy" decoding="async"></a>
+        <a href="img/g/13.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/13-s.webp" width="575" height="720" alt="Ученица в кабинете" loading="lazy" decoding="async"></a>
+        <a href="img/g/14.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/14-s.webp" width="575" height="720" alt="Ученица выполняет задание" loading="lazy" decoding="async"></a>
+        <a href="img/g/15.webp" data-g="photos" data-w="959" data-h="1203"><img src="img/g/15-s.webp" width="574" height="720" alt="Ученица с тетрадью" loading="lazy" decoding="async"></a>
+        <a href="img/g/16.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/16-s.webp" width="575" height="720" alt="Ольга" loading="lazy" decoding="async"></a>
+        <a href="img/g/17.webp" data-g="photos" data-w="960" data-h="1203"><img src="img/g/17-s.webp" width="575" height="720" alt="Ученица с котом" loading="lazy" decoding="async"></a>
+      </div>
     </div>
   </div>
 </section>
@@ -392,8 +469,9 @@ h1 .l2 { display: block; color: var(--tomato); }
       <div>
         <h2>Say hello!</h2>
         <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Договоримся о&nbsp;пробном занятии.</p>
+        <p class="where"><b>Кабинет:</b> Новосибирск, ул.&nbsp;Немировича‑Данченко, 148/1, офис 318. Ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. <a href="https://2gis.ru/novosibirsk/firm/70000001041726732" target="_blank" rel="noopener">Как пройти</a>. Или онлайн по&nbsp;Зуму из&nbsp;любого города.</p>
       </div>
-      <div class="msgs"><a class="btn tg" href="https://t.me/+79237888824" target="_blank" rel="noopener">Telegram</a><a class="btn wa" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn vk" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
+      <div class="msgs"><a class="btn tg" href="https://t.me/world_on" target="_blank" rel="noopener">Telegram</a><a class="btn wa" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn vk" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
       <div class="hl" aria-label="Hello"><button type="button" style="--c:#FF5A36;--d:#C93A1B">H</button><button type="button" style="--c:#FFC12E;--d:#D99400">E</button><button type="button" style="--c:#1DB972;--d:#0F8A51">L</button><button type="button" style="--c:#FF78AE;--d:#D24F86">L</button><button type="button" style="--c:#FFFBF3;--d:#B9B2D6">O</button></div>
     </div>
   </div>
@@ -402,11 +480,19 @@ h1 .l2 { display: block; color: var(--tomato); }
 
 <script src="matter.min.js"></script>
 <script src="toys.js"></script>
+<script src="gallery.js"></script>
 <script>
 document.querySelector('[data-tabs]').addEventListener('click', function (e) {
   var b = e.target.closest('button'); if (!b) return;
   this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
   document.querySelector('[data-tab-out]').textContent = b.getAttribute('data-v');
+});
+document.querySelectorAll('.note .more').forEach(function (b) {
+  b.addEventListener('click', function () { b.previousElementSibling.classList.remove('clip'); b.remove(); });
+});
+document.querySelector('.notes-more button').addEventListener('click', function () {
+  document.querySelectorAll('.note[hidden]').forEach(function (n) { n.hidden = false; });
+  this.parentNode.hidden = true;
 });
 </script>
 </body>
