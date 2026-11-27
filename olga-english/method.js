@@ -20,7 +20,8 @@
   var cur = 'where', idx = 0;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // голос браузера, английский; общий переключатель звука на первом экране тоже учитываем
+  // записанный голос: voice/m/<слово>-<номер>.mp3; если файл не загрузился, говорит браузер
+  var au = null, fileOk = !!window.Audio;
   var enVoice = null;
   function pickVoice() {
     if (!('speechSynthesis' in window)) return;
@@ -29,16 +30,33 @@
   }
   if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.addEventListener && speechSynthesis.addEventListener('voiceschanged', pickVoice); }
   function soundOn() { var b = document.querySelector('.snd'); return !b || b.getAttribute('aria-pressed') !== 'false'; }
-  function say(force) {
-    if (!force && !soundOn()) return;
+  function browserSay(text) {
     try {
       if (!('speechSynthesis' in window)) return;
       speechSynthesis.cancel();
-      var t = T[cur], u = new SpeechSynthesisUtterance(t.q + ' ' + t.a.replace('{}', t.s[idx][0]));
+      var u = new SpeechSynthesisUtterance(text);
       u.lang = enVoice ? enVoice.lang : 'en-GB'; if (enVoice) u.voice = enVoice;
       u.rate = 0.85; u.pitch = 1.1;
       speechSynthesis.speak(u);
     } catch (e) {}
+  }
+  function say(force) {
+    if (!force && !soundOn()) return;
+    var t = T[cur], text = t.q + ' ' + t.a.replace('{}', t.s[idx][0]);
+    try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+    if (!fileOk) { browserSay(text); return; }
+    try {
+      if (!au) {
+        au = new Audio();
+        au.preload = 'auto';
+        au.addEventListener('error', function () { fileOk = false; browserSay(au.dataset.text || ''); });
+      }
+      au.pause();
+      au.dataset.text = text;
+      au.src = 'voice/m/' + cur + '-' + idx + '.mp3';
+      var p = au.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) { fileOk = false; browserSay(text); }
   }
 
   function esc(x) { return x.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
