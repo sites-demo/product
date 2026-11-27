@@ -160,12 +160,36 @@ h1 .l2 { display: block; color: var(--tomato); }
 .ways b { display: block; margin-bottom: 4px; font: 800 21px/1.2 var(--hand); color: var(--ink); }
 .board { transform: rotate(3deg); }
 .qw { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 8px; max-width: 36em; }
-.qw li { display: inline-flex; align-items: baseline; gap: 6px; padding: 7px 12px 6px; background: var(--paper); border: 2px solid var(--c); border-radius: 12px; box-shadow: 0 6px 14px -10px rgba(34, 29, 61, .5); }
 .qw li:nth-child(odd) { rotate: -2deg; } .qw li:nth-child(even) { rotate: 1.5deg; }
+.qw button { display: inline-flex; align-items: baseline; gap: 6px; min-height: 40px; padding: 7px 12px 6px; background: var(--paper); border: 2px solid var(--c); border-radius: 12px; box-shadow: 0 6px 14px -10px rgba(34, 29, 61, .5); font: inherit; cursor: pointer; transition: transform .15s, background .15s, box-shadow .15s; -webkit-tap-highlight-color: transparent; }
+.qw button:hover { transform: translateY(-2px); }
+.qw button:active { transform: translateY(1px) scale(.97); }
 .qw b { font: 800 19px/1 var(--hand); color: var(--c); }
 .qw span { font-size: 14.5px; line-height: 1; color: var(--ink-2); }
-.ways .ex { display: block; margin-top: 8px; font: 600 17px/1.4 var(--hand); color: var(--ink); }
-.ways .ex u { text-decoration-color: var(--tomato); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.qw button[aria-pressed="true"] { background: var(--d, var(--c)); box-shadow: 3px 3px 0 var(--ink); border-color: var(--ink); transform: translateY(-2px); }
+.qw button[aria-pressed="true"] b, .qw button[aria-pressed="true"] span { color: #fff; }
+.qw button:focus-visible, .wb button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.wb { position: relative; max-width: 36em; margin: 18px 0 34px; padding: 18px 20px 18px; background: #fff; border: 2.5px solid var(--ink); border-radius: 16px; box-shadow: 5px 5px 0 var(--ink); }
+.wb::after { content: ''; position: absolute; left: 14%; right: 14%; bottom: -15px; height: 10px; border: 2.5px solid var(--ink); border-top: 0; border-radius: 0 0 8px 8px; background: #E6E3EE; }
+.wb-tip { font: 600 15px/1.25 var(--hand); color: var(--ink-2); }
+.wb-in { margin-top: 10px; min-height: 120px; }
+.wb-q { font: 700 clamp(22px, 6.4vw, 28px)/1.25 var(--hand); color: var(--ink); }
+.wb-q b { color: var(--c); }
+.wb-a { margin-top: 4px; font: 700 clamp(22px, 6.4vw, 28px)/1.3 var(--hand); color: var(--ink); }
+.wb-slot { padding: 0 2px; border: 0; background: none; font: inherit; color: var(--c); text-decoration: underline; text-decoration-color: var(--c); text-decoration-thickness: 3px; text-underline-offset: 6px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wb-ru { margin-top: 8px; font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
+.wb-ctl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.wb-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 2.5px solid var(--ink); border-radius: 12px; background: var(--paper); box-shadow: 3px 3px 0 var(--ink); font: 700 15px/1 var(--sans); color: var(--ink); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wb-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.wb-next { background: var(--c); color: #fff; }
+.wb.write .wb-q { animation: wb-write .5s steps(14, end) both; }
+.wb.write .wb-a { animation: wb-write .55s .3s steps(16, end) both; }
+.wb.write .wb-ru { animation: wb-fade .4s .7s both; }
+.wb-slot.pop { animation: wb-pop .35s ease-out; }
+@keyframes wb-write { from { clip-path: inset(-10% 100% -10% 0); } to { clip-path: inset(-10% 0 -10% 0); } }
+@keyframes wb-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wb-pop { 0% { opacity: 0; transform: translateY(8px) scale(.85); } 100% { opacity: 1; transform: none; } }
+.wb-slot { display: inline-block; }
 .polaroid a.ph { display: block; cursor: zoom-in; }
 .board .ph img { object-position: 50% 30%; }
 .stars { color: var(--sun-d); letter-spacing: 1px; }
@@ -308,7 +332,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 @media (max-width: 520px) { .cta .btn:not(.main) { display: none; } .cta .btn.main { flex: 1; } .tag { margin-left: 34px; max-width: calc(100% - 38px); padding: 22px 16px 20px 46px; } .tag b { font-size: clamp(30px, 10.6vw, 60px); } .tag::before { left: 16px; } .tag svg { left: -50px; width: 60px; height: 90px; margin-top: -45px; } }
 @media (max-width: 420px) { .diploma { grid-template-columns: 104px minmax(0, 1fr); gap: 14px; } }
 @media (max-width: 899px) { .price-in, .about-in, .method-in { grid-template-columns: minmax(0, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .bubble, .hint, .lb-bg, .snaps a { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .wb.write .wb-q, .wb.write .wb-a, .wb.write .wb-ru, .wb-slot.pop { animation: none; } .bubble, .hint, .lb-bg, .snaps a { transition: none; } .hero.quake .hero-txt, .hero.quake .floor { animation: none; } .js .rv { opacity: 1; translate: none; scale: none; } .js .rv.in, .hl.in button { animation: none; opacity: 1; } .js .hl button { opacity: 1; } }
 @media (max-width: 520px) { .ways li { padding-left: 38px; } .ways li::before { left: 0; } }
 /* фон: тёплая бумага в бледную клетку */
 body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60, 40, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(80, 60, 40, .07) 1px, transparent 1px); background-size: 26px 26px; }
@@ -367,18 +391,27 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
     <div class="method-txt">
       <h2>Как я учу</h2>
       <p class="sub">Учу по&nbsp;своей методике «8&nbsp;шаблонов и&nbsp;1&nbsp;глагол», я&nbsp;проверила её на&nbsp;24&nbsp;учениках. Берём один глагол to&nbsp;be и&nbsp;восемь вопросительных слов, на&nbsp;каждое слово свой шаблон предложения.</p>
-      <ul class="qw" lang="en">
-        <li style="--c:#FF5A36"><b>what</b><span lang="ru">что</span></li>
-        <li style="--c:#3366FF"><b>where</b><span lang="ru">где</span></li>
-        <li style="--c:#1DB972"><b>when</b><span lang="ru">когда</span></li>
-        <li style="--c:#D99400"><b>how</b><span lang="ru">как</span></li>
-        <li style="--c:#D24F86"><b>who</b><span lang="ru">кто</span></li>
-        <li style="--c:#8D63FF"><b>why</b><span lang="ru">почему</span></li>
-        <li style="--c:#FF5A36"><b>whose</b><span lang="ru">чей</span></li>
-        <li style="--c:#3366FF"><b>which</b><span lang="ru">который</span></li>
+      <ul class="qw" aria-label="Восемь вопросительных слов">
+        <li style="--c:#FF5A36;--d:#C93A1B"><button type="button" data-w="what" aria-pressed="false"><b lang="en">what</b><span>что</span></button></li>
+        <li style="--c:#3366FF;--d:#1D44C2"><button type="button" data-w="where" aria-pressed="true"><b lang="en">where</b><span>где</span></button></li>
+        <li style="--c:#1DB972;--d:#0F8A51"><button type="button" data-w="when" aria-pressed="false"><b lang="en">when</b><span>когда</span></button></li>
+        <li style="--c:#D99400;--d:#A36F00"><button type="button" data-w="how" aria-pressed="false"><b lang="en">how</b><span>как</span></button></li>
+        <li style="--c:#D24F86;--d:#B03A6C"><button type="button" data-w="who" aria-pressed="false"><b lang="en">who</b><span>кто</span></button></li>
+        <li style="--c:#8D63FF;--d:#6338D9"><button type="button" data-w="why" aria-pressed="false"><b lang="en">why</b><span>почему</span></button></li>
+        <li style="--c:#FF5A36;--d:#C93A1B"><button type="button" data-w="whose" aria-pressed="false"><b lang="en">whose</b><span>чей</span></button></li>
+        <li style="--c:#3366FF;--d:#1D44C2"><button type="button" data-w="which" aria-pressed="false"><b lang="en">which</b><span>который</span></button></li>
       </ul>
+      <div class="wb" style="--c:#1D44C2">
+        <p class="wb-tip">Нажмите на&nbsp;слово, и&nbsp;на&nbsp;доске появится его шаблон</p>
+        <div class="wb-in" aria-live="polite">
+          <p class="wb-q" lang="en"><b>Where</b> are you?</p>
+          <p class="wb-a" lang="en">I am <button class="wb-slot" type="button" aria-label="Поменять слово">at home</button>.</p>
+          <p class="wb-ru">Где ты? Я&nbsp;дома.</p>
+        </div>
+        <div class="wb-ctl"><button class="wb-btn wb-next" type="button">Поменять слово</button><button class="wb-btn wb-say" type="button"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="#FFC12E" stroke="#221D3D" stroke-width="2" stroke-linejoin="round"/><path d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="#221D3D" stroke-width="2" stroke-linecap="round"/></svg>Послушать</button></div>
+      </div>
       <ol class="ways">
-        <li><b>Меняем одно слово за&nbsp;раз</b>Сначала ученик рассказывает о&nbsp;себе: имя, профессия, хобби. Потом в&nbsp;той&nbsp;же фразе меняется только место, потом только время.<span class="ex" lang="en">I am <u>at home</u>. I am <u>in the park</u>. I am <u>on the plane</u>.</span></li>
+        <li><b>Меняем одно слово за&nbsp;раз</b>Сначала ученик рассказывает о&nbsp;себе: имя, профессия, хобби. Потом в&nbsp;той&nbsp;же фразе меняется только место, потом только время.</li>
         <li><b>Доводим до&nbsp;автоматизма</b>Спрашиваем друг друга и&nbsp;отвечаем, пока фраза не&nbsp;начнёт звучать без раздумий. Только после этого добавляем новый глагол.</li>
         <li><b>Один старт для всех</b>Ребёнок с&nbsp;6&nbsp;лет и&nbsp;взрослый начинают с&nbsp;одних и&nbsp;тех&nbsp;же шаблонов. Отличается только скорость, её подбираю под ученика.</li>
       </ol>
@@ -526,6 +559,7 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
 <script src="matter.min.js"></script>
 <script src="toys.js"></script>
 <script src="gallery.js"></script>
+<script src="method.js"></script>
 <script>
 document.querySelector('[data-tabs]').addEventListener('click', function (e) {
   var b = e.target.closest('button'); if (!b) return;
