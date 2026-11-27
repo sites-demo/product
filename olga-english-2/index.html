@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#FBFAF7">
-<script>document.documentElement.classList.add('js')</script>
+<script>document.documentElement.classList.add('js');(function(){var m=location.search.match(/[?&]f=(\d)/);document.documentElement.setAttribute('data-f',m?m[1]:'2')})()</script>
 <title>Репетитор английского в Новосибирске и онлайн, Ольга Теплова</title>
 <meta name="description" content="Английский с нуля для детей от 6 лет и взрослых. Онлайн в Зуме, первое занятие бесплатно, дальше от 1 500 ₽. Рейтинг 5,0 в 2ГИС.">
 <meta property="og:type" content="website">
@@ -31,11 +31,31 @@
 @font-face { font-family: Golos; src: url(f/golos-cyr.woff2) format("woff2"); font-weight: 400 900; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
 @font-face { font-family: Golos; src: url(f/golos-lat.woff2) format("woff2"); font-weight: 400 900; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+20BD, U+2122, U+2212, U+2215; }
 
+@font-face { font-family: Lit; font-style: normal; src: url(f/lit-cyr-n-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: Lit; font-style: normal; src: url(f/lit-lat-n-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: Lit; font-style: italic; src: url(f/lit-cyr-i-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: Lit; font-style: italic; src: url(f/lit-lat-i-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: Lit; src: url(f/lit-rub.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+20BD; }
+@font-face { font-family: SS4; font-style: normal; src: url(f/sss-cyr-n-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: SS4; font-style: normal; src: url(f/sss-lat-n-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: SS4; font-style: italic; src: url(f/sss-cyr-i-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: SS4; font-style: italic; src: url(f/sss-lat-i-400-600.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: SS4; src: url(f/sss-rub.woff2) format("woff2"); font-weight: 400 600; font-display: swap; unicode-range: U+20BD; }
+
+@font-face { font-family: SSa; font-style: normal; src: url(f/ssa-cyr-n-400-700.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: SSa; font-style: normal; src: url(f/ssa-lat-n-400-700.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: SSa; font-style: italic; src: url(f/ssa-cyr-i-400.woff2) format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: SSa; font-style: italic; src: url(f/ssa-lat-i-400.woff2) format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: SSa; src: url(f/ssa-rub.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+20BD; }
+@font-face { font-family: Ons; font-style: normal; src: url(f/ons-cyr-n-400-700.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: Ons; font-style: normal; src: url(f/ons-lat-n-400-700.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+@font-face { font-family: Ons; src: url(f/ons-rub.woff2) format("woff2"); font-weight: 400 700; font-display: swap; unicode-range: U+20BD; }
+
 :root {
   --bg: #FBFAF7;
   --paper: #FFFFFF;
   --ink: #161A2C;
-  --ink2: #4B5066;
+  --ink2: #33374A;
   --mute: #676B7E;
   --line: #E4E1D9;
   --blue: #24407A;
@@ -44,13 +64,23 @@
   --serif: Display, "Times New Roman", serif;
   --sans: Golos, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
+/* варианты шрифтов по ссылке: без параметра и ?f=2 классика, ?f=1 книжный, ?f=3 без засечек, ?f=0 прежний */
+:root { --serif: SS4, Georgia, serif; --sans: SSa, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; --hw: 600; }
+html[data-f="1"] { --serif: Lit, Georgia, serif; --sans: Lit, Georgia, serif; --hw: 500; }
+html[data-f="3"] { --serif: Ons, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; --sans: Ons, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; --hw: 600; }
+html[data-f="2"] body, html[data-f="2"] body * { font-size-adjust: .53 !important; }
+html[data-f="2"] body :is(h1, h2, h3, h1 *, h2 *, h3 *, .brand b, .facts b, .about-txt .first, .qw b, .wb-q, .wb-q *, .wb-a, .wb-a *, .ex, .ex *, .plist li b, .rating b, .pull blockquote, .photos-t, .photos .n), html[data-f="2"] .steps li::before { font-size-adjust: none !important; }
+html[data-f="3"] .hero h1 i { font-style: normal; font-weight: 400; }
+html[data-f="3"] .qw b, html[data-f="3"] .wb-q b, html[data-f="3"] .ex { font-style: normal; }
+html[data-f="0"] { --serif: Display, "Times New Roman", serif; --sans: Golos, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; --hw: 400; --ink2: #4B5066; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 html, body { overflow-x: clip; }
 body { margin: 0; background: var(--bg); color: var(--ink2); font: 400 17px/1.62 var(--sans); -webkit-font-smoothing: antialiased; }
+@media (min-width: 760px) { body { font-size: 18px; } }
 img { display: block; max-width: 100%; height: auto; }
 a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; overflow-wrap: break-word; }
+h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--serif); font-weight: var(--hw); letter-spacing: -.01em; text-wrap: balance; overflow-wrap: break-word; }
 h2 { font-size: clamp(34px, 4.6vw, 52px); line-height: 1.08; }
 p { margin: 0; }
 .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 20px; }
@@ -68,6 +98,7 @@ p { margin: 0; }
 .brand { display: flex; flex-direction: column; color: var(--ink); text-decoration: none; line-height: 1.15; }
 .brand b { font: 400 22px/1.1 var(--serif); }
 .brand small { margin-top: 3px; color: var(--mute); font-size: 13px; }
+@media (max-width: 480px) { .brand .city { display: none; } }
 .nav { display: none; gap: 30px; }
 .nav a { color: var(--ink2); font-size: 15px; text-decoration: none; }
 .nav a:hover { color: var(--ink); text-decoration: underline; }
@@ -276,7 +307,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 </head>
 <body>
 <header class="topbar"><div class="wrap top">
-  <a class="brand" href="#"><b>Ольга Теплова</b><small>репетитор английского, Новосибирск</small></a>
+  <a class="brand" href="#"><b>Ольга Теплова</b><small>репетитор английского<span class="city">, Новосибирск</span></small></a>
   <nav class="nav" aria-label="Разделы"><a href="#about">Обо мне</a><a href="#method">Методика</a><a href="#price">Стоимость</a><a href="#reviews">Отзывы</a></nav>
   <a class="btn" href="#contact">Записаться</a>
 </div></header>
