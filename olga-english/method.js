@@ -29,7 +29,8 @@
     enVoice = en.filter(function (x) { return /GB/i.test(x.lang); })[0] || en.filter(function (x) { return /US/i.test(x.lang); })[0] || en[0] || null;
   }
   if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.addEventListener && speechSynthesis.addEventListener('voiceschanged', pickVoice); }
-  function soundOn() { var b = document.querySelector('.snd'); return !b || b.getAttribute('aria-pressed') !== 'false'; }
+  // data-auto="off" на доске: голос только по кнопке «Послушать»
+  function soundOn() { if (wb.getAttribute('data-auto') === 'off') return false; var b = document.querySelector('.snd'); return !b || b.getAttribute('aria-pressed') !== 'false'; }
   function browserSay(text) {
     try {
       if (!('speechSynthesis' in window)) return;
@@ -53,7 +54,7 @@
       }
       au.pause();
       au.dataset.text = text;
-      au.src = 'voice/m/' + cur + '-' + idx + '.mp3';
+      au.src = (wb.getAttribute('data-voice') || 'voice/m/') + cur + '-' + idx + '.mp3';
       var p = au.play();
       if (p && p.catch) p.catch(function () {});
     } catch (e) { fileOk = false; browserSay(text); }
