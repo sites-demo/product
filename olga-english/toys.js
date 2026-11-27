@@ -23,8 +23,8 @@
   function paintSnd() { if (sndBtn) sndBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); }
   paintSnd();
 
-  // записанного голоса пока нет: сразу говорит браузер, без лишнего запроса и задержки
-  var au = null, voiceOk = false, queue = [], cur = '';
+  // записанный голос лежит в voice/<буква>.mp3; если файл не загрузился, говорит браузер
+  var au = null, voiceOk = !!window.Audio, queue = [], cur = '';
   var enVoice = null, ruVoice = null;
   function pickVoices() {
     if (!('speechSynthesis' in window)) return;
