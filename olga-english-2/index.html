@@ -36,7 +36,7 @@
   --paper: #FFFFFF;
   --ink: #161A2C;
   --ink2: #4B5066;
-  --mute: #7C8094;
+  --mute: #676B7E;
   --line: #E4E1D9;
   --blue: #24407A;
   --blue2: #1A3060;
@@ -46,10 +46,11 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink2); font: 400 17px/1.62 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--bg); color: var(--ink2); font: 400 17px/1.62 var(--sans); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; }
+h1, h2, h3 { margin: 0; color: var(--ink); font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; overflow-wrap: break-word; }
 h2 { font-size: clamp(34px, 4.6vw, 52px); line-height: 1.08; }
 p { margin: 0; }
 .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 20px; }
@@ -63,32 +64,33 @@ p { margin: 0; }
 
 /* шапка */
 .topbar { border-bottom: 1px solid var(--line); }
-.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 18px; padding-bottom: 18px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding-top: 18px; padding-bottom: 18px; }
 .brand { display: flex; flex-direction: column; color: var(--ink); text-decoration: none; line-height: 1.15; }
 .brand b { font: 400 22px/1.1 var(--serif); }
 .brand small { margin-top: 3px; color: var(--mute); font-size: 13px; }
 .nav { display: none; gap: 30px; }
 .nav a { color: var(--ink2); font-size: 15px; text-decoration: none; }
 .nav a:hover { color: var(--ink); text-decoration: underline; }
-.top .btn { min-height: 42px; padding: 0 18px; font-size: 15px; }
+.top .btn { min-height: 44px; padding: 0 18px; font-size: 15px; }
 @media (min-width: 980px) { .nav { display: flex; } }
 
 /* первый экран */
 .hero { padding: 44px 0 80px; }
-.hero-in { display: grid; gap: 40px; }
+.hero-in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+@media (max-width: 400px) { .hero h1 { font-size: 36px; } }
 .hero .where { margin-bottom: 18px; color: var(--mute); font-size: 15px; }
 .hero h1 { font-size: clamp(42px, 5vw, 66px); line-height: 1.04; }
-.hero h1 i { display: block; color: var(--blue); font-style: italic; }
+.hero h1 i { display: block; font-style: italic; }
 .hero .lead { max-width: 560px; margin-top: 24px; font-size: 18.5px; line-height: 1.55; }
 .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .facts { display: grid; margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .facts li { display: grid; grid-template-columns: 126px minmax(0, 1fr); align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.facts b { color: var(--ink); font: 400 22px/1.1 var(--serif); white-space: nowrap; }
+.facts b { color: var(--ink); font: 400 24px/1.1 var(--serif); white-space: nowrap; }
 .facts span { font-size: 15px; line-height: 1.4; }
 .stars { color: var(--gold); letter-spacing: 1px; }
 .portrait { margin: 0; }
 .portrait .ph { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #E9ECF1; }
-.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: saturate(.9); }
 .portrait figcaption { margin-top: 12px; color: var(--mute); font: italic 400 16px/1.4 var(--serif); }
 @media (min-width: 760px) {
   .facts { grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
@@ -108,37 +110,57 @@ p { margin: 0; }
 .sub { max-width: 640px; margin-top: 18px; font-size: 18px; }
 
 /* обо мне */
-.about-in { display: grid; gap: 28px; }
+.about-in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .about-side img { display: none; }
 .about-txt p + p { margin-top: 16px; }
-.about-txt .first { color: var(--ink); font: 400 21px/1.42 var(--serif); }
+.about-txt .first { color: var(--ink); font: 400 22px/1.42 var(--serif); }
 @media (min-width: 760px) { .about-txt .first { font-size: 24px; } }
 .edu { margin-top: 40px; border-top: 1px solid var(--line); }
-.edu-t { padding: 22px 0 4px; color: var(--ink); font: 500 13px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.edu-t { padding: 28px 0 6px; font-size: 26px; line-height: 1.2; }
 .diploma { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); }
 @media (max-width: 400px) { .diploma { grid-template-columns: 92px minmax(0, 1fr); gap: 14px; } }
 .dip { display: block; padding: 4px; border: 1px solid var(--line); background: #fff; cursor: zoom-in; transition: border-color .2s; }
 .dip:hover { border-color: var(--ink2); }
-.diploma b { display: block; color: var(--ink); font: 400 21px/1.2 var(--serif); }
+.diploma b { display: block; color: var(--ink); font: 600 17px/1.3 var(--sans); }
 .diploma span { display: block; margin-top: 4px; font-size: 15px; line-height: 1.45; }
 @media (min-width: 980px) {
   .about-in { grid-template-columns: 360px minmax(0, 1fr); gap: 80px; }
-  .about-side img { display: block; margin-top: 40px; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .about-side img { display: block; margin-top: 40px; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(.9); }
 }
 
 /* методика */
 .method-head { max-width: 760px; }
-.qw { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 44px 0 0; padding: 0; list-style: none; background: var(--line); border: 1px solid var(--line); }
-.qw li { padding: 20px 18px 18px; background: var(--bg); }
-.qw b { display: block; color: var(--ink); font: italic 400 30px/1 var(--serif); }
-.qw span { display: block; margin-top: 8px; color: var(--mute); font-size: 14.5px; }
-.qw .verb { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; background: var(--blue); }
+#method { background: var(--paper); }
+.qw-tip { margin-top: 36px; color: var(--mute); font-size: 15px; }
+.qw { display: grid; grid-template-columns: repeat(auto-fit, minmax(max(4em, 22%), 1fr)); gap: 1px; margin: 14px 0 0; padding: 1px; list-style: none; }
+.qw li { background: var(--paper); box-shadow: 0 0 0 1px var(--line); }
+.qw button { display: block; width: 100%; height: 100%; margin: 0; padding: 14px 10px 12px; border: 0; border-radius: 0; background: var(--paper); color: var(--ink); text-align: left; cursor: pointer; transition: background .2s, color .2s; -webkit-tap-highlight-color: transparent; }
+.qw button:hover { background: #F4F2ED; }
+.qw button:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+.qw button[aria-pressed="true"] { background: var(--blue); color: #fff; }
+.qw b { display: block; color: inherit; font: italic 400 24px/1 var(--serif); }
+.qw button span { display: block; margin-top: 6px; color: var(--mute); font: 400 13px/1.3 var(--sans); }
+.qw button[aria-pressed="true"] span { color: rgba(255, 255, 255, .8); }
+.qw .verb { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 12px 12px; background: var(--ink); }
 .qw .verb b { flex: none; color: #fff; white-space: nowrap; }
-.qw .verb span { margin: 0; color: rgba(255, 255, 255, .78); text-align: right; }
-@media (min-width: 760px) { .qw { grid-template-columns: repeat(4, 1fr); } .qw li { padding: 26px 24px 22px; } .qw b { font-size: 36px; } }
-.method-body { display: grid; gap: 48px; margin-top: 64px; }
+.qw .verb span { margin: 0; color: rgba(255, 255, 255, .78); font-size: 13px; line-height: 1.3; text-align: right; }
+@media (max-width: 360px) { .qw button { padding: 12px 7px 10px; } .qw b { font-size: 21px; } .qw button span { font-size: 12px; } }
+@media (min-width: 760px) { .qw { grid-template-columns: repeat(4, minmax(0, 1fr)); } .qw button { padding: 26px 24px 22px; } .qw .verb { padding: 22px 24px 20px; } .qw b { font-size: 36px; } .qw button span, .qw .verb span { font-size: 14.5px; } }
+.wb { padding: 30px 0 0; }
+.wb-in { min-height: 9.5em; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+.wb-q, .wb-a { color: var(--ink); font: 400 clamp(27px, 3.4vw, 40px)/1.25 var(--serif); }
+.wb-q b { font-weight: 400; font-style: italic; color: var(--blue); }
+.wb-a { margin-top: 6px; }
+.wb-slot { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; text-decoration-color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: .18em; cursor: pointer; }
+.wb-slot:hover { color: var(--blue); }
+.wb-ru { margin-top: 14px; color: var(--mute); font-size: 16px; }
+.wb-ctl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.wb-ctl .btn { min-height: 44px; padding: 0 18px; font-size: 15px; }
+.wb-ctl svg { flex: none; }
+.method-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; margin-top: 64px; }
 .steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
-.steps li { position: relative; padding: 0 0 30px 56px; counter-increment: s; }
+.steps li { position: relative; padding: 0 0 30px 48px; counter-increment: s; }
+@media (min-width: 760px) { .steps li { padding-left: 56px; } }
 .steps li + li { padding-top: 30px; border-top: 1px solid var(--line); }
 .steps li::before { content: counter(s); position: absolute; left: 0; color: var(--blue); font: 400 40px/1 var(--serif); }
 .steps li + li::before { top: 30px; }
@@ -147,8 +169,8 @@ p { margin: 0; }
 .ex u { text-decoration-color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .board { margin: 0; }
 .board a { display: block; cursor: zoom-in; }
-.board img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.board figcaption { margin-top: 12px; color: var(--mute); font: italic 400 16px/1.4 var(--serif); }
+.board img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(.9); }
+.board figcaption { margin-top: 12px; color: var(--mute); font-size: 14.5px; line-height: 1.4; }
 @media (min-width: 980px) { .method-body { grid-template-columns: minmax(0, 1fr) 340px; gap: 80px; align-items: start; } }
 
 /* занятия */
@@ -159,30 +181,33 @@ p { margin: 0; }
 @media (min-width: 760px) { .how-row { grid-template-columns: 300px minmax(0, 1fr); gap: 40px; padding: 32px 0; } .how-row p { max-width: 600px; padding-top: 4px; } }
 
 /* стоимость */
-.price-in { display: grid; gap: 40px; }
+.price-in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
 .plist { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
 .plist li { display: flex; align-items: baseline; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .plist li span { color: var(--ink); font-size: 17px; }
-.plist li i { flex: 1; min-width: 20px; border-bottom: 1px dotted #B9B6AE; transform: translateY(-5px); }
-.plist li b { color: var(--ink); font: 400 24px/1 var(--serif); white-space: nowrap; }
+.plist li i { flex: 1; min-width: 8px; border-bottom: 1px dotted #B9B6AE; transform: translateY(-5px); }
+.plist li b { margin-left: auto; color: var(--ink); font: 400 24px/1 var(--serif); white-space: nowrap; }
 @media (min-width: 760px) { .plist li b { font-size: 28px; } }
-.plist li.free b { color: var(--blue); font-style: italic; }
 .notes { margin: 24px 0 0; padding: 0; list-style: none; }
 .notes li { position: relative; padding-left: 20px; font-size: 15.5px; }
 .notes li + li { margin-top: 8px; }
 .notes li::before { content: ""; position: absolute; left: 2px; top: .7em; width: 6px; height: 1px; background: var(--ink2); }
-.seats { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 36px; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.seats { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
 .dots { display: flex; gap: 7px; }
 .dots i { width: 14px; height: 14px; border: 1px solid var(--ink); border-radius: 50%; }
 .dots i.on { background: var(--ink); }
 .seats p { color: var(--ink); font-size: 16px; }
 .price-in .btn { margin-top: 28px; }
-@media (min-width: 980px) { .price-in { grid-template-columns: 360px minmax(0, 1fr); gap: 80px; } }
+.price-in .notes { margin: 0; }
+@media (min-width: 980px) { .price-in { grid-template-columns: 360px minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 28px 80px; } .p-list { grid-column: 2; grid-row: 1 / 3; } .price-in .notes { grid-column: 1; grid-row: 2; } }
 
 /* отзывы */
 .rating { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-top: 18px; font-size: 16px; }
 .rating b { color: var(--ink); font: 400 28px/1 var(--serif); }
-.revs { margin-top: 44px; columns: 1; column-gap: 48px; }
+.pull { max-width: 900px; margin: 48px 0 0; }
+.pull blockquote { margin: 0; color: var(--ink); font: 400 clamp(28px, 3.6vw, 44px)/1.22 var(--serif); text-wrap: balance; }
+.pull figcaption { margin-top: 16px; color: var(--mute); font-size: 15px; }
+.revs { margin-top: 56px; columns: 1; column-gap: 48px; }
 @media (min-width: 760px) { .revs { columns: 2; } }
 @media (min-width: 1100px) { .revs { columns: 3; } }
 .rev { break-inside: avoid; margin: 0 0 36px; padding-top: 20px; border-top: 1px solid var(--line); }
@@ -190,7 +215,7 @@ p { margin: 0; }
 .rev .txt { margin: 0; color: var(--ink); font-size: 16.5px; line-height: 1.6; }
 .rev .txt.clip { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .rev .more { margin-top: 8px; padding: 0; border: 0; background: none; color: var(--blue); font: 500 15px/1.4 var(--sans); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.rev .who { margin-top: 14px; color: var(--ink); font: italic 400 17px/1.3 var(--serif); }
+.rev .who { margin-top: 14px; color: var(--ink); font: 600 15px/1.3 var(--sans); }
 .rev .who span { margin-left: 8px; color: var(--mute); font: 400 14px/1.3 var(--sans); }
 .revs-more { margin-top: 4px; }
 .revs-more[hidden] { display: none; }
@@ -198,7 +223,7 @@ p { margin: 0; }
 .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
 .photos a { position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; background: #E9ECF1; cursor: zoom-in; }
 .photos a:nth-child(n+7) { display: none; }
-.photos img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.88); transition: transform .5s ease; }
+.photos img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); transition: transform .5s ease; }
 .photos a:hover img { transform: scale(1.03); }
 .photos .n { position: absolute; inset: 0; display: grid; place-items: center; padding: 8px; background: rgba(22, 26, 44, .55); color: #fff; font: 400 19px/1.1 var(--serif); text-align: center; }
 @media (min-width: 760px) { .photos .n { font-size: 24px; } }
@@ -208,7 +233,6 @@ p { margin: 0; }
 .contact { padding: 0 0 80px; }
 .panel { padding: 44px 24px; background: var(--ink); color: rgba(255, 255, 255, .78); }
 .panel h2 { color: #fff; }
-.panel h2 i { color: #AFC2EA; font-style: italic; }
 .panel .sub { color: rgba(255, 255, 255, .78); }
 .msgs { display: grid; gap: 10px; margin-top: 32px; }
 .msgs .btn { border-color: rgba(255, 255, 255, .5); color: #fff; }
@@ -217,8 +241,8 @@ p { margin: 0; }
 .msgs .btn.main:hover { background: #DCE4F5; border-color: #DCE4F5; }
 .max { margin-top: 6px; font-size: 15.5px; }
 .panel a:not(.btn) { color: #fff; }
-.info { display: grid; gap: 18px; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .18); font-size: 15.5px; }
-.info b { display: block; margin-bottom: 4px; color: #fff; font: 400 20px/1.25 var(--serif); }
+.info { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .18); font-size: 15.5px; }
+.info b { display: block; margin-bottom: 4px; color: #fff; font: 600 17px/1.3 var(--sans); }
 @media (min-width: 760px) { .panel { padding: 64px; } .msgs { grid-template-columns: repeat(3, auto); justify-content: start; } .max { grid-column: 1 / -1; } .info { grid-template-columns: 1fr 1fr; gap: 40px; } }
 @media (min-width: 980px) { .contact { padding-bottom: 120px; } .panel { padding: 80px; } }
 .foot { padding-bottom: 40px; color: var(--mute); font-size: 14px; line-height: 1.6; }
@@ -252,7 +276,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 </head>
 <body>
 <header class="topbar"><div class="wrap top">
-  <a class="brand" href="#"><b>Ольга Теплова</b><small>преподаватель английского</small></a>
+  <a class="brand" href="#"><b>Ольга Теплова</b><small>репетитор английского, Новосибирск</small></a>
   <nav class="nav" aria-label="Разделы"><a href="#about">Обо мне</a><a href="#method">Методика</a><a href="#price">Стоимость</a><a href="#reviews">Отзывы</a></nav>
   <a class="btn" href="#contact">Записаться</a>
 </div></header>
@@ -261,10 +285,9 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 <section class="hero">
   <div class="wrap hero-in">
     <div>
-      <p class="where">Репетитор английского, Новосибирск и&nbsp;онлайн</p>
       <h1>Английский с&nbsp;нуля <i>для детей и&nbsp;взрослых</i></h1>
       <p class="lead">Начинаем говорить с&nbsp;первого урока. Взрослых довожу до&nbsp;уровня Intermediate, детям помогаю справляться с&nbsp;английским в&nbsp;школе.</p>
-      <div class="cta"><a class="btn main" href="#contact">Записаться на&nbsp;бесплатное занятие</a><a class="btn" href="#method">Как я&nbsp;учу</a></div>
+      <div class="cta"><a class="btn main" href="#contact">Записаться на&nbsp;бесплатное занятие</a><a class="btn" href="#method">Методика</a></div>
       <ul class="facts">
         <li><b><span class="stars" aria-hidden="true">★</span> 5,0</b><span>24&nbsp;отзыва в&nbsp;2ГИС</span></li>
         <li><b>Бесплатно</b><span>первое занятие, 60&nbsp;минут</span></li>
@@ -273,7 +296,6 @@ html.lb-open, html.lb-open body { overflow: hidden; }
     </div>
     <figure class="portrait">
       <div class="ph"><img src="img/olga-s.webp" srcset="img/olga-s.webp 600w, img/olga.webp 960w" sizes="(min-width: 980px) 380px, 100vw" width="600" height="800" alt="Ольга Теплова, преподаватель английского" fetchpriority="high"></div>
-      <figcaption>Ольга Николаевна Теплова, преподаю английский и&nbsp;немецкий больше 8&nbsp;лет</figcaption>
     </figure>
   </div>
 </section>
@@ -289,7 +311,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
       <p>Беру учеников с&nbsp;нуля и&nbsp;довожу до&nbsp;уровня Intermediate. Взрослые ученики в&nbsp;отзывах пишут, что на&nbsp;это у&nbsp;них ушёл примерно год. Детям помогаю освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;приучаю заниматься самостоятельно.</p>
       <p>Программу собираю под задачу ученика: школьный учебник, переписка и&nbsp;звонки по&nbsp;работе, поездки, разговор с&nbsp;родственниками за&nbsp;границей.</p>
       <div class="edu">
-        <p class="edu-t">Образование</p>
+        <h3 class="edu-t">Образование</h3>
         <div class="diploma">
           <a class="dip" href="../olga-english/img/dip-vkgu.webp" data-g="dip" data-w="1243" data-h="890" data-cap="Бакалавр образования, иностранные языки, 2011"><img src="../olga-english/img/dip-vkgu-s.webp" width="480" height="344" alt="Диплом бакалавра образования по специальности «Иностранный язык: два иностранных языка»" loading="lazy" decoding="async"></a>
           <div><b>Иностранные языки</b><span>Бакалавр образования, специальность «Иностранный язык: два иностранных языка». Восточно-Казахстанский государственный университет им.&nbsp;С.&nbsp;Аманжолова, 2011</span></div>
@@ -309,17 +331,26 @@ html.lb-open, html.lb-open body { overflow: hidden; }
       <h2>Методика «8&nbsp;шаблонов и&nbsp;1&nbsp;глагол»</h2>
       <p class="sub">Я&nbsp;проверила её на&nbsp;24&nbsp;учениках. Берём один глагол to&nbsp;be и&nbsp;восемь вопросительных слов, на&nbsp;каждое слово свой шаблон предложения.</p>
     </div>
-    <ul class="qw rv" lang="en">
-      <li><b>what</b><span lang="ru">что</span></li>
-      <li><b>where</b><span lang="ru">где</span></li>
-      <li><b>when</b><span lang="ru">когда</span></li>
-      <li><b>how</b><span lang="ru">как</span></li>
-      <li><b>who</b><span lang="ru">кто</span></li>
-      <li><b>why</b><span lang="ru">почему</span></li>
-      <li><b>whose</b><span lang="ru">чей</span></li>
-      <li><b>which</b><span lang="ru">который</span></li>
-      <li class="verb"><b>to be</b><span lang="ru">один глагол для всех восьми шаблонов</span></li>
+    <p class="qw-tip">Нажмите на&nbsp;слово, и&nbsp;ниже появится его шаблон</p>
+    <ul class="qw" aria-label="Восемь вопросительных слов">
+      <li><button type="button" data-w="what" aria-pressed="false"><b lang="en">what</b><span>что</span></button></li>
+      <li><button type="button" data-w="where" aria-pressed="true"><b lang="en">where</b><span>где</span></button></li>
+      <li><button type="button" data-w="when" aria-pressed="false"><b lang="en">when</b><span>когда</span></button></li>
+      <li><button type="button" data-w="how" aria-pressed="false"><b lang="en">how</b><span>как</span></button></li>
+      <li><button type="button" data-w="who" aria-pressed="false"><b lang="en">who</b><span>кто</span></button></li>
+      <li><button type="button" data-w="why" aria-pressed="false"><b lang="en">why</b><span>почему</span></button></li>
+      <li><button type="button" data-w="whose" aria-pressed="false"><b lang="en">whose</b><span>чей</span></button></li>
+      <li><button type="button" data-w="which" aria-pressed="false"><b lang="en">which</b><span>который</span></button></li>
+      <li class="verb"><b lang="en">to be</b><span>один глагол для всех восьми шаблонов</span></li>
     </ul>
+    <div class="wb" data-voice="../olga-english/voice/m/" data-auto="off">
+      <div class="wb-in" aria-live="polite">
+        <p class="wb-q" lang="en"><b>Where</b> are you?</p>
+        <p class="wb-a" lang="en">I am <button class="wb-slot" type="button" aria-label="Поменять слово">at home</button>.</p>
+        <p class="wb-ru">Где ты? Я&nbsp;дома.</p>
+      </div>
+      <div class="wb-ctl"><button class="btn wb-next" type="button">Поменять слово</button><button class="btn wb-say" type="button"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.5 9c1.2 1.6 1.2 4.4 0 6M18 6.5c2.6 3 2.6 8 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Послушать</button></div>
+    </div>
     <div class="method-body">
       <ol class="steps">
         <li><h3>Меняем одно слово за&nbsp;раз</h3><p>Сначала ученик рассказывает о&nbsp;себе: имя, профессия, хобби. Потом в&nbsp;той&nbsp;же фразе меняется только место, потом только время.</p><span class="ex" lang="en">I am <u>at home</u>. I am <u>in the park</u>. I am <u>on the plane</u>.</span></li>
@@ -348,20 +379,20 @@ html.lb-open, html.lb-open body { overflow: hidden; }
       <h2>Стоимость</h2>
       <p class="sub">Цена одна для детей и&nbsp;взрослых.</p>
     </div>
-    <div class="rv">
+    <div class="p-list rv">
       <ul class="plist">
         <li class="free"><span>Первое занятие, 60&nbsp;минут</span><i></i><b>бесплатно</b></li>
         <li><span>Занятие 60&nbsp;минут</span><i></i><b>1&nbsp;500&nbsp;₽</b></li>
         <li><span>Занятие 90&nbsp;минут</span><i></i><b>2&nbsp;250&nbsp;₽</b></li>
       </ul>
-      <ul class="notes">
-        <li>Оплата после каждого урока.</li>
-        <li>Перенести урок можно, если предупредить за&nbsp;сутки.</li>
-        <li>Работаю как ИП, поэтому можно оплатить от&nbsp;юрлица по&nbsp;договору с&nbsp;актами.</li>
-      </ul>
       <div class="seats"><div class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div><p>Беру до&nbsp;6&nbsp;учеников, сейчас свободно 4&nbsp;места</p></div>
-      <a class="btn main" href="#contact">Занять место</a>
+      <a class="btn main" href="#contact">Записаться на&nbsp;бесплатное занятие</a>
     </div>
+    <ul class="notes">
+      <li>Оплата после каждого урока.</li>
+      <li>Перенести урок можно, если предупредить за&nbsp;сутки.</li>
+      <li>Работаю как ИП, поэтому можно оплатить от&nbsp;юрлица по&nbsp;договору с&nbsp;актами.</li>
+    </ul>
   </div>
 </section>
 
@@ -369,6 +400,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   <div class="wrap">
     <h2>Отзывы</h2>
     <p class="rating"><b>5,0</b><span class="stars" aria-hidden="true">★★★★★</span><span>24&nbsp;отзыва в&nbsp;2ГИС.</span> <a href="https://2gis.ru/novosibirsk/firm/70000001041726732/tab/reviews" target="_blank" rel="noopener">Открыть в&nbsp;2ГИС</a></p>
+    <figure class="pull rv"><blockquote>«Почти год занятий, и&nbsp;школьная программа теперь по&nbsp;зубам.»</blockquote><figcaption>Yuri K., отзыв в&nbsp;2ГИС, февраль 2022</figcaption></figure>
     <div class="revs">
       <figure class="rev"><blockquote class="txt">Ольга занималась с&nbsp;нашей дочерью английским. Умеет заинтересовать ребёнка, использует разные техники запоминания, имеет много интересных карточек и&nbsp;другие интерактивные материалы для детей. Дочка легко запомнила новые слова. Мы довольны. Рекомендую.</blockquote><figcaption class="who">Александр З.<span>март 2026</span></figcaption></figure>
       <figure class="rev"><blockquote class="txt clip">Ребёнок в&nbsp;школе перешёл в&nbsp;продвинутую группу английского и&nbsp;сразу же стал отставать. Решили попробовать дополнительные занятия, Ольгу выбрали по&nbsp;отзывам и&nbsp;локации. Почти год занятий, и&nbsp;школьная программа теперь по&nbsp;зубам. В какой-то момент Ольга говорит, цель достигнута, можно заниматься дальше, но следует поставить новую цель. Действительно, в&nbsp;школе оценки сплошные 4 и&nbsp;5. Это уважительное отношение и&nbsp;к ученикам, и&nbsp;к себе как профессионалу. Итого: пять звёзд, но поставил бы все семь.</blockquote><button class="more" type="button">Читать полностью</button><figcaption class="who">Yuri K.<span>февраль 2022</span></figcaption></figure>
@@ -422,7 +454,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="panel rv">
-      <h2>Записаться на&nbsp;<i>бесплатное</i> занятие</h2>
+      <h2>Записаться на&nbsp;бесплатное занятие</h2>
       <p class="sub">Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Подберём удобное время.</p>
       <div class="msgs"><a class="btn main" href="https://t.me/world_on" target="_blank" rel="noopener">Telegram</a><a class="btn" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
       <div class="info">
@@ -437,6 +469,7 @@ html.lb-open, html.lb-open body { overflow: hidden; }
 <footer class="wrap foot">Ольга Теплова, английский для&nbsp;детей и&nbsp;взрослых<br>ИП Теплова О.&nbsp;Н., ОГРНИП 321547600176748</footer>
 
 <script src="../olga-english/gallery.js"></script>
+<script src="../olga-english/method.js"></script>
 <script>
 (function () {
   // отзывы: сначала шесть, длинные свёрнуты
@@ -449,6 +482,13 @@ html.lb-open, html.lb-open body { overflow: hidden; }
     var t = r.querySelector('.txt'), b = r.querySelector('.more');
     if (!b) return;
     b.addEventListener('click', function () { t.classList.remove('clip'); b.remove(); });
+  });
+  // доска методики: после выбора слова доска должна быть видна
+  var qw = document.querySelector('.qw'), wbIn = document.querySelector('.wb-in');
+  if (qw && wbIn) qw.addEventListener('click', function (e) {
+    if (!e.target.closest('button[data-w]')) return;
+    var r = wbIn.getBoundingClientRect();
+    if (r.bottom > innerHeight) wbIn.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'end' });
   });
   // появление при прокрутке
   var els = document.querySelectorAll('.rv');
