@@ -9,7 +9,7 @@
     M: 'M is for moon', N: 'N is for nose', O: 'O is for orange', P: 'P is for pig', Q: 'Q is for queen', R: 'R is for rabbit',
     S: 'S is for sun', T: 'T is for tree', U: 'U is for umbrella', V: 'V is for violin', W: 'W is for whale', X: 'X is for fox',
     Y: 'Y is for yo-yo', Z: 'Z is for zebra', apple: 'Apple', ball: 'Ball', star: 'Star',
-    hello: 'Hello! Давай играть! Нажми на букву!', five: 'Ура! Уже пять слов!', all: 'Вау! Все буквы собраны! Ты молодец!'
+    hi: "Hi there! Let's play! Tap a letter!", meet: 'Hello! Nice to meet you!', five: 'Ура! Уже пять слов!', all: 'Вау! Все буквы собраны! Ты молодец!'
   };
   var RU = {
     A: 'яблоко', B: 'мяч', C: 'кот', D: 'собака', E: 'яйцо', F: 'рыба', G: 'жираф', H: 'дом', I: 'мороженое', J: 'сок',
@@ -78,7 +78,7 @@
     soundOn = !soundOn;
     try { localStorage.setItem('azbuka-sound', soundOn ? 'on' : 'off'); } catch (e) {}
     paintSnd();
-    if (soundOn) play('hello'); else hush();
+    if (soundOn) play('hi'); else hush();
   });
 
   // ---------- наклейки прилипают при прокрутке ----------
@@ -103,7 +103,7 @@
           x.classList.remove('hop');
           setTimeout(function () { void x.offsetWidth; x.classList.add('hop'); }, i * 70);
         });
-        play('hello');
+        play('meet');
       });
     });
   }
