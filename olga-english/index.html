@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <meta name="theme-color" content="#FAF7F2">
 <script>document.documentElement.classList.add('js')</script>
 <title>Репетитор английского в Новосибирске и онлайн, Ольга Теплова</title>
 <meta name="description" content="Английский с нуля для детей от 6 лет и взрослых. Онлайн в Зуме, первое занятие бесплатно, дальше от 1 500 ₽. Рейтинг 5,0 в 2ГИС.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
+<link rel="canonical" href="https://www.studio-sait.ru/olga-english/">
 <meta property="og:url" content="https://www.studio-sait.ru/olga-english/">
 <meta property="og:title" content="Ольга Теплова, английский для детей и взрослых">
 <meta property="og:description" content="Английский с нуля онлайн в Зуме. Первое занятие бесплатно, рейтинг 5,0 в 2ГИС.">
@@ -111,13 +111,13 @@ h1 .l2 { display: block; color: var(--tomato); }
 
 /* обо мне */
 .about-in { display: grid; gap: 34px; }
-.polaroid { position: relative; justify-self: center; width: min(78%, 340px); background: #fff; padding: 12px 12px 54px; border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); }
+.polaroid { position: relative; justify-self: center; width: min(78%, 340px); background: #fff; padding: 12px 12px 16px; border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); }
 .mag { position: absolute; z-index: 2; font: 600 56px/.8 'Toy', sans-serif; color: var(--c); text-shadow: 0 1px 0 var(--d), 0 2px 0 var(--d), 0 3px 0 var(--d), 0 4px 0 var(--d), 0 7px 9px rgba(34, 29, 61, .3); pointer-events: none; }
 .polaroid .mag { top: -30px; left: 50%; transform: translateX(-50%) rotate(6deg); font-size: 64px; }
 .polaroid .ph { aspect-ratio: 4 / 5; border-radius: 3px; background: repeating-linear-gradient(135deg, #F7EBD6 0 12px, #F2E3C9 12px 24px); display: grid; place-items: center; font: 600 22px/1.15 var(--hand); color: var(--ink-2); text-align: center; padding: 16px; }
 .polaroid .ph:has(img) { padding: 0; overflow: hidden; }
 .polaroid .ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 700 22px/1 var(--hand); }
+.polaroid figcaption { margin-top: 12px; text-align: center; font: 700 22px/1.1 var(--hand); overflow-wrap: anywhere; }
 .about-txt p { margin-top: 16px; font-size: 18.5px; }
 .about-txt h2 + p { margin-top: 22px; }
 .edu { margin-top: 30px; }
@@ -138,6 +138,9 @@ h1 .l2 { display: block; color: var(--tomato); }
 .stop:nth-child(1) .tile { background: var(--sun); transform: rotate(-5deg); }
 .stop:nth-child(2) .tile { background: var(--green); transform: rotate(4deg); }
 .stop:nth-child(3) .tile { background: var(--blue); transform: rotate(-3deg); }
+.stop:nth-child(4) .tile { background: var(--pink); transform: rotate(3deg); }
+.sched { margin-top: 48px; max-width: 40em; color: var(--ink-2); }
+.sched b { color: var(--ink); }
 .stop h3 { font: 800 24px/1.15 var(--hand); }
 .stop p { margin-top: 6px; color: var(--ink-2); }
 .pawn { position: absolute; z-index: 2; left: 64px; top: -34px; }
@@ -194,7 +197,7 @@ h1 .l2 { display: block; color: var(--tomato); }
 @keyframes wb-pop { 0% { opacity: 0; transform: translateY(8px) scale(.85); } 100% { opacity: 1; transform: none; } }
 .wb-slot { display: inline-block; }
 .polaroid a.ph { display: block; cursor: zoom-in; }
-.board .ph img { object-position: 50% 30%; }
+.board .ph img { object-position: 50% 0; }
 .stars { color: var(--sun-d); letter-spacing: 1px; }
 .price-txt p { font-size: 18.5px; }
 .desks { margin-top: 22px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; max-width: 460px; }
@@ -311,8 +314,8 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .about-in { grid-template-columns: 400px minmax(0, 1fr); gap: 80px; align-items: center; }
   .polaroid { width: 100%; justify-self: start; }
   .about-txt { max-width: 580px; }
-  .path { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 64px; }
-  .path::before { left: 50px; right: calc((100% - 80px) / 3 - 50px); top: 48px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
+  .path { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; margin-top: 64px; }
+  .path::before { left: 50px; right: calc((100% - 108px) / 4 - 50px); top: 48px; bottom: auto; border-left: 0; border-top: 4px dashed var(--ink); }
   .stop { grid-template-columns: 1fr; align-items: start; align-content: start; }
   .stop p { max-width: 20em; }
   .price-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 80px; align-items: center; }
@@ -371,8 +374,8 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
     <div class="about-txt">
       <h2>Обо мне</h2>
       <svg class="scrib" viewBox="0 0 150 14" aria-hidden="true"><path d="M3 9 C 30 3, 60 13, 90 6 S 135 4, 147 8" fill="none" stroke="#FFC12E" stroke-width="6" stroke-linecap="round" /></svg>
-      <p>Меня зовут Ольга Николаевна Теплова. Я&nbsp;преподаватель английского и&nbsp;немецкого языков, учу больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми от&nbsp;6&nbsp;лет и&nbsp;со&nbsp;взрослыми.</p>
-      <p>Беру учеников с&nbsp;нуля и&nbsp;довожу до&nbsp;уровня Intermediate. Взрослые ученики в&nbsp;отзывах пишут, что на&nbsp;это у&nbsp;них ушёл примерно год. Детям помогаю освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;приучаю заниматься самостоятельно.</p>
+      <p>Меня зовут Ольга Николаевна Теплова, мне 38&nbsp;лет. Преподаю английский и&nbsp;немецкий языки больше 8&nbsp;лет. Занимаюсь с&nbsp;детьми от&nbsp;6&nbsp;лет и&nbsp;со&nbsp;взрослыми.</p>
+      <p>Беру учеников с&nbsp;нуля и&nbsp;довожу до&nbsp;уровня Intermediate, обычно за&nbsp;полтора‑два года. Детям помогаю освоиться на&nbsp;уроках английского в&nbsp;школе и&nbsp;приучаю заниматься самостоятельно.</p>
       <p>Программу собираю под задачу ученика: школьный учебник, переписка и&nbsp;звонки по&nbsp;работе, поездки, разговор с&nbsp;родственниками за&nbsp;границей.</p>
       <div class="edu">
         <p class="edu-t">Образование</p>
@@ -438,9 +441,14 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
       </div>
       <div class="stop">
         <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><rect x="7" y="11" width="40" height="36" rx="6" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" /><path d="M7 21 H47 M17 6 V15 M37 6 V15" stroke="#221D3D" stroke-width="3" stroke-linecap="round" /><path d="M27 42 C 18 36, 18 28, 23 28 C 25 28, 27 30, 27 32 C 27 30, 29 28, 31 28 C 36 28, 36 36, 27 42 Z" fill="#FF5A36" stroke="#221D3D" stroke-width="2" stroke-linejoin="round" /></svg></div>
-        <div><h3>Постоянное расписание</h3><p>2 или 3 раза в&nbsp;неделю в&nbsp;одни и&nbsp;те&nbsp;же дни. Занятие 60 или 90&nbsp;минут в&nbsp;Зуме.</p></div>
+        <div><h3>Через полгода</h3><p>Свободно говорите в&nbsp;настоящем времени: и&nbsp;монологом, и&nbsp;в&nbsp;диалоге.</p></div>
+      </div>
+      <div class="stop">
+        <div class="tile rv"><svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M17 13 H10 C 10 21, 13 25, 18 25 M37 13 H44 C 44 21, 41 25, 36 25" fill="none" stroke="#221D3D" stroke-width="3" stroke-linecap="round" /><path d="M16 8 H38 V19 C 38 28, 33 33, 27 33 C 21 33, 16 28, 16 19 Z" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" stroke-linejoin="round" /><path d="M27 33 V40" stroke="#221D3D" stroke-width="3" /><rect x="17" y="40" width="20" height="7" rx="2.5" fill="#FFFBF3" stroke="#221D3D" stroke-width="3" /><path d="M27 13 L29.1 17.3 L33.8 17.9 L30.4 21.1 L31.2 25.8 L27 23.6 L22.8 25.8 L23.6 21.1 L20.2 17.9 L24.9 17.3 Z" fill="#FFC12E" stroke="#221D3D" stroke-width="1.6" stroke-linejoin="round" /></svg></div>
+        <div><h3>Через полтора‑два года</h3><p>Уровень Intermediate.</p></div>
       </div>
     </div>
+    <p class="sched"><b>Постоянное расписание:</b> 2 или 3&nbsp;раза в&nbsp;неделю в&nbsp;одни и&nbsp;те&nbsp;же дни, занятие 60&nbsp;или 90&nbsp;минут в&nbsp;Зуме.</p>
   </div>
 </section>
 
@@ -520,9 +528,9 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
         <div class="note" hidden style="--c:#8D63FF;--d:#6338D9"><span class="mag" aria-hidden="true">X</span><p class="txt clip">Очень легко и&nbsp;интересно заниматься. Желание изучать язык растёт после каждого занятия. Прогресс просто удивляет, недавно я говорил &quot;лангуаге&quot; сейчас понимаю некоторые фразы в&nbsp;песнях или видео на&nbsp;английском, причём не&nbsp;напрягая память, а&nbsp;с ходу, сам того не&nbsp;замечая. В общем рекомендую!</p><button class="more" type="button">Читать полностью</button><p class="who">Андрей Л.<span>ноябрь 2020</span></p></div>
       </div>
       <div class="notes-more"><button class="btn sm soft" type="button">Показать все 24 отзыва</button></div>
-      <p class="snaps-t">Фото с&nbsp;занятий и&nbsp;из&nbsp;кабинета</p>
+      <p class="snaps-t">Фото с&nbsp;занятий</p>
       <div class="snaps">
-        <a href="img/g/01.webp" data-g="photos" data-w="1277" data-h="1600" data-cap="Кабинет на Немировича‑Данченко"><img src="img/g/01-s.webp" width="575" height="720" alt="Кабинет: доска, стол и ноутбук для онлайн‑уроков" loading="lazy" decoding="async"></a>
+        <a href="img/g/01.webp" data-g="photos" data-w="1277" data-h="1600"><img src="img/g/01-s.webp" width="575" height="720" alt="Кабинет: доска, стол и ноутбук для онлайн‑уроков" loading="lazy" decoding="async"></a>
         <a href="img/g/02.webp" data-g="photos" data-w="954" data-h="1381"><img src="img/g/02-s.webp" width="497" height="720" alt="Ольга с ученицей в кабинете" loading="lazy" decoding="async"></a>
         <a href="img/g/03.webp" data-g="photos" data-w="1440" data-h="1015"><img src="img/g/03-s.webp" width="1021" height="720" alt="Ольга с ученицей" loading="lazy" decoding="async"></a>
         <a href="img/g/04.webp" data-g="photos" data-w="1080" data-h="1369"><img src="img/g/04-s.webp" width="568" height="720" alt="Ольга с ученицей готовят пиццу" loading="lazy" decoding="async"><span class="snap-n" aria-hidden="true">+13 фото</span></a>
@@ -550,7 +558,7 @@ body { background-color: #FAF7F2; background-image: linear-gradient(rgba(80, 60,
       <div>
         <h2>Записаться на&nbsp;пробное занятие</h2>
         <p>Напишите, кто будет учиться и&nbsp;что сейчас получается с&nbsp;английским. Подберём удобное время.</p>
-        <p class="where"><b>Занятия онлайн в&nbsp;Зуме</b>, из&nbsp;любого города, ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. Кабинет в&nbsp;Новосибирске: ул.&nbsp;Немировича‑Данченко, 148/1, офис 318, <a href="https://2gis.ru/novosibirsk/firm/70000001041726732" target="_blank" rel="noopener">как пройти</a>.</p>
+        <p class="where"><b>Занятия онлайн в&nbsp;Зуме</b>, из&nbsp;любого города, ежедневно с&nbsp;10:00 до&nbsp;20:00 по&nbsp;записи. Юридический адрес в&nbsp;Новосибирске: ул.&nbsp;Немировича‑Данченко, 148/1, офис&nbsp;318.</p>
       </div>
       <div class="msgs"><a class="btn tg" href="https://t.me/world_on" target="_blank" rel="noopener">Telegram</a><a class="btn wa" href="https://wa.me/79237888824" target="_blank" rel="noopener">WhatsApp</a><a class="btn vk" href="https://vk.com/id21353018" target="_blank" rel="noopener">ВКонтакте</a><p class="max">В&nbsp;MAX: <a href="tel:+79237888824">+7&nbsp;923&nbsp;788‑88‑24</a></p></div>
       <div class="hl" aria-label="Hello"><button type="button" style="--c:#FF5A36;--d:#C93A1B">H</button><button type="button" style="--c:#FFC12E;--d:#D99400">E</button><button type="button" style="--c:#1DB972;--d:#0F8A51">L</button><button type="button" style="--c:#FF78AE;--d:#D24F86">L</button><button type="button" style="--c:#FFFBF3;--d:#B9B2D6">O</button></div>
